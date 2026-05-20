@@ -20,7 +20,7 @@ export default function CTASection() {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                     <ShinyButton asChild className="!px-8 !py-3 !text-sm !rounded-xl !h-[44px] !font-medium">
-                        <Link href="https://el-portal-app.vercel.app">
+                        <Link href={process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app'}>
                             Join for free
                         </Link>
                     </ShinyButton>

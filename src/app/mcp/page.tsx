@@ -126,7 +126,7 @@ const STDIO_CONFIG = `{
   }
 }`;
 
-const HTTP_CONFIG = `POST https://el-portal-app.vercel.app/api/mcp
+const HTTP_CONFIG = `POST https://app.el-portal.app/api/mcp
 Authorization: Bearer ep_YOUR_KEY_HERE
 Content-Type: application/json`;
 
@@ -496,7 +496,7 @@ export default function McpPage() {
                 MCP config. Full read access in under a minute.
               </p>
               <Link
-                href="https://el-portal-app.vercel.app/settings"
+                href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app'}/settings`}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-100 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 px-4 py-2 rounded-lg transition-colors duration-150"
               >
                 Open Settings

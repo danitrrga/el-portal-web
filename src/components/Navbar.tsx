@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { ShinyButton } from "./ui/shiny-button";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app';
+
 const navLinks = [
     { href: "/manifesto", label: "Manifesto" },
     { href: "/changelog", label: "Changelog" },
@@ -64,11 +66,11 @@ export default function Navbar() {
                     <div className="flex items-center space-x-4">
                         <Link
                             className="text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors duration-300 hidden sm:block pr-4"
-                            href="https://el-portal-app.vercel.app/login"
+                            href={`${APP_URL}/login`}
                         >
                             Log in
                         </Link>
-                        <Link href="https://el-portal-app.vercel.app">
+                        <Link href={APP_URL}>
                             <ShinyButton className="!px-6 !py-3 !text-sm !rounded-xl !h-[44px] !font-medium">
                                 Get Started
                             </ShinyButton>
@@ -110,7 +112,7 @@ export default function Navbar() {
                         ))}
                         <Link
                             className="block text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors duration-300 py-2"
-                            href="https://el-portal-app.vercel.app/login"
+                            href={`${APP_URL}/login`}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             Log in

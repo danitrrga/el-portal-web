@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import ReadingLayout from "@/components/ReadingLayout";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Privacy Policy — El Portal",
@@ -10,170 +9,266 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
     return (
-        <div className="relative w-full overflow-x-hidden bg-zinc-950 min-h-screen">
-            {/* Background grid texture */}
-            <div
-                className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"
-                style={{
-                    maskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)",
-                    WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)",
-                }}
-            />
+        <div className="min-h-screen bg-background text-fg">
+            <header className="border-b border-border-subtle">
+                <div className="max-w-4xl mx-auto px-6 py-5 flex items-center justify-between">
+                    <Link href="/" className="text-sm font-semibold text-fg tracking-tight">
+                        El Portal
+                    </Link>
+                    <Link
+                        href="/"
+                        className="flex items-center gap-1.5 text-xs text-fg-secondary hover:text-fg transition-colors"
+                    >
+                        <ArrowLeft size={14} />
+                        Back
+                    </Link>
+                </div>
+            </header>
 
-            <Navbar />
+            <main className="max-w-[680px] mx-auto px-6">
+                {/* Hero */}
+                <section className="pt-24 pb-4 text-center">
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium mb-4">
+                        Privacy &amp; Data
+                    </p>
+                    <h1 className="text-5xl sm:text-6xl tracking-tight font-medium text-fg text-balance">
+                        Your data, fully visible.
+                    </h1>
+                    <p className="mt-6 text-lg text-fg-secondary leading-relaxed text-pretty max-w-xl mx-auto">
+                        El Portal is hosted in the EU and built on your consent. This page lists everything we
+                        store, everything we never touch, and how to take it all back.
+                    </p>
+                </section>
 
-            <main className="relative z-10 flex-1 pt-24">
-                <ReadingLayout>
-                    {/* Header */}
-                    <header className="pt-16 pb-12">
-                        <h1 className="text-3xl md:text-4xl font-semibold text-zinc-100 tracking-tight mb-3">
-                            Privacy Policy
-                        </h1>
-                        <p className="text-sm text-zinc-500">
-                            Last updated — April 13, 2026
-                        </p>
-                    </header>
+                <Hairline />
 
-                    {/* Content */}
-                    <div className="space-y-10 pb-24">
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Introduction
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                                El Portal (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) operates a mobile-first personal operating system designed for intentional living and peak performance. This Privacy Policy explains how we collect, use, and protect your information when you use our application and website.
-                            </p>
-                            <p className="text-sm text-zinc-400 leading-relaxed">
-                                By using El Portal, you agree to the collection and use of information in accordance with this policy.
-                            </p>
-                        </section>
+                {/* Required bucket */}
+                <Bucket
+                    tag="Required"
+                    title="Mood, habit, and cycle data"
+                    lede="The entries you log. Without these the app cannot work for you."
+                    stored={[
+                        "Mood and feelings you check in with",
+                        "Habits you mark done or undone",
+                        "Work cycles, goals, and reflections you write",
+                        "Your account email and username",
+                    ]}
+                    neverStored={[
+                        "Anything from outside the app",
+                        "Browsing history or activity on other sites",
+                        "Location, contacts, or device sensors",
+                    ]}
+                    meta="Stored only after you explicitly consent at signup."
+                />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Information We Collect
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                                We collect the minimum information necessary to provide and improve El Portal:
-                            </p>
-                            <ul className="list-disc list-inside text-sm text-zinc-400 leading-relaxed space-y-2">
-                                <li><span className="text-zinc-300 font-medium">Account data</span> — email address and display name provided during registration</li>
-                                <li><span className="text-zinc-300 font-medium">Usage data</span> — habits, tasks, cycles, and performance metrics you create within the app</li>
-                                <li><span className="text-zinc-300 font-medium">Device information</span> — device type, operating system, and browser version for compatibility</li>
-                                <li><span className="text-zinc-300 font-medium">Analytics</span> — anonymous, aggregated usage patterns to improve the product</li>
-                            </ul>
-                        </section>
+                <Hairline />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                How We Use Your Information
-                            </h2>
-                            <ul className="list-disc list-inside text-sm text-zinc-400 leading-relaxed space-y-2">
-                                <li>Provide, maintain, and improve El Portal&apos;s core functionality</li>
-                                <li>Sync your data across devices</li>
-                                <li>Send essential service communications (account verification, security alerts)</li>
-                                <li>Analyze aggregated, anonymized trends to guide product development</li>
-                            </ul>
-                            <p className="text-sm text-zinc-400 leading-relaxed mt-4">
-                                We do not sell your personal data to third parties. We do not use your data for advertising.
-                            </p>
-                        </section>
+                {/* Bucket A */}
+                <Bucket
+                    tag="Optional — default off"
+                    title="Anonymous usage stats"
+                    lede="We log feature taps, navigation, and load times so we can see what works and what is slow. No content, no cookies."
+                    stored={[
+                        "Which screens were opened",
+                        "Which features were tapped",
+                        "Page-load and route-change timings",
+                        "Error codes when something breaks",
+                    ]}
+                    neverStored={[
+                        "The text you write or the values you log",
+                        "Any IP address (dropped before storage)",
+                        "Cookies of any kind",
+                    ]}
+                    meta="EU-hosted in Frankfurt. Your toggle controls everything."
+                />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Data Storage and Security
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                                Your data is stored securely using Supabase, hosted on cloud infrastructure with encryption at rest and in transit. We implement industry-standard security measures including:
-                            </p>
-                            <ul className="list-disc list-inside text-sm text-zinc-400 leading-relaxed space-y-2">
-                                <li>TLS encryption for all data in transit</li>
-                                <li>AES-256 encryption for data at rest</li>
-                                <li>Row-level security policies on all database tables</li>
-                                <li>Regular security audits and dependency updates</li>
-                            </ul>
-                        </section>
+                <Hairline />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Third-Party Services
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                                El Portal relies on the following third-party services to operate:
-                            </p>
-                            <ul className="list-disc list-inside text-sm text-zinc-400 leading-relaxed space-y-2">
-                                <li><span className="text-zinc-300 font-medium">Supabase</span> — database, authentication, and real-time sync</li>
-                                <li><span className="text-zinc-300 font-medium">Vercel</span> — website hosting and edge delivery</li>
-                            </ul>
-                            <p className="text-sm text-zinc-400 leading-relaxed mt-4">
-                                Each service maintains its own privacy policy. We select providers who meet or exceed our security standards.
-                            </p>
-                        </section>
+                {/* Bucket B */}
+                <Bucket
+                    tag="Optional — default off"
+                    title="Reports and your reactions"
+                    lede="When you ask El Portal for an AI report, we save the report and how you reacted to it. Over time, this helps us write reports that feel more like you."
+                    stored={[
+                        "The mood and habit summary the report was based on",
+                        "The report text we wrote you",
+                        "Your reaction (kept open, dismissed, asked again, marked helpful)",
+                    ]}
+                    neverStored={[
+                        "Your name or account ID (replaced with a random hash)",
+                        "Slide text or anything you write into a slide",
+                        "Photos you upload",
+                        "Free-form reflections or journal entries",
+                    ]}
+                    meta="Encrypted at rest. Never sold, never sent to ad networks, never shared with third-party AI providers."
+                />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Your Rights
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                                You have the right to:
-                            </p>
-                            <ul className="list-disc list-inside text-sm text-zinc-400 leading-relaxed space-y-2">
-                                <li><span className="text-zinc-300 font-medium">Access</span> — request a copy of all personal data we hold about you</li>
-                                <li><span className="text-zinc-300 font-medium">Correction</span> — update or correct inaccurate information</li>
-                                <li><span className="text-zinc-300 font-medium">Deletion</span> — request permanent deletion of your account and all associated data</li>
-                                <li><span className="text-zinc-300 font-medium">Export</span> — download your data in a portable format</li>
-                            </ul>
-                            <p className="text-sm text-zinc-400 leading-relaxed mt-4">
-                                To exercise any of these rights, contact us at the address below.
-                            </p>
-                        </section>
+                <Hairline />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Cookies
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed">
-                                El Portal uses essential cookies only — session tokens required for authentication. We do not use tracking cookies, advertising pixels, or third-party analytics cookies.
-                            </p>
-                        </section>
+                {/* Providers */}
+                <section>
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium mb-3">
+                        Where your data lives
+                    </p>
+                    <h2 className="text-2xl font-semibold tracking-tight text-fg text-balance mb-8">
+                        Four providers, all in the EU.
+                    </h2>
+                    <ul>
+                        <ProviderRow
+                            name="Supabase"
+                            region="EU — Frankfurt"
+                            purpose="Primary database. Stores your account, entries, and consent log."
+                        />
+                        <ProviderRow
+                            name="PostHog Cloud"
+                            region="EU — Frankfurt"
+                            purpose="Anonymous usage stats. Only active if you opt in."
+                        />
+                        <ProviderRow
+                            name="Vercel"
+                            region="EU — edge"
+                            purpose="Hosts the app and runs server functions."
+                        />
+                        <ProviderRow
+                            name="Google Gemini"
+                            region="EU"
+                            purpose="Generates AI report text. Only invoked when you request a report."
+                        />
+                    </ul>
+                </section>
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Children&apos;s Privacy
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed">
-                                El Portal is not directed at individuals under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal data, please contact us and we will delete it promptly.
-                            </p>
-                        </section>
+                <Hairline />
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Changes to This Policy
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed">
-                                We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Continued use of El Portal after changes constitutes acceptance of the revised policy.
-                            </p>
-                        </section>
+                {/* Your rights */}
+                <section>
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium mb-3">
+                        Your rights
+                    </p>
+                    <h2 className="text-2xl font-semibold tracking-tight text-fg text-balance mb-8">
+                        Take it all back, any time.
+                    </h2>
+                    <ul>
+                        <RightRow
+                            title="Export everything"
+                            description="Download a single file with everything we have on you."
+                            action="Settings — Privacy — Download"
+                        />
+                        <RightRow
+                            title="Delete everything"
+                            description="Permanently erases your account and all your data. Cannot be undone."
+                            action="Settings — Privacy — Delete"
+                        />
+                        <RightRow
+                            title="Change your mind any time"
+                            description="Flip any toggle in Settings — Privacy. We apply the change right away and keep a record of every choice."
+                            action="Settings — Privacy"
+                        />
+                        <RightRow
+                            title="Get in touch"
+                            description="If something feels off, write to us or contact your local data protection authority."
+                            action="privacy@el-portal.app"
+                        />
+                    </ul>
+                </section>
 
-                        <section>
-                            <h2 className="text-xl font-semibold text-zinc-100 mb-4">
-                                Contact
-                            </h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed">
-                                For privacy-related inquiries, data requests, or concerns, reach us at{" "}
-                                <a
-                                    href="mailto:privacy@elportal.app"
-                                    className="text-zinc-300 underline underline-offset-4 decoration-zinc-600 hover:text-zinc-100 hover:decoration-zinc-400 transition-colors duration-300"
-                                >
-                                    privacy@elportal.app
-                                </a>
-                                .
-                            </p>
-                        </section>
-                    </div>
-                </ReadingLayout>
+                {/* Footer meta */}
+                <footer className="mt-32 mb-16 text-center">
+                    <p className="font-mono text-xs text-fg-muted">Last updated 2026-04-28</p>
+                    <p className="mt-2 text-xs text-fg-muted">
+                        Reach us at{" "}
+                        <a
+                            href="mailto:privacy@el-portal.app"
+                            className="text-fg underline underline-offset-4 decoration-fg-muted hover:decoration-fg transition-colors"
+                        >
+                            privacy@el-portal.app
+                        </a>
+                    </p>
+                </footer>
             </main>
-
-            <Footer />
         </div>
+    );
+}
+
+function Hairline() {
+    return <hr className="my-20 border-t border-border-subtle" />;
+}
+
+interface BucketProps {
+    tag: string;
+    title: string;
+    lede: string;
+    stored: string[];
+    neverStored: string[];
+    meta: string;
+}
+
+function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
+    return (
+        <section>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium mb-3">{tag}</p>
+            <h2 className="text-2xl font-semibold tracking-tight text-fg text-balance">{title}</h2>
+            <p className="mt-4 text-base text-fg-secondary leading-relaxed text-pretty">{lede}</p>
+
+            <div className="mt-10 grid sm:grid-cols-2 gap-12">
+                <div>
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium mb-3">
+                        What we store
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-fg-secondary leading-relaxed">
+                        {stored.map((item) => (
+                            <li key={item}>{item}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium mb-3">
+                        What we never touch
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-fg-secondary leading-relaxed">
+                        {neverStored.map((item) => (
+                            <li key={item}>{item}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+
+            <p className="mt-10 text-xs text-fg-muted leading-relaxed">{meta}</p>
+        </section>
+    );
+}
+
+function ProviderRow({ name, region, purpose }: { name: string; region: string; purpose: string }) {
+    return (
+        <li className="flex items-baseline justify-between gap-4 py-4 border-b border-border-subtle last:border-b-0">
+            <div className="min-w-0">
+                <p className="text-sm font-semibold text-fg">{name}</p>
+                <p className="text-xs text-fg-secondary mt-0.5 leading-relaxed">{purpose}</p>
+            </div>
+            <span className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium flex-shrink-0">
+                {region}
+            </span>
+        </li>
+    );
+}
+
+function RightRow({
+    title,
+    description,
+    action,
+}: {
+    title: string;
+    description: string;
+    action: string;
+}) {
+    return (
+        <li className="flex items-start justify-between gap-6 py-5 border-b border-border-subtle last:border-b-0">
+            <div className="min-w-0">
+                <p className="text-sm font-semibold text-fg">{title}</p>
+                <p className="text-xs text-fg-secondary mt-0.5 leading-relaxed">{description}</p>
+            </div>
+            <span className="text-[11px] uppercase tracking-[0.12em] text-fg-muted font-medium flex-shrink-0 mt-0.5">
+                {action}
+            </span>
+        </li>
     );
 }

@@ -422,7 +422,7 @@ export default function PricingPage() {
                                 className="flex flex-col sm:flex-row gap-4 shrink-0 origin-center md:origin-right"
                                 style={{ transform: "scale(0.7)" }}
                             >
-                                <Link href="https://el-portal-app.vercel.app">
+                                <Link href={process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app'}>
                                     <ShinyButton>
                                         Start Version 1
                                     </ShinyButton>
