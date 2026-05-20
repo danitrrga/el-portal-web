@@ -12,7 +12,7 @@ import { ShinyButton } from "@/components/ui/shiny-button";
 
 export default function MethodologyPage() {
     return (
-        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-zinc-950">
+        <div className="relative flex min-h-screen w-full flex-col bg-zinc-950">
             {/* Grain texture overlay (matching Pricing) */}
             <div
                 className="fixed inset-0 z-50 pointer-events-none opacity-[0.02]"

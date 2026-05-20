@@ -9,7 +9,7 @@ interface ReadingLayoutProps {
 
 export default function ReadingLayout({ children, className }: ReadingLayoutProps) {
     return (
-        <div className="relative min-h-screen w-full overflow-x-hidden">
+        <div className="relative w-full">
             {/* Radial blue gradient — matches home hero */}
             <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[700px] bg-[radial-gradient(circle_at_50%_0%,_rgba(30,64,175,0.15)_0%,_rgba(2,6,23,0)_70%)] opacity-80" />
 

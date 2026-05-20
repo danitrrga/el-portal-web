@@ -621,7 +621,7 @@ export default function ChangelogPage() {
     });
 
     return (
-        <div className="relative min-h-screen w-full flex-col overflow-x-hidden bg-zinc-950">
+        <div className="relative min-h-screen w-full flex-col bg-zinc-950">
             {/* Background grid texture */}
             <div
                 className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"

@@ -37,16 +37,9 @@ export function DayBentoCard() {
 
         if (dotRef.current) {
             dotRef.current.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-
-            if (isDay) {
-                // Day Phase: Warm, bright
-                dotRef.current.style.backgroundColor = `rgba(255, 240, 200, 1)`;
-                dotRef.current.style.boxShadow = `0 0 ${15 + dayIntensity * 10}px ${2 + dayIntensity * 4}px rgba(255, 230, 150, ${0.5 * dayIntensity})`;
-            } else {
-                // Night Phase: Cool, dim
-                dotRef.current.style.backgroundColor = `rgba(150, 200, 255, 1)`;
-                dotRef.current.style.boxShadow = `0 0 ${10 + nightIntensity * 10}px ${2 + nightIntensity * 4}px rgba(100, 150, 255, ${0.3 * nightIntensity})`;
-            }
+            dotRef.current.style.backgroundColor = isDay
+                ? `rgba(255, 240, 200, 1)`
+                : `rgba(150, 200, 255, 1)`;
         }
 
         if (dayRadialGlowRef.current) {
@@ -114,7 +107,8 @@ export function DayBentoCard() {
                             style={{
                                 background: 'radial-gradient(circle, rgba(255, 230, 150, 0.45) 0%, transparent 60%)',
                                 filter: 'blur(12px)',
-                                opacity: 0
+                                opacity: 0,
+                                willChange: "transform, opacity",
                             }}
                         />
                     </div>
@@ -129,7 +123,8 @@ export function DayBentoCard() {
                             style={{
                                 background: 'radial-gradient(circle, rgba(100, 150, 255, 0.35) 0%, transparent 60%)',
                                 filter: 'blur(10px)',
-                                opacity: 0
+                                opacity: 0,
+                                willChange: "transform, opacity",
                             }}
                         />
                     </div>
@@ -140,6 +135,7 @@ export function DayBentoCard() {
                     <div
                         ref={dotRef}
                         className="absolute w-3 h-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                        style={{ willChange: "transform" }}
                     />
                 </div>
 
