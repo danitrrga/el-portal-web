@@ -179,10 +179,10 @@ export default function TermsPage() {
                             <p className="text-sm text-zinc-400 leading-relaxed">
                                 For questions about these terms, reach us at{" "}
                                 <a
-                                    href="mailto:legal@elportal.app"
+                                    href="mailto:dtarraga.emp@gmail.com"
                                     className="text-zinc-300 underline underline-offset-4 decoration-zinc-600 hover:text-zinc-100 hover:decoration-zinc-400 transition-colors duration-300"
                                 >
-                                    legal@elportal.app
+                                    dtarraga.emp@gmail.com
                                 </a>
                                 .
                             </p>

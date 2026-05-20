@@ -158,7 +158,7 @@ export default function PrivacyPage() {
                             <RightRow
                                 title="Get in touch"
                                 description="If something feels off, write to us or contact your local data protection authority."
-                                action="privacy@el-portal.app"
+                                action="dtarraga.emp@gmail.com"
                             />
                         </ul>
                     </section>
@@ -168,10 +168,10 @@ export default function PrivacyPage() {
                         <p className="mt-2 text-xs text-zinc-500">
                             Reach us at{" "}
                             <a
-                                href="mailto:privacy@el-portal.app"
+                                href="mailto:dtarraga.emp@gmail.com"
                                 className="text-zinc-300 underline underline-offset-4 decoration-zinc-600 hover:text-zinc-100 hover:decoration-zinc-400 transition-colors duration-300"
                             >
-                                privacy@el-portal.app
+                                dtarraga.emp@gmail.com
                             </a>
                         </p>
                     </footer>
