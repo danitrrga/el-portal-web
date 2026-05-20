@@ -10,6 +10,7 @@ const footerColumns = [
             { label: "Features", href: "/" },
             { label: "Methodology", href: "/methodology" },
             { label: "Changelog", href: "/changelog" },
+            { label: "MCP Integration", href: "/mcp" },
         ],
     },
     {
