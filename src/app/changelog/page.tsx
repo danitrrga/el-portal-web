@@ -13,6 +13,111 @@ export default function ChangelogPage() {
     // Extracted changelog data to cleanly filter and map
     const changelogData = [
         {
+            version: "2.0.28",
+            date: "May 20, 2026",
+            tags: ["Fix"],
+            type: "Features",
+            title: "Sign-in Now Lands Where It Should",
+            description: (
+                <>
+                    <p>Google sign-in now routes entirely through the app — no more redirects that landed on an external URL. A class of quiet auth failures is gone, and the login screen handles dark browser themes correctly.</p>
+                    <ul className="list-none space-y-2 mt-3">
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Clean OAuth flow</strong> — After signing in with Google, you land on your dashboard — never on a raw external URL.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Autofill polished</strong> — Browser-autofilled inputs on the login screen now match the dark theme; no more white flash when Chrome fills in your credentials.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Email links secured</strong> — Magic link emails are built from the app&apos;s own domain, not whatever URL the server happened to see at send time.</span></li>
+                    </ul>
+                </>
+            ),
+        },
+        {
+            version: "2.0.27",
+            date: "May 11, 2026",
+            tags: ["New Feature"],
+            type: "Features",
+            title: "A Guided Tour for Your First Day",
+            description: (
+                <>
+                    <p>New users now get a step-by-step walkthrough of El Portal — from creating your first Version to setting up your first Cycle. A spotlight marks exactly where to look; a connector points you to the right control. When you finish, you&apos;re ready for day one.</p>
+                    <ul className="list-none space-y-2 mt-3">
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Step-by-step spotlight</strong> — Each tour step dims everything except the one thing you need to act on, with a clear arrow pointing right to it.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Tab-by-tab coaching</strong> — The tour walks through Version creation and Cycle setup section by section, inside the actual modals.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Smart for returning users</strong> — If you already have a Version or Cycle, the tour skips the creation steps and shows you what you&apos;ve built instead.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Replay anytime</strong> — Restart the tour from Settings whenever you want a refresher.</span></li>
+                    </ul>
+                </>
+            ),
+        },
+        {
+            version: "2.0.26",
+            date: "May 11, 2026",
+            tags: ["Improvement"],
+            type: "Features",
+            title: "Archives Is Now a Vault",
+            description: (
+                <>
+                    <p>Archives has been reimagined as a quieter, more intentional space. Instead of a tab-heavy surface packed with sections, you arrive at a threshold — six stone names, generous space, no clutter. Each one opens into its own room.</p>
+                    <ul className="list-none space-y-2 mt-3">
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Threshold Hall</strong> — Six stones centered on the screen: Vision, Life Checklist, Routines, Theory Notes, Mantras, and Skills &amp; Traits. Click one to enter.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Each stone, its own room</strong> — Every section now lives on a dedicated page. Routines and Theory Notes let you drill into individual entries from their own mini hall.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Skills &amp; Traits chip gallery</strong> — Browse your skills and traits as chips. Add inline, double-click to edit, no modal needed.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Debrief History removed</strong> — That section is gone. The vault is calmer for it.</span></li>
+                    </ul>
+                </>
+            ),
+        },
+        {
+            version: "2.0.25",
+            date: "May 11, 2026",
+            tags: ["Improvement"],
+            type: "Features",
+            title: "A New First Impression",
+            description: (
+                <>
+                    <p>The moment after you verify your email, El Portal now introduces itself properly — an animated welcome overlaid on the actual dashboard, so you see the real interface while being shown around it.</p>
+                    <ul className="list-none space-y-2 mt-3">
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Overlay, not a detour</strong> — Onboarding now sits on top of the dashboard instead of routing you to a separate page. You land in the right place from the start.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Post-verify welcome screen</strong> — Right after email confirmation, you get a clear, calm introduction — what El Portal is, what you&apos;re consenting to, and what comes next.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Animated system intro</strong> — Version, Cycle, and Day are introduced with motion that mirrors how the system actually works.</span></li>
+                    </ul>
+                </>
+            ),
+        },
+        {
+            version: "2.0.24",
+            date: "May 06, 2026",
+            tags: ["Improvement"],
+            type: "Features",
+            title: "Records Page, Rebuilt",
+            description: (
+                <>
+                    <p>The database records page has been rebuilt with a cleaner, more focused interface. The heavy header is gone, a sliding indicator tracks your active tab, and single-key shortcuts let you navigate without lifting your hands from the keyboard.</p>
+                    <ul className="list-none space-y-2 mt-3">
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Tab bar leads the page</strong> — The titled header is gone. Versions, Cycles, Habits, and Objectives tabs are the first thing you see.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Sliding indicator</strong> — A smooth highlight follows your active tab, consistent with how the Trends view works.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Keyboard shortcuts</strong> — Press V, C, H, or O to jump directly to each tab.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Cleaner status badges</strong> — Active and archived states now render as quiet, consistent pills.</span></li>
+                    </ul>
+                </>
+            ),
+        },
+        {
+            version: "2.0.23",
+            date: "May 11, 2026",
+            tags: ["Fix"],
+            type: "Features",
+            title: "Daily Pulse, Now Reliable",
+            description: (
+                <>
+                    <p>Your daily insights and notifications were silently failing to run on most days. The scheduling infrastructure has been replaced — your morning data is there when you need it.</p>
+                    <ul className="list-none space-y-2 mt-3">
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Insights run on time</strong> — Moved off a scheduler that was dropping roughly 80% of its runs. Daily reports now fire consistently, every day.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">Notifications stay timely</strong> — The 15-minute notification check now runs on independent scheduling, decoupled from the daily report job.</span></li>
+                        <li className="flex items-start gap-2"><span className="text-zinc-700 mt-1">-</span><span><strong className="text-zinc-200">No silent cutoffs</strong> — Insight generation can now run to completion even for longer processing windows.</span></li>
+                    </ul>
+                </>
+            ),
+        },
+        {
             version: "2.0.22",
             date: "May 02, 2026",
             tags: ["New Feature", "Improvement"],
