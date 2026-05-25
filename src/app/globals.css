@@ -237,3 +237,12 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Display heading utility — Special Gothic Expanded One, all-caps */
+.display {
+  font-family: var(--font-special-gothic-expanded), "Arial Black", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  line-height: 1.02;
+}
