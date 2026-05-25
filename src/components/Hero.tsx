@@ -1,86 +1,137 @@
 "use client";
+
 import React from "react";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import Image from "next/image";
-import Link from "next/link";
-import { ShinyButton } from "@/components/ui/shiny-button";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { HeroAppMockup } from "./hero/HeroAppMockup";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function Hero() {
-    return (
-        <div className="flex flex-col overflow-hidden relative z-10 w-full">
-            {/* Ambient Top Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(circle_at_50%_0%,_rgba(30,64,175,0.18)_0%,_rgba(2,6,23,0)_70%)] pointer-events-none opacity-80 -z-10"></div>
+  const prefersReducedMotion = useReducedMotion();
 
-            <ContainerScroll
-                titleComponent={
-                    <motion.div
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 0 },
-                            visible: {
-                                opacity: 1,
-                                transition: {
-                                    staggerChildren: 0.1,
-                                    delayChildren: 0.2,
-                                },
-                            },
-                        }}
-                        className="flex flex-col items-center max-w-4xl mx-auto relative z-10 text-center"
-                    >
-                        {/* Ambient Glow has been moved to top edge of the page */}
-                        <motion.div
-                            variants={{
-                                hidden: { opacity: 0, y: 30 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                            }}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] uppercase tracking-widest font-semibold mb-6 shadow-[0_0_20px_rgba(30,64,175,0.15)]"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
-                            V2.0 Access
-                        </motion.div>
+  const containerVariants = {
+    hidden: { opacity: 1 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    },
+  };
 
-                        <motion.h1
-                            variants={{
-                                hidden: { opacity: 0, y: 30 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                            }}
-                            className="text-5xl md:text-7xl font-black tracking-[-0.04em] bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent mb-6 leading-tight text-glow-hero"
-                        >
-                            Your shortcut to <br />
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-glow via-blue-200 to-accent-neon-green">
-                                high performance.
-                            </span>
-                        </motion.h1>
-                        <motion.div
-                            variants={{
-                                hidden: { opacity: 0, y: 30 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                            }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                        >
-                        </motion.div>
-                    </motion.div>
-                }
+  const itemVariants = {
+    hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 16 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: EASE },
+    },
+  };
+
+  return (
+    <section
+      className="relative min-h-[110vh] overflow-hidden"
+      style={{ background: "#04060c" }}
+    >
+      {/* Top atmosphere bloom */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 40% at 50% -10%, rgba(56,103,214,0.22), transparent 60%)",
+        }}
+      />
+      {/* Dot pattern */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+          maskImage:
+            "radial-gradient(ellipse 60% 50% at 50% 0%, black 50%, transparent 100%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 60% 50% at 50% 0%, black 50%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative z-10 mx-auto max-w-[1100px] px-8">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="pt-40 text-center"
+        >
+          {/* Eyebrow */}
+          <motion.div variants={itemVariants} className="flex justify-center">
+            <span
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-[11px] font-medium uppercase tracking-[0.18em]"
+              style={{
+                color: "#8590a8",
+                borderColor: "rgba(255,255,255,0.10)",
+              }}
             >
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                    className="h-full w-full rounded-2xl shadow-[0_0_30px_-5px_rgba(30,64,175,0.15)] relative"
-                >
-                    <Image
-                        src={`/assets/showcase/dashboard_black.png`}
-                        alt="hero"
-                        height={720}
-                        width={1400}
-                        className="mx-auto rounded-2xl object-cover h-full object-left-top"
-                        draggable={false}
-                    />
-                </motion.div>
-            </ContainerScroll>
-        </div>
-    );
+              <span
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#4487D6" }}
+              />
+              V2 · public access
+            </span>
+          </motion.div>
+
+          {/* H1 */}
+          <motion.h1
+            variants={itemVariants}
+            className="display mt-7 mx-auto max-w-[1000px]"
+            style={{
+              fontSize: "clamp(42px, 4.2vw, 58px)",
+              color: "#f4f6fb",
+            }}
+          >
+            The final operating system<br />for high-performers.
+          </motion.h1>
+
+          {/* Sub */}
+          <motion.p
+            variants={itemVariants}
+            className="mx-auto mt-7 max-w-[620px] text-[17px] leading-[1.6]"
+            style={{ color: "#aab3c5" }}
+          >
+            Versions plan a 90-day identity. Cycles run a 15-day focus. Track habits, goals, biometrics... The system analyzes the trends the eye misses.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-9 flex items-center justify-center gap-[18px]"
+          >
+            <a
+              href={process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app"}
+              className="inline-flex items-center gap-2 px-[22px] py-3 rounded-full text-sm font-medium border transition-colors"
+              style={{
+                color: "#f4f6fb",
+                borderColor: "rgba(255,255,255,0.20)",
+                background: "rgba(255,255,255,0.05)",
+              }}
+            >
+              <span>Open El Portal</span>
+              <span aria-hidden>→</span>
+            </a>
+            <a
+              href="/methodology"
+              className="text-sm font-medium transition-colors hover:text-[#f4f6fb]"
+              style={{ color: "#aab3c5" }}
+            >
+              Read the methodology
+            </a>
+          </motion.div>
+
+          {/* App mockup */}
+          <motion.div variants={itemVariants}>
+            <HeroAppMockup />
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
 }
