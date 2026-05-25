@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { ShinyButton } from "./ui/shiny-button";
+import { ElPortalWordmark } from "./ElPortalWordmark";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app';
 
@@ -23,25 +23,17 @@ export default function Navbar() {
             className={[
                 "fixed top-4 left-1/2 -translate-x-1/2 z-50",
                 "max-w-5xl w-[calc(100%-2rem)]",
-                "bg-zinc-900/80 backdrop-blur-xl",
-                "border border-white/5",
+                "bg-[rgba(10,16,32,0.6)] backdrop-blur-xl",
+                "border border-white/[0.05]",
                 "shadow-[0_0_30px_-5px_rgba(0,0,0,0.5)]",
-                "rounded-2xl transition-all duration-300",
+                "rounded-2xl transition-colors duration-300",
             ].join(" ")}
         >
             <div className="px-6">
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <span className="font-bold text-2xl text-white tracking-tighter relative z-10 flex items-center">
-                            P
-                            <img
-                                src="/icon.svg"
-                                alt="El Portal Icon"
-                                className="w-[1.1em] h-[1.1em] mx-[2px]"
-                            />
-                            RTAL
-                        </span>
+                        <ElPortalWordmark size={20} />
                     </Link>
 
                     {/* Desktop Nav Links */}
@@ -52,8 +44,8 @@ export default function Navbar() {
                                 className={[
                                     "transition-colors duration-300",
                                     pathname === link.href
-                                        ? "text-zinc-100"
-                                        : "text-zinc-400 hover:text-zinc-100",
+                                        ? "text-[#f4f6fb]"
+                                        : "text-[#aab3c5] hover:text-[#f4f6fb]",
                                 ].join(" ")}
                                 href={link.href}
                             >
@@ -65,19 +57,26 @@ export default function Navbar() {
                     {/* Right Actions */}
                     <div className="flex items-center space-x-4">
                         <Link
-                            className="text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors duration-300 hidden sm:block pr-4"
+                            className="text-sm font-medium text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300 hidden sm:block pr-4"
                             href={`${APP_URL}/login`}
                         >
                             Log in
                         </Link>
                         <Link href={APP_URL}>
-                            <ShinyButton className="!px-6 !py-3 !text-sm !rounded-xl !h-[44px] !font-medium">
+                            <span
+                                className="inline-flex items-center px-[18px] py-2.5 rounded-[10px] text-[13px] font-medium border transition-colors"
+                                style={{
+                                    color: "#f4f6fb",
+                                    borderColor: "rgba(255,255,255,0.18)",
+                                    background: "rgba(255,255,255,0.04)",
+                                }}
+                            >
                                 Get Started
-                            </ShinyButton>
+                            </span>
                         </Link>
                         {/* Mobile Hamburger */}
                         <button
-                            className="md:hidden text-zinc-400 hover:text-zinc-100 transition-colors duration-300"
+                            className="md:hidden text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             aria-label="Toggle menu"
                         >
@@ -93,7 +92,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden border-t border-white/5 bg-zinc-950/95 backdrop-blur-xl rounded-b-2xl">
+                <div className="md:hidden border-t border-white/[0.05] bg-[rgba(4,6,12,0.95)] backdrop-blur-xl rounded-b-2xl">
                     <div className="px-6 py-4 space-y-1">
                         {navLinks.map((link) => (
                             <Link
@@ -101,8 +100,8 @@ export default function Navbar() {
                                 className={[
                                     "block text-sm font-medium py-2 transition-colors duration-300",
                                     pathname === link.href
-                                        ? "text-zinc-100"
-                                        : "text-zinc-400 hover:text-zinc-100",
+                                        ? "text-[#f4f6fb]"
+                                        : "text-[#aab3c5] hover:text-[#f4f6fb]",
                                 ].join(" ")}
                                 href={link.href}
                                 onClick={() => setMobileMenuOpen(false)}
@@ -111,7 +110,7 @@ export default function Navbar() {
                             </Link>
                         ))}
                         <Link
-                            className="block text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors duration-300 py-2"
+                            className="block text-sm font-medium text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300 py-2"
                             href={`${APP_URL}/login`}
                             onClick={() => setMobileMenuOpen(false)}
                         >
