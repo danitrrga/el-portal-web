@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ElPortalWordmark } from "./ElPortalWordmark";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app';
@@ -56,24 +57,12 @@ export default function Navbar() {
 
                     {/* Right Actions */}
                     <div className="flex items-center space-x-4">
-                        <Link
-                            className="text-sm font-medium text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300 hidden sm:block pr-4"
-                            href={`${APP_URL}/login`}
-                        >
-                            Log in
-                        </Link>
-                        <Link href={APP_URL}>
-                            <span
-                                className="inline-flex items-center px-[18px] py-2.5 rounded-[10px] text-[13px] font-medium border transition-colors"
-                                style={{
-                                    color: "#f4f6fb",
-                                    borderColor: "rgba(255,255,255,0.18)",
-                                    background: "rgba(255,255,255,0.04)",
-                                }}
-                            >
-                                Get Started
-                            </span>
-                        </Link>
+                        <Button asChild variant="brand-link" size="sm" className="hidden sm:inline-flex pr-4">
+                            <Link href={`${APP_URL}/login`}>Log in</Link>
+                        </Button>
+                        <Button asChild variant="brand" size="sm">
+                            <Link href={APP_URL}>Get Started</Link>
+                        </Button>
                         {/* Mobile Hamburger */}
                         <button
                             className="md:hidden text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300"

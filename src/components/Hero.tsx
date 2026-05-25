@@ -119,26 +119,17 @@ export default function Hero() {
                 }}
                 className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
               >
-                <div
-                  key={1}
-                  className="rounded-[14px] border p-0.5"
-                  style={{
-                    background: "rgba(255,255,255,0.06)",
-                    borderColor: "rgba(255,255,255,0.10)",
-                  }}
-                >
-                  <Button asChild size="lg" className="rounded-xl px-5 text-base">
-                    <Link href={APP_URL}>
-                      <span className="text-nowrap">Open El Portal</span>
-                    </Link>
-                  </Button>
-                </div>
+                <Button key={1} asChild variant="brand" size="lg" className="text-base">
+                  <Link href={APP_URL}>
+                    <span className="text-nowrap">Open El Portal</span>
+                  </Link>
+                </Button>
                 <Button
                   key={2}
                   asChild
                   size="lg"
-                  variant="ghost"
-                  className="h-[42px] rounded-xl px-5"
+                  variant="brand-link"
+                  className="text-base"
                 >
                   <Link href="/methodology">
                     <span className="text-nowrap">Read the methodology</span>
