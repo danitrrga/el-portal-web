@@ -151,112 +151,72 @@ export default function SystemFeaturesSection() {
   );
 }
 
-/* ─── Card 2 visual ─────────────────────────────────────────────── */
+/* ─── Card 2 visual — boxy weekly score grid ─────────────────── */
 function HabitScoreboardVisual() {
-  const habits: { name: string; weight: "LOW" | "MED" | "HIGH"; done: boolean }[] = [
-    { name: "Deep work block", weight: "HIGH", done: true },
-    { name: "Mobility", weight: "MED", done: true },
-    { name: "Read 20m", weight: "LOW", done: true },
-    { name: "Cold shower", weight: "LOW", done: false },
-  ];
-
-  const weightVal = { LOW: 1, MED: 2, HIGH: 4 } as const;
-  const total = habits.reduce((s, h) => s + weightVal[h.weight], 0);
-  const done = habits.reduce((s, h) => s + (h.done ? weightVal[h.weight] : 0), 0);
-  const pct = (done / total) * 100;
-
-  // Score ring geometry
-  const R = 18;
-  const C = 2 * Math.PI * R;
-  const dash = (pct / 100) * C;
+  // 7 days, score 0-100. Latest day = index 5 (today)
+  const days = [82, 76, 91, 68, 88, 75, 0];
+  const todayIdx = 5;
 
   return (
-    <div
-      className="relative w-full rounded-lg border overflow-hidden"
-      style={{
-        background: "#04060c",
-        borderColor: "rgba(255,255,255,0.08)",
-      }}
-    >
-      {/* Mini UI chrome — header bar */}
-      <div
-        className="flex items-center justify-between px-3 py-2 border-b"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
-      >
-        <span className="text-[9px] uppercase tracking-[0.18em]" style={{ color: "#5a6478" }}>
-          Today
+    <div className="w-full space-y-2">
+      {/* Top label row */}
+      <div className="flex items-center justify-between">
+        <span
+          className="text-[9px] uppercase tracking-[0.18em] font-mono"
+          style={{ color: "#5a6478" }}
+        >
+          W23 · cycle 4
         </span>
-        <div className="flex items-center gap-2">
-          {/* Score ring */}
-          <svg width="44" height="44" viewBox="0 0 44 44">
-            <circle cx="22" cy="22" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
-            <circle
-              cx="22"
-              cy="22"
-              r={R}
-              fill="none"
-              stroke="#77B7ED"
-              strokeWidth="3"
-              strokeDasharray={`${dash} ${C}`}
-              strokeLinecap="round"
-              transform="rotate(-90 22 22)"
-            />
-            <text
-              x="22"
-              y="26"
-              textAnchor="middle"
-              fontSize="11"
-              fontWeight="500"
-              fill="#f4f6fb"
-              fontFamily="'JetBrains Mono', monospace"
-            >
-              {Math.round(pct)}
-            </text>
-          </svg>
-        </div>
+        <span
+          className="text-[9px] uppercase tracking-[0.18em] font-mono"
+          style={{ color: "#5a6478" }}
+        >
+          day 84 / 90
+        </span>
       </div>
 
-      {/* Habit list */}
-      <div className="px-3 py-2.5 space-y-2">
-        {habits.map((h, i) => (
-          <div key={i} className="flex items-center justify-between text-[11px]">
-            <div className="flex items-center gap-2">
-              <span
-                className="inline-flex w-3 h-3 rounded-sm border flex-shrink-0 items-center justify-center"
-                style={{
-                  background: h.done ? "rgba(68,135,214,0.30)" : "transparent",
-                  borderColor: h.done
-                    ? "rgba(119,183,237,0.50)"
-                    : "rgba(255,255,255,0.20)",
-                }}
-              >
-                {h.done && (
-                  <svg viewBox="0 0 12 12" className="w-2 h-2" style={{ color: "#f4f6fb" }}>
-                    <path
-                      d="M2 6l3 3 5-6"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </span>
-              <span style={{ color: h.done ? "#f4f6fb" : "#aab3c5" }}>{h.name}</span>
-            </div>
-            <span
-              className="text-[8px] uppercase tracking-[0.14em] font-medium px-1.5 py-0.5 rounded"
+      {/* 7-square grid — each square = one day, fill opacity = score */}
+      <div className="grid grid-cols-7 gap-1">
+        {days.map((score, i) => {
+          const opacity = score === 0 ? 0 : 0.15 + (score / 100) * 0.40;
+          const isToday = i === todayIdx;
+          return (
+            <div
+              key={i}
+              className="aspect-square border relative"
               style={{
-                color: "#8590a8",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background:
+                  score === 0
+                    ? "transparent"
+                    : `linear-gradient(180deg, rgba(119,183,237,${opacity + 0.05}), rgba(68,135,214,${opacity}))`,
+                borderColor: isToday
+                  ? "rgba(119,183,237,0.55)"
+                  : score === 0
+                    ? "rgba(255,255,255,0.06)"
+                    : "rgba(255,255,255,0.10)",
               }}
-            >
-              {h.weight}
-            </span>
-          </div>
-        ))}
+            />
+          );
+        })}
+      </div>
+
+      {/* Bottom label row */}
+      <div
+        className="flex items-center justify-between pt-1 border-t"
+        style={{ borderColor: "rgba(255,255,255,0.06)" }}
+      >
+        <span
+          className="text-[9px] uppercase tracking-[0.18em] font-mono"
+          style={{ color: "#5a6478" }}
+        >
+          score
+        </span>
+        <span
+          className="text-[11px] font-mono font-medium"
+          style={{ color: "#f4f6fb" }}
+        >
+          12 / 16
+        </span>
       </div>
     </div>
   );
@@ -265,26 +225,23 @@ function HabitScoreboardVisual() {
 /* ─── Card 1 wireframe stub (replaced by Daniel's screenshot) ─── */
 function VersionTimelineWireframe() {
   return (
-    <div className="relative aspect-[16/8] overflow-hidden">
-      {/* Atmospheric backdrop */}
+    <div className="relative aspect-[16/5] overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(68,135,214,0.10), transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(68,135,214,0.08), transparent 70%)",
         }}
       />
-      {/* Horizontal hairline beam */}
       <div
         className="absolute left-0 right-0 top-1/2 h-px"
         style={{
           background:
-            "linear-gradient(90deg, transparent, rgba(119,183,237,0.30) 30%, rgba(119,183,237,0.30) 70%, transparent)",
+            "linear-gradient(90deg, transparent, rgba(119,183,237,0.25) 30%, rgba(119,183,237,0.25) 70%, transparent)",
         }}
       />
-      {/* Tiny placeholder caption — bottom-left */}
       <span
-        className="absolute bottom-3 left-3 text-[9px] uppercase tracking-[0.18em]"
+        className="absolute bottom-2 left-2 text-[9px] uppercase tracking-[0.18em] font-mono"
         style={{ color: "#5a6478" }}
       >
         screenshot pending
@@ -293,120 +250,89 @@ function VersionTimelineWireframe() {
   );
 }
 
-/* ─── Card 4 cinematic visual — identity beam with goal nodes ─── */
+/* ─── Card 4 visual — boxy goal slot matrix ─────────────────── */
 function IdentityBeamVisual() {
-  // 3 goal nodes positioned along a descending beam
-  const nodes = [
-    { cx: 28, cy: 30, r: 4, glow: 14 },
-    { cx: 55, cy: 55, r: 5, glow: 18 },
-    { cx: 80, cy: 78, r: 3.5, glow: 12 },
+  // 4x2 grid — 6 active, 2 empty slots
+  const slots: { active: boolean; fill: number }[] = [
+    { active: true, fill: 72 },
+    { active: true, fill: 88 },
+    { active: true, fill: 45 },
+    { active: false, fill: 0 },
+    { active: true, fill: 60 },
+    { active: true, fill: 33 },
+    { active: true, fill: 92 },
+    { active: false, fill: 0 },
   ];
 
   return (
-    <div
-      className="relative w-full aspect-[16/7] rounded-lg border overflow-hidden"
-      style={{
-        background: "#04060c",
-        borderColor: "rgba(255,255,255,0.08)",
-      }}
-    >
-      {/* Atmospheric blue wash from top-left */}
+    <div className="w-full space-y-2">
+      {/* Top label row */}
+      <div className="flex items-center justify-between">
+        <span
+          className="text-[9px] uppercase tracking-[0.18em] font-mono"
+          style={{ color: "#5a6478" }}
+        >
+          V2 · 6 active
+        </span>
+        <span
+          className="text-[9px] uppercase tracking-[0.18em] font-mono"
+          style={{ color: "#5a6478" }}
+        >
+          identity: founder
+        </span>
+      </div>
+
+      {/* 4x2 boxy slot grid */}
+      <div className="grid grid-cols-4 gap-1">
+        {slots.map((slot, i) => {
+          const opacity = slot.active ? 0.10 + (slot.fill / 100) * 0.35 : 0;
+          return (
+            <div
+              key={i}
+              className="aspect-[3/2] border relative overflow-hidden"
+              style={{
+                background: slot.active
+                  ? `linear-gradient(180deg, rgba(119,183,237,${opacity + 0.05}), rgba(68,135,214,${opacity}))`
+                  : "transparent",
+                borderColor: slot.active
+                  ? "rgba(255,255,255,0.10)"
+                  : "rgba(255,255,255,0.05)",
+                borderStyle: slot.active ? "solid" : "dashed",
+              }}
+            >
+              {slot.active && (
+                <div
+                  className="absolute bottom-0 left-0 right-0"
+                  style={{
+                    height: `${slot.fill}%`,
+                    background:
+                      "linear-gradient(180deg, transparent, rgba(119,183,237,0.18))",
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Bottom label row */}
       <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 80% at 20% 20%, rgba(68,135,214,0.16), transparent 70%)",
-        }}
-      />
-      {/* Soft top-light arc */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 90% 20% at 50% 0%, rgba(119,183,237,0.10), transparent 60%)",
-        }}
-      />
-
-      {/* SVG beam + nodes */}
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        className="absolute inset-0 w-full h-full"
+        className="flex items-center justify-between pt-1 border-t"
+        style={{ borderColor: "rgba(255,255,255,0.06)" }}
       >
-        <defs>
-          <linearGradient id="beam-grad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="rgba(119,183,237,0.55)" />
-            <stop offset="60%" stopColor="rgba(68,135,214,0.30)" />
-            <stop offset="100%" stopColor="rgba(8,56,133,0)" />
-          </linearGradient>
-          <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="rgba(119,183,237,0.55)" />
-            <stop offset="100%" stopColor="rgba(119,183,237,0)" />
-          </radialGradient>
-        </defs>
-
-        {/* Diagonal beam (identity → goals) */}
-        <line
-          x1="15"
-          y1="15"
-          x2="92"
-          y2="90"
-          stroke="url(#beam-grad)"
-          strokeWidth="0.6"
-          strokeLinecap="round"
-        />
-
-        {/* Connecting hairlines from beam to each node */}
-        {nodes.map((n, i) => (
-          <line
-            key={`l-${i}`}
-            x1={n.cx - 6}
-            y1={n.cy - 6}
-            x2={n.cx}
-            y2={n.cy}
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="0.3"
-          />
-        ))}
-
-        {/* Glow halos */}
-        {nodes.map((n, i) => (
-          <circle
-            key={`g-${i}`}
-            cx={n.cx}
-            cy={n.cy}
-            r={n.glow}
-            fill="url(#node-glow)"
-          />
-        ))}
-
-        {/* Solid nodes */}
-        {nodes.map((n, i) => (
-          <circle
-            key={`n-${i}`}
-            cx={n.cx}
-            cy={n.cy}
-            r={n.r}
-            fill="#77B7ED"
-            stroke="rgba(255,255,255,0.30)"
-            strokeWidth="0.4"
-          />
-        ))}
-      </svg>
-
-      {/* Two micro-labels positioned for breathing */}
-      <span
-        className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.18em] font-medium"
-        style={{ color: "#aab3c5" }}
-      >
-        Identity
-      </span>
-      <span
-        className="absolute bottom-3 right-3 text-[9px] uppercase tracking-[0.18em] font-medium"
-        style={{ color: "#aab3c5" }}
-      >
-        Goals
-      </span>
+        <span
+          className="text-[9px] uppercase tracking-[0.18em] font-mono"
+          style={{ color: "#5a6478" }}
+        >
+          cycle fill
+        </span>
+        <span
+          className="text-[11px] font-mono font-medium"
+          style={{ color: "#f4f6fb" }}
+        >
+          61%
+        </span>
+      </div>
     </div>
   );
 }
