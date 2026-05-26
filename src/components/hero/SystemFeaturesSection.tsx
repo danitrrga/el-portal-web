@@ -50,64 +50,25 @@ export default function SystemFeaturesSection() {
                 </p>
               </div>
             </CardHeader>
-            <div className="relative h-fit pl-6 md:pl-12">
-              <div
-                className="absolute -inset-6"
-                style={{
-                  background:
-                    "radial-gradient(75% 95% at 50% 0%, transparent, #04060c 100%)",
-                }}
-              />
-              <div
-                className="overflow-hidden rounded-tl-lg border-l border-t pl-2 pt-2"
-                style={{
-                  background: "#04060c",
-                  borderColor: "rgba(255,255,255,0.08)",
-                }}
-              >
-                <div className="aspect-[16/10] flex items-center justify-center">
-                  <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "#5a6478" }}>
-                    Version timeline screenshot
-                  </p>
-                </div>
-              </div>
+            <div className="relative h-fit px-6 pb-6 md:px-12 md:pb-12">
+              <TimeHierarchyVisual />
             </div>
           </Card>
 
-          {/* Card 2 — Habit + skill scoring (col-2, screenshot) */}
+          {/* Card 2 — Habit + skill scoring (col-2, custom visual) */}
           <Card
             className="group overflow-hidden shadow-black/20 sm:col-span-2 sm:rounded-none sm:rounded-tr-xl border-white/[0.08]"
             style={{ background: "#0a1429" }}
           >
             <p
-              className="display mx-auto my-6 max-w-md text-balance px-6 text-center md:p-6"
-              style={{
-                fontSize: "clamp(18px, 1.8vw, 24px)",
-                color: "#f4f6fb",
-              }}
+              className="font-sans font-medium mx-auto my-6 max-w-md text-balance px-6 text-center text-[18px] md:p-6 md:text-[20px]"
+              style={{ color: "#f4f6fb" }}
             >
-              Habits + skills, weighted and scored.
+              Habits and skills, weighted and scored.
             </p>
             <CardContent className="mt-auto h-fit">
-              <div className="relative mb-6 sm:mb-0">
-                <div
-                  className="absolute -inset-6"
-                  style={{
-                    background:
-                      "radial-gradient(50% 75% at 75% 50%, transparent, #04060c 100%)",
-                  }}
-                />
-                <div
-                  className="aspect-[76/59] overflow-hidden rounded-r-lg border flex items-center justify-center"
-                  style={{
-                    background: "#04060c",
-                    borderColor: "rgba(255,255,255,0.08)",
-                  }}
-                >
-                  <p className="text-xs uppercase tracking-[0.18em]" style={{ color: "#5a6478" }}>
-                    Habit tracker screenshot
-                  </p>
-                </div>
+              <div className="relative mb-6 sm:mb-0 px-6 pb-6">
+                <HabitScoreboardVisual />
               </div>
             </CardContent>
           </Card>
@@ -118,11 +79,8 @@ export default function SystemFeaturesSection() {
             style={{ background: "#0a1429" }}
           >
             <p
-              className="display mx-auto mb-12 max-w-md text-balance text-center"
-              style={{
-                fontSize: "clamp(18px, 1.8vw, 24px)",
-                color: "#f4f6fb",
-              }}
+              className="font-sans font-medium mx-auto mb-12 max-w-md text-balance text-center text-[18px] md:text-[20px]"
+              style={{ color: "#f4f6fb" }}
             >
               Quick capture, one keystroke away.
             </p>
@@ -212,5 +170,192 @@ export default function SystemFeaturesSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─── Card 1 visual ─────────────────────────────────────────────── */
+function TimeHierarchyVisual() {
+  return (
+    <div className="w-full space-y-3">
+      {/* Version row — single full-width bar */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <span
+            className="text-[10px] uppercase tracking-[0.18em] font-medium"
+            style={{ color: "#8590a8" }}
+          >
+            Version
+          </span>
+          <span
+            className="text-[10px] uppercase tracking-[0.12em]"
+            style={{ color: "#5a6478" }}
+          >
+            90 days
+          </span>
+        </div>
+        <div
+          className="h-9 rounded-md border flex items-center px-3"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(68,135,214,0.18), rgba(68,135,214,0.06))",
+            borderColor: "rgba(119,183,237,0.22)",
+          }}
+        >
+          <span className="text-[11px] font-medium" style={{ color: "#f4f6fb" }}>
+            Identity phase
+          </span>
+        </div>
+      </div>
+
+      {/* Cycle row — 6 segments */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <span
+            className="text-[10px] uppercase tracking-[0.18em] font-medium"
+            style={{ color: "#8590a8" }}
+          >
+            Cycle × 6
+          </span>
+          <span
+            className="text-[10px] uppercase tracking-[0.12em]"
+            style={{ color: "#5a6478" }}
+          >
+            15 days
+          </span>
+        </div>
+        <div className="grid grid-cols-6 gap-1">
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <div
+              key={i}
+              className="h-6 rounded-md border"
+              style={{
+                background:
+                  i === 1
+                    ? "rgba(68,135,214,0.22)"
+                    : "rgba(255,255,255,0.04)",
+                borderColor:
+                  i === 1
+                    ? "rgba(119,183,237,0.35)"
+                    : "rgba(255,255,255,0.08)",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Day row — 15 small markers */}
+      <div className="space-y-1.5">
+        <div className="flex items-center justify-between">
+          <span
+            className="text-[10px] uppercase tracking-[0.18em] font-medium"
+            style={{ color: "#8590a8" }}
+          >
+            Day × 15
+          </span>
+          <span
+            className="text-[10px] uppercase tracking-[0.12em]"
+            style={{ color: "#5a6478" }}
+          >
+            scored
+          </span>
+        </div>
+        <div className="grid grid-cols-15 gap-1" style={{ gridTemplateColumns: "repeat(15, minmax(0, 1fr))" }}>
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-3 rounded-sm border"
+              style={{
+                background:
+                  i < 4
+                    ? "rgba(68,135,214,0.30)"
+                    : "rgba(255,255,255,0.04)",
+                borderColor:
+                  i < 4
+                    ? "rgba(119,183,237,0.40)"
+                    : "rgba(255,255,255,0.06)",
+              }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Card 2 visual ─────────────────────────────────────────────── */
+function HabitScoreboardVisual() {
+  const habits: { name: string; weight: "LOW" | "MED" | "HIGH"; done: boolean }[] = [
+    { name: "Deep work block", weight: "HIGH", done: true },
+    { name: "Mobility", weight: "MED", done: true },
+    { name: "Read 20m", weight: "LOW", done: true },
+    { name: "Cold shower", weight: "LOW", done: false },
+  ];
+
+  const weightVal = { LOW: 1, MED: 2, HIGH: 4 } as const;
+  const total = habits.reduce((s, h) => s + weightVal[h.weight], 0);
+  const done = habits.reduce((s, h) => s + (h.done ? weightVal[h.weight] : 0), 0);
+
+  return (
+    <div
+      className="w-full rounded-lg border p-3 space-y-2"
+      style={{
+        background: "rgba(255,255,255,0.02)",
+        borderColor: "rgba(255,255,255,0.08)",
+      }}
+    >
+      {habits.map((h, i) => (
+        <div key={i} className="flex items-center justify-between text-[11px]">
+          <div className="flex items-center gap-2">
+            <span
+              className="inline-block w-3 h-3 rounded-sm border flex-shrink-0 flex items-center justify-center"
+              style={{
+                background: h.done ? "rgba(68,135,214,0.30)" : "transparent",
+                borderColor: h.done
+                  ? "rgba(119,183,237,0.50)"
+                  : "rgba(255,255,255,0.20)",
+              }}
+            >
+              {h.done && (
+                <svg viewBox="0 0 12 12" className="w-2 h-2" style={{ color: "#f4f6fb" }}>
+                  <path
+                    d="M2 6l3 3 5-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+            </span>
+            <span style={{ color: h.done ? "#f4f6fb" : "#aab3c5" }}>{h.name}</span>
+          </div>
+          <span
+            className="text-[9px] uppercase tracking-[0.12em] font-medium px-1.5 py-0.5 rounded"
+            style={{
+              color: "#8590a8",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
+          >
+            {h.weight}
+          </span>
+        </div>
+      ))}
+      <div
+        className="pt-2 mt-1 flex items-center justify-between text-[11px] border-t"
+        style={{ borderColor: "rgba(255,255,255,0.08)" }}
+      >
+        <span
+          className="uppercase tracking-[0.14em] text-[10px]"
+          style={{ color: "#8590a8" }}
+        >
+          Day score
+        </span>
+        <span className="font-mono font-medium" style={{ color: "#f4f6fb" }}>
+          {done} / {total}
+        </span>
+      </div>
+    </div>
   );
 }
