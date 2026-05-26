@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import SystemFeaturesSection from "@/components/hero/SystemFeaturesSection";
 import McpIntegrationSection from "@/components/hero/McpIntegrationSection";
 import SystemBlueprintSection from "@/components/SystemBlueprintSection";
 import CTASection from "@/components/CTASection";
@@ -15,6 +16,7 @@ export default function Home() {
 
       <main className="relative z-10">
         <Hero />
+        <SystemFeaturesSection />
         <McpIntegrationSection />
         <SystemBlueprintSection />
         <CTASection />
