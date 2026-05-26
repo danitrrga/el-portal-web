@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Briefcase, Dumbbell, BookOpen, PenTool, Camera, HeartPulse } from "lucide-react";
 
 export default function SystemFeaturesSection() {
   return (
@@ -151,15 +152,21 @@ export default function SystemFeaturesSection() {
   );
 }
 
-/* ─── Card 2 visual — boxy weekly score grid ─────────────────── */
+/* ─── Card 2 visual — weekly chip row with day + score ─────── */
 function HabitScoreboardVisual() {
-  // 7 days, score 0-100. Latest day = index 5 (today)
-  const days = [82, 76, 91, 68, 88, 75, 0];
+  const days: { letter: string; score: number | null }[] = [
+    { letter: "M", score: 82 },
+    { letter: "T", score: 76 },
+    { letter: "W", score: 91 },
+    { letter: "T", score: 68 },
+    { letter: "F", score: 88 },
+    { letter: "S", score: 75 },
+    { letter: "S", score: null },
+  ];
   const todayIdx = 5;
 
   return (
-    <div className="w-full space-y-2">
-      {/* Top label row */}
+    <div className="w-full space-y-2.5">
       <div className="flex items-center justify-between">
         <span
           className="text-[9px] uppercase tracking-[0.18em] font-mono"
@@ -175,41 +182,56 @@ function HabitScoreboardVisual() {
         </span>
       </div>
 
-      {/* 7-square grid — each square = one day, fill opacity = score */}
-      <div className="grid grid-cols-7 gap-1">
-        {days.map((score, i) => {
-          const opacity = score === 0 ? 0 : 0.15 + (score / 100) * 0.40;
+      <div className="grid grid-cols-7 gap-1.5">
+        {days.map((d, i) => {
+          const isFuture = d.score === null;
           const isToday = i === todayIdx;
+          const opacity = isFuture ? 0 : 0.10 + ((d.score ?? 0) / 100) * 0.30;
           return (
             <div
               key={i}
-              className="aspect-square border relative"
+              className="aspect-square rounded-[6px] border relative flex flex-col items-center justify-between py-1.5"
               style={{
-                background:
-                  score === 0
-                    ? "transparent"
-                    : `linear-gradient(180deg, rgba(119,183,237,${opacity + 0.05}), rgba(68,135,214,${opacity}))`,
+                background: isFuture
+                  ? "rgba(255,255,255,0.02)"
+                  : `linear-gradient(180deg, rgba(119,183,237,${opacity + 0.05}) 0%, rgba(68,135,214,${opacity}) 100%)`,
                 borderColor: isToday
-                  ? "rgba(119,183,237,0.55)"
-                  : score === 0
-                    ? "rgba(255,255,255,0.06)"
-                    : "rgba(255,255,255,0.10)",
+                  ? "rgba(119,183,237,0.45)"
+                  : "rgba(255,255,255,0.10)",
+                borderStyle: isFuture ? "dashed" : "solid",
+                boxShadow: isFuture
+                  ? "none"
+                  : "inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.25)",
               }}
-            />
+            >
+              <span
+                className="text-[8px] uppercase tracking-[0.14em] font-mono leading-none"
+                style={{ color: isFuture ? "#3d4658" : "#8590a8" }}
+              >
+                {d.letter}
+              </span>
+              <span
+                className="text-[10px] font-mono font-medium leading-none"
+                style={{
+                  color: isFuture ? "#3d4658" : isToday ? "#f4f6fb" : "#aab3c5",
+                }}
+              >
+                {d.score ?? "—"}
+              </span>
+            </div>
           );
         })}
       </div>
 
-      {/* Bottom label row */}
       <div
-        className="flex items-center justify-between pt-1 border-t"
+        className="flex items-center justify-between pt-1.5 border-t"
         style={{ borderColor: "rgba(255,255,255,0.06)" }}
       >
         <span
           className="text-[9px] uppercase tracking-[0.18em] font-mono"
           style={{ color: "#5a6478" }}
         >
-          score
+          today score
         </span>
         <span
           className="text-[11px] font-mono font-medium"
@@ -250,23 +272,23 @@ function VersionTimelineWireframe() {
   );
 }
 
-/* ─── Card 4 visual — boxy goal slot matrix ─────────────────── */
+/* ─── Card 4 visual — identity slots with icons + progress ── */
 function IdentityBeamVisual() {
-  // 4x2 grid — 6 active, 2 empty slots
-  const slots: { active: boolean; fill: number }[] = [
-    { active: true, fill: 72 },
-    { active: true, fill: 88 },
-    { active: true, fill: 45 },
-    { active: false, fill: 0 },
-    { active: true, fill: 60 },
-    { active: true, fill: 33 },
-    { active: true, fill: 92 },
-    { active: false, fill: 0 },
+  const slots: {
+    Icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+    label: string;
+    fill: number;
+  }[] = [
+    { Icon: Briefcase, label: "Founder", fill: 72 },
+    { Icon: Dumbbell, label: "Athlete", fill: 88 },
+    { Icon: BookOpen, label: "Student", fill: 45 },
+    { Icon: PenTool, label: "Writer", fill: 60 },
+    { Icon: Camera, label: "Creator", fill: 33 },
+    { Icon: HeartPulse, label: "Wellness", fill: 92 },
   ];
 
   return (
-    <div className="w-full space-y-2">
-      {/* Top label row */}
+    <div className="w-full space-y-2.5">
       <div className="flex items-center justify-between">
         <span
           className="text-[9px] uppercase tracking-[0.18em] font-mono"
@@ -278,46 +300,44 @@ function IdentityBeamVisual() {
           className="text-[9px] uppercase tracking-[0.18em] font-mono"
           style={{ color: "#5a6478" }}
         >
-          identity: founder
+          identity matrix
         </span>
       </div>
 
-      {/* 4x2 boxy slot grid */}
-      <div className="grid grid-cols-4 gap-1">
-        {slots.map((slot, i) => {
-          const opacity = slot.active ? 0.10 + (slot.fill / 100) * 0.35 : 0;
+      <div className="grid grid-cols-3 gap-1.5">
+        {slots.map(({ Icon, label, fill }, i) => {
+          const opacity = 0.06 + (fill / 100) * 0.18;
           return (
             <div
               key={i}
-              className="aspect-[3/2] border relative overflow-hidden"
+              className="aspect-[4/3] rounded-[6px] border relative overflow-hidden flex flex-col items-center justify-center gap-1.5"
               style={{
-                background: slot.active
-                  ? `linear-gradient(180deg, rgba(119,183,237,${opacity + 0.05}), rgba(68,135,214,${opacity}))`
-                  : "transparent",
-                borderColor: slot.active
-                  ? "rgba(255,255,255,0.10)"
-                  : "rgba(255,255,255,0.05)",
-                borderStyle: slot.active ? "solid" : "dashed",
+                background: `linear-gradient(180deg, rgba(119,183,237,${opacity + 0.04}) 0%, rgba(68,135,214,${opacity}) 100%)`,
+                borderColor: "rgba(255,255,255,0.10)",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 6px rgba(0,0,0,0.25)",
               }}
             >
-              {slot.active && (
-                <div
-                  className="absolute bottom-0 left-0 right-0"
-                  style={{
-                    height: `${slot.fill}%`,
-                    background:
-                      "linear-gradient(180deg, transparent, rgba(119,183,237,0.18))",
-                  }}
-                />
-              )}
+              <Icon className="w-4 h-4" strokeWidth={1.5} />
+              <span
+                className="text-[9px] uppercase tracking-[0.12em] font-mono leading-none"
+                style={{ color: "#aab3c5" }}
+              >
+                {label}
+              </span>
+              <div
+                className="absolute bottom-0 left-0 right-0 h-0.5"
+                style={{
+                  background: `linear-gradient(90deg, rgba(119,183,237,0.55) ${fill}%, rgba(255,255,255,0.04) ${fill}%)`,
+                }}
+              />
             </div>
           );
         })}
       </div>
 
-      {/* Bottom label row */}
       <div
-        className="flex items-center justify-between pt-1 border-t"
+        className="flex items-center justify-between pt-1.5 border-t"
         style={{ borderColor: "rgba(255,255,255,0.06)" }}
       >
         <span
@@ -330,7 +350,7 @@ function IdentityBeamVisual() {
           className="text-[11px] font-mono font-medium"
           style={{ color: "#f4f6fb" }}
         >
-          61%
+          65%
         </span>
       </div>
     </div>
