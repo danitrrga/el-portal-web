@@ -29,15 +29,15 @@ export default function McpIntegrationSection() {
       <div className="py-24 md:py-32">
         <div className="mx-auto max-w-5xl px-6">
           <div className="aspect-16/10 group relative mx-auto flex max-w-[22rem] items-center justify-between sm:max-w-sm">
+            {/* Outer ring — brand-blue top-light arc */}
             <div
-              role="presentation"
-              className="bg-linear-to-b border-foreground/5 absolute inset-0 z-10 aspect-square animate-spin items-center justify-center rounded-full border-t from-lime-500/15 to-transparent to-25% opacity-0 duration-[3.5s] group-hover:opacity-100 dark:from-white/5"
-            ></div>
-            <div
-              role="presentation"
-              className="bg-linear-to-b border-foreground/5 absolute inset-16 z-10 aspect-square scale-90 animate-spin items-center justify-center rounded-full border-t from-blue-500/15 to-transparent to-25% opacity-0 duration-[3.5s] group-hover:opacity-100"
-            ></div>
-            <div className="bg-linear-to-b from-muted-foreground/15 absolute inset-0 flex aspect-square items-center justify-center rounded-full border-t to-transparent to-25%">
+              className="absolute inset-0 flex aspect-square items-center justify-center rounded-full border-t"
+              style={{
+                borderTopColor: "rgba(119,183,237,0.30)",
+                background:
+                  "radial-gradient(circle at 50% 0%, rgba(68,135,214,0.18), transparent 55%)",
+              }}
+            >
               <IntegrationCard className="-translate-x-1/6 absolute left-0 top-1/4 -translate-y-1/4">
                 <Bot />
               </IntegrationCard>
@@ -48,7 +48,15 @@ export default function McpIntegrationSection() {
                 <Workflow />
               </IntegrationCard>
             </div>
-            <div className="bg-linear-to-b from-muted-foreground/15 absolute inset-16 flex aspect-square scale-90 items-center justify-center rounded-full border-t to-transparent to-25%">
+            {/* Inner ring — softer brand-blue glow */}
+            <div
+              className="absolute inset-16 flex aspect-square scale-90 items-center justify-center rounded-full border-t"
+              style={{
+                borderTopColor: "rgba(119,183,237,0.22)",
+                background:
+                  "radial-gradient(circle at 50% 0%, rgba(56,103,214,0.14), transparent 55%)",
+              }}
+            >
               <IntegrationCard className="absolute top-0 -translate-y-1/2">
                 <BrainCircuit />
               </IntegrationCard>
