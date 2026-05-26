@@ -65,11 +65,7 @@ export default function SystemFeaturesSection() {
                   borderColor: "rgba(255,255,255,0.08)",
                 }}
               >
-                <div className="aspect-[16/9] flex items-center justify-center">
-                  <p className="text-[10px] uppercase tracking-[0.18em]" style={{ color: "#5a6478" }}>
-                    Version timeline · screenshot
-                  </p>
-                </div>
+                <VersionTimelineWireframe />
               </div>
             </div>
           </Card>
@@ -85,15 +81,8 @@ export default function SystemFeaturesSection() {
             >
               Habits and skills, weighted and scored.
             </p>
-            <CardContent className="mt-auto h-fit">
-              <div className="relative mb-5 sm:mb-0 px-5 pb-5">
-                <div
-                  className="absolute -inset-3"
-                  style={{
-                    background:
-                      "radial-gradient(50% 75% at 50% 100%, transparent, #04060c 100%)",
-                  }}
-                />
+            <CardContent className="h-fit">
+              <div className="relative px-5 pb-5">
                 <HabitScoreboardVisual />
               </div>
             </CardContent>
@@ -153,7 +142,7 @@ export default function SystemFeaturesSection() {
               </p>
             </CardHeader>
             <CardContent className="relative h-fit px-5 pb-5 md:px-7 md:pb-7">
-              <GoalsCardsVisual />
+              <IdentityBeamVisual />
             </CardContent>
           </Card>
         </div>
@@ -273,89 +262,151 @@ function HabitScoreboardVisual() {
   );
 }
 
-/* ─── Card 4 visual ─────────────────────────────────────────────── */
-function GoalsCardsVisual() {
-  const goals = [
-    { title: "Ship V2 marketing", phase: "Identity: founder", progress: 72, weight: "HIGH" },
-    { title: "Squat 100kg × 5", phase: "Identity: athlete", progress: 45, weight: "MED" },
-    { title: "Daily reading", phase: "Identity: student", progress: 88, weight: "LOW" },
+/* ─── Card 1 wireframe stub (replaced by Daniel's screenshot) ─── */
+function VersionTimelineWireframe() {
+  return (
+    <div className="relative aspect-[16/8] overflow-hidden">
+      {/* Atmospheric backdrop */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(68,135,214,0.10), transparent 70%)",
+        }}
+      />
+      {/* Horizontal hairline beam */}
+      <div
+        className="absolute left-0 right-0 top-1/2 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(119,183,237,0.30) 30%, rgba(119,183,237,0.30) 70%, transparent)",
+        }}
+      />
+      {/* Tiny placeholder caption — bottom-left */}
+      <span
+        className="absolute bottom-3 left-3 text-[9px] uppercase tracking-[0.18em]"
+        style={{ color: "#5a6478" }}
+      >
+        screenshot pending
+      </span>
+    </div>
+  );
+}
+
+/* ─── Card 4 cinematic visual — identity beam with goal nodes ─── */
+function IdentityBeamVisual() {
+  // 3 goal nodes positioned along a descending beam
+  const nodes = [
+    { cx: 28, cy: 30, r: 4, glow: 14 },
+    { cx: 55, cy: 55, r: 5, glow: 18 },
+    { cx: 80, cy: 78, r: 3.5, glow: 12 },
   ];
 
   return (
     <div
-      className="relative w-full rounded-lg border overflow-hidden"
+      className="relative w-full aspect-[16/7] rounded-lg border overflow-hidden"
       style={{
         background: "#04060c",
         borderColor: "rgba(255,255,255,0.08)",
       }}
     >
-      {/* Header */}
+      {/* Atmospheric blue wash from top-left */}
       <div
-        className="flex items-center justify-between px-3 py-2 border-b"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
-      >
-        <span className="text-[9px] uppercase tracking-[0.18em]" style={{ color: "#5a6478" }}>
-          Active goals · V2
-        </span>
-        <span className="text-[9px] uppercase tracking-[0.18em]" style={{ color: "#5a6478" }}>
-          3
-        </span>
-      </div>
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 80% at 20% 20%, rgba(68,135,214,0.16), transparent 70%)",
+        }}
+      />
+      {/* Soft top-light arc */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 20% at 50% 0%, rgba(119,183,237,0.10), transparent 60%)",
+        }}
+      />
 
-      {/* Goal rows */}
-      <div className="divide-y" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-        {goals.map((g, i) => (
-          <div
-            key={i}
-            className="px-3 py-2.5 flex items-center justify-between gap-3"
-            style={{ borderTop: i > 0 ? "1px solid rgba(255,255,255,0.06)" : "none" }}
-          >
-            <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-medium truncate" style={{ color: "#f4f6fb" }}>
-                {g.title}
-              </p>
-              <p
-                className="text-[9px] uppercase tracking-[0.14em] mt-0.5 truncate"
-                style={{ color: "#5a6478" }}
-              >
-                {g.phase}
-              </p>
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              {/* Progress bar */}
-              <div
-                className="w-16 h-1.5 rounded-full overflow-hidden"
-                style={{ background: "rgba(255,255,255,0.06)" }}
-              >
-                <div
-                  className="h-full rounded-full"
-                  style={{
-                    width: `${g.progress}%`,
-                    background:
-                      "linear-gradient(90deg, rgba(68,135,214,0.6), rgba(119,183,237,0.8))",
-                  }}
-                />
-              </div>
-              <span
-                className="text-[9px] font-mono w-7 text-right"
-                style={{ color: "#aab3c5" }}
-              >
-                {g.progress}%
-              </span>
-              <span
-                className="text-[8px] uppercase tracking-[0.14em] font-medium px-1.5 py-0.5 rounded"
-                style={{
-                  color: "#8590a8",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                }}
-              >
-                {g.weight}
-              </span>
-            </div>
-          </div>
+      {/* SVG beam + nodes */}
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute inset-0 w-full h-full"
+      >
+        <defs>
+          <linearGradient id="beam-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="rgba(119,183,237,0.55)" />
+            <stop offset="60%" stopColor="rgba(68,135,214,0.30)" />
+            <stop offset="100%" stopColor="rgba(8,56,133,0)" />
+          </linearGradient>
+          <radialGradient id="node-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="rgba(119,183,237,0.55)" />
+            <stop offset="100%" stopColor="rgba(119,183,237,0)" />
+          </radialGradient>
+        </defs>
+
+        {/* Diagonal beam (identity → goals) */}
+        <line
+          x1="15"
+          y1="15"
+          x2="92"
+          y2="90"
+          stroke="url(#beam-grad)"
+          strokeWidth="0.6"
+          strokeLinecap="round"
+        />
+
+        {/* Connecting hairlines from beam to each node */}
+        {nodes.map((n, i) => (
+          <line
+            key={`l-${i}`}
+            x1={n.cx - 6}
+            y1={n.cy - 6}
+            x2={n.cx}
+            y2={n.cy}
+            stroke="rgba(255,255,255,0.15)"
+            strokeWidth="0.3"
+          />
         ))}
-      </div>
+
+        {/* Glow halos */}
+        {nodes.map((n, i) => (
+          <circle
+            key={`g-${i}`}
+            cx={n.cx}
+            cy={n.cy}
+            r={n.glow}
+            fill="url(#node-glow)"
+          />
+        ))}
+
+        {/* Solid nodes */}
+        {nodes.map((n, i) => (
+          <circle
+            key={`n-${i}`}
+            cx={n.cx}
+            cy={n.cy}
+            r={n.r}
+            fill="#77B7ED"
+            stroke="rgba(255,255,255,0.30)"
+            strokeWidth="0.4"
+          />
+        ))}
+      </svg>
+
+      {/* Two micro-labels positioned for breathing */}
+      <span
+        className="absolute top-3 left-3 text-[9px] uppercase tracking-[0.18em] font-medium"
+        style={{ color: "#aab3c5" }}
+      >
+        Identity
+      </span>
+      <span
+        className="absolute bottom-3 right-3 text-[9px] uppercase tracking-[0.18em] font-medium"
+        style={{ color: "#aab3c5" }}
+      >
+        Goals
+      </span>
     </div>
   );
 }
