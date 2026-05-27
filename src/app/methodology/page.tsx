@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { ArrowRight, Sun, Moon } from "lucide-react";
 
 const SECTION_BG = "#04060c";
@@ -50,17 +56,105 @@ function SectionEyebrow({ num, label }: { num: string; label: string }) {
 
 /* ────────────────────────────────────────────────────────────────────
    01 — Temporal Hierarchy
-   features-9: asymmetric split (concept left, diagram right) +
-   full-width anchor metric below.
+   Single-column flow: header + intro at top (full width), then an
+   asymmetric 3-card definition grid (Version full-width row, Cycle +
+   Day equal columns below). Layout itself encodes containment.
    ──────────────────────────────────────────────────────────────────── */
+
+type Scale = {
+  name: "Version" | "Cycle" | "Day";
+  duration: string;
+  isDefault: boolean;
+  role: string;
+  bullets: string[];
+};
+
+const SCALES: Scale[] = [
+  {
+    name: "Version",
+    duration: "~90 days",
+    isDefault: true,
+    role: "The arc — who you're becoming.",
+    bullets: [
+      "Sets the direction.",
+      "Contains its cycles.",
+      "Months long — multi-month identity arc.",
+    ],
+  },
+  {
+    name: "Cycle",
+    duration: "~15 days",
+    isDefault: true,
+    role: "The sprint — what to work on now.",
+    bullets: [
+      "Inside a Version.",
+      "Focused execution toward the arc.",
+      "Weeks long — short enough to actually finish.",
+    ],
+  },
+  {
+    name: "Day",
+    duration: "1 day",
+    isDefault: false,
+    role: "The reps — the only scale you actually live in.",
+    bullets: [
+      "Inside a Cycle.",
+      "Atomic — one set of habits, one score.",
+      "Where everything compounds from.",
+    ],
+  },
+];
+
+function ScaleCardContent({ scale }: { scale: Scale }) {
+  return (
+    <>
+      <CardHeader className="p-6 md:p-7">
+        <div className="flex items-baseline justify-between gap-3">
+          <CardTitle
+            className="font-mono text-[11px] font-normal uppercase tracking-[0.22em]"
+            style={{ color: FG_MUTED }}
+          >
+            {scale.name}
+          </CardTitle>
+          <span className="font-mono text-xs">
+            <span style={{ color: FG_STRONG }}>{scale.duration}</span>
+            {scale.isDefault && (
+              <span style={{ color: FG_SUBTLE }}> · default</span>
+            )}
+          </span>
+        </div>
+        <CardDescription
+          className="mt-3 text-base"
+          style={{ color: FG }}
+        >
+          {scale.role}
+        </CardDescription>
+      </CardHeader>
+      <ul
+        className="px-6 pb-6 md:px-7 md:pb-7 space-y-2 text-[14px]"
+        style={{ color: FG }}
+      >
+        {scale.bullets.map((b) => (
+          <li key={b} className="flex items-start gap-2.5">
+            <span aria-hidden style={{ color: FG_SUBTLE }}>
+              —
+            </span>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
 function TemporalHierarchySection() {
   return (
     <section>
       <SectionEyebrow num="01" label="Temporal Hierarchy" />
 
-      <div className="grid items-start gap-10 md:grid-cols-[1fr_1.1fr] md:gap-14">
-        {/* LEFT — concept */}
-        <div>
+      <div className="flex flex-col gap-10 md:gap-14">
+        {/* Header — full content width */}
+        <div className="max-w-2xl">
           <h2
             className="display text-balance leading-[1.1]"
             style={{
@@ -76,239 +170,25 @@ function TemporalHierarchySection() {
           >
             Three time scales the entire system is built on. A Version
             sets the direction. A Cycle moves you toward it. A Day is the
-            unit of execution.
+            unit of execution. Lengths are yours to set — the only rule
+            is that a Version divides evenly into Cycles.
           </p>
-          <ul className="mt-6 space-y-3">
-            {[
-              { k: "Version", v: "90 days. The arc — who you're becoming." },
-              { k: "Cycle", v: "15 days. The sprint — what to work on now." },
-              { k: "Day", v: "1 day. The reps — the only scale you live in." },
-            ].map((row) => (
-              <li
-                key={row.k}
-                className="grid grid-cols-[80px_1fr] gap-3 text-[14px] leading-[1.55] md:text-[15px]"
-              >
-                <span
-                  className="font-mono text-[12px] uppercase tracking-[0.16em] pt-[2px]"
-                  style={{ color: FG_MUTED }}
-                >
-                  {row.k}
-                </span>
-                <span style={{ color: FG }}>{row.v}</span>
-              </li>
-            ))}
-          </ul>
         </div>
 
-        {/* RIGHT — strata diagram (matches hero VCD language, editorial variant) */}
-        <div className="relative">
-          <TemporalStrataDiagram />
+        {/* Asymmetric card grid — Version top (full width), Cycle + Day below */}
+        <div className="grid gap-4 md:grid-cols-2 md:gap-5">
+          <Card className="md:col-span-2">
+            <ScaleCardContent scale={SCALES[0]} />
+          </Card>
+          <Card>
+            <ScaleCardContent scale={SCALES[1]} />
+          </Card>
+          <Card>
+            <ScaleCardContent scale={SCALES[2]} />
+          </Card>
         </div>
       </div>
     </section>
-  );
-}
-
-/* ────────────────────────────────────────────────────────────────────
-   TemporalStrataDiagram — static editorial variant of the hero's
-   VCDSection. Three horizontal strata sharing a single dashed NOW
-   line. Monotone (no accent), no glow on today dot, no animation.
-   ──────────────────────────────────────────────────────────────────── */
-
-const STRATA_TRACK = "rgba(255,255,255,0.06)";
-const STRATA_PAST = "rgba(255,255,255,0.20)";
-const STRATA_ACTIVE = "rgba(255,255,255,0.35)";
-const STRATA_NOW = "rgba(255,255,255,0.28)";
-
-function TemporalStrataDiagram() {
-  const TODAY_DAY_OF_VERSION = 42;
-  const TOTAL_DAYS = 90;
-  const TOTAL_CYCLES = 6;
-  const ACTIVE_CYCLE_IDX = 2; // 0-indexed → cycle 3 of 6
-  const NOW_PCT = (TODAY_DAY_OF_VERSION / TOTAL_DAYS) * 100;
-
-  return (
-    <div className="relative w-full">
-      <NowLine leftPct={NOW_PCT} />
-
-      <div className="flex flex-col gap-7">
-        <Stratum
-          label="VERSION"
-          count="90 days"
-          rightMeta={`Day ${TODAY_DAY_OF_VERSION} of ${TOTAL_DAYS}`}
-        >
-          <VersionTrack progressPct={NOW_PCT} />
-        </Stratum>
-
-        <Stratum label="CYCLES" count={`${TOTAL_CYCLES} × 15 days`}>
-          <CycleBlocks totalCycles={TOTAL_CYCLES} activeIdx={ACTIVE_CYCLE_IDX} />
-        </Stratum>
-
-        <Stratum label="DAYS" count="1 day each">
-          <DayDots total={TOTAL_DAYS} todayIdx={TODAY_DAY_OF_VERSION - 1} />
-        </Stratum>
-      </div>
-    </div>
-  );
-}
-
-function Stratum({
-  label,
-  count,
-  rightMeta,
-  children,
-}: {
-  label: string;
-  count: string;
-  rightMeta?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div className="mb-2.5 flex items-baseline justify-between gap-3">
-        <div className="flex items-baseline gap-2.5">
-          <span
-            className="font-mono text-[10px] uppercase tracking-[0.22em]"
-            style={{ color: FG_MUTED }}
-          >
-            {label}
-          </span>
-          <span
-            aria-hidden
-            className="font-mono text-[10px]"
-            style={{ color: FG_SUBTLE }}
-          >
-            ·
-          </span>
-          <span
-            className="font-mono text-[10px] tabular-nums"
-            style={{ color: FG_SUBTLE }}
-          >
-            {count}
-          </span>
-        </div>
-        {rightMeta ? (
-          <span
-            className="font-mono text-[10px] tabular-nums"
-            style={{ color: FG_MUTED }}
-          >
-            {rightMeta}
-          </span>
-        ) : null}
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function NowLine({ leftPct }: { leftPct: number }) {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute top-6 bottom-2"
-      style={{
-        left: `${leftPct}%`,
-        width: 1,
-        transform: "translateX(-50%)",
-        background:
-          "repeating-linear-gradient(to bottom, " +
-          STRATA_NOW +
-          " 0 3px, transparent 3px 6px)",
-      }}
-    />
-  );
-}
-
-function VersionTrack({ progressPct }: { progressPct: number }) {
-  return (
-    <div className="relative h-2">
-      <div
-        className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full"
-        style={{ background: STRATA_TRACK }}
-      />
-      <div
-        className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full"
-        style={{
-          left: 0,
-          width: `${progressPct}%`,
-          background: STRATA_PAST,
-        }}
-      />
-    </div>
-  );
-}
-
-function CycleBlocks({
-  totalCycles,
-  activeIdx,
-}: {
-  totalCycles: number;
-  activeIdx: number;
-}) {
-  return (
-    <div
-      className="grid h-2 gap-px"
-      style={{
-        gridTemplateColumns: `repeat(${totalCycles}, minmax(0, 1fr))`,
-      }}
-    >
-      {Array.from({ length: totalCycles }).map((_, i) => {
-        const isActive = i === activeIdx;
-        const isPast = i < activeIdx;
-        return (
-          <div
-            key={i}
-            className="h-full"
-            style={{
-              background: isActive
-                ? STRATA_ACTIVE
-                : isPast
-                  ? STRATA_PAST
-                  : STRATA_TRACK,
-              borderRadius: 2,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-function DayDots({
-  total,
-  todayIdx,
-}: {
-  total: number;
-  todayIdx: number;
-}) {
-  return (
-    <div className="relative h-2.5 w-full">
-      {Array.from({ length: total }).map((_, i) => {
-        const dayPct = ((i + 0.5) / total) * 100;
-        const isToday = i === todayIdx;
-        const isPast = i < todayIdx;
-        const size = isToday ? 9 : 2;
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: `${dayPct}%`,
-              top: "50%",
-              width: size,
-              height: size,
-              transform: "translate(-50%, -50%)",
-              borderRadius: "50%",
-              background: isToday
-                ? FG_STRONG
-                : isPast
-                  ? STRATA_PAST
-                  : STRATA_TRACK,
-            }}
-          />
-        );
-      })}
-    </div>
   );
 }
 
