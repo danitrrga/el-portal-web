@@ -26,6 +26,7 @@ const specialGothicExpandedOne = Special_Gothic_Expanded_One({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
