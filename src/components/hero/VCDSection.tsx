@@ -3,11 +3,17 @@
 import { Compass, Repeat, Sun } from "lucide-react";
 
 const SECTION_BG = "#04060c";
-const FG_STRONG = "#f4f6fb";
-const FG = "#aab3c5";
-const FG_MUTED = "#8590a8";
+const FG_STRONG = "#ffffff";
+const FG = "#d4d9e3";
+const FG_MUTED = "#a8b0c0";
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
+
+/* Tailark whites — bars dominated by white tones, accent reserved for NOW */
+const WHITE_STRONG = "rgba(255,255,255,0.92)";
+const WHITE = "rgba(255,255,255,0.55)";
+const WHITE_DIM = "rgba(255,255,255,0.22)";
+const WHITE_TRACK = "rgba(255,255,255,0.08)";
 
 const ACTIVE_CYCLE = 2; // 0-indexed: cycle 3 of 6
 const TODAY = 11; // 0-indexed: day 12 of 15
@@ -36,7 +42,7 @@ export default function VCDSection() {
         <LayeredStrata dayOfVersion={dayOfVersion} />
 
         {/* Captions */}
-        <div className="mt-12 sm:mt-16 grid gap-8 sm:grid-cols-3 sm:gap-10 max-w-3xl mx-auto">
+        <div className="mt-2 sm:mt-4 grid gap-8 sm:grid-cols-3 sm:gap-10 max-w-3xl mx-auto">
           <Caption
             icon={Compass}
             label="Version"
@@ -105,7 +111,7 @@ function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
   const COL_GAP = 24; // px gap between label and stratum columns
 
   return (
-    <div className="relative mx-auto max-w-3xl py-14">
+    <div className="relative mx-auto max-w-3xl py-8">
       {/* Atmosphere — top-light, matches MCP's `50% 0%` origin + ~18% opacity */}
       <div
         aria-hidden
@@ -125,7 +131,7 @@ function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
           bottom: 32,
           width: 1,
           transform: "translateX(-50%)",
-          background: `repeating-linear-gradient(to bottom, ${ACCENT_LIGHT}66 0 3px, transparent 3px 7px)`,
+          background: `repeating-linear-gradient(to bottom, rgba(255,255,255,0.55) 0 3px, transparent 3px 7px)`,
         }}
       />
 
@@ -199,7 +205,7 @@ function VersionStratum({
       {/* Track */}
       <div
         className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[5px] rounded-full"
-        style={{ background: "rgba(255,255,255,0.06)" }}
+        style={{ background: WHITE_TRACK }}
       />
       {/* Cycle boundary ticks (5 inner ticks for 6 segments) */}
       {[1, 2, 3, 4, 5].map((i) => (
@@ -208,7 +214,7 @@ function VersionStratum({
           className="absolute top-0 bottom-0 w-px"
           style={{
             left: `${(i / 6) * 100}%`,
-            background: "rgba(255,255,255,0.15)",
+            background: "rgba(255,255,255,0.2)",
           }}
         />
       ))}
@@ -218,7 +224,7 @@ function VersionStratum({
         style={{
           left: `${activeStartPct}%`,
           width: `${activeEndPct - activeStartPct}%`,
-          background: `${ACCENT_LIGHT}40`,
+          background: "rgba(255,255,255,0.18)",
           borderRadius: 2,
         }}
       />
@@ -228,7 +234,7 @@ function VersionStratum({
         style={{
           left: 0,
           width: `${nowPct}%`,
-          background: `linear-gradient(90deg, ${ACCENT}99 0%, ${ACCENT_LIGHT}cc 100%)`,
+          background: `linear-gradient(90deg, ${WHITE} 0%, ${WHITE_STRONG} 100%)`,
         }}
       />
     </div>
@@ -254,13 +260,13 @@ function CycleStratum() {
               className="h-full"
               style={{
                 background: isActive
-                  ? `linear-gradient(90deg, ${ACCENT}b3, ${ACCENT_LIGHT}cc)`
+                  ? `linear-gradient(90deg, ${WHITE}, ${WHITE_STRONG})`
                   : isPast
-                  ? `${ACCENT}55`
-                  : "rgba(255,255,255,0.05)",
+                  ? WHITE_DIM
+                  : WHITE_TRACK,
                 borderRadius: 2,
                 boxShadow: isActive
-                  ? `0 0 10px ${ACCENT}66, inset 0 1px 0 rgba(255,255,255,0.08)`
+                  ? "inset 0 1px 0 rgba(255,255,255,0.18)"
                   : undefined,
               }}
             />
@@ -299,12 +305,12 @@ function DayStratum({
               transform: "translate(-50%, -50%)",
               borderRadius: "50%",
               background: isToday
-                ? ACCENT_LIGHT
+                ? "#ffffff"
                 : isPast
-                ? `${ACCENT}99`
-                : "rgba(255,255,255,0.20)",
+                ? WHITE
+                : WHITE_DIM,
               boxShadow: isToday
-                ? `0 0 12px ${ACCENT_LIGHT}, 0 0 4px ${ACCENT_LIGHT}cc`
+                ? `0 0 14px rgba(255,255,255,0.6), 0 0 6px ${ACCENT_LIGHT}cc`
                 : undefined,
             }}
           />

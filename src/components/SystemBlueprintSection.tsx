@@ -1,7 +1,6 @@
 import { Card, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import {
-  AlertTriangle,
   ChevronDown,
   FlaskConical,
   LineChart,
@@ -12,11 +11,11 @@ import { ReactNode } from "react";
 /* ─── Monotone palette ─ white / grey / black only.
    No brand accent inside mockups — pure typographic hierarchy. */
 const BG = "#04060c"; // matches Hero section bg
-const FG_STRONG = "#f4f6fb";
-const FG = "#aab3c5";
-const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "#5a6478";
-const RULE = "rgba(255,255,255,0.08)";
+const FG_STRONG = "#ffffff";
+const FG = "#d4d9e3";
+const FG_MUTED = "#a8b0c0";
+const FG_SUBTLE = "#6f7889";
+const RULE = "rgba(255,255,255,0.14)";
 
 export default function SystemBlueprintSection() {
   return (
@@ -147,7 +146,7 @@ function LabMockup() {
         <div className="h-px" style={{ background: RULE }} />
 
         {/* FRICTION */}
-        <SectionLabel icon={AlertTriangle}>Friction</SectionLabel>
+        <SectionLabel>Friction</SectionLabel>
         <ul className="space-y-1.5">
           {[
             "Run volume bleeding into deep-work hours",
@@ -324,8 +323,8 @@ function InsightRow({
             <span
               className="text-[8.5px] uppercase tracking-[0.1em] font-semibold rounded-full px-1.5 py-[1px]"
               style={{
-                background: "rgba(255,255,255,0.06)",
-                color: FG,
+                background: "rgba(255,255,255,0.1)",
+                color: FG_STRONG,
               }}
             >
               New
@@ -449,7 +448,7 @@ const FeatureCard = ({ children, className }: FeatureCardProps) => (
 );
 
 const CardDecorator = () => {
-  const LINE = "rgba(255,255,255,0.14)";
+  const LINE = "rgba(255,255,255,0.22)";
   return (
     <>
       {/* Corner brackets — anchor points for the trace */}
