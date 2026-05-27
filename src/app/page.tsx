@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import VCDSection from "@/components/hero/VCDSection";
 import McpIntegrationSection from "@/components/hero/McpIntegrationSection";
 import SystemBlueprintSection from "@/components/SystemBlueprintSection";
+import MethodologyPreviewSection from "@/components/MethodologyPreviewSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <VCDSection />
         <McpIntegrationSection />
         <SystemBlueprintSection />
+        <MethodologyPreviewSection />
         <CTASection />
       </main>
 
