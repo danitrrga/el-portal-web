@@ -32,7 +32,7 @@ const specialGothicExpandedOne = Special_Gothic_Expanded_One({
 export const metadata: Metadata = {
   title: "El Portal - The personal OS",
   description:
-    "El Portal is a mobile-first personal operating system. Manage habits with drag-and-drop, track deep work cycles, and align your goals — now with a unified architecture and semantic design system.",
+    "El Portal is a mobile-first personal operating system. Manage habits with drag-and-drop, track deep work cycles, and align your goals, now with a unified architecture and semantic design system.",
 };
 
 export default function RootLayout({

@@ -1,12 +1,6 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 import { ArrowRight, Sun, Moon } from "lucide-react";
 
 const SECTION_BG = "#04060c";
@@ -74,66 +68,66 @@ const SCALES: Scale[] = [
     name: "Version",
     duration: "~90 days",
     isDefault: true,
-    role: "The arc — who you're becoming.",
+    role: "The arc, representing who you're becoming.",
     bullets: [
       "Sets the direction.",
       "Contains its cycles.",
-      "Months long — multi-month identity arc.",
+      "Months long, forming a multi-month identity arc.",
     ],
   },
   {
     name: "Cycle",
     duration: "~15 days",
     isDefault: true,
-    role: "The sprint — what to work on now.",
+    role: "The sprint, defining what to work on now.",
     bullets: [
       "Inside a Version.",
       "Focused execution toward the arc.",
-      "Weeks long — short enough to actually finish.",
+      "Weeks long, short enough to actually finish.",
     ],
   },
   {
     name: "Day",
     duration: "1 day",
     isDefault: false,
-    role: "The reps — the only scale you actually live in.",
+    role: "The reps, the only scale you actually live in.",
     bullets: [
       "Inside a Cycle.",
-      "Atomic — one set of habits, one score.",
+      "Atomic, with one set of habits and one score.",
       "Where everything compounds from.",
     ],
   },
 ];
 
-function ScaleCardContent({ scale }: { scale: Scale }) {
+function ScaleTextContent({ scale }: { scale: Scale }) {
   return (
-    <>
-      <CardHeader className="p-6 md:p-7">
-        <div className="flex items-baseline justify-between gap-3">
-          <CardTitle
-            className="font-mono text-[11px] font-normal uppercase tracking-[0.22em]"
-            style={{ color: FG_MUTED }}
-          >
-            {scale.name}
-          </CardTitle>
-          <span className="font-mono text-xs">
-            <span style={{ color: FG_STRONG }}>{scale.duration}</span>
-            {scale.isDefault && (
-              <span style={{ color: FG_SUBTLE }}> · default</span>
-            )}
-          </span>
-        </div>
-        <CardDescription
-          className="mt-3 text-base"
-          style={{ color: FG }}
+    <div className="flex flex-col">
+      {/* Scale Header */}
+      <div className="flex items-baseline justify-between gap-3 border-b pb-3 mb-4" style={{ borderColor: RULE }}>
+        <h3
+          className="font-mono text-[11px] font-normal uppercase tracking-[0.22em]"
+          style={{ color: FG_MUTED }}
         >
-          {scale.role}
-        </CardDescription>
-      </CardHeader>
-      <ul
-        className="px-6 pb-6 md:px-7 md:pb-7 space-y-2 text-[14px]"
-        style={{ color: FG }}
+          {scale.name}
+        </h3>
+        <span className="font-mono text-xs">
+          <span style={{ color: FG_STRONG }}>{scale.duration}</span>
+          {scale.isDefault && (
+            <span style={{ color: FG_SUBTLE }}> · default</span>
+          )}
+        </span>
+      </div>
+      
+      {/* Role / Description */}
+      <p
+        className="text-[15px] font-medium leading-[1.5] mb-4"
+        style={{ color: FG_STRONG }}
       >
+        {scale.role}
+      </p>
+
+      {/* Bullets */}
+      <ul className="space-y-2.5 text-[14px] leading-[1.6]" style={{ color: FG }}>
         {scale.bullets.map((b) => (
           <li key={b} className="flex items-start gap-2.5">
             <span aria-hidden style={{ color: FG_SUBTLE }}>
@@ -143,7 +137,7 @@ function ScaleCardContent({ scale }: { scale: Scale }) {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
@@ -164,28 +158,13 @@ function TemporalHierarchySection() {
           >
             Version, Cycle, Day.
           </h2>
-          <p
-            className="mt-5 text-[15px] leading-[1.65] md:text-base"
-            style={{ color: FG }}
-          >
-            Three time scales the entire system is built on. A Version
-            sets the direction. A Cycle moves you toward it. A Day is the
-            unit of execution. Lengths are yours to set — the only rule
-            is that a Version divides evenly into Cycles.
-          </p>
         </div>
 
-        {/* Asymmetric card grid — Version top (full width), Cycle + Day below */}
-        <div className="grid gap-4 md:grid-cols-2 md:gap-5">
-          <Card className="md:col-span-2">
-            <ScaleCardContent scale={SCALES[0]} />
-          </Card>
-          <Card>
-            <ScaleCardContent scale={SCALES[1]} />
-          </Card>
-          <Card>
-            <ScaleCardContent scale={SCALES[2]} />
-          </Card>
+        {/* Clean typographic grid without card chrome — just text and layout */}
+        <div className="grid gap-8 md:grid-cols-3 md:gap-12">
+          <ScaleTextContent scale={SCALES[0]} />
+          <ScaleTextContent scale={SCALES[1]} />
+          <ScaleTextContent scale={SCALES[2]} />
         </div>
       </div>
     </section>
@@ -216,7 +195,7 @@ function DailyScoreSection() {
           style={{ color: FG }}
         >
           Every habit carries a weight. Your day rolls up into a single
-          number — not a streak count, not a vibe — the share of the
+          number, not a streak count or a vibe, representing the share of the
           weight you actually moved.
         </p>
       </div>
@@ -312,19 +291,6 @@ function DailyScoreSection() {
               5 of 7 weight
             </span>
           </div>
-        </div>
-
-        {/* Formula */}
-        <div
-          className="mt-8 border-t pt-5 text-center"
-          style={{ borderColor: RULE_STRONG }}
-        >
-          <code
-            className="font-mono text-[12px] md:text-[13px]"
-            style={{ color: FG_MUTED }}
-          >
-            score = round(completedWeight / totalWeight × 100)
-          </code>
         </div>
       </div>
 
@@ -484,7 +450,7 @@ function PulseLoopSection() {
                   },
                   {
                     k: "Feelings",
-                    v: "What's actually present — pick from a bank of named emotions.",
+                    v: "What's actually present, selected from a bank of named emotions.",
                   },
                   {
                     k: "Focus",
@@ -610,16 +576,10 @@ function HabitsAndGoalsSection() {
         </p>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="grid gap-10 md:grid-cols-2 md:gap-14">
         {/* HABITS */}
-        <div
-          className="rounded-xl border p-6 md:p-7"
-          style={{
-            background: "rgba(255,255,255,0.015)",
-            borderColor: RULE_STRONG,
-          }}
-        >
-          <div className="flex items-baseline justify-between">
+        <div className="flex flex-col">
+          <div className="flex items-baseline justify-between border-b pb-3 mb-4" style={{ borderColor: RULE }}>
             <h3
               className="display leading-none"
               style={{ fontSize: "20px", color: FG_STRONG }}
@@ -634,17 +594,17 @@ function HabitsAndGoalsSection() {
             </span>
           </div>
           <p
-            className="mt-4 text-[14px] leading-[1.6]"
+            className="text-[14px] leading-[1.6] mb-4"
             style={{ color: FG }}
           >
             Weighted recurring actions. They feed the daily score and the
             consistency layer beneath it.
           </p>
-          <ul className="mt-5 space-y-2.5">
+          <ul className="space-y-2.5">
             {[
-              "Three weight tiers — LOW (1), MEDIUM (2), HIGH (4).",
+              "Three weight tiers: LOW (1), MEDIUM (2), and HIGH (4).",
               "Recurrence configured per habit, not assumed.",
-              "Don't auto-carry between cycles — deliberate by design.",
+              "Don't auto-carry between cycles, remaining deliberate by design.",
             ].map((line) => (
               <li
                 key={line}
@@ -663,14 +623,8 @@ function HabitsAndGoalsSection() {
         </div>
 
         {/* GOALS */}
-        <div
-          className="rounded-xl border p-6 md:p-7"
-          style={{
-            background: "rgba(255,255,255,0.015)",
-            borderColor: RULE_STRONG,
-          }}
-        >
-          <div className="flex items-baseline justify-between">
+        <div className="flex flex-col">
+          <div className="flex items-baseline justify-between border-b pb-3 mb-4" style={{ borderColor: RULE }}>
             <h3
               className="display leading-none"
               style={{ fontSize: "20px", color: FG_STRONG }}
@@ -685,17 +639,17 @@ function HabitsAndGoalsSection() {
             </span>
           </div>
           <p
-            className="mt-4 text-[14px] leading-[1.6]"
+            className="text-[14px] leading-[1.6] mb-4"
             style={{ color: FG }}
           >
             Outcomes you commit to inside a 15-day window. Two kinds, each
             with its own definition of done.
           </p>
-          <ul className="mt-5 space-y-2.5">
+          <ul className="space-y-2.5">
             {[
-              "task_project — bounded scope, finished or not.",
-              "consistency_metric — a rate you hold across the cycle.",
-              "Carry across cycles via lineage — same goal, multiple cycles.",
+              "task_project, with bounded scope, finished or not.",
+              "consistency_metric, representing a rate you hold across the cycle.",
+              "Carry across cycles via lineage, keeping the same goal across multiple cycles.",
             ].map((line) => (
               <li
                 key={line}
@@ -714,29 +668,28 @@ function HabitsAndGoalsSection() {
         </div>
       </div>
 
-      {/* Carry-over anchor */}
+      {/* Carry-over callout */}
       <div
-        className="mt-8 rounded-lg border px-5 py-4"
+        className="mt-10 border-l-2 pl-4 py-1"
         style={{
-          background: "rgba(119,183,237,0.04)",
-          borderColor: `${ACCENT}33`,
+          borderColor: `${ACCENT}66`,
         }}
       >
-        <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+        <div className="flex flex-col gap-1.5 md:flex-row md:items-baseline md:gap-3">
           <span
-            className="font-mono text-[10px] uppercase tracking-[0.22em]"
+            className="font-mono text-[10px] uppercase tracking-[0.22em] font-medium shrink-0"
             style={{ color: ACCENT_LIGHT }}
           >
             Carry-over
           </span>
-          <span
+          <p
             className="text-[13px] leading-[1.55] md:text-[14px]"
             style={{ color: FG }}
           >
-            Goals can travel across cycles via a lineage link — same
-            journey, multiple sprints. Habits start fresh each cycle, by
+            Goals can travel across cycles via a lineage link, keeping the same
+            journey across multiple sprints. Habits start fresh each cycle, by
             choice.
-          </span>
+          </p>
         </div>
       </div>
     </section>
@@ -768,8 +721,8 @@ function TrendsInsightsSection() {
           style={{ color: FG }}
         >
           A correlation engine and a set of pattern detectors look for
-          repeating signals across your habits, vitals, and feelings —
-          then write them up plainly.
+          repeating signals across your habits, vitals, and feelings,
+          writing them up plainly.
         </p>
       </div>
 
@@ -937,7 +890,7 @@ export default function MethodologyPage() {
             style={{ color: FG }}
           >
             A method, not a vibe. Five mechanics, layered. The system
-            reads, organizes, and surfaces signal — you stay focused on
+            reads, organizes, and surfaces signal, leaving you to stay focused on
             the work that earns it.
           </p>
         </header>
@@ -984,7 +937,7 @@ export default function MethodologyPage() {
             className="max-w-2xl text-[14px] leading-[1.65] md:text-[15px]"
             style={{ color: FG_MUTED }}
           >
-            The method is the floor — the convictions underneath it are
+            The method is the floor, and the convictions underneath it are
             what make it worth running.
           </p>
           <Link
