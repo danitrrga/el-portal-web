@@ -1,34 +1,73 @@
 import Link from "next/link";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { Button } from "@/components/ui/button";
+
+const SECTION_BG = "#04060c";
+const FG_STRONG = "#f4f6fb";
+const FG = "#aab3c5";
+const FG_MUTED = "#8590a8";
+const ACCENT = "#4487D6";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 
 export default function CTASection() {
-    return (
-        <section className="py-20 relative overflow-hidden bg-transparent z-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(30,64,175,0.15)_0%,_transparent_60%)] pointer-events-none"></div>
-            <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-            <div
-                className="relative max-w-4xl mx-auto px-4 text-center z-10 transition-transform duration-500"
-                style={{ transform: "scale(0.8)", transformOrigin: "center center" }}
-            >
-                <h2 className="text-5xl md:text-7xl font-bold text-zinc-100 mb-8 tracking-tight">
-                    Ready to optimize your <br />
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600 drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]">life?</span>
-                </h2>
-                <p className="text-lg md:text-xl text-zinc-400 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-                    Join thousands of engineers, designers, and founders who use EL PORTAL to
-                    manage their life&apos;s work.
-                </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                    <ShinyButton asChild className="!px-8 !py-3 !text-sm !rounded-xl !h-[44px] !font-medium">
-                        <Link href={process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app'}>
-                            Join for free
-                        </Link>
-                    </ShinyButton>
-                    <span className="text-sm font-medium text-zinc-500 tracking-wide uppercase">
-                        No credit card required
-                    </span>
-                </div>
-            </div>
-        </section>
-    );
+  return (
+    <section
+      className="relative overflow-hidden py-24 md:py-32"
+      style={{ background: SECTION_BG }}
+    >
+      {/* Top hairline — gradient fade so it doesn't read as a hard rule */}
+      <div
+        aria-hidden
+        className="absolute left-0 right-0 top-0 h-px"
+        style={{
+          background:
+            "linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent)",
+        }}
+      />
+
+      {/* Atmospheric backdrop — top-light radial, mirrors VCDSection vocabulary */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 pointer-events-none"
+        style={{
+          background: `radial-gradient(ellipse 70% 90% at 50% 0%, ${ACCENT}1f, transparent 60%)`,
+        }}
+      />
+
+      <div className="relative mx-auto max-w-3xl px-6 text-center">
+        <h2
+          className="display text-balance"
+          style={{
+            fontSize: "clamp(36px, 4.6vw, 58px)",
+            color: FG_STRONG,
+          }}
+        >
+          Start your first Version.
+        </h2>
+
+        <p
+          className="mt-6 text-base md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
+          style={{ color: FG }}
+        >
+          Open El Portal, draft a 90-day arc, run your first Cycle. The
+          system tracks, analyzes, and surfaces patterns — you focus on
+          the work.
+        </p>
+
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 md:flex-row md:gap-6">
+          <Button asChild variant="brand" size="lg" className="text-base">
+            <Link href={APP_URL}>
+              <span className="text-nowrap">Open El Portal</span>
+            </Link>
+          </Button>
+          <span
+            className="text-[11px] font-medium uppercase tracking-[0.18em]"
+            style={{ color: FG_MUTED }}
+          >
+            No card · set up in under 10 minutes
+          </span>
+        </div>
+      </div>
+    </section>
+  );
 }

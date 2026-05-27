@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { CopyButton } from "@/components/CopyButton";
 
 /* ─── Data ────────────────────────────────────────────────────────── */
 
@@ -172,9 +173,12 @@ const EXAMPLE_MORNING = `{
 
 function CodeBlock({ code }: { code: string }) {
   return (
-    <pre className="rounded-lg bg-zinc-900 border border-zinc-800/60 px-4 py-3.5 text-[13px] font-mono text-zinc-300 leading-[1.65] overflow-x-auto">
-      <code>{code}</code>
-    </pre>
+    <div className="relative group">
+      <pre className="rounded-lg bg-zinc-900 border border-zinc-800/60 px-4 py-3.5 pr-20 text-[13px] font-mono text-zinc-300 leading-[1.65] overflow-x-auto">
+        <code>{code}</code>
+      </pre>
+      <CopyButton value={code} />
+    </div>
   );
 }
 

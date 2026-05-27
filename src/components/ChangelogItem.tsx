@@ -1,69 +1,163 @@
-import * as React from "react"
-import { Badge } from "@/components/ui/badge"
+import * as React from "react";
+import { Lock, Rocket, Info, PenLine } from "lucide-react";
 
-interface ChangelogItemProps {
-    version: string
-    date: string
-    tags?: string[]
-    title: string
-    description: React.ReactNode
-}
+const NOTE_ICONS = {
+  lock: Lock,
+  rocket: Rocket,
+  info: Info,
+  pen: PenLine,
+} as const;
+
+export type BulletItem = { lead?: string; body: string };
+export type NoteItem = { icon: keyof typeof NOTE_ICONS; text: string };
+
+export type ChangelogEntry = {
+  version: string;
+  date: string;
+  tags: string[];
+  title: string;
+  body: string;
+  bullets?: BulletItem[];
+  note?: NoteItem;
+  isRelease?: boolean;
+};
+
+const FG_STRONG = "#f4f6fb";
+const FG = "#aab3c5";
+const FG_MUTED = "#8590a8";
+const FG_SUBTLE = "#5a6478";
+const ACCENT = "#4487D6";
+const ACCENT_LIGHT = "#77B7ED";
 
 export function ChangelogItem({
-    version,
-    date,
-    tags = [],
-    title,
-    description,
-}: ChangelogItemProps) {
-    const getTagColor = (t: string) => {
-        const lowerT = t.toLowerCase()
-        if (lowerT.includes("feature") || lowerT.includes("optimization") || lowerT.includes("improvement")) {
-            return "bg-blue-500/10 text-blue-400 border-blue-500/20"
-        } else if (lowerT.includes("fix") || lowerT.includes("hotfix")) {
-            return "bg-rose-500/10 text-rose-400 border-rose-500/20"
-        }
-        // Default muted tag
-        return "bg-zinc-800/50 text-zinc-300 border-zinc-700/50"
-    }
+  entry,
+  isLast,
+}: {
+  entry: ChangelogEntry;
+  isLast?: boolean;
+}) {
+  const NoteIcon = entry.note ? NOTE_ICONS[entry.note.icon] : null;
 
-    return (
-        <div className="relative pl-8 md:pl-10 pb-12 group">
-            {/* Timeline Dot exactly on the vertical line (left-0 of parent) */}
-            <div className="absolute -left-[3.5px] top-[32px] md:top-[40px] h-2 w-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.6)] z-10" />
+  return (
+    <article
+      className={`grid grid-cols-1 gap-x-12 gap-y-5 py-14 md:py-16 lg:grid-cols-[160px_1fr] ${
+        !isLast ? "border-b border-white/[0.05]" : ""
+      }`}
+    >
+      {/* LEFT — version pill + date (sticky on lg) */}
+      <div className="space-y-2.5 lg:sticky lg:top-28 lg:self-start">
+        <span
+          className="inline-flex items-center rounded-md border px-2 py-1 font-mono text-[11px] font-medium tabular-nums"
+          style={{
+            background: entry.isRelease
+              ? "rgba(68,135,214,0.18)"
+              : "rgba(68,135,214,0.08)",
+            borderColor: entry.isRelease
+              ? "rgba(119,183,237,0.40)"
+              : "rgba(68,135,214,0.20)",
+            color: entry.isRelease ? FG_STRONG : ACCENT_LIGHT,
+          }}
+        >
+          v{entry.version}
+        </span>
+        <time
+          className="block text-[13px]"
+          style={{ color: FG_MUTED }}
+        >
+          {entry.date}
+        </time>
+        {entry.tags.length > 0 && (
+          <div
+            className="flex flex-wrap gap-x-2 gap-y-1 pt-1 font-mono text-[10px] uppercase tracking-[0.18em]"
+            style={{ color: FG_SUBTLE }}
+          >
+            {entry.tags.map((tag, i) => (
+              <span key={tag} className="inline-flex items-center">
+                {i > 0 && <span className="mr-2 select-none">·</span>}
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
 
-            {/* Content Card (Bento Box rules) */}
-            <div className="rounded-xl border border-white/5 bg-zinc-950/80 transition-colors duration-300 ease-out hover:border-white/10 hover:bg-zinc-900/40 p-6 md:p-8 overflow-hidden">
+      {/* RIGHT — title + body + bullets + note */}
+      <div>
+        <h2
+          className={
+            entry.isRelease
+              ? "display mb-5 text-balance leading-[1.1]"
+              : "mb-4 text-balance text-[24px] font-semibold leading-[1.2] tracking-tight md:text-[28px]"
+          }
+          style={{
+            color: FG_STRONG,
+            ...(entry.isRelease
+              ? { fontSize: "clamp(28px, 2.8vw, 36px)" }
+              : {}),
+          }}
+        >
+          {entry.title}
+        </h2>
 
-                {/* Metadata Row */}
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                    {/* Version Badge */}
-                    <Badge variant="outline" className="font-mono text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase tracking-widest px-3 py-1">
-                        v{version}
-                    </Badge>
-                    <span className="text-zinc-400 text-sm">{date}</span>
-                    {/* Dynamic Tags */}
-                    {tags.length > 0 && (
-                        <div className="flex gap-2">
-                            {tags.map((tag) => (
-                                <Badge key={tag} variant="outline" className={`text-[10px] font-bold uppercase ${getTagColor(tag)} px-2 py-0.5`}>
-                                    {tag}
-                                </Badge>
-                            ))}
-                        </div>
-                    )}
-                </div>
+        <p
+          className="text-[15px] leading-[1.7] md:text-base"
+          style={{ color: FG }}
+        >
+          {entry.body}
+        </p>
 
-                {/* Content */}
-                <div>
-                    <h3 className="text-xl font-medium tracking-tight text-zinc-100 mb-3 group-hover:text-white transition-colors">
-                        {title}
-                    </h3>
-                    <div className="text-zinc-400 leading-relaxed text-sm space-y-4">
-                        {description}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+        {entry.bullets && entry.bullets.length > 0 && (
+          <ul className="mt-6 space-y-3">
+            {entry.bullets.map((b, i) => (
+              <li
+                key={i}
+                className="grid grid-cols-[auto_1fr] items-start gap-3 text-[15px] leading-[1.7] md:text-base"
+                style={{ color: FG }}
+              >
+                <span
+                  aria-hidden
+                  className="select-none pt-[2px] font-mono"
+                  style={{ color: FG_SUBTLE }}
+                >
+                  —
+                </span>
+                <span>
+                  {b.lead && (
+                    <>
+                      <strong
+                        className="font-semibold"
+                        style={{ color: FG_STRONG }}
+                      >
+                        {b.lead}:
+                      </strong>{" "}
+                    </>
+                  )}
+                  {b.body}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {entry.note && NoteIcon && (
+          <p
+            className="mt-6 flex items-start gap-2.5 text-[14px] leading-[1.6] italic"
+            style={{ color: FG_MUTED }}
+          >
+            <NoteIcon
+              strokeWidth={1.5}
+              className="mt-[3px] size-3.5 shrink-0 not-italic"
+              style={{ color: ACCENT }}
+            />
+            <span>
+              <strong className="font-semibold not-italic" style={{ color: FG }}>
+                Note:
+              </strong>{" "}
+              {entry.note.text}
+            </span>
+          </p>
+        )}
+      </div>
+    </article>
+  );
 }

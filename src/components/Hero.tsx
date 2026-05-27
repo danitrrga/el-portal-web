@@ -1,86 +1,205 @@
 "use client";
+
 import React from "react";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import Image from "next/image";
 import Link from "next/link";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { AnimatedGroup } from "@/components/ui/animated-group";
+import { HeroAppMockup } from "./hero/HeroAppMockup";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
+
+const transitionVariants = {
+  item: {
+    hidden: {
+      opacity: 0,
+      filter: "blur(12px)",
+      y: 12,
+    },
+    visible: {
+      opacity: 1,
+      filter: "blur(0px)",
+      y: 0,
+      transition: {
+        type: "spring" as const,
+        bounce: 0.3,
+        duration: 1.5,
+      },
+    },
+  },
+};
 
 export default function Hero() {
-    return (
-        <div className="flex flex-col overflow-hidden relative z-10 w-full">
-            {/* Ambient Top Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[radial-gradient(circle_at_50%_0%,_rgba(30,64,175,0.18)_0%,_rgba(2,6,23,0)_70%)] pointer-events-none opacity-80 -z-10"></div>
+  return (
+    <main className="relative overflow-hidden" style={{ background: "#02030a" }}>
+      {/* Atmospheric blue-tinted radials on the left (adapted from tailark) */}
+      <div
+        aria-hidden
+        className="z-[2] absolute inset-0 pointer-events-none isolate contain-strict hidden lg:block"
+      >
+        <div className="w-[34rem] h-[80rem] -translate-y-[340px] absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,rgba(96,165,235,0.05)_0,rgba(68,135,214,0.02)_45%,rgba(8,56,133,0)_80%)]" />
+        <div className="h-[80rem] absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(150,200,245,0.028)_0,rgba(68,135,214,0.01)_70%,transparent_100%)] [translate:5%_-50%]" />
+        <div className="h-[80rem] -translate-y-[340px] absolute left-0 top-0 w-56 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,rgba(180,215,250,0.02)_0,rgba(96,165,235,0.008)_70%,transparent_100%)]" />
+      </div>
 
-            <ContainerScroll
-                titleComponent={
-                    <motion.div
-                        initial="hidden"
-                        animate="visible"
-                        variants={{
-                            hidden: { opacity: 0 },
-                            visible: {
-                                opacity: 1,
-                                transition: {
-                                    staggerChildren: 0.1,
-                                    delayChildren: 0.2,
-                                },
-                            },
-                        }}
-                        className="flex flex-col items-center max-w-4xl mx-auto relative z-10 text-center"
-                    >
-                        {/* Ambient Glow has been moved to top edge of the page */}
-                        <motion.div
-                            variants={{
-                                hidden: { opacity: 0, y: 30 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                            }}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] uppercase tracking-widest font-semibold mb-6 shadow-[0_0_20px_rgba(30,64,175,0.15)]"
-                        >
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
-                            V2.0 Access
-                        </motion.div>
+      {/* Film-grain noise overlay for texture — masked out below mockup zone */}
+      <div
+        aria-hidden
+        className="z-[3] absolute inset-0 pointer-events-none opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='4.5' numOctaves='1' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>\")",
+          backgroundRepeat: "repeat",
+          backgroundSize: "160px 160px",
+          maskImage: "linear-gradient(to bottom, black 0%, black 40%, transparent 65%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 40%, transparent 65%)",
+        }}
+      />
 
-                        <motion.h1
-                            variants={{
-                                hidden: { opacity: 0, y: 30 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                            }}
-                            className="text-5xl md:text-7xl font-black tracking-[-0.04em] bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent mb-6 leading-tight text-glow-hero"
-                        >
-                            Your shortcut to <br />
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary-glow via-blue-200 to-accent-neon-green">
-                                high performance.
-                            </span>
-                        </motion.h1>
-                        <motion.div
-                            variants={{
-                                hidden: { opacity: 0, y: 30 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-                            }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                        >
-                        </motion.div>
-                    </motion.div>
-                }
-            >
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                    className="h-full w-full rounded-2xl shadow-[0_0_30px_-5px_rgba(30,64,175,0.15)] relative"
+      {/* Bottom fade to pure black — kills seam against next section */}
+      <div
+        aria-hidden
+        className="z-[4] absolute inset-x-0 bottom-0 h-[40%] pointer-events-none"
+        style={{
+          background: "linear-gradient(to bottom, transparent 0%, #000 100%)",
+        }}
+      />
+
+      <section>
+        <div className="relative pt-24 md:pt-36">
+          {/* Bottom fade so radial atmosphere blends into the next section */}
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,#02030a_75%)]"
+          />
+
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
+              <AnimatedGroup variants={transitionVariants}>
+                {/* Announcement pill — promo: first 300 users get Pro lifetime free */}
+                <Link
+                  href="/pricing"
+                  className="group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 transition-colors duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    borderColor: "rgba(255,255,255,0.10)",
+                  }}
                 >
-                    <Image
-                        src={`/assets/showcase/dashboard_black.png`}
-                        alt="hero"
-                        height={720}
-                        width={1400}
-                        className="mx-auto rounded-2xl object-cover h-full object-left-top"
-                        draggable={false}
-                    />
-                </motion.div>
-            </ContainerScroll>
+                  <span className="text-sm" style={{ color: "#aab3c5" }}>
+                    <span style={{ color: "#77B7ED" }} className="font-medium">Early access</span>
+                    <span style={{ color: "rgba(255,255,255,0.20)" }}> · </span>
+                    Launching soon · First 30 signups get Pro for life
+                  </span>
+                  <span
+                    className="block h-4 w-0.5"
+                    style={{ background: "rgba(255,255,255,0.15)" }}
+                  />
+                  <div
+                    className="size-6 overflow-hidden rounded-full duration-500"
+                    style={{ background: "rgba(255,255,255,0.06)" }}
+                  >
+                    <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
+                      <span className="flex size-6">
+                        <ArrowRight className="m-auto size-3" style={{ color: "#f4f6fb" }} />
+                      </span>
+                      <span className="flex size-6">
+                        <ArrowRight className="m-auto size-3" style={{ color: "#f4f6fb" }} />
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+
+                {/* H1 — Special Gothic Expanded One uppercase */}
+                <h1
+                  className="display mt-8 max-w-4xl mx-auto text-balance lg:mt-16"
+                  style={{
+                    fontSize: "clamp(42px, 4.2vw, 58px)",
+                    color: "#f4f6fb",
+                  }}
+                >
+                  The final operating system for high-performers.
+                </h1>
+
+                {/* Sub — narrative prose */}
+                <p
+                  className="mx-auto mt-8 max-w-2xl text-balance text-lg leading-[1.55]"
+                  style={{ color: "#aab3c5" }}
+                >
+                  Versions plan a 90-day identity. Cycles run a 15-day focus. Track habits, goals, biometrics... The system analyzes the trends the eye misses.
+                </p>
+              </AnimatedGroup>
+
+              {/* CTAs */}
+              <AnimatedGroup
+                variants={{
+                  container: {
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.05,
+                        delayChildren: 0.75,
+                      },
+                    },
+                  },
+                  ...transitionVariants,
+                }}
+                className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
+              >
+                <Button key={1} asChild variant="brand" size="lg" className="text-base">
+                  <Link href={APP_URL}>
+                    <span className="text-nowrap">Open El Portal</span>
+                  </Link>
+                </Button>
+                <Button
+                  key={2}
+                  asChild
+                  size="lg"
+                  variant="brand-link"
+                  className="text-base"
+                >
+                  <Link href="/methodology">
+                    <span className="text-nowrap">Read the methodology</span>
+                  </Link>
+                </Button>
+              </AnimatedGroup>
+            </div>
+          </div>
+
+          {/* App mockup framed wrapper (adapted from tailark) */}
+          <AnimatedGroup
+            variants={{
+              container: {
+                visible: {
+                  transition: {
+                    staggerChildren: 0.05,
+                    delayChildren: 0.75,
+                  },
+                },
+              },
+              ...transitionVariants,
+            }}
+          >
+            <div className="relative z-[5] -mr-56 mt-6 overflow-hidden px-2 sm:mr-0 sm:mt-8 md:mt-10">
+              <div
+                aria-hidden
+                className="absolute inset-0 z-10 from-transparent from-35%"
+                style={{
+                  background: "linear-gradient(to bottom, transparent 0%, transparent 70%, #02030a 100%)",
+                }}
+              />
+              <div
+                className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4"
+                style={{
+                  background: "#02030a",
+                  borderColor: "rgba(255,255,255,0.08)",
+                  boxShadow: "0 30px 80px rgba(0, 0, 0, 0.4)",
+                }}
+              >
+                <HeroAppMockup />
+              </div>
+            </div>
+          </AnimatedGroup>
         </div>
-    );
+      </section>
+    </main>
+  );
 }

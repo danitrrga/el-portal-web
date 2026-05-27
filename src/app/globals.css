@@ -124,7 +124,7 @@
 
 /* Body */
 html {
-  background: #020617;
+  background: #02030a;
 }
 
 body {
@@ -152,11 +152,11 @@ body {
   opacity: 1;
 }
 
-/* Blue focus ring */
-*:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.5),
-    0 0 25px 6px rgba(30, 64, 175, 0.15);
+/* Neutral focus ring — subtle white ring on interactive elements only */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.30);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 :root {
@@ -195,11 +195,11 @@ body {
 }
 
 .dark {
-  --background: #0a0a0a;
+  --background: #02030a;
   --foreground: #f4f4f5;
-  --card: #0a0a0a;
+  --card: #02030a;
   --card-foreground: #f4f4f5;
-  --popover: #0a0a0a;
+  --popover: #02030a;
   --popover-foreground: #f4f4f5;
   --primary: hsl(222, 84%, 35%);
   --primary-foreground: #ffffff;
@@ -218,7 +218,7 @@ body {
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: #0a0a0a;
+  --sidebar: #02030a;
   --sidebar-foreground: #f4f4f5;
   --sidebar-primary: hsl(222, 84%, 35%);
   --sidebar-primary-foreground: #ffffff;
@@ -236,4 +236,13 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Display heading utility — Special Gothic Expanded One, all-caps */
+.display {
+  font-family: var(--font-special-gothic-expanded), "Arial Black", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  text-transform: uppercase;
+  line-height: 1.02;
 }

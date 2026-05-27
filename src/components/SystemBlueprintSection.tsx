@@ -1,119 +1,511 @@
-"use client";
+import { Card, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import {
+  ChevronDown,
+  FlaskConical,
+  LineChart,
+  LucideIcon,
+} from "lucide-react";
+import { ReactNode } from "react";
 
-import React, { useEffect } from "react";
-import { motion, useAnimation, Variants } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import Image from "next/image";
-import { systemBlueprintData } from "@/data/systemBlueprintData";
-import { VersionSelector } from "@/components/animations/VersionSelector";
-import { CycleBentoCard } from "@/components/animations/CycleBentoCard";
-import { DayBentoCard } from "@/components/animations/DayBentoCard";
+/* ─── Monotone palette ─ white / grey / black only.
+   No brand accent inside mockups — pure typographic hierarchy. */
+const BG = "#04060c"; // matches Hero section bg
+const FG_STRONG = "#ffffff";
+const FG = "#d4d9e3";
+const FG_MUTED = "#a8b0c0";
+const FG_SUBTLE = "#6f7889";
+const RULE = "rgba(255,255,255,0.14)";
 
-export interface ReadonlySystemBlueprintSectionProps {
-    className?: string;
+export default function SystemBlueprintSection() {
+  return (
+    <section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
+      <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl">
+        <div className="mx-auto grid gap-4 lg:grid-cols-2">
+          {/* THE LAB */}
+          <FeatureCard>
+            <CardHeader className="pb-3">
+              <CardHeading
+                icon={FlaskConical}
+                title="The Lab"
+                description="Where you design, execute, and iterate on your self-development system."
+              />
+            </CardHeader>
+
+            <div className="relative mb-6 mt-auto border-t border-dashed sm:mb-0">
+              <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_40%,hsl(var(--muted)),white_125%)]"></div>
+              <div className="aspect-[76/59] p-1 px-6">
+                <MockupFrame>
+                  <LabMockup />
+                </MockupFrame>
+              </div>
+            </div>
+          </FeatureCard>
+
+          {/* TRENDS */}
+          <FeatureCard>
+            <CardHeader className="pb-3">
+              <CardHeading
+                icon={LineChart}
+                title="Trends"
+                description="A correlation engine and AI model, evaluate your daily logs and biometric data to find patterns that were hidden."
+              />
+            </CardHeader>
+
+            <div className="relative mb-6 mt-auto border-t border-dashed sm:mb-0">
+              <div className="absolute inset-0 [background:radial-gradient(125%_125%_at_50%_0%,transparent_40%,hsl(var(--muted)),white_125%)]"></div>
+              <div className="aspect-[76/59] p-1 px-6">
+                <MockupFrame>
+                  <TrendsMockup />
+                </MockupFrame>
+              </div>
+            </div>
+          </FeatureCard>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.15,
-        },
-    },
-};
+/* ─── Mockup frame — pure black surface ──────────────────────────── */
+function MockupFrame({ children }: { children: ReactNode }) {
+  return (
+    <div
+      className="relative w-full h-full overflow-hidden"
+      style={{ background: BG }}
+    >
+      {children}
+    </div>
+  );
+}
 
-const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.8,
-            ease: [0.22, 1, 0.36, 1],
-        },
-    },
-};
+/* ────────────────────────────────────────────────────────────────────
+   LabMockup — minimal monotone Cycle 6 view.
+   Adapted from el-portal/src/components/lab/CycleCard.tsx, stripped of
+   all card chrome — just typographic hierarchy.
+   Sections shown: Priorities · Friction · Goals (collapsed)
+   ──────────────────────────────────────────────────────────────────── */
+function LabMockup() {
+  return (
+    <div className="absolute inset-0 overflow-hidden flex flex-col px-6 py-5">
+      {/* Header */}
+      <div className="flex items-baseline justify-between mb-5">
+        <div className="flex items-center gap-2.5">
+          <ChevronDown size={14} style={{ color: FG_MUTED }} />
+          <h2
+            className="text-[15px] font-bold tracking-tight"
+            style={{ color: FG_STRONG }}
+          >
+            Cycle 6
+          </h2>
+          <span
+            className="text-[9px] font-bold uppercase tracking-[0.18em]"
+            style={{ color: FG_MUTED }}
+          >
+            Active
+          </span>
+        </div>
+        <span
+          className="text-[11px]"
+          style={{ color: FG_SUBTLE }}
+        >
+          16 May — 30 May
+        </span>
+      </div>
 
-export default function SystemBlueprintSection({ className = "" }: ReadonlySystemBlueprintSectionProps) {
-    const controls = useAnimation();
-    const [ref, inView] = useInView({ threshold: 0.15, triggerOnce: true });
-
-    useEffect(() => {
-        if (inView) {
-            controls.start("visible");
-        }
-    }, [controls, inView]);
-
-    return (
-        <section id="methodology" className={`relative flex flex-col items-center py-24 md:py-32 px-6 sm:px-8 bg-zinc-950 text-slate-100 font-display selection:bg-primary/30 antialiased overflow-hidden border-t border-white/5 ${className}`}>
-
-            {/* Universal Grid Texture */}
+      <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-4">
+        {/* PRIORITIES */}
+        <SectionLabel>Priorities</SectionLabel>
+        <div className="space-y-1.5">
+          {[
+            "Compound block",
+            "Marketing site v2",
+            "Sub-22 5k attempt",
+          ].map((p, i) => (
             <div
-                className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"
-                style={{
-                    maskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)",
-                    WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)"
-                }}
-            />
-
-            {/* Subtle Grain Noise Component-Level */}
-            <div
-                className="absolute inset-0 pointer-events-none opacity-[0.03]"
-                style={{
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%15noiseFilter)'/%3E%3C/svg%3E\")"
-                }}
-            ></div>
-
-            {/* Radial soft glow matching the Hero section */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[radial-gradient(circle_at_50%_50%,_rgba(30,64,175,0.05)_0%,_rgba(9,9,11,0)_60%)] pointer-events-none -z-10"></div>
-
-            <main
-                className="w-full max-w-6xl flex flex-col gap-16 relative z-10 selection:bg-primary/30 mx-auto transition-transform duration-500"
-                style={{ transform: "scale(0.8)", transformOrigin: "top center", marginBottom: "-120px" }}
+              key={p}
+              className="flex items-baseline gap-3"
             >
+              <span
+                className="text-[11px] font-bold tabular-nums"
+                style={{ color: FG_SUBTLE }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span
+                className="text-[13px] font-medium"
+                style={{ color: FG_STRONG }}
+              >
+                {p}
+              </span>
+            </div>
+          ))}
+        </div>
 
-                {/* Header - Centered for cinematic impact */}
-                <motion.section
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={controls}
-                    variants={{ visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } } }}
-                    className="flex flex-col items-center text-center gap-6"
-                >
-                    <motion.div
-                        variants={itemVariants}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] uppercase tracking-widest font-semibold shadow-[0_0_20px_rgba(30,64,175,0.15)]"
-                    >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] animate-pulse"></span>
-                        {systemBlueprintData.header.badge}
-                    </motion.div>
+        {/* divider */}
+        <div className="h-px" style={{ background: RULE }} />
 
-                    <h2 className="font-serif italic text-5xl md:text-7xl lg:text-8xl text-zinc-100 max-w-4xl leading-[1.05] tracking-tight drop-shadow-sm">
-                        {systemBlueprintData.header.title}
-                    </h2>
-                </motion.section>
+        {/* FRICTION */}
+        <SectionLabel>Friction</SectionLabel>
+        <ul className="space-y-1.5">
+          {[
+            "Run volume bleeding into deep-work hours",
+            "Phone time spiking above 2h on rest days",
+          ].map((f) => (
+            <li
+              key={f}
+              className="flex items-start gap-2.5 text-[12px] leading-[1.4]"
+              style={{ color: FG }}
+            >
+              <span
+                className="mt-[6px] w-[5px] h-[5px] rounded-full flex-shrink-0"
+                style={{ background: "#ef4444" }}
+              />
+              {f}
+            </li>
+          ))}
+        </ul>
 
-                {/* Temporal Hierarchy Grid */}
-                <motion.section
-                    ref={ref}
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={controls}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6"
-                >
-                    <motion.div variants={itemVariants} className="h-full">
-                        <VersionSelector />
-                    </motion.div>
-                    <motion.div variants={itemVariants} className="h-full">
-                        <CycleBentoCard />
-                    </motion.div>
-                    <motion.div variants={itemVariants} className="h-full">
-                        <DayBentoCard />
-                    </motion.div>
-                </motion.section>
+        {/* divider */}
+        <div className="h-px" style={{ background: RULE }} />
 
-
-            </main >
-        </section >
-    );
+        {/* GOALS (collapsed) */}
+        <SectionLabel>Goals</SectionLabel>
+        <div className="space-y-1">
+          {[
+            { title: "Sub-22 5k race in 30 days", pct: 13 },
+            { title: "Marketing site v2", pct: 33 },
+            { title: "Hit 100 paying customers", pct: 0 },
+            { title: "Read 12 books this version", pct: 9 },
+          ].map((g) => (
+            <div
+              key={g.title}
+              className="flex items-baseline justify-between gap-3"
+            >
+              <span
+                className="text-[13px] font-medium truncate"
+                style={{ color: FG_STRONG }}
+              >
+                {g.title}
+              </span>
+              <span
+                className="text-[12px] font-bold tabular-nums flex-shrink-0"
+                style={{ color: g.pct === 0 ? FG_SUBTLE : FG }}
+              >
+                {g.pct}%
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
+
+/* ────────────────────────────────────────────────────────────────────
+   TrendsMockup — minimal monotone Insights view.
+   Adapted from el-portal/src/components/trends/InsightCard.tsx +
+   InsightCardRow.tsx — weekly summary + correlation data points.
+   No tag cards, no meter bars — just the correlations.
+   ──────────────────────────────────────────────────────────────────── */
+function TrendsMockup() {
+  const insights: {
+    headline: string;
+    body: string;
+    lift: number;
+    polarity: "positive" | "negative";
+    strength: "strong" | "moderate" | "low";
+    isNew: boolean;
+    date: string;
+  }[] = [
+      {
+        headline: "Meditate 10 min → 28% better mood",
+        body: "Days you complete Meditate 10 min tend to have higher mood.",
+        lift: 28,
+        polarity: "positive",
+        strength: "strong",
+        isNew: true,
+        date: "Today",
+      },
+      {
+        headline: "Deep work 90m → 16% higher wellbeing",
+        body: "On days with Deep work block (90 min), your wellbeing tends to be higher.",
+        lift: 16,
+        polarity: "positive",
+        strength: "moderate",
+        isNew: true,
+        date: "3d ago",
+      },
+      {
+        headline: "Late screen time → 12% worse next-morning mood",
+        body: "Phone use after 22:00 tends to depress next-day mood scores.",
+        lift: 12,
+        polarity: "negative",
+        strength: "low",
+        isNew: false,
+        date: "5d ago",
+      },
+    ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden flex flex-col px-6 py-5">
+      <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-4">
+        {/* WEEKLY SUMMARY */}
+        <SectionLabel>Weekly Summary</SectionLabel>
+        <p className="text-[12px] leading-[1.55]" style={{ color: FG }}>
+          Two weeks of compounding habits. Meditation cuts evening stress by
+          nearly a third, and sleep is feeding directly into mood.{" "}
+          <span style={{ color: FG_STRONG }}>Tuesdays peak.</span>
+        </p>
+
+        {/* divider */}
+        <div className="h-px" style={{ background: RULE }} />
+
+        {/* WHAT YOUR DATA REVEALS — insight cards */}
+        <SectionLabel>What your data reveals</SectionLabel>
+        <div className="space-y-2">
+          {insights.map((i) => (
+            <InsightRow key={i.headline} insight={i} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── InsightRow — adapted from el-portal trends/InsightCardRow.tsx ─ */
+function InsightRow({
+  insight,
+}: {
+  insight: {
+    headline: string;
+    body: string;
+    lift: number;
+    polarity: "positive" | "negative";
+    strength: "strong" | "moderate" | "low";
+    isNew: boolean;
+    date: string;
+  };
+}) {
+  const arrow = insight.polarity === "positive" ? "↑" : "↓";
+
+  return (
+    <div className="flex items-start gap-2.5">
+      {/* Strength circle */}
+      <div className="pt-[3px] shrink-0">
+        <StrengthCircle level={insight.strength} />
+      </div>
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <p
+            className="text-[12px] font-semibold leading-[1.3] tracking-[-0.01em]"
+            style={{ color: FG_STRONG }}
+          >
+            {insight.headline}
+          </p>
+          <span
+            className="text-[12px] tabular-nums font-semibold shrink-0 leading-[1.3]"
+            style={{ color: FG_STRONG }}
+          >
+            {arrow}
+            {insight.lift}%
+          </span>
+        </div>
+        <p
+          className="text-[11px] mt-1 leading-[1.4]"
+          style={{ color: FG_MUTED }}
+        >
+          {insight.body}
+        </p>
+        <div className="flex items-center gap-2 mt-1.5">
+          {insight.isNew && (
+            <span
+              className="text-[8.5px] uppercase tracking-[0.1em] font-semibold rounded-full px-1.5 py-[1px]"
+              style={{
+                background: "rgba(255,255,255,0.1)",
+                color: FG_STRONG,
+              }}
+            >
+              New
+            </span>
+          )}
+          <span
+            className="text-[10px] ml-auto tabular-nums"
+            style={{ color: FG_SUBTLE }}
+          >
+            {insight.date}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── StrengthCircle — monotone version of el-portal's primitive ── */
+function StrengthCircle({
+  level,
+  size = 11,
+}: {
+  level: "strong" | "moderate" | "low";
+  size?: number;
+}) {
+  const r = size / 2 - 1;
+  const c = size / 2;
+
+  if (level === "strong") {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className="shrink-0"
+      >
+        <circle cx={c} cy={c} r={r} fill={FG_STRONG} />
+      </svg>
+    );
+  }
+
+  if (level === "moderate") {
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className="shrink-0"
+      >
+        <circle
+          cx={c}
+          cy={c}
+          r={r}
+          fill="none"
+          stroke={FG_STRONG}
+          strokeWidth={1.25}
+        />
+        <path
+          d={`M ${c} ${c - r} A ${r} ${r} 0 0 1 ${c} ${c + r} Z`}
+          fill={FG_STRONG}
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      className="shrink-0"
+    >
+      <circle
+        cx={c}
+        cy={c}
+        r={r}
+        fill="none"
+        stroke={FG_SUBTLE}
+        strokeWidth={1.25}
+      />
+    </svg>
+  );
+}
+
+/* ─── Section label — uppercase tracked eyebrow ──────────────────── */
+function SectionLabel({
+  icon: Icon,
+  children,
+}: {
+  icon?: LucideIcon;
+  children: ReactNode;
+}) {
+  return (
+    <h4
+      className="flex items-center gap-1.5 text-[8px] font-bold uppercase tracking-[0.22em]"
+      style={{ color: FG_MUTED }}
+    >
+      {Icon && <Icon size={9} />}
+      {children}
+    </h4>
+  );
+}
+
+/* ─── FeatureCard wrapper + decorator (tailark features-10) ────── */
+interface FeatureCardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const FeatureCard = ({ children, className }: FeatureCardProps) => (
+  <Card
+    className={cn(
+      "group relative rounded-none border-0 shadow-none flex flex-col",
+      className,
+    )}
+    style={{ background: BG }}
+  >
+    <CardDecorator />
+    {children}
+  </Card>
+);
+
+const CardDecorator = () => {
+  const LINE = "rgba(255,255,255,0.22)";
+  return (
+    <>
+      {/* Corner brackets — anchor points for the trace */}
+      <span className="border-white absolute -left-px -top-px block size-2 border-l-2 border-t-2 z-10" />
+      <span className="border-white absolute -right-px -top-px block size-2 border-r-2 border-t-2 z-10" />
+      <span className="border-white absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 z-10" />
+      <span className="border-white absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 z-10" />
+
+      {/* Edge traces — thin lines that fade where they approach the brackets */}
+      <span
+        aria-hidden
+        className="absolute top-0 left-2 right-2 h-px pointer-events-none"
+        style={{
+          background: `linear-gradient(to right, transparent 0%, ${LINE} 12%, ${LINE} 88%, transparent 100%)`,
+        }}
+      />
+      <span
+        aria-hidden
+        className="absolute bottom-0 left-2 right-2 h-px pointer-events-none"
+        style={{
+          background: `linear-gradient(to right, transparent 0%, ${LINE} 12%, ${LINE} 88%, transparent 100%)`,
+        }}
+      />
+      <span
+        aria-hidden
+        className="absolute left-0 top-2 bottom-2 w-px pointer-events-none"
+        style={{
+          background: `linear-gradient(to bottom, transparent 0%, ${LINE} 12%, ${LINE} 88%, transparent 100%)`,
+        }}
+      />
+      <span
+        aria-hidden
+        className="absolute right-0 top-2 bottom-2 w-px pointer-events-none"
+        style={{
+          background: `linear-gradient(to bottom, transparent 0%, ${LINE} 12%, ${LINE} 88%, transparent 100%)`,
+        }}
+      />
+    </>
+  );
+};
+
+interface CardHeadingProps {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const CardHeading = ({ icon: Icon, title, description }: CardHeadingProps) => (
+  <div className="px-6 pt-6 pb-0">
+    <span className="text-muted-foreground flex items-center gap-2">
+      <Icon className="size-4" />
+      {title}
+    </span>
+    {/* No min-h — heading flows naturally. FeatureCard uses flex-col +
+        mt-auto on the mockup wrapper to pin mockups to the bottom of the
+        card. Grid stretches both cards to equal height, so mockups
+        bottom-align regardless of heading length. */}
+    <p className="mt-6 text-2xl font-semibold">{description}</p>
+  </div>
+);
