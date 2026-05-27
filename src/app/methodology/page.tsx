@@ -100,124 +100,212 @@ function TemporalHierarchySection() {
           </ul>
         </div>
 
-        {/* RIGHT — nested diagram */}
-        <div
-          className="relative aspect-[5/4] rounded-xl border p-6 md:p-8"
-          style={{
-            background: "rgba(255,255,255,0.015)",
-            borderColor: RULE_STRONG,
-          }}
-        >
-          <NestedScalesDiagram />
+        {/* RIGHT — strata diagram (matches hero VCD language, editorial variant) */}
+        <div className="relative">
+          <TemporalStrataDiagram />
         </div>
-      </div>
-
-      {/* Anchor metric — full width */}
-      <div
-        className="mt-12 flex items-center justify-center gap-4 border-y py-5"
-        style={{ borderColor: RULE_STRONG }}
-      >
-        <span
-          className="font-mono text-[11px] uppercase tracking-[0.22em]"
-          style={{ color: FG_MUTED }}
-        >
-          1 Version
-        </span>
-        <span
-          className="font-mono text-[11px]"
-          style={{ color: FG_SUBTLE }}
-        >
-          ═
-        </span>
-        <span
-          className="font-mono text-[11px] uppercase tracking-[0.22em]"
-          style={{ color: FG_MUTED }}
-        >
-          6 Cycles
-        </span>
-        <span
-          className="font-mono text-[11px]"
-          style={{ color: FG_SUBTLE }}
-        >
-          ═
-        </span>
-        <span
-          className="font-mono text-[11px] uppercase tracking-[0.22em]"
-          style={{ color: FG_MUTED }}
-        >
-          90 Days
-        </span>
       </div>
     </section>
   );
 }
 
-function NestedScalesDiagram() {
-  const days = [
-    { label: "VERSION", sub: "90", size: 1.0 },
-    { label: "CYCLE", sub: "15", size: 0.68 },
-    { label: "DAY", sub: "1", size: 0.36 },
-  ];
+/* ────────────────────────────────────────────────────────────────────
+   TemporalStrataDiagram — static editorial variant of the hero's
+   VCDSection. Three horizontal strata sharing a single dashed NOW
+   line. Monotone (no accent), no glow on today dot, no animation.
+   ──────────────────────────────────────────────────────────────────── */
+
+const STRATA_TRACK = "rgba(255,255,255,0.06)";
+const STRATA_PAST = "rgba(255,255,255,0.20)";
+const STRATA_ACTIVE = "rgba(255,255,255,0.35)";
+const STRATA_NOW = "rgba(255,255,255,0.28)";
+
+function TemporalStrataDiagram() {
+  const TODAY_DAY_OF_VERSION = 42;
+  const TOTAL_DAYS = 90;
+  const TOTAL_CYCLES = 6;
+  const ACTIVE_CYCLE_IDX = 2; // 0-indexed → cycle 3 of 6
+  const NOW_PCT = (TODAY_DAY_OF_VERSION / TOTAL_DAYS) * 100;
+
   return (
-    <div className="relative flex h-full w-full items-center justify-center">
-      {days.map((d, i) => {
-        const inset = (1 - d.size) * 50;
+    <div className="relative w-full">
+      <NowLine leftPct={NOW_PCT} />
+
+      <div className="flex flex-col gap-7">
+        <Stratum
+          label="VERSION"
+          count="90 days"
+          rightMeta={`Day ${TODAY_DAY_OF_VERSION} of ${TOTAL_DAYS}`}
+        >
+          <VersionTrack progressPct={NOW_PCT} />
+        </Stratum>
+
+        <Stratum label="CYCLES" count={`${TOTAL_CYCLES} × 15 days`}>
+          <CycleBlocks totalCycles={TOTAL_CYCLES} activeIdx={ACTIVE_CYCLE_IDX} />
+        </Stratum>
+
+        <Stratum label="DAYS" count="1 day each">
+          <DayDots total={TOTAL_DAYS} todayIdx={TODAY_DAY_OF_VERSION - 1} />
+        </Stratum>
+      </div>
+    </div>
+  );
+}
+
+function Stratum({
+  label,
+  count,
+  rightMeta,
+  children,
+}: {
+  label: string;
+  count: string;
+  rightMeta?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="mb-2.5 flex items-baseline justify-between gap-3">
+        <div className="flex items-baseline gap-2.5">
+          <span
+            className="font-mono text-[10px] uppercase tracking-[0.22em]"
+            style={{ color: FG_MUTED }}
+          >
+            {label}
+          </span>
+          <span
+            aria-hidden
+            className="font-mono text-[10px]"
+            style={{ color: FG_SUBTLE }}
+          >
+            ·
+          </span>
+          <span
+            className="font-mono text-[10px] tabular-nums"
+            style={{ color: FG_SUBTLE }}
+          >
+            {count}
+          </span>
+        </div>
+        {rightMeta ? (
+          <span
+            className="font-mono text-[10px] tabular-nums"
+            style={{ color: FG_MUTED }}
+          >
+            {rightMeta}
+          </span>
+        ) : null}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function NowLine({ leftPct }: { leftPct: number }) {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute top-6 bottom-2"
+      style={{
+        left: `${leftPct}%`,
+        width: 1,
+        transform: "translateX(-50%)",
+        background:
+          "repeating-linear-gradient(to bottom, " +
+          STRATA_NOW +
+          " 0 3px, transparent 3px 6px)",
+      }}
+    />
+  );
+}
+
+function VersionTrack({ progressPct }: { progressPct: number }) {
+  return (
+    <div className="relative h-2">
+      <div
+        className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full"
+        style={{ background: STRATA_TRACK }}
+      />
+      <div
+        className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full"
+        style={{
+          left: 0,
+          width: `${progressPct}%`,
+          background: STRATA_PAST,
+        }}
+      />
+    </div>
+  );
+}
+
+function CycleBlocks({
+  totalCycles,
+  activeIdx,
+}: {
+  totalCycles: number;
+  activeIdx: number;
+}) {
+  return (
+    <div
+      className="grid h-2 gap-px"
+      style={{
+        gridTemplateColumns: `repeat(${totalCycles}, minmax(0, 1fr))`,
+      }}
+    >
+      {Array.from({ length: totalCycles }).map((_, i) => {
+        const isActive = i === activeIdx;
+        const isPast = i < activeIdx;
         return (
           <div
-            key={d.label}
-            className="absolute inset-0 rounded-lg border"
+            key={i}
+            className="h-full"
             style={{
-              top: `${inset}%`,
-              left: `${inset}%`,
-              right: `${inset}%`,
-              bottom: `${inset}%`,
-              borderColor:
-                i === 0
-                  ? "rgba(255,255,255,0.10)"
-                  : i === 1
-                    ? "rgba(255,255,255,0.16)"
-                    : "rgba(255,255,255,0.28)",
-              background:
-                i === 2
-                  ? `${ACCENT}10`
-                  : "rgba(255,255,255,0.012)",
+              background: isActive
+                ? STRATA_ACTIVE
+                : isPast
+                  ? STRATA_PAST
+                  : STRATA_TRACK,
+              borderRadius: 2,
             }}
-          >
-            {i === 2 ? (
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span
-                  className="font-mono text-[10px] uppercase tracking-[0.22em]"
-                  style={{ color: FG_MUTED }}
-                >
-                  {d.label}
-                </span>
-                <span
-                  className="display mt-1 leading-none"
-                  style={{
-                    fontSize: "clamp(28px, 4vw, 40px)",
-                    color: FG_STRONG,
-                  }}
-                >
-                  {d.sub}
-                </span>
-              </div>
-            ) : (
-              <div className="absolute left-3 top-2.5 flex items-baseline gap-2">
-                <span
-                  className="font-mono text-[9px] uppercase tracking-[0.22em]"
-                  style={{ color: FG_SUBTLE }}
-                >
-                  {d.label}
-                </span>
-                <span
-                  className="font-mono text-[10px] tabular-nums"
-                  style={{ color: FG_MUTED }}
-                >
-                  {d.sub}
-                </span>
-              </div>
-            )}
-          </div>
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function DayDots({
+  total,
+  todayIdx,
+}: {
+  total: number;
+  todayIdx: number;
+}) {
+  return (
+    <div className="relative h-2.5 w-full">
+      {Array.from({ length: total }).map((_, i) => {
+        const dayPct = ((i + 0.5) / total) * 100;
+        const isToday = i === todayIdx;
+        const isPast = i < todayIdx;
+        const size = isToday ? 9 : 2;
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: `${dayPct}%`,
+              top: "50%",
+              width: size,
+              height: size,
+              transform: "translate(-50%, -50%)",
+              borderRadius: "50%",
+              background: isToday
+                ? FG_STRONG
+                : isPast
+                  ? STRATA_PAST
+                  : STRATA_TRACK,
+            }}
+          />
         );
       })}
     </div>
