@@ -76,9 +76,9 @@ export default function Hero() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
               <AnimatedGroup variants={transitionVariants}>
-                {/* Announcement pill with arrow-swap hover (adapted from tailark) */}
+                {/* Announcement pill — promo: first 300 users get Pro lifetime free */}
                 <Link
-                  href={APP_URL}
+                  href="/pricing"
                   className="group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 transition-colors duration-300"
                   style={{
                     background: "rgba(255,255,255,0.04)",
@@ -86,7 +86,9 @@ export default function Hero() {
                   }}
                 >
                   <span className="text-sm" style={{ color: "#aab3c5" }}>
-                    V2 is live — public access
+                    <span style={{ color: "#77B7ED" }} className="font-medium">Early access</span>
+                    <span style={{ color: "rgba(255,255,255,0.20)" }}> · </span>
+                    Launching soon · First 30 signups get Pro for life
                   </span>
                   <span
                     className="block h-4 w-0.5"

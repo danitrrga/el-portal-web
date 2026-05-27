@@ -1,157 +1,94 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { Check, ChevronDown } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { Button } from "@/components/ui/button";
 
-/* ─── Inline SVG icons ────────────────────────────────────────────── */
+/* ─── Brand palette (matches Hero / VCD / CTA / Methodology) ──────── */
+const SECTION_BG = "#04060c";
+const FG_STRONG = "#f4f6fb";
+const FG = "#aab3c5";
+const FG_MUTED = "#8590a8";
+const FG_SUBTLE = "#5a6478";
+const ACCENT = "#4487D6";
+const ACCENT_LIGHT = "#77B7ED";
+const BORDER = "rgba(255,255,255,0.08)";
+const BORDER_STRONG = "rgba(255,255,255,0.14)";
 
-function CheckIcon({ filled = false }: { filled?: boolean }) {
-    return (
-        <svg
-            className={`w-4 h-4 shrink-0 ${filled ? "text-blue-400" : "text-blue-500/70"}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-        >
-            <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-            />
-        </svg>
-    );
-}
-
-function ChevronIcon() {
-    return (
-        <svg
-            className="w-5 h-5 text-zinc-500 transition-transform duration-300 group-open:rotate-180"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-        >
-            <path
-                fillRule="evenodd"
-                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                clipRule="evenodd"
-            />
-        </svg>
-    );
-}
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 
 /* ─── Data ────────────────────────────────────────────────────────── */
 
 const tiers = [
     {
         name: "Initiate",
-        description: "Start building your first identity version.",
+        description: "The full system. Free, forever.",
         price: "$0",
         period: "forever free",
-        cta: "Begin Your Journey",
+        cta: "Begin your journey",
         featured: false,
         features: [
-            "1 Active Version (90-Day cycle)",
-            "1 Cycle at a time (15-Day sprint)",
-            "Basic habit tracking (up to 5 habits)",
-            "Daily performance scoring (P_daily)",
-            "Community access",
+            "Unlimited Versions, Cycles, and Days",
+            "Dual-progression Goals (streaks + projects)",
+            "Habit tracking + daily performance scoring",
+            "The Lab — Cycle planner",
+            "The Archives — full knowledge base",
+            "Cinema Mode — 5 immersive slides",
+            "Daily Pulse — mood & vitals",
+            "Trends — basic analytics",
+            "MCP integration + API keys",
+            "Mobile experience · 5 languages",
+            "60 MB storage",
         ],
     },
     {
         name: "Lifetime",
-        description: "One payment. Full access. Forever.",
+        description: "Everything in Initiate, plus AI on top.",
         price: "$10",
         period: "one-time",
-        cta: "Claim Lifetime Access",
+        cta: "Claim Lifetime access",
         featured: true,
-        badge: "Best Value",
+        badge: "Free for first 30",
         features: [
-            "Unlimited Versions & Cycles",
-            "Dual-Progression Goals (Streaks + Projects)",
-            "Cinema Mode — 5 immersive slides",
-            "The Archives — full knowledge base",
-            "Daily Pulse — mood & vitals tracking",
-            "Trends — analytics & insights",
-            "5-language internationalization",
-            "Mobile-optimized experience",
-            "Drag-and-drop reordering",
-            "Early access to new features",
+            "Everything in Initiate",
+            "Unlimited storage (vs 60 MB)",
+            "AI Insight Narratives — weekly auto-summaries",
+            "Reflection Sentiment Analysis",
+            "Weekly Digest emails",
             "Founding Member badge",
-            "Lifetime updates, zero renewals",
             "Direct line to the creator",
+            "Early access to new features",
+            "Lifetime updates, zero renewals",
         ],
     },
-];
+] as const;
 
 const comparisonFeatures: {
     name: string;
     initiate: string | boolean;
     lifetime: string | boolean;
 }[] = [
-        {
-            name: "Habit Tracking + Goal System",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "Cinema Mode",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "The Archives",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: 'Weekly Review & Recap of Cycles',
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: 'Keyboard Centric Design',
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "Mobile Experience",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "Drag-and-Drop Reordering",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "Internationalization (5 Languages)",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "Daily Pulse Check-Ins",
-            initiate: true,
-            lifetime: true,
-        },
-        {
-            name: "Storage",
-            initiate: "60MB",
-            lifetime: "Unlimited",
-        },
-        {
-            name: "Priority Support",
-            initiate: "—",
-            lifetime: true,
-        },
-        {
-            name: "Trends & Advanced Mood Analytics",
-            initiate: "—",
-            lifetime: true,
-        },
+        { name: "Versions, Cycles, Days", initiate: "Unlimited", lifetime: "Unlimited" },
+        { name: "Habit Tracking + Goal System", initiate: true, lifetime: true },
+        { name: "The Lab — Cycle planner", initiate: true, lifetime: true },
+        { name: "The Archives", initiate: true, lifetime: true },
+        { name: "Cinema Mode", initiate: true, lifetime: true },
+        { name: "Daily Pulse (mood + vitals)", initiate: true, lifetime: true },
+        { name: "Trends — basic analytics", initiate: true, lifetime: true },
+        { name: "Keyboard-centric design", initiate: true, lifetime: true },
+        { name: "Drag-and-drop reordering", initiate: true, lifetime: true },
+        { name: "Mobile experience", initiate: true, lifetime: true },
+        { name: "Internationalization (5 languages)", initiate: true, lifetime: true },
+        { name: "MCP integration + API keys", initiate: true, lifetime: true },
+        { name: "Storage", initiate: "60 MB", lifetime: "Unlimited" },
+        { name: "AI Insight Narratives", initiate: "—", lifetime: true },
+        { name: "Reflection Sentiment Analysis", initiate: "—", lifetime: true },
+        { name: "Weekly Digest emails", initiate: "—", lifetime: true },
+        { name: "Founding Member badge", initiate: "—", lifetime: true },
+        { name: "Direct line to the creator", initiate: "—", lifetime: true },
+        { name: "Lifetime updates, zero renewals", initiate: "—", lifetime: true },
     ];
 
 const faqs = [
@@ -168,199 +105,203 @@ const faqs = [
         a: "El Portal is built for serious operators, not for profit margins. A one-time $10 payment unlocks everything. Future updates are included. No subscriptions, no renewals, no hidden fees. You pay once and the whole system is yours, forever.",
     },
     {
-        q: "What is the Dual-Progression Goal System?",
-        a: "Goals in El Portal are tracked mathematically. Type A goals are powered by habit streaks and follow an asymptotic curve (early consistency is heavily rewarded). Type B goals are project-based with linear subtask completion. Both are always quantified.",
+        q: "What is Trends and what data powers it?",
+        a: "Trends displays all the data collected so you can access it and visualize it at anytime. Insights are computed with all the data collects, your habits, goal progress, daily mood and energy check-ins, and Cycle scores. You can see how consistent you've been, how your mood lines up with your output, and how each Cycle compares to the last. In the future, as we expand the app, we will be able to offer much more comprehensive analytics systems, tracking biometric data and more. Connecting a smart band or apple health, we can use sleep, heart rate, recovery, screen time... To relate it to your performance in all ways.",
     },
     {
-        q: "What happens to my data if I stay on the free tier?",
-        a: "Your data is never deleted. On the Initiate tier, advanced features like Cinema Mode and The Archives are not available, but your Versions, Cycles, and performance history remain fully intact.",
+        q: "What's actually different about the free tier?",
+        a: "Less than you might think. Initiate gives you the whole working system — unlimited Versions, Cycles, and Days, the full Lab, Archives, Cinema Mode, basic Trends, Pulse check-ins, mobile, MCP, all of it. The only real ceilings are storage (60 MB cap) and the AI layer on top (narratives, sentiment, weekly digest emails). Your data is never deleted regardless of tier.",
     },
+    {
+        q: "When does Lifetime billing launch?",
+        a: "El Portal is launching soon. As a thank-you for showing up early, the first 30 signups get the Pro tier activated for free at launch — no payment required, kept for life. Everyone after that pays the one-time $10 through Stripe (PCI-DSS Level 1, card details never touch El Portal's servers).",
+    },
+    {
+        q: "What happens to my data?",
+        a: "Your data will never be sold or shared with third parties. It will always remain under your ownership. You can export all your data at any time in a JSON format or delete it on demand.",
+    },
+    {
+        q: "Is my payment secure?",
+        a: "Yes. Payments are processed by Stripe, a PCI-DSS Level 1 certified provider used by millions of businesses worldwide. Your card details never touch El Portal's servers. They go directly to Stripe over an encrypted connection, and we only receive a confirmation token. No card numbers, no CVVs, no storage on our end.",
+    },
+
 ];
 
-/* ─── Component ───────────────────────────────────────────────────── */
+/* ─── Page ────────────────────────────────────────────────────────── */
 
 export default function PricingPage() {
-    notFound();
-
     return (
-        <div className="relative w-full bg-zinc-950 min-h-screen">
-            {/* Grain texture overlay */}
+        <div
+            className="relative w-full min-h-screen"
+            style={{ background: SECTION_BG }}
+        >
+            {/* Atmospheric backdrop — top-light radial (matches Hero / CTA recipe) */}
             <div
-                className="fixed inset-0 z-50 pointer-events-none opacity-[0.02]"
+                aria-hidden
+                className="absolute inset-0 -z-10 pointer-events-none"
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                }}
-            />
-
-            {/* Top radial blue gradient (DESIGN.md §2) */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-950/40 via-zinc-950 to-zinc-950 pointer-events-none" />
-
-            {/* Background grid texture */}
-            <div
-                className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"
-                style={{
-                    maskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)",
-                    WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)"
+                    background: `radial-gradient(ellipse 70% 60% at 50% 0%, ${ACCENT}1f, transparent 65%)`,
                 }}
             />
 
             <Navbar />
 
             <main className="relative z-10 flex flex-col items-center">
-                {/* ── Hero Header ──────────────────────────────────── */}
-                <div className="w-full max-w-5xl px-6 md:px-8 pt-56 pb-10 flex flex-col items-center text-center">
-                    <h1 className="text-zinc-100 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter mb-5">
-                        Invest in your identity architecture
+                {/* ── Hero ─────────────────────────────────────────── */}
+                <section className="w-full max-w-3xl px-6 pt-40 md:pt-48 pb-12 text-center">
+                    <h1
+                        className="display text-balance"
+                        style={{
+                            fontSize: "clamp(36px, 4.6vw, 58px)",
+                            color: FG_STRONG,
+                        }}
+                    >
+                        Pay once. Own the system.
                     </h1>
-                    <p className="text-zinc-400 text-sm md:text-base max-w-lg leading-relaxed mb-12">
-                        El Portal is the bridge between your Current Self and your Future
-                        Self. Start free, or unlock everything, forever, for a single
-                        payment.
+                    <p
+                        className="mt-6 text-base md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
+                        style={{ color: FG }}
+                    >
+                        Start free or unlock everything with one payment. No
+                        subscriptions, no tiers above this, no renewals.
                     </p>
 
-                    {/* ── Pricing Cards Grid ───────────────────────── */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-3xl items-stretch">
+                    {/* Promo banner */}
+                    <div
+                        className="mt-8 inline-flex items-center gap-3 rounded-full border px-4 py-2"
+                        style={{
+                            background: `${ACCENT}14`,
+                            borderColor: `${ACCENT_LIGHT}4d`,
+                        }}
+                    >
+                        <span
+                            className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em]"
+                            style={{ color: ACCENT_LIGHT }}
+                        >
+                            <span
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ background: ACCENT_LIGHT }}
+                            />
+                            Early access
+                        </span>
+                        <span
+                            className="block h-3 w-px"
+                            style={{ background: "rgba(255,255,255,0.15)" }}
+                        />
+                        <span
+                            className="text-xs font-medium"
+                            style={{ color: FG_STRONG }}
+                        >
+                            Launching soon · First 30 signups get Lifetime free at launch
+                        </span>
+                    </div>
+                </section>
+
+                {/* ── Pricing cards — tailark pricing-2 recipe on brand tokens ── */}
+                <section className="w-full max-w-3xl px-6 pb-16">
+                    <div className="grid gap-4 md:grid-cols-2 items-stretch">
                         {tiers.map((tier) => (
-                            <div
-                                key={tier.name}
-                                className={`
-                                    relative flex flex-col p-6 rounded-2xl text-left
-                                    transition-all duration-300 ease-out
-                                    bg-zinc-950/80 backdrop-blur-xl border
-                                    ${tier.featured
-                                        ? "border-blue-500/20 shadow-[0_0_30px_-5px_rgba(30,64,175,0.15)] hover:shadow-[0_0_40px_-5px_rgba(30,64,175,0.25)] hover:border-blue-500/30"
-                                        : "border-white/5 hover:border-blue-500/20 hover:shadow-[0_0_30px_-5px_rgba(30,64,175,0.1)]"
-                                    }
-                                `}
-                            >
-                                {/* Badge */}
-                                {tier.badge && (
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500/10 text-blue-400 text-[10px] font-bold uppercase tracking-wider rounded-full whitespace-nowrap border border-blue-500/20">
-                                        {tier.badge}
-                                    </div>
-                                )}
-
-                                {/* Tier Name & Price */}
-                                <div className="mb-2">
-                                    <h3 className="text-zinc-100 text-lg font-semibold tracking-tight mb-1">
-                                        {tier.name}
-                                    </h3>
-                                    <p className="text-zinc-500 text-xs leading-relaxed mb-3">
-                                        {tier.description}
-                                    </p>
-                                    <div className="flex items-baseline gap-2">
-                                        <span className="text-zinc-100 text-4xl font-bold tracking-tight">
-                                            {tier.price}
-                                        </span>
-                                        <span className="text-zinc-500 text-xs">
-                                            {tier.period}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Separator */}
-                                <div className="w-full h-px bg-zinc-800/50 my-4" />
-
-                                {/* Features */}
-                                <ul className="space-y-2.5 mb-6 flex-grow">
-                                    {tier.features.map((feature) => (
-                                        <li
-                                            key={feature}
-                                            className="flex items-start gap-2.5 text-xs leading-relaxed"
-                                        >
-                                            <CheckIcon filled={tier.featured} />
-                                            <span
-                                                className={
-                                                    tier.featured
-                                                        ? "text-zinc-300"
-                                                        : "text-zinc-400"
-                                                }
-                                            >
-                                                {feature}
-                                            </span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                {/* CTA Button */}
-                                {tier.featured ? (
-                                    <ShinyButton className="w-full text-xs py-2.5 px-5">
-                                        {tier.cta}
-                                    </ShinyButton>
-                                ) : (
-                                    <button
-                                        className="w-full py-4 px-8 pb-1px rounded-md font-medium text-lg tracking-tight transition-all duration-300 ease-out bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border border-white/5 hover:border-blue-500/20"
-                                    >
-                                        {tier.cta}
-                                    </button>
-                                )}
-                            </div>
+                            <PricingCard key={tier.name} tier={tier} />
                         ))}
                     </div>
-                </div>
+                </section>
 
-                {/* ── Feature Comparison Table ─────────────────────── */}
-                <section className="w-full max-w-3xl px-6 md:px-8 py-16">
-                    <h2 className="text-zinc-100 text-2xl font-bold tracking-tight mb-10 text-center">
-                        Feature Comparison
-                    </h2>
-                    <div className="bg-zinc-950/80 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden">
+                {/* ── Comparison table ─────────────────────────────── */}
+                <section className="w-full max-w-3xl px-6 py-16">
+                    <div className="text-center mb-10">
+                        <span
+                            className="text-[11px] font-medium uppercase tracking-[0.22em]"
+                            style={{ color: FG_MUTED }}
+                        >
+                            Compare
+                        </span>
+                        <h2
+                            className="display text-balance mt-4"
+                            style={{
+                                fontSize: "clamp(24px, 2.6vw, 32px)",
+                                color: FG_STRONG,
+                            }}
+                        >
+                            Feature by feature.
+                        </h2>
+                    </div>
+                    <div
+                        className="rounded-xl border overflow-hidden"
+                        style={{ borderColor: BORDER, background: "rgba(255,255,255,0.015)" }}
+                    >
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="border-b border-zinc-800/50">
-                                    <th className="p-4 md:p-5 text-zinc-100 font-semibold text-xs tracking-tight">
+                                <tr
+                                    className="border-b"
+                                    style={{ borderColor: BORDER }}
+                                >
+                                    <th
+                                        className="px-5 py-4 text-[11px] font-medium uppercase tracking-[0.16em]"
+                                        style={{ color: FG_MUTED }}
+                                    >
                                         Feature
                                     </th>
-                                    <th className="p-4 md:p-5 text-zinc-400 font-medium text-xs text-center">
+                                    <th
+                                        className="px-5 py-4 text-[11px] font-medium uppercase tracking-[0.16em] text-center"
+                                        style={{ color: FG_MUTED }}
+                                    >
                                         Initiate
                                     </th>
-                                    <th className="p-4 md:p-5 text-blue-400 font-semibold text-xs text-center">
+                                    <th
+                                        className="px-5 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-center"
+                                        style={{ color: FG_STRONG }}
+                                    >
                                         Lifetime
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-zinc-800/50">
+                            <tbody>
                                 {comparisonFeatures.map((row, i) => (
                                     <tr
                                         key={row.name}
-                                        className={`transition-colors hover:bg-white/[0.02] ${i % 2 === 1
-                                            ? "bg-white/[0.01]"
-                                            : ""
-                                            }`}
+                                        className="transition-colors"
+                                        style={{
+                                            borderTop:
+                                                i === 0
+                                                    ? undefined
+                                                    : `1px solid ${BORDER}`,
+                                        }}
                                     >
-                                        <td className="p-4 md:p-5 text-zinc-300 text-xs leading-relaxed">
+                                        <td
+                                            className="px-5 py-3.5 text-sm"
+                                            style={{ color: FG }}
+                                        >
                                             {row.name}
                                         </td>
-                                        {(
-                                            [
-                                                "initiate",
-                                                "lifetime",
-                                            ] as const
-                                        ).map((tier) => {
+                                        {(["initiate", "lifetime"] as const).map((tier) => {
                                             const val = row[tier];
                                             return (
                                                 <td
                                                     key={tier}
-                                                    className="p-4 md:p-5 text-center"
+                                                    className="px-5 py-3.5 text-center"
                                                 >
                                                     {val === true ? (
-                                                        <span className="inline-flex justify-center">
-                                                            <CheckIcon
-                                                                filled={
-                                                                    tier ===
-                                                                    "lifetime"
-                                                                }
-                                                            />
-                                                        </span>
+                                                        <Check
+                                                            className="inline-block size-3.5"
+                                                            strokeWidth={2.5}
+                                                            style={{
+                                                                color:
+                                                                    tier === "lifetime"
+                                                                        ? ACCENT_LIGHT
+                                                                        : FG_MUTED,
+                                                            }}
+                                                        />
                                                     ) : (
                                                         <span
-                                                            className={`text-xs ${val === "—"
-                                                                ? "text-zinc-600"
-                                                                : tier ===
-                                                                    "lifetime"
-                                                                    ? "text-zinc-100 font-medium"
-                                                                    : "text-zinc-400"
-                                                                }`}
+                                                            className="text-sm tabular-nums"
+                                                            style={{
+                                                                color:
+                                                                    val === "—"
+                                                                        ? FG_SUBTLE
+                                                                        : tier === "lifetime"
+                                                                            ? FG_STRONG
+                                                                            : FG_MUTED,
+                                                            }}
                                                         >
                                                             {val as string}
                                                         </span>
@@ -375,22 +316,49 @@ export default function PricingPage() {
                     </div>
                 </section>
 
-                {/* ── FAQ Section ──────────────────────────────────── */}
-                <section className="w-full max-w-2xl px-6 md:px-8 py-16">
-                    <h2 className="text-zinc-100 text-2xl font-bold tracking-tight mb-10 text-center">
-                        Common Questions
-                    </h2>
-                    <div className="space-y-3">
+                {/* ── FAQ ──────────────────────────────────────────── */}
+                <section className="w-full max-w-2xl px-6 py-16">
+                    <div className="text-center mb-10">
+                        <span
+                            className="text-[11px] font-medium uppercase tracking-[0.22em]"
+                            style={{ color: FG_MUTED }}
+                        >
+                            FAQ
+                        </span>
+                        <h2
+                            className="display text-balance mt-4"
+                            style={{
+                                fontSize: "clamp(24px, 2.6vw, 32px)",
+                                color: FG_STRONG,
+                            }}
+                        >
+                            Common questions.
+                        </h2>
+                    </div>
+                    <div className="space-y-2">
                         {faqs.map((faq) => (
                             <details
                                 key={faq.q}
-                                className="group rounded-xl border border-white/5 bg-zinc-950/80 backdrop-blur-xl px-5 py-4 transition-all duration-300 ease-out hover:border-blue-500/20 cursor-pointer"
+                                className="group rounded-lg border px-5 py-4 transition-colors"
+                                style={{
+                                    background: "rgba(255,255,255,0.015)",
+                                    borderColor: BORDER,
+                                }}
                             >
-                                <summary className="flex items-center justify-between font-medium text-sm text-zinc-100 list-none tracking-tight">
+                                <summary
+                                    className="flex items-center justify-between text-sm font-medium list-none cursor-pointer"
+                                    style={{ color: FG_STRONG }}
+                                >
                                     <span>{faq.q}</span>
-                                    <ChevronIcon />
+                                    <ChevronDown
+                                        className="size-4 transition-transform duration-300 group-open:rotate-180"
+                                        style={{ color: FG_MUTED }}
+                                    />
                                 </summary>
-                                <p className="mt-3 text-xs text-zinc-400 leading-relaxed">
+                                <p
+                                    className="mt-3 text-sm leading-[1.6]"
+                                    style={{ color: FG }}
+                                >
                                     {faq.a}
                                 </p>
                             </details>
@@ -398,49 +366,119 @@ export default function PricingPage() {
                     </div>
                 </section>
 
-                {/* ── Bottom CTA Glass Panel ───────────────────────── */}
-                <section className="w-full max-w-4xl px-6 md:px-8 pb-24">
-                    <div className="relative p-8 md:p-10 rounded-2xl bg-zinc-950/80 backdrop-blur-xl border border-white/5 overflow-hidden">
-                        {/* Top gradient line */}
-                        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-700/50 to-transparent" />
-                        {/* Background glow */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/10 to-transparent pointer-events-none" />
-
-                        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
-                            <div className="max-w-lg">
-                                <h2 className="text-zinc-100 text-2xl md:text-3xl font-bold tracking-tight mb-3">
-                                    Ready to architect your next Version?
-                                </h2>
-                                <p className="text-zinc-400 text-sm leading-relaxed">
-                                    Start your first Version today.
-                                    Define who you&apos;re becoming, set your
-                                    macro goals, and let the system hold you
-                                    accountable, mathematically.
-                                </p>
-                            </div>
-                            <div
-                                className="flex flex-col sm:flex-row gap-4 shrink-0 origin-center md:origin-right"
-                                style={{ transform: "scale(0.7)" }}
-                            >
-                                <Link href={process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app'}>
-                                    <ShinyButton>
-                                        Start Version 1
-                                    </ShinyButton>
-                                </Link>
-                                <Link href="/methodology">
-                                    <button
-                                        className=" px-4 h-16 rounded-md font-medium text-lg tracking-tight transition-all duration-300 ease-out bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border border-white/5 hover:border-blue-500/20"
-                                    >
-                                        Read the Methodology
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <div className="pb-16" />
             </main>
 
             <Footer />
+        </div>
+    );
+}
+
+/* ─── PricingCard — tailark pricing-2 structure on brand tokens ──── */
+function PricingCard({
+    tier,
+}: {
+    tier: {
+        name: string;
+        description: string;
+        price: string;
+        period: string;
+        cta: string;
+        featured: boolean;
+        features: readonly string[];
+        badge?: string;
+    };
+}) {
+    return (
+        <div
+            className="relative flex flex-col rounded-xl border"
+            style={{
+                background: tier.featured
+                    ? "rgba(68,135,214,0.06)"
+                    : "rgba(255,255,255,0.015)",
+                borderColor: tier.featured ? `${ACCENT_LIGHT}40` : BORDER,
+            }}
+        >
+            {tier.badge && (
+                <span
+                    className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.16em] whitespace-nowrap border"
+                    style={{
+                        background: SECTION_BG,
+                        borderColor: `${ACCENT_LIGHT}59`,
+                        color: ACCENT_LIGHT,
+                    }}
+                >
+                    {tier.badge}
+                </span>
+            )}
+
+            {/* Header */}
+            <div className="p-6">
+                <h3
+                    className="text-base font-semibold"
+                    style={{ color: FG_STRONG }}
+                >
+                    {tier.name}
+                </h3>
+                <p
+                    className="mt-1 text-xs leading-[1.55]"
+                    style={{ color: FG_MUTED }}
+                >
+                    {tier.description}
+                </p>
+                <div className="mt-5 flex items-baseline gap-2">
+                    <span
+                        className="text-4xl font-bold tabular-nums tracking-tight"
+                        style={{ color: FG_STRONG }}
+                    >
+                        {tier.price}
+                    </span>
+                    <span
+                        className="text-xs"
+                        style={{ color: FG_SUBTLE }}
+                    >
+                        {tier.period}
+                    </span>
+                </div>
+            </div>
+
+            {/* Dashed divider */}
+            <div
+                className="border-t border-dashed mx-6"
+                style={{ borderColor: BORDER_STRONG }}
+            />
+
+            {/* Features */}
+            <ul className="p-6 space-y-2.5 flex-grow">
+                {tier.features.map((feature) => (
+                    <li
+                        key={feature}
+                        className="flex items-start gap-2.5 text-sm leading-[1.5]"
+                        style={{ color: FG }}
+                    >
+                        <Check
+                            className="size-3.5 mt-[3px] flex-shrink-0"
+                            strokeWidth={2.5}
+                            style={{
+                                color: tier.featured ? ACCENT_LIGHT : FG_MUTED,
+                            }}
+                        />
+                        <span>{feature}</span>
+                    </li>
+                ))}
+            </ul>
+
+            {/* CTA */}
+            <div className="p-6 pt-0">
+                <Button
+                    asChild
+                    variant="brand"
+                    size="default"
+                    className="w-full"
+                >
+                    <Link href={APP_URL}>{tier.cta}</Link>
+                </Button>
+            </div>
         </div>
     );
 }

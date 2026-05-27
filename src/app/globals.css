@@ -124,7 +124,7 @@
 
 /* Body */
 html {
-  background: #020617;
+  background: #02030a;
 }
 
 body {
@@ -195,11 +195,11 @@ body {
 }
 
 .dark {
-  --background: #0a0a0a;
+  --background: #02030a;
   --foreground: #f4f4f5;
-  --card: #0a0a0a;
+  --card: #02030a;
   --card-foreground: #f4f4f5;
-  --popover: #0a0a0a;
+  --popover: #02030a;
   --popover-foreground: #f4f4f5;
   --primary: hsl(222, 84%, 35%);
   --primary-foreground: #ffffff;
@@ -218,7 +218,7 @@ body {
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: #0a0a0a;
+  --sidebar: #02030a;
   --sidebar-foreground: #f4f4f5;
   --sidebar-primary: hsl(222, 84%, 35%);
   --sidebar-primary-foreground: #ffffff;

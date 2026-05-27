@@ -13,6 +13,7 @@ const navLinks = [
     { href: "/manifesto", label: "Manifesto" },
     { href: "/changelog", label: "Changelog" },
     { href: "/methodology", label: "Methodology" },
+    { href: "/pricing", label: "Pricing" },
 ];
 
 export default function Navbar() {
@@ -34,7 +35,7 @@ export default function Navbar() {
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <ElPortalWordmark size={20} />
+                        <ElPortalWordmark size={24} />
                     </Link>
 
                     {/* Desktop Nav Links */}
@@ -61,7 +62,7 @@ export default function Navbar() {
                             <Link href={`${APP_URL}/login`}>Log in</Link>
                         </Button>
                         <Button asChild variant="brand" size="sm">
-                            <Link href={APP_URL}>Get Started</Link>
+                            <Link href={APP_URL}>Sign Up</Link>
                         </Button>
                         {/* Mobile Hamburger */}
                         <button
