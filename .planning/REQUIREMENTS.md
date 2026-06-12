@@ -11,10 +11,9 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 <!-- Adopt the OKLCH token system on shared surfaces before building new pages on top of them. -->
 
-- [ ] **TOKEN-01**: The Hero and shared landing components use the `--color-*` OKLCH tokens instead of hardcoded hex values
-- [ ] **TOKEN-02**: Banned neon-blue glow values (`rgba(30,64,175,…)`, `rgba(59,130,246,…)`) are removed or replaced with `--color-accent-subtle`
-- [ ] **TOKEN-03**: Decorative perpetual/expensive motion is removed per brand rules — animated `textShadow` in `PerformanceMetric.tsx` and `animate-pulse` in `DashboardPreview.tsx`
-- [ ] **TOKEN-04**: The token migration produces no visual regression on existing pages (verified by manual visual review against the locked palette)
+- [ ] **TOKEN-01**: The Hero and shared landing components reference `--color-*` / CSS variable tokens instead of hardcoded hex values
+- [ ] **TOKEN-02**: Hardcoded glow values (`rgba(30,64,175,…)`, `rgba(59,130,246,…)`) are tokenized into CSS variables carrying the **same value** — no color change, appearance identical (desaturation/restyle of glows is out of scope this milestone)
+- [ ] **TOKEN-04**: The token migration is value-preserving — the home page is pixel- and motion-identical before and after; every token used resolves to the exact current hex/rgba value (verified by manual before/after visual review)
 
 ### Features Page
 
@@ -49,6 +48,7 @@ Deferred to a future milestone. Tracked but not in this roadmap.
 
 ### Token Foundation
 
+- **TOKEN-03**: Remove decorative perpetual/expensive motion per brand rules — animated `textShadow` in `PerformanceMetric.tsx` and `animate-pulse` in `DashboardPreview.tsx`. **Deferred from v1** — this is an intentional motion change, and this milestone's top priority is that nothing changes how it looks. Revisit on its own merits.
 - **TOKEN-05**: Full-site token migration of all remaining pages/components (manifesto, methodology, changelog, mcp, pricing) beyond the Hero and shared components
 - **TOKEN-06**: Retire/rename legacy tokens (`--color-primary-glow`, `--shadow-glow-*`) and reconcile naming with the OKLCH system
 
@@ -75,30 +75,29 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| TOKEN-01 | — | Pending |
-| TOKEN-02 | — | Pending |
-| TOKEN-03 | — | Pending |
-| TOKEN-04 | — | Pending |
-| FEAT-01 | — | Pending |
-| FEAT-02 | — | Pending |
-| FEAT-03 | — | Pending |
-| FEAT-04 | — | Pending |
-| FEAT-05 | — | Pending |
-| FEAT-06 | — | Pending |
-| LEGAL-01 | — | Pending |
-| LEGAL-02 | — | Pending |
-| LEGAL-03 | — | Pending |
-| LEGAL-04 | — | Pending |
-| LEGAL-05 | — | Pending |
-| QUAL-01 | — | Pending |
-| QUAL-02 | — | Pending |
-| QUAL-03 | — | Pending |
+| TOKEN-01 | Phase 1 | Pending |
+| TOKEN-02 | Phase 1 | Pending |
+| TOKEN-04 | Phase 1 | Pending |
+| FEAT-01 | Phase 2 | Pending |
+| FEAT-02 | Phase 2 | Pending |
+| FEAT-03 | Phase 2 | Pending |
+| FEAT-04 | Phase 2 | Pending |
+| FEAT-05 | Phase 2 | Pending |
+| FEAT-06 | Phase 2 | Pending |
+| LEGAL-01 | Phase 3 | Pending |
+| LEGAL-02 | Phase 3 | Pending |
+| LEGAL-03 | Phase 3 | Pending |
+| LEGAL-04 | Phase 3 | Pending |
+| LEGAL-05 | Phase 3 | Pending |
+| QUAL-01 | Phase 2 | Pending |
+| QUAL-02 | Phase 4 | Pending |
+| QUAL-03 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 18 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 18 ⚠️ (to be mapped by roadmapper)
+- v1 requirements: 17 total
+- Mapped to phases: 17 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-12*
-*Last updated: 2026-06-12 after initial definition*
+*Last updated: 2026-06-12 — TOKEN-03 deferred to v2 (Phase 1 is strictly value-preserving); traceability + counts updated*

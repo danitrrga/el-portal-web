@@ -28,8 +28,8 @@ Every page must read as unmistakably El Portal — the ink-blue, disciplined, at
 - [ ] New **Features** page describing the app's real features (hybrid layout: hero → bento grid → deep-dive rows → CTA), content grounded in the actual el-portal app
 - [ ] **Terms** page rebranded to the ink-blue token system AND restructured to match Privacy's componentized, designed quality (legal copy preserved)
 - [ ] **Privacy** page rebranded to the ink-blue token system (structure/copy preserved; verify claims against the real app)
-- [ ] **OKLCH token migration**: convert the existing Hero (and shared components) from hardcoded hex / banned neon-blue `rgba()` glows to the `--color-*` OKLCH tokens — the deferred "phase-2" migration, pulled into this milestone
-- [ ] All new/changed pages: WCAG AA color contrast, semantic landmarks, no perpetual/decorative motion (per `.impeccable.md`)
+- [ ] **OKLCH token migration (value-preserving)**: convert the existing Hero (and shared components) from hardcoded hex/`rgba()` to `--color-*` / CSS variable tokens **using the same color values** — pixel- and motion-identical, an invisible refactor. (Removing perpetual motion / desaturating glows is an intentional visual change → deferred to v2.)
+- [ ] New/changed pages (Features, Terms, Privacy): WCAG AA color contrast, semantic landmarks, brand-compliant motion (per `.impeccable.md`)
 
 ### Out of Scope
 
@@ -69,6 +69,8 @@ Every page must read as unmistakably El Portal — the ink-blue, disciplined, at
 | Features layout = hybrid (hero → bento → deep-dive rows → CTA) | Most editorial; matches home-page atmosphere while staying scannable | — Pending |
 | Terms rebrand = reskin + restructure to Privacy's quality; copy preserved | Terms is plain stacked text; Privacy is already well-componentized — level Terms up | — Pending |
 | Adopt OKLCH tokens now AND migrate Hero hardcoded hex to tokens | New pages are the right place to start the system; unify the Hero rather than defer | — Pending |
+| Phase 1 token migration is strictly **value-preserving** (same hex/rgba) — pixel- and motion-identical | User's top priority: nothing changes how it looks; the migration is an invisible refactor, not a restyle | — Pending |
+| Defer perpetual-motion removal (TOKEN-03) to v2 | Removing `animate-pulse`/animated `textShadow` is an intentional motion change that conflicts with the no-visual-change priority | — Pending |
 | Map codebase before init (brownfield) | Establish accurate Validated baseline and surface concerns | ✓ Good |
 
 ## Evolution
