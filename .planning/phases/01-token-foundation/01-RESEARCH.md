@@ -700,11 +700,11 @@ background: `radial-gradient(ellipse 65% 90% at 50% 0%, var(--color-ep-accent-al
 
 **Solution:** For each template literal that appends an alpha suffix to a hex var, add a dedicated rgba token with the precomputed alpha:
 
-| Template literal | Alpha suffix | Value | New token |
+| Template literal | Alpha suffix | Authoritative token value (8-digit hex) | New token |
 |-----------------|-------------|-------|-----------|
-| `${ACCENT}14` | `0x14` = 8% opacity | `rgba(68,135,214,0.08)` | `--color-ep-accent-alpha-08` |
-| `${ACCENT}1f` | `0x1f` = 12% opacity | `rgba(68,135,214,0.12)` | `--color-ep-accent-alpha-12` |
-| `${ACCENT_LIGHT}cc` | `0xcc` = 80% opacity | `rgba(119,183,237,0.80)` | `--color-ep-accent-light-alpha-80` |
+| `${ACCENT}14` | `0x14` = 8% opacity | `#4487d614` | `--color-ep-accent-alpha-08` |
+| `${ACCENT}1f` | `0x1f` = 12% opacity | `#4487d61f` | `--color-ep-accent-alpha-12` |
+| `${ACCENT_LIGHT}cc` | `0xcc` = 80% opacity | `#77b7edcc` | `--color-ep-accent-light-alpha-80` |
 
 These extra vars must be included in the globals.css additions. The template literal then becomes:
 
@@ -726,17 +726,12 @@ All `${CONSTANT}hexAlpha` patterns in in-scope components:
 
 | File | Line | Template | Alpha hex | Decimal opacity | New var |
 |------|------|----------|-----------|-----------------|---------|
-| VCDSection.tsx | ~120 | `${ACCENT}1f` | `1f` | 12.2% | `--color-ep-accent-alpha-12` = `rgba(68,135,214,0.122)`. Round to `0.12`. |
-| MethodologyPreview.tsx | ~41 | `${ACCENT}14` | `14` | 7.8% | `--color-ep-accent-alpha-08` = `rgba(68,135,214,0.078)`. Round to `0.08`. |
+| VCDSection.tsx | ~120 | `${ACCENT}1f` | `1f` | 12.2% | `--color-ep-accent-alpha-12` = `#4487d61f` |
+| MethodologyPreview.tsx | ~41 | `${ACCENT}14` | `14` | 7.8% | `--color-ep-accent-alpha-08` = `#4487d614` |
 | CTASection.tsx | ~34 | `${ACCENT}1f` | `1f` | 12.2% | Reuse `--color-ep-accent-alpha-12` |
-| VCDSection.tsx | ~313 | `${ACCENT_LIGHT}cc` | `cc` | 80% | `--color-ep-accent-light-alpha-80` = `rgba(119,183,237,0.8)` |
+| VCDSection.tsx | ~313 | `${ACCENT_LIGHT}cc` | `cc` | 80% | `--color-ep-accent-light-alpha-80` = `#77b7edcc` |
 
-**Note on precision:** Hex `1f` = 31/255 = 12.16%. Hex `14` = 20/255 = 7.84%. The CSS var values should use the exact decimal to avoid sub-pixel color drift. Even these tiny differences matter for pixel-identical output.
-
-Corrected values:
-- `rgba(68,135,214,0.122)` for `1f` — or keep as `rgba(68,135,214,0.12157)`. Browser will round anyway. Use `rgba(68,135,214,0.122)` for pragmatism.
-- `rgba(68,135,214,0.078)` for `14`
-- `rgba(119,183,237,0.80)` for `cc`
+**Note on precision (AUTHORITATIVE):** Define these tokens using the EXACT 8-digit hex form (`#4487d61f`, `#4487d614`, `#77b7edcc`) — byte-identical to the original `${CONSTANT}<suffix>` literals. This supersedes any rounded `rgba(…, 0.12)` decimal forms shown elsewhere in earlier drafts of this doc; rounded decimals (e.g. `0.122` vs the exact `31/255 = 0.12157`) would introduce sub-pixel drift and must NOT be used. The component reference becomes a plain `var(--color-ep-accent-alpha-12)` with no appended hex-alpha suffix.
 
 ---
 
@@ -860,26 +855,30 @@ All constraints from CLAUDE.md that directly affect this phase:
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **CalloutCard scope decision**
    - What we know: CalloutCard is NOT imported by `page.tsx` or any direct home-page section component based on source-file reading.
    - What's unclear: Whether it's used by any sub-component not checked here (e.g., a future hero sub-component).
    - Recommendation: Migrate it anyway — it's tiny (50 lines), its rgba glow values are identical to values being tokenized elsewhere, and it's cleaner to sweep it up.
+   - **RESOLVED:** Migrated in plan 01-02 (Task 2) — bg-[#0a0a0a] and the three glow/inset rgba values are tokenized at their current values; pre-existing font-serif italic left untouched.
 
 2. **Footer migration scope**
    - What we know: Footer uses `zinc-*` Tailwind classes (not inline hex). Phase 1 requirement says "Hero and shared landing components."
    - What's unclear: Whether Footer counts as a "shared landing component" for Phase 1.
    - Recommendation: Defer Footer to Phase 3 (Legal Rebrand) or a dedicated sweep. The zinc-* classes are a separate concern from inline hex.
+   - **RESOLVED:** Deferred — Footer is out of Phase 1 scope; its zinc-* classes are addressed in a later phase, not 01-02.
 
 3. **DashboardPreview slate-* classes**
    - What we know: DashboardPreview uses many `slate-*` Tailwind utility classes alongside inline rgba values.
    - What's unclear: Whether "hardcoded hex" in TOKEN-01 includes Tailwind default palette utilities.
    - Recommendation: Migrate only the inline `style={}` values in Phase 1. Leave `slate-*` Tailwind classes for a dedicated cleanup task.
+   - **RESOLVED:** Deferred — plan 01-02 migrates only DashboardPreview's inline style values (SVG stroke + gradient stop); the slate-* Tailwind classes are left for a dedicated later cleanup.
 
 4. **Shadow vars in @theme inline**
    - What we know: `@theme inline` is Tailwind v4's token system. Shadow shorthand is not a standard Tailwind token type.
    - Recommendation: Place `--shadow-ep-*` in `:root` / `.dark` blocks, not in `@theme inline`.
+   - **RESOLVED:** Placed in the `.dark` block in plan 01-01 (not in @theme inline), avoiding unexpected Tailwind shadow-utility generation.
 
 ---
 

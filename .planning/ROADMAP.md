@@ -28,7 +28,9 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Every migrated value is the SAME color as before — each token used resolves to the exact current hex/rgba value (the `rgba(30,64,175,…)` / `rgba(59,130,246,…)` glow values are tokenized at their current value, NOT changed/desaturated). Where an existing `--color-*` token does not already equal the current value, a value-equal token is used or added.
   3. The home page is visually and behaviorally IDENTICAL before and after — same colors, same glows, same animations and motion (the existing `animate-pulse` and animated `textShadow` are intentionally LEFT in place this phase). Verified by manual before/after visual review.
   4. No new banned anti-patterns are introduced in touched files (raw `<button>`, gradient-clipped text, pure black, `transition: all`, `useAnimationFrame` for decoration). Pre-existing patterns are left untouched this phase.
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 01-01-PLAN.md — Add the value-equal --color-ep-* token block to globals.css (foundation; no component touched)
+  - [ ] 01-02-PLAN.md — Migrate the 12 home-page components to reference the value-equal tokens + value-preserving verification
 **UI hint**: yes
 
 ### Phase 2: Features Page
@@ -76,7 +78,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Token Foundation | 0/TBD | Not started | - |
+| 1. Token Foundation | 0/2 | Not started | - |
 | 2. Features Page | 0/TBD | Not started | - |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
