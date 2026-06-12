@@ -5,7 +5,6 @@ const SECTION_BG = "var(--color-ep-section-bg)";
 const FG_STRONG = "var(--color-ep-fg-strong)";
 const FG = "var(--color-ep-fg)";
 const FG_MUTED = "var(--color-ep-fg-muted-2)";
-const ACCENT = "var(--color-ep-accent)";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 

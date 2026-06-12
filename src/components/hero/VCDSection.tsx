@@ -6,8 +6,6 @@ const SECTION_BG = "var(--color-ep-section-bg)";
 const FG_STRONG = "var(--color-ep-fg-strong-white)";
 const FG = "var(--color-ep-fg-body)";
 const FG_MUTED = "var(--color-ep-fg-muted)";
-const ACCENT = "var(--color-ep-accent)";
-const ACCENT_LIGHT = "var(--color-ep-accent-light)";
 
 /* Tailark whites — bars dominated by white tones, accent reserved for NOW */
 const WHITE_STRONG = "var(--color-ep-white-strong)";
