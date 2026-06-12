@@ -2,18 +2,18 @@
 
 import { Compass, Repeat, Sun } from "lucide-react";
 
-const SECTION_BG = "#04060c";
-const FG_STRONG = "#ffffff";
-const FG = "#d4d9e3";
-const FG_MUTED = "#a8b0c0";
-const ACCENT = "#4487D6";
-const ACCENT_LIGHT = "#77B7ED";
+const SECTION_BG = "var(--color-ep-section-bg)";
+const FG_STRONG = "var(--color-ep-fg-strong-white)";
+const FG = "var(--color-ep-fg-body)";
+const FG_MUTED = "var(--color-ep-fg-muted)";
+const ACCENT = "var(--color-ep-accent)";
+const ACCENT_LIGHT = "var(--color-ep-accent-light)";
 
 /* Tailark whites — bars dominated by white tones, accent reserved for NOW */
-const WHITE_STRONG = "rgba(255,255,255,0.92)";
-const WHITE = "rgba(255,255,255,0.55)";
-const WHITE_DIM = "rgba(255,255,255,0.22)";
-const WHITE_TRACK = "rgba(255,255,255,0.08)";
+const WHITE_STRONG = "var(--color-ep-white-strong)";
+const WHITE = "var(--color-ep-white)";
+const WHITE_DIM = "var(--color-ep-white-dim)";
+const WHITE_TRACK = "var(--color-ep-white-track)";
 
 const ACTIVE_CYCLE = 2; // 0-indexed: cycle 3 of 6
 const TODAY = 11; // 0-indexed: day 12 of 15
@@ -117,7 +117,7 @@ function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
         aria-hidden
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 65% 90% at 50% 0%, ${ACCENT}1f, transparent 65%)`,
+          background: `radial-gradient(ellipse 65% 90% at 50% 0%, var(--color-ep-accent-alpha-12), transparent 65%)`,
         }}
       />
 
@@ -131,7 +131,7 @@ function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
           bottom: 32,
           width: 1,
           transform: "translateX(-50%)",
-          background: `repeating-linear-gradient(to bottom, rgba(255,255,255,0.55) 0 3px, transparent 3px 7px)`,
+          background: `repeating-linear-gradient(to bottom, var(--color-ep-white) 0 3px, transparent 3px 7px)`,
         }}
       />
 
@@ -214,7 +214,7 @@ function VersionStratum({
           className="absolute top-0 bottom-0 w-px"
           style={{
             left: `${(i / 6) * 100}%`,
-            background: "rgba(255,255,255,0.2)",
+            background: "var(--color-ep-separator)",
           }}
         />
       ))}
@@ -224,7 +224,7 @@ function VersionStratum({
         style={{
           left: `${activeStartPct}%`,
           width: `${activeEndPct - activeStartPct}%`,
-          background: "rgba(255,255,255,0.18)",
+          background: "var(--color-ep-active-highlight)",
           borderRadius: 2,
         }}
       />
@@ -266,7 +266,7 @@ function CycleStratum() {
                   : WHITE_TRACK,
                 borderRadius: 2,
                 boxShadow: isActive
-                  ? "inset 0 1px 0 rgba(255,255,255,0.18)"
+                  ? "inset 0 1px 0 var(--color-ep-active-highlight)"
                   : undefined,
               }}
             />
@@ -310,7 +310,7 @@ function DayStratum({
                 ? WHITE
                 : WHITE_DIM,
               boxShadow: isToday
-                ? `0 0 14px rgba(255,255,255,0.6), 0 0 6px ${ACCENT_LIGHT}cc`
+                ? `0 0 14px var(--color-ep-dot-glow), 0 0 6px var(--color-ep-accent-light-alpha-80)`
                 : undefined,
             }}
           />

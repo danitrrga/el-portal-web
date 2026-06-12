@@ -31,15 +31,15 @@ const transitionVariants = {
 
 export default function Hero() {
   return (
-    <main className="relative overflow-hidden" style={{ background: "#02030a" }}>
+    <main className="relative overflow-hidden" style={{ background: "var(--color-ep-bg-base)" }}>
       {/* Atmospheric blue-tinted radials on the left (adapted from tailark) */}
       <div
         aria-hidden
         className="z-[2] absolute inset-0 pointer-events-none isolate contain-strict hidden lg:block"
       >
-        <div className="w-[34rem] h-[80rem] -translate-y-[340px] absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,rgba(96,165,235,0.05)_0,rgba(68,135,214,0.02)_45%,rgba(8,56,133,0)_80%)]" />
-        <div className="h-[80rem] absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,rgba(150,200,245,0.028)_0,rgba(68,135,214,0.01)_70%,transparent_100%)] [translate:5%_-50%]" />
-        <div className="h-[80rem] -translate-y-[340px] absolute left-0 top-0 w-56 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,rgba(180,215,250,0.02)_0,rgba(96,165,235,0.008)_70%,transparent_100%)]" />
+        <div className="w-[34rem] h-[80rem] -translate-y-[340px] absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,var(--color-ep-atmos-1)_0,var(--color-ep-atmos-2)_45%,rgba(8,56,133,0)_80%)]" />
+        <div className="h-[80rem] absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,var(--color-ep-atmos-3)_0,var(--color-ep-atmos-4)_70%,transparent_100%)] [translate:5%_-50%]" />
+        <div className="h-[80rem] -translate-y-[340px] absolute left-0 top-0 w-56 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,var(--color-ep-atmos-5)_0,var(--color-ep-atmos-6)_70%,transparent_100%)]" />
       </div>
 
       {/* Film-grain noise overlay for texture — masked out below mockup zone */}
@@ -61,7 +61,7 @@ export default function Hero() {
         aria-hidden
         className="z-[4] absolute inset-x-0 bottom-0 h-[40%] pointer-events-none"
         style={{
-          background: "linear-gradient(to bottom, transparent 0%, #000 100%)",
+          background: "linear-gradient(to bottom, transparent 0%, var(--color-ep-fade-black) 100%)",
         }}
       />
 
@@ -70,7 +70,7 @@ export default function Hero() {
           {/* Bottom fade so radial atmosphere blends into the next section */}
           <div
             aria-hidden
-            className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,#02030a_75%)]"
+            className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-ep-bg-base)_75%)]"
           />
 
           <div className="mx-auto max-w-7xl px-6">
@@ -81,29 +81,29 @@ export default function Hero() {
                   href="/pricing"
                   className="group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 transition-colors duration-300"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    borderColor: "rgba(255,255,255,0.10)",
+                    background: "var(--color-ep-pill-bg)",
+                    borderColor: "var(--color-ep-pill-border)",
                   }}
                 >
-                  <span className="text-sm" style={{ color: "#aab3c5" }}>
-                    <span style={{ color: "#77B7ED" }} className="font-medium">Early access</span>
-                    <span style={{ color: "rgba(255,255,255,0.20)" }}> · </span>
+                  <span className="text-sm" style={{ color: "var(--color-ep-fg)" }}>
+                    <span style={{ color: "var(--color-ep-accent-light)" }} className="font-medium">Early access</span>
+                    <span style={{ color: "var(--color-ep-separator)" }}> · </span>
                     Launching soon · First 30 signups get Pro for life
                   </span>
                   <span
                     className="block h-4 w-0.5"
-                    style={{ background: "rgba(255,255,255,0.15)" }}
+                    style={{ background: "var(--color-ep-divider)" }}
                   />
                   <div
                     className="size-6 overflow-hidden rounded-full duration-500"
-                    style={{ background: "rgba(255,255,255,0.06)" }}
+                    style={{ background: "var(--color-ep-pill-btn-bg)" }}
                   >
                     <div className="flex w-12 -translate-x-1/2 duration-500 ease-in-out group-hover:translate-x-0">
                       <span className="flex size-6">
-                        <ArrowRight className="m-auto size-3" style={{ color: "#f4f6fb" }} />
+                        <ArrowRight className="m-auto size-3" style={{ color: "var(--color-ep-fg-strong)" }} />
                       </span>
                       <span className="flex size-6">
-                        <ArrowRight className="m-auto size-3" style={{ color: "#f4f6fb" }} />
+                        <ArrowRight className="m-auto size-3" style={{ color: "var(--color-ep-fg-strong)" }} />
                       </span>
                     </div>
                   </div>
@@ -114,7 +114,7 @@ export default function Hero() {
                   className="display mt-8 max-w-4xl mx-auto text-balance lg:mt-16"
                   style={{
                     fontSize: "clamp(42px, 4.2vw, 58px)",
-                    color: "#f4f6fb",
+                    color: "var(--color-ep-fg-strong)",
                   }}
                 >
                   The final operating system for high-performers.
@@ -123,7 +123,7 @@ export default function Hero() {
                 {/* Sub — narrative prose */}
                 <p
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg leading-[1.55]"
-                  style={{ color: "#aab3c5" }}
+                  style={{ color: "var(--color-ep-fg)" }}
                 >
                   Versions plan a 90-day identity. Cycles run a 15-day focus. Track habits, goals, biometrics... The system analyzes the trends the eye misses.
                 </p>
@@ -183,15 +183,15 @@ export default function Hero() {
                 aria-hidden
                 className="absolute inset-0 z-10 from-transparent from-35%"
                 style={{
-                  background: "linear-gradient(to bottom, transparent 0%, transparent 70%, #02030a 100%)",
+                  background: "linear-gradient(to bottom, transparent 0%, transparent 70%, var(--color-ep-bg-base) 100%)",
                 }}
               />
               <div
                 className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4"
                 style={{
-                  background: "#02030a",
-                  borderColor: "rgba(255,255,255,0.08)",
-                  boxShadow: "0 30px 80px rgba(0, 0, 0, 0.4)",
+                  background: "var(--color-ep-bg-base)",
+                  borderColor: "var(--color-ep-frame-border)",
+                  boxShadow: "0 30px 80px var(--color-ep-shadow-dark)",
                 }}
               >
                 <HeroAppMockup />

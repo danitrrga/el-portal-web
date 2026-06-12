@@ -2,12 +2,12 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const SECTION_BG = "#04060c";
-const FG_STRONG = "#f4f6fb";
-const FG = "#aab3c5";
-const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "#5a6478";
-const ACCENT = "#4487D6";
+const SECTION_BG = "var(--color-ep-section-bg)";
+const FG_STRONG = "var(--color-ep-fg-strong)";
+const FG = "var(--color-ep-fg)";
+const FG_MUTED = "var(--color-ep-fg-muted-2)";
+const FG_SUBTLE = "var(--color-ep-fg-subtle-2)";
+const ACCENT = "var(--color-ep-accent)";
 
 const PRINCIPLES = [
   {
@@ -38,7 +38,7 @@ export default function MethodologyPreviewSection() {
         aria-hidden
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 60% 80% at 50% 0%, ${ACCENT}14, transparent 65%)`,
+          background: `radial-gradient(ellipse 60% 80% at 50% 0%, var(--color-ep-accent-alpha-08), transparent 65%)`,
         }}
       />
 

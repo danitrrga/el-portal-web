@@ -25,9 +25,9 @@ export default function Navbar() {
             className={[
                 "fixed top-4 left-1/2 -translate-x-1/2 z-50",
                 "max-w-5xl w-[calc(100%-2rem)]",
-                "bg-[rgba(10,16,32,0.6)] backdrop-blur-xl",
+                "bg-[var(--color-ep-nav-bg)] backdrop-blur-xl",
                 "border border-white/[0.05]",
-                "shadow-[0_0_30px_-5px_rgba(0,0,0,0.5)]",
+                "shadow-[0_0_30px_-5px_var(--color-ep-nav-shadow)]",
                 "rounded-2xl transition-colors duration-300",
             ].join(" ")}
         >
@@ -46,8 +46,8 @@ export default function Navbar() {
                                 className={[
                                     "transition-colors duration-300",
                                     pathname === link.href
-                                        ? "text-[#f4f6fb]"
-                                        : "text-[#aab3c5] hover:text-[#f4f6fb]",
+                                        ? "text-[var(--color-ep-fg-strong)]"
+                                        : "text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)]",
                                 ].join(" ")}
                                 href={link.href}
                             >
@@ -66,7 +66,7 @@ export default function Navbar() {
                         </Button>
                         {/* Mobile Hamburger */}
                         <button
-                            className="md:hidden text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300"
+                            className="md:hidden text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             aria-label="Toggle menu"
                         >
@@ -82,7 +82,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden border-t border-white/[0.05] bg-[rgba(4,6,12,0.95)] backdrop-blur-xl rounded-b-2xl">
+                <div className="md:hidden border-t border-white/[0.05] bg-[var(--color-ep-mobile-menu-bg)] backdrop-blur-xl rounded-b-2xl">
                     <div className="px-6 py-4 space-y-1">
                         {navLinks.map((link) => (
                             <Link
@@ -90,8 +90,8 @@ export default function Navbar() {
                                 className={[
                                     "block text-sm font-medium py-2 transition-colors duration-300",
                                     pathname === link.href
-                                        ? "text-[#f4f6fb]"
-                                        : "text-[#aab3c5] hover:text-[#f4f6fb]",
+                                        ? "text-[var(--color-ep-fg-strong)]"
+                                        : "text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)]",
                                 ].join(" ")}
                                 href={link.href}
                                 onClick={() => setMobileMenuOpen(false)}
@@ -100,7 +100,7 @@ export default function Navbar() {
                             </Link>
                         ))}
                         <Link
-                            className="block text-sm font-medium text-[#aab3c5] hover:text-[#f4f6fb] transition-colors duration-300 py-2"
+                            className="block text-sm font-medium text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300 py-2"
                             href={`${APP_URL}/login`}
                             onClick={() => setMobileMenuOpen(false)}
                         >

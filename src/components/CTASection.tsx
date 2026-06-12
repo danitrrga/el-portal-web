@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-const SECTION_BG = "#04060c";
-const FG_STRONG = "#f4f6fb";
-const FG = "#aab3c5";
-const FG_MUTED = "#8590a8";
-const ACCENT = "#4487D6";
+const SECTION_BG = "var(--color-ep-section-bg)";
+const FG_STRONG = "var(--color-ep-fg-strong)";
+const FG = "var(--color-ep-fg)";
+const FG_MUTED = "var(--color-ep-fg-muted-2)";
+const ACCENT = "var(--color-ep-accent)";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 
@@ -21,7 +21,7 @@ export default function CTASection() {
         className="absolute left-0 right-0 top-0 h-px"
         style={{
           background:
-            "linear-gradient(to right, transparent, rgba(255,255,255,0.12), transparent)",
+            "linear-gradient(to right, transparent, var(--color-ep-hairline), transparent)",
         }}
       />
 
@@ -30,7 +30,7 @@ export default function CTASection() {
         aria-hidden
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 70% 90% at 50% 0%, ${ACCENT}1f, transparent 60%)`,
+          background: `radial-gradient(ellipse 70% 90% at 50% 0%, var(--color-ep-accent-alpha-12), transparent 60%)`,
         }}
       />
 

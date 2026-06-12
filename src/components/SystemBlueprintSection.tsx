@@ -10,12 +10,12 @@ import { ReactNode } from "react";
 
 /* ─── Monotone palette ─ white / grey / black only.
    No brand accent inside mockups — pure typographic hierarchy. */
-const BG = "#04060c"; // matches Hero section bg
-const FG_STRONG = "#ffffff";
-const FG = "#d4d9e3";
-const FG_MUTED = "#a8b0c0";
-const FG_SUBTLE = "#6f7889";
-const RULE = "rgba(255,255,255,0.14)";
+const BG = "var(--color-ep-section-bg)"; // matches Hero section bg
+const FG_STRONG = "var(--color-ep-fg-strong-white)";
+const FG = "var(--color-ep-fg-body)";
+const FG_MUTED = "var(--color-ep-fg-muted)";
+const FG_SUBTLE = "var(--color-ep-fg-subtle)";
+const RULE = "var(--color-ep-rule)";
 
 export default function SystemBlueprintSection() {
   return (
@@ -448,7 +448,7 @@ const FeatureCard = ({ children, className }: FeatureCardProps) => (
 );
 
 const CardDecorator = () => {
-  const LINE = "rgba(255,255,255,0.22)";
+  const LINE = "var(--color-ep-white-dim)";
   return (
     <>
       {/* Corner brackets — anchor points for the trace */}
