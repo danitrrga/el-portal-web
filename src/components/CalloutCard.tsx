@@ -29,10 +29,10 @@ export default function CalloutCard({ title, quote, className }: CalloutCardProp
             {/* Gradient border wrapper */}
             <div className="rounded-xl p-px bg-gradient-to-b from-blue-700/50 to-transparent">
                 <Card
-                    className="card-glow border-0 bg-[#0a0a0a] rounded-[11px] py-0"
+                    className="card-glow border-0 bg-[var(--color-ep-callout-bg)] rounded-[11px] py-0"
                     style={{
                         boxShadow:
-                            "0 0 40px -10px rgba(30, 64, 175, 0.25), inset 0 1px 0 rgba(255,255,255,0.04), inset 0 0 60px rgba(30,64,175,0.03)",
+                            "0 0 40px -10px var(--color-ep-glow-blue-25), inset 0 1px 0 var(--color-ep-inset-top), inset 0 0 60px var(--color-ep-glow-blue-03)",
                     }}
                 >
                     <CardContent className="px-10 py-12 text-center">

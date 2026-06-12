@@ -33,9 +33,9 @@ export default function McpIntegrationSection() {
             <div
               className="absolute inset-0 flex aspect-square items-center justify-center rounded-full border-t"
               style={{
-                borderTopColor: "rgba(119,183,237,0.30)",
+                borderTopColor: "var(--color-ep-ring-border-outer)",
                 background:
-                  "radial-gradient(circle at 50% 0%, rgba(68,135,214,0.18), transparent 55%)",
+                  "radial-gradient(circle at 50% 0%, var(--color-ep-ring-bg-outer), transparent 55%)",
               }}
             >
               <IntegrationCard className="-translate-x-1/6 absolute left-0 top-1/4 -translate-y-1/4">
@@ -52,9 +52,9 @@ export default function McpIntegrationSection() {
             <div
               className="absolute inset-16 flex aspect-square scale-90 items-center justify-center rounded-full border-t"
               style={{
-                borderTopColor: "rgba(119,183,237,0.22)",
+                borderTopColor: "var(--color-ep-ring-border-inner)",
                 background:
-                  "radial-gradient(circle at 50% 0%, rgba(56,103,214,0.14), transparent 55%)",
+                  "radial-gradient(circle at 50% 0%, var(--color-ep-ring-bg-inner), transparent 55%)",
               }}
             >
               <IntegrationCard className="absolute top-0 -translate-y-1/2">
@@ -73,7 +73,7 @@ export default function McpIntegrationSection() {
                   className="shadow-black-950/10 dark:bg-background size-16 border-black/20 shadow-xl dark:border-white/25 dark:shadow-white/15"
                   isCenter={true}
                 >
-                  <McpLogo className="text-[#f4f6fb]" />
+                  <McpLogo className="text-[var(--color-ep-fg-strong)]" />
                 </IntegrationCard>
               </div>
             </div>
@@ -83,7 +83,7 @@ export default function McpIntegrationSection() {
               className="display text-balance"
               style={{
                 fontSize: "clamp(28px, 3.2vw, 40px)",
-                color: "#f4f6fb",
+                color: "var(--color-ep-fg-strong)",
               }}
             >
               Your agent keeps the record.

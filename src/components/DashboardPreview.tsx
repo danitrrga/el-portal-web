@@ -220,7 +220,7 @@ export default function DashboardPreview() {
                                         className="drop-shadow-[0_0_4px_rgba(30,64,175,0.5)]"
                                         d="M0,10 C20,10 30,35 100,38"
                                         fill="none"
-                                        stroke="#3B82F6"
+                                        stroke="var(--color-ep-chart-line)"
                                         strokeWidth="0.5"
                                     />
                                     <defs>
@@ -233,7 +233,7 @@ export default function DashboardPreview() {
                                         >
                                             <stop
                                                 offset="0%"
-                                                stopColor="rgba(30, 64, 175, 0.3)"
+                                                stopColor="var(--color-ep-glow-blue-30)"
                                             />
                                             <stop
                                                 offset="100%"

@@ -14,6 +14,8 @@ export function PerformanceMetric() {
 
     useEffect(() => {
         if (isInView && !hasAnimated) {
+            // Intentional: one-shot animation trigger gated on scroll-into-view (external sync).
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasAnimated(true);
             // The number counter ticks up after habits have "slid" in (approx 1.5s delay)
             setTimeout(() => {
@@ -34,7 +36,7 @@ export function PerformanceMetric() {
     return (
         <div ref={containerRef} className="flex flex-col md:flex-row gap-8 w-full">
             {/* Code Block (Formula) */}
-            <div className="w-full md:w-[60%] glass-panel rounded-2xl overflow-hidden border-border transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_40px_-10px_rgba(30,64,175,0.2)] flex flex-col">
+            <div className="w-full md:w-[60%] glass-panel rounded-2xl overflow-hidden border-border transition-all duration-300 hover:border-primary/30 hover:shadow-[var(--shadow-ep-glow-blue-20)] flex flex-col">
                 <div className="p-4 border-b border-white/5 flex items-center justify-between bg-zinc-950/80">
                     <span className="text-xs font-bold text-muted-foreground">P_daily Algorithm</span>
                     <div className="flex gap-2">
@@ -43,7 +45,7 @@ export function PerformanceMetric() {
                         <div className="size-2.5 rounded-full bg-green-500/50"></div>
                     </div>
                 </div>
-                <div className="flex-1 p-6 md:p-8 bg-[#0d1117] font-mono text-sm overflow-x-auto flex items-center">
+                <div className="flex-1 p-6 md:p-8 bg-[var(--color-ep-code-bg)] font-mono text-sm overflow-x-auto flex items-center">
                     <pre className="leading-relaxed whitespace-pre-wrap sm:whitespace-pre w-full overflow-hidden">
                         <code className="text-zinc-300"><span className="text-pink-500">function</span> <span className="text-blue-400">calculatePerformance</span>(habits) {'{'}
                             {"\n  "} <span className="text-slate-500">{"// Weight mapping for priority execution"}</span>
@@ -73,7 +75,7 @@ export function PerformanceMetric() {
                             initial={{ x: -150, opacity: 0 }}
                             animate={hasAnimated ? { x: 0, opacity: 1 } : { x: -150, opacity: 0 }}
                             transition={{ duration: 0.6, delay: habit.delay, ease: "easeOut" }}
-                            className={`h-2 rounded-full ${habit.id === 1 ? 'bg-primary shadow-[0_0_15px_-3px_rgba(30,64,175,0.6)]' : habit.id === 2 ? 'bg-primary/50' : 'bg-primary/20'}`}
+                            className={`h-2 rounded-full ${habit.id === 1 ? 'bg-primary shadow-[var(--shadow-ep-habit-bar)]' : habit.id === 2 ? 'bg-primary/50' : 'bg-primary/20'}`}
                         />
                     ))}
                 </div>
@@ -98,7 +100,7 @@ export function PerformanceMetric() {
                     <motion.div
                         className="font-serif text-6xl text-foreground relative z-10 transition-all duration-300"
                         animate={hasAnimated ? {
-                            textShadow: "0 0 40px rgba(30, 64, 175, 0.4), 0 0 12px rgba(255, 255, 255, 0.1)"
+                            textShadow: "0 0 40px var(--color-ep-glow-blue-40), 0 0 12px var(--color-ep-text-glow-white)"
                         } : { textShadow: "none" }}
                         transition={{ delay: 3, duration: 1 }}
                     >
