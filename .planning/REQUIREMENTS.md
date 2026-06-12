@@ -12,7 +12,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 <!-- Adopt the OKLCH token system on shared surfaces before building new pages on top of them. -->
 
 - [ ] **TOKEN-01**: The Hero and shared landing components reference `--color-*` / CSS variable tokens instead of hardcoded hex values
-- [ ] **TOKEN-02**: Hardcoded glow values (`rgba(30,64,175,…)`, `rgba(59,130,246,…)`) are tokenized into CSS variables carrying the **same value** — no color change, appearance identical (desaturation/restyle of glows is out of scope this milestone)
+- [x] **TOKEN-02**: Hardcoded glow values (`rgba(30,64,175,…)`, `rgba(59,130,246,…)`) are tokenized into CSS variables carrying the **same value** — no color change, appearance identical (desaturation/restyle of glows is out of scope this milestone)
 - [ ] **TOKEN-04**: The token migration is value-preserving — the home page is pixel- and motion-identical before and after; every token used resolves to the exact current hex/rgba value (verified by manual before/after visual review)
 
 ### Features Page
@@ -76,7 +76,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | TOKEN-01 | Phase 1 | Pending |
-| TOKEN-02 | Phase 1 | Pending |
+| TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
 | FEAT-01 | Phase 2 | Pending |
 | FEAT-02 | Phase 2 | Pending |

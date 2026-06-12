@@ -29,7 +29,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The home page is visually and behaviorally IDENTICAL before and after — same colors, same glows, same animations and motion (the existing `animate-pulse` and animated `textShadow` are intentionally LEFT in place this phase). Verified by manual before/after visual review.
   4. No new banned anti-patterns are introduced in touched files (raw `<button>`, gradient-clipped text, pure black, `transition: all`, `useAnimationFrame` for decoration). Pre-existing patterns are left untouched this phase.
 **Plans**: 2 plans
-  - [ ] 01-01-PLAN.md — Add the value-equal --color-ep-* token block to globals.css (foundation; no component touched)
+  - [x] 01-01-PLAN.md — Add the value-equal --color-ep-* token block to globals.css (foundation; no component touched)
   - [ ] 01-02-PLAN.md — Migrate the 12 home-page components to reference the value-equal tokens + value-preserving verification
 **UI hint**: yes
 
@@ -78,7 +78,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Token Foundation | 0/2 | Not started | - |
+| 1. Token Foundation | 1/2 | In Progress|  |
 | 2. Features Page | 0/TBD | Not started | - |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
