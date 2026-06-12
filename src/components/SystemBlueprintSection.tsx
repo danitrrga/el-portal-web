@@ -323,7 +323,7 @@ function InsightRow({
             <span
               className="text-[8.5px] uppercase tracking-[0.1em] font-semibold rounded-full px-1.5 py-[1px]"
               style={{
-                background: "rgba(255,255,255,0.1)",
+                background: "var(--color-ep-text-glow-white)",
                 color: FG_STRONG,
               }}
             >

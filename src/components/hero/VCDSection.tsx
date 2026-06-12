@@ -305,7 +305,7 @@ function DayStratum({
               transform: "translate(-50%, -50%)",
               borderRadius: "50%",
               background: isToday
-                ? "#ffffff"
+                ? "var(--color-ep-fg-strong-white)"
                 : isPast
                 ? WHITE
                 : WHITE_DIM,
