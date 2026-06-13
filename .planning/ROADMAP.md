@@ -44,7 +44,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. The page is on-brand — ink-blue OKLCH tokens, Special Gothic display headings, atmospheric dark surface — and ships correct metadata (title + description).
   5. Entrance/scroll animations follow the brand motion system (GPU-composited transform/opacity, custom easing, staggered entrance) with no perpetual decorative motion.
   6. All site routes (`/`, `/features`, `/manifesto`, `/methodology`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) resolve.
-**Plans**: TBD
+**Plans**: 4 plans
+  - [ ] 02-01-PLAN.md — Wire Features into Navbar navLinks + repoint Footer Product link (D-11, FEAT-01/QUAL-01)
+  - [ ] 02-02-PLAN.md — Build the RSC content sections: hero intro, line-ruled highlight grid, closing CTA (FEAT-02/03/04/05)
+  - [ ] 02-03-PLAN.md — Build the Pulse + Trends deep-dive rows (client island, line visuals, brand motion) (FEAT-02/03/06)
+  - [ ] 02-04-PLAN.md — Assemble /features route: metadata, hybrid order, architect frame + build/route verification (FEAT-03/05, QUAL-01)
 **UI hint**: yes
 
 ### Phase 3: Legal Pages Rebrand
@@ -79,6 +83,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Token Foundation | 2/2 | Complete   | 2026-06-13 |
-| 2. Features Page | 0/TBD | Not started | - |
+| 2. Features Page | 0/4 | Not started | - |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
