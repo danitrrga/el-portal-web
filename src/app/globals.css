@@ -330,3 +330,95 @@ body {
   text-transform: uppercase;
   line-height: 1.02;
 }
+
+/* ── Footer wordmark — ghost outline → left-to-right grain fill ──────
+   At rest: a faint, chunky hollow outline of EL PORTAL.
+   On hover: the outline brightens and a gaussian-noise grain gradient
+   organically fills the letters from left to right. CSS-only, reversible,
+   crisp at any size. No perpetual motion, no rAF. */
+@property --wordmark-reveal {
+  syntax: "<percentage>";
+  initial-value: 0%;
+  inherits: true;
+}
+
+.wordmark {
+  position: relative;
+  display: grid;
+  justify-content: end;
+  isolation: isolate;
+  /* Mask grain — biased near-opaque; mainly erodes the advancing reveal edge
+     so the fill front looks granular rather than a clean wipe line. */
+  --wordmark-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.12' intercept='0.88'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Surface grain — opaque greyscale fractal noise (3 octaves), tonal range
+     compressed toward mid-grey so soft-light adds only a whisper of texture. */
+  --wordmark-grain-tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.4' intercept='0.3'/%3E%3CfeFuncG type='linear' slope='0.4' intercept='0.3'/%3E%3CfeFuncB type='linear' slope='0.4' intercept='0.3'/%3E%3CfeFuncA type='discrete' tableValues='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+}
+
+.wordmark__layer {
+  grid-area: 1 / 1;
+  margin: 0;
+  font-family: var(--font-special-gothic-expanded), "Arial Black", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.85;
+  font-size: clamp(1.9rem, 8.6vw, 7.6rem);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Ghost chunky outline — always present, brightens on hover */
+.wordmark__outline {
+  color: transparent;
+  -webkit-text-stroke: clamp(1.25px, 0.32vw, 4px) rgba(255, 255, 255, 0.55);
+  opacity: 0.32;
+  transition: opacity 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wordmark:hover .wordmark__outline {
+  opacity: 0.6;
+}
+
+/* Grain-textured fill — revealed left → right via an animated mask.
+   Final coverage = (left-to-right sweep) ∩ (grain), so the advancing
+   edge is eroded by noise and reads as an organic granular fill. */
+.wordmark__fill {
+  color: transparent;
+  /* Volumetric, nonlinear fill — stacked radial blooms (a light source
+     top-left, a secondary bloom bottom-right) + a directional luminance ramp
+     + blended grain, clipped to the glyphs. Reads as a lit, textured surface
+     rather than flat white. Cool blue-grey shadows tie it to the ink palette. */
+  background-image:
+    radial-gradient(135% 215% at 16% -25%, #ffffff 0%, #f4f6fb 20%, rgba(190, 203, 226, 0.62) 54%, rgba(124, 141, 173, 0.46) 80%, rgba(90, 106, 140, 0.5) 100%),
+    radial-gradient(95% 150% at 94% 128%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 56%),
+    linear-gradient(101deg, rgba(116, 135, 168, 0.4) 0%, rgba(255, 255, 255, 0.96) 47%, rgba(150, 167, 198, 0.5) 100%),
+    var(--wordmark-grain-tex);
+  background-blend-mode: normal, screen, overlay, soft-light;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 220px 220px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-mask-image:
+    linear-gradient(90deg, #000 calc(var(--wordmark-reveal) - 19%), transparent var(--wordmark-reveal)),
+    var(--wordmark-grain);
+  mask-image:
+    linear-gradient(90deg, #000 calc(var(--wordmark-reveal) - 19%), transparent var(--wordmark-reveal)),
+    var(--wordmark-grain);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-size: 100% 100%, 200px 200px;
+  mask-size: 100% 100%, 200px 200px;
+  -webkit-mask-repeat: no-repeat, repeat;
+  mask-repeat: no-repeat, repeat;
+  transition: --wordmark-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wordmark:hover .wordmark__fill {
+  --wordmark-reveal: 117%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordmark__outline,
+  .wordmark__fill {
+    transition: none;
+  }
+}

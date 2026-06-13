@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { ElPortalWordmark } from "./ElPortalWordmark";
 
 const footerColumns = [
     {
@@ -65,10 +66,8 @@ export default function Footer() {
                 >
                     {/* Brand column */}
                     <motion.div variants={itemVariants} className="col-span-2 md:col-span-1">
-                        <Link href="/" className="inline-block mb-4">
-                            <span className="font-serif italic text-2xl text-zinc-100">
-                                Portal
-                            </span>
+                        <Link href="/" aria-label="El Portal home" className="inline-block mb-4">
+                            <ElPortalWordmark size={24} />
                         </Link>
                         <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
                             Your personal operating system for intentional living and peak performance.
@@ -97,26 +96,28 @@ export default function Footer() {
                     ))}
                 </motion.div>
 
-                {/* Bottom bar */}
-                <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <p className="text-sm text-zinc-500">
-                        &copy; {new Date().getFullYear()} Portal. All rights reserved.
+                {/* Bottom bar — copyright left, giant grain-fill wordmark right at the same height */}
+                <div className="pt-6 border-t border-white/5 flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                    <p className="text-sm text-zinc-500 shrink-0">
+                        &copy; {new Date().getFullYear()} El Portal. All rights reserved.
                     </p>
+
+                    {/* Brand wordmark — ghost outline that fills with grain on hover */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        viewport={{ once: true }}
+                        aria-hidden="true"
+                        className="min-w-0 overflow-hidden"
+                    >
+                        <div className="wordmark">
+                            <span className="wordmark__layer wordmark__outline">El Portal</span>
+                            <span className="wordmark__layer wordmark__fill">El Portal</span>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
-
-            {/* Large brand watermark */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                viewport={{ once: true }}
-                className="-mt-8 md:-mt-12 text-center overflow-hidden select-none pointer-events-none"
-            >
-                <span className="font-serif italic text-[clamp(4rem,15vw,12rem)] text-white/[0.08] leading-none">
-                    Portal
-                </span>
-            </motion.div>
         </footer>
     );
 }
