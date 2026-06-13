@@ -15,16 +15,19 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [x] **TOKEN-02**: Hardcoded glow values (`rgba(30,64,175,…)`, `rgba(59,130,246,…)`) are tokenized into CSS variables carrying the **same value** — no color change, appearance identical (desaturation/restyle of glows is out of scope this milestone)
 - [ ] **TOKEN-04**: The token migration is value-preserving — the home page is pixel- and motion-identical before and after; every token used resolves to the exact current hex/rgba value (verified by manual before/after visual review)
 
-### Features Page
+### Features Page — CANCELLED (2026-06-13)
 
-<!-- New /features route. Content grounded in .planning/research/app-features/. -->
+<!-- Phase 2 features page CANCELLED by user: the coded design was rejected and the
+     /features route + components were deleted. The only surviving change is the
+     Navbar/Footer "Methodology" link relabeled "Features" (still → /methodology).
+     FEAT-01…FEAT-06 are dropped, not delivered. -->
 
-- [x] **FEAT-01**: Visitor can reach a new `/features` page from the site navigation and footer
-- [x] **FEAT-02**: The Features page presents the app's real features using accurate product vocabulary (Version → Cycle → Day, Pulse, Lab, Goals, Trends, Archives), grounded in the app research — no invented or unshipped features are claimed
-- [x] **FEAT-03**: The Features page uses the hybrid layout — hero intro → bento grid of feature highlights → deep-dive rows for the headline features → closing CTA
-- [x] **FEAT-04**: The Features page CTA drives the visitor to pricing / get-started
-- [x] **FEAT-05**: The Features page is on-brand (ink-blue OKLCH tokens, Special Gothic display headings, atmospheric dark surface) and has correct page metadata (title + description)
-- [x] **FEAT-06**: Features page entrance/scroll animations follow the brand motion system (GPU-composited transform/opacity, custom easing, staggered entrance — no perpetual decorative motion)
+- [~] **FEAT-01**: ~~Visitor can reach a new `/features` page from the site navigation and footer~~ — CANCELLED (no /features page)
+- [~] **FEAT-02**: ~~The Features page presents the app's real features using accurate product vocabulary…~~ — CANCELLED
+- [~] **FEAT-03**: ~~The Features page uses the hybrid layout — hero intro → bento grid → deep-dive rows → closing CTA~~ — CANCELLED
+- [~] **FEAT-04**: ~~The Features page CTA drives the visitor to pricing / get-started~~ — CANCELLED
+- [~] **FEAT-05**: ~~The Features page is on-brand … and has correct page metadata~~ — CANCELLED
+- [~] **FEAT-06**: ~~Features page entrance/scroll animations follow the brand motion system…~~ — CANCELLED
 
 ### Legal Pages Rebrand
 
@@ -38,7 +41,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### Cross-Cutting Quality
 
-- [x] **QUAL-01**: Site navigation and footer include the Features link, and every route (`/`, `/features`, `/manifesto`, `/methodology`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) resolves
+- [~] **QUAL-01**: ~~Site navigation and footer include the Features link, and every route (incl. `/features`) resolves~~ — CANCELLED with Phase 2. (General route-resolution health is still covered by Phase 4 / QUAL-02's build gate. Nav/footer now show a "Features" label pointing to `/methodology`.)
 - [ ] **QUAL-02**: TypeScript typecheck (`tsc`), ESLint, and `next build` all pass with no new errors
 - [ ] **QUAL-03**: No new uses of banned anti-patterns are introduced (raw `<button>`, gradient-clipped text, pure black, `zinc`/`slate` mixing on landing surfaces, `transition: all`, `useAnimationFrame` for decoration)
 
@@ -78,18 +81,18 @@ Which phases cover which requirements. Populated during roadmap creation.
 | TOKEN-01 | Phase 1 | Pending |
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
-| FEAT-01 | Phase 2 | Complete |
-| FEAT-02 | Phase 2 | Complete |
-| FEAT-03 | Phase 2 | Complete |
-| FEAT-04 | Phase 2 | Complete |
-| FEAT-05 | Phase 2 | Complete |
-| FEAT-06 | Phase 2 | Complete |
+| FEAT-01 | Phase 2 | Cancelled |
+| FEAT-02 | Phase 2 | Cancelled |
+| FEAT-03 | Phase 2 | Cancelled |
+| FEAT-04 | Phase 2 | Cancelled |
+| FEAT-05 | Phase 2 | Cancelled |
+| FEAT-06 | Phase 2 | Cancelled |
 | LEGAL-01 | Phase 3 | Pending |
 | LEGAL-02 | Phase 3 | Pending |
 | LEGAL-03 | Phase 3 | Pending |
 | LEGAL-04 | Phase 3 | Pending |
 | LEGAL-05 | Phase 3 | Pending |
-| QUAL-01 | Phase 2 | Complete |
+| QUAL-01 | Phase 2 | Cancelled |
 | QUAL-02 | Phase 4 | Pending |
 | QUAL-03 | Phase 1 | Pending |
 

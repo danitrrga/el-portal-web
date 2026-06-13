@@ -13,7 +13,7 @@ This milestone unifies the El Portal marketing site under the ink-blue OKLCH tok
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Token Foundation** - Migrate Hero + shared components to OKLCH/CSS variable tokens using identical hex/rgba values — pixel- and motion-identical (nothing changes how it looks) (completed 2026-06-13)
-- [x] **Phase 2: Features Page** - New truthful `/features` route (hero → bento → deep-dive rows → CTA), linked from nav and footer (completed 2026-06-13)
+- [~] **Phase 2: Features Page** — CANCELLED 2026-06-13 (coded design rejected; `/features` route + components deleted). Only surviving change: the Methodology nav/footer link was relabeled "Features" (still → `/methodology`).
 - [ ] **Phase 3: Legal Pages Rebrand** - Reskin Terms + Privacy to tokens, level Terms up to Privacy's quality, reconcile claims, meet WCAG AA
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
 
@@ -33,10 +33,17 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 01-02-PLAN.md — Migrate the 12 home-page components to reference the value-equal tokens + value-preserving verification
 **UI hint**: yes
 
-### Phase 2: Features Page
-**Goal**: A visitor can reach a new `/features` page that describes El Portal's real, shipped features in the brand's voice and layout, and is driven onward to pricing/get-started.
+### Phase 2: Features Page — CANCELLED (2026-06-13)
+> **CANCELLED by user.** The features-page design that was coded (plans 02-01…02-04)
+> was rejected and reverted — `src/app/features/page.tsx` and its section components
+> were deleted. The only change kept from this phase is relabeling the Navbar + Footer
+> "Methodology" link to "Features" (URL unchanged: `/methodology`). Requirements
+> FEAT-01…FEAT-06 and QUAL-01 are dropped (see REQUIREMENTS.md). Plans below are
+> retained for history only and no longer reflect shipped code.
+
+**Goal**: ~~A visitor can reach a new `/features` page that describes El Portal's real, shipped features in the brand's voice and layout, and is driven onward to pricing/get-started.~~ (cancelled)
 **Depends on**: Phase 1
-**Requirements**: FEAT-01, FEAT-02, FEAT-03, FEAT-04, FEAT-05, FEAT-06, QUAL-01
+**Requirements**: ~~FEAT-01, FEAT-02, FEAT-03, FEAT-04, FEAT-05, FEAT-06, QUAL-01~~ (cancelled)
 **Success Criteria** (what must be TRUE):
   1. A visitor can navigate to `/features` from both the site navigation and the footer, and the route renders with no console errors.
   2. The page uses the hybrid layout — hero intro → bento grid of feature highlights → deep-dive rows for headline features → closing CTA — and the CTA links to pricing / get-started.
@@ -44,11 +51,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. The page is on-brand — ink-blue OKLCH tokens, Special Gothic display headings, atmospheric dark surface — and ships correct metadata (title + description).
   5. Entrance/scroll animations follow the brand motion system (GPU-composited transform/opacity, custom easing, staggered entrance) with no perpetual decorative motion.
   6. All site routes (`/`, `/features`, `/manifesto`, `/methodology`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) resolve.
-**Plans**: 4 plans
-  - [x] 02-01-PLAN.md — Wire Features into Navbar navLinks + repoint Footer Product link (D-11, FEAT-01/QUAL-01)
-  - [x] 02-02-PLAN.md — Build the RSC content sections: hero intro, line-ruled highlight grid, closing CTA (FEAT-02/03/04/05)
-  - [x] 02-03-PLAN.md — Build the Pulse + Trends deep-dive rows (client island, line visuals, brand motion) (FEAT-02/03/06)
-  - [x] 02-04-PLAN.md — Assemble /features route: metadata, hybrid order, architect frame + build/route verification (FEAT-03/05, QUAL-01)
+**Plans**: 4 plans (executed then REVERTED — retained for history)
+  - [~] 02-01-PLAN.md — Wire Features into Navbar navLinks + repoint Footer Product link (REVERTED; relabel-only change kept)
+  - [~] 02-02-PLAN.md — Build the RSC content sections: hero intro, line-ruled highlight grid, closing CTA (REVERTED — deleted)
+  - [~] 02-03-PLAN.md — Build the Pulse + Trends deep-dive rows (REVERTED — deleted)
+  - [~] 02-04-PLAN.md — Assemble /features route: metadata, hybrid order, architect frame (REVERTED — deleted)
 **UI hint**: yes
 
 ### Phase 3: Legal Pages Rebrand
@@ -65,7 +72,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 ### Phase 4: Verification & Polish
 **Goal**: The whole site is provably clean — it typechecks, lints, and builds with no new errors, every route resolves, and no banned anti-patterns slipped in.
-**Depends on**: Phase 2, Phase 3
+**Depends on**: Phase 3 (Phase 2 cancelled)
 **Requirements**: QUAL-02
 **Success Criteria** (what must be TRUE):
   1. `tsc` (TypeScript typecheck) passes with no new errors.
