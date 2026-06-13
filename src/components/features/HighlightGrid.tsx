@@ -8,7 +8,7 @@ import {
   Target,
   Translate,
   Timer,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react/dist/ssr";
 
 /* ── Section eyebrow — mono num · label + hairline rule ───────────── */
 function SectionEyebrow({ num, label }: { num: string; label: string }) {
