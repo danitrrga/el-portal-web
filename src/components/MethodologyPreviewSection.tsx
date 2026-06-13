@@ -48,7 +48,7 @@ export default function MethodologyPreviewSection() {
             className="text-[11px] font-medium uppercase tracking-[0.22em]"
             style={{ color: FG_MUTED }}
           >
-            Methodology
+            Features
           </span>
           <h2
             className="display text-balance mt-4"
