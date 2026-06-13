@@ -24,7 +24,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [x] **FEAT-03**: The Features page uses the hybrid layout — hero intro → bento grid of feature highlights → deep-dive rows for the headline features → closing CTA
 - [x] **FEAT-04**: The Features page CTA drives the visitor to pricing / get-started
 - [x] **FEAT-05**: The Features page is on-brand (ink-blue OKLCH tokens, Special Gothic display headings, atmospheric dark surface) and has correct page metadata (title + description)
-- [ ] **FEAT-06**: Features page entrance/scroll animations follow the brand motion system (GPU-composited transform/opacity, custom easing, staggered entrance — no perpetual decorative motion)
+- [x] **FEAT-06**: Features page entrance/scroll animations follow the brand motion system (GPU-composited transform/opacity, custom easing, staggered entrance — no perpetual decorative motion)
 
 ### Legal Pages Rebrand
 
@@ -83,7 +83,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | FEAT-03 | Phase 2 | Complete |
 | FEAT-04 | Phase 2 | Complete |
 | FEAT-05 | Phase 2 | Complete |
-| FEAT-06 | Phase 2 | Pending |
+| FEAT-06 | Phase 2 | Complete |
 | LEGAL-01 | Phase 3 | Pending |
 | LEGAL-02 | Phase 3 | Pending |
 | LEGAL-03 | Phase 3 | Pending |
