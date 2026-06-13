@@ -63,7 +63,7 @@ export default function CTASection() {
             className="text-[11px] font-medium uppercase tracking-[0.18em]"
             style={{ color: FG_MUTED }}
           >
-            No card · set up in under 10 minutes
+            Set up in under 10 minutes
           </span>
         </div>
       </div>
