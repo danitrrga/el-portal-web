@@ -12,7 +12,6 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app';
 const navLinks = [
     { href: "/manifesto", label: "Manifesto" },
     { href: "/changelog", label: "Changelog" },
-    { href: "/methodology", label: "Methodology" },
     { href: "/features", label: "Features" },
     { href: "/pricing", label: "Pricing" },
 ];
