@@ -13,7 +13,7 @@ This milestone unifies the El Portal marketing site under the ink-blue OKLCH tok
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Token Foundation** - Migrate Hero + shared components to OKLCH/CSS variable tokens using identical hex/rgba values — pixel- and motion-identical (nothing changes how it looks) (completed 2026-06-13)
-- [~] **Phase 2: Features Page** — CANCELLED 2026-06-13 (coded design rejected; `/features` route + components deleted). Only surviving change: the Methodology nav/footer link was relabeled "Features" (still → `/methodology`).
+- [~] **Phase 2: Features Page** — CANCELLED 2026-06-13 (coded design rejected; `/features` route + components deleted). Only surviving change: the Methodology page was relabeled "Features" and its route renamed `/methodology` → `/features`.
 - [ ] **Phase 3: Legal Pages Rebrand** - Reskin Terms + Privacy to tokens, level Terms up to Privacy's quality, reconcile claims, meet WCAG AA
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
 
@@ -37,7 +37,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 > **CANCELLED by user.** The features-page design that was coded (plans 02-01…02-04)
 > was rejected and reverted — `src/app/features/page.tsx` and its section components
 > were deleted. The only change kept from this phase is relabeling the Navbar + Footer
-> "Methodology" link to "Features" (URL unchanged: `/methodology`). Requirements
+> "Methodology" page to "Features" and renaming its route `/methodology` → `/features`. Requirements
 > FEAT-01…FEAT-06 and QUAL-01 are dropped (see REQUIREMENTS.md). Plans below are
 > retained for history only and no longer reflect shipped code.
 
@@ -78,7 +78,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   1. `tsc` (TypeScript typecheck) passes with no new errors.
   2. ESLint passes with no new errors.
   3. `next build` completes successfully.
-  4. A final route check confirms every page (`/`, `/features`, `/manifesto`, `/methodology`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) loads without console errors.
+  4. A final route check confirms every page (`/`, `/features`, `/manifesto`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) loads without console errors.
 **Plans**: TBD
 **UI hint**: yes
 

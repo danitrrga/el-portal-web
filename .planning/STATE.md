@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 Phase: 02 (features-page) — CANCELLED by user (design rejected)
 Plan: plans 02-01…02-04 were executed then reverted; the `/features` page and its
   section components were deleted. Only surviving change: the Navbar + Footer
-  "Methodology" link was relabeled "Features" and still points to /methodology.
+  "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
 Status: Phase 02 deliverables NOT shipped. ROADMAP.md Phase 02 entry and
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
 Last activity: 2026-06-13
