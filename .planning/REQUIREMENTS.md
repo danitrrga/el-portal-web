@@ -19,7 +19,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 <!-- New /features route. Content grounded in .planning/research/app-features/. -->
 
-- [ ] **FEAT-01**: Visitor can reach a new `/features` page from the site navigation and footer
+- [x] **FEAT-01**: Visitor can reach a new `/features` page from the site navigation and footer
 - [ ] **FEAT-02**: The Features page presents the app's real features using accurate product vocabulary (Version → Cycle → Day, Pulse, Lab, Goals, Trends, Archives), grounded in the app research — no invented or unshipped features are claimed
 - [ ] **FEAT-03**: The Features page uses the hybrid layout — hero intro → bento grid of feature highlights → deep-dive rows for the headline features → closing CTA
 - [ ] **FEAT-04**: The Features page CTA drives the visitor to pricing / get-started
@@ -38,7 +38,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### Cross-Cutting Quality
 
-- [ ] **QUAL-01**: Site navigation and footer include the Features link, and every route (`/`, `/features`, `/manifesto`, `/methodology`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) resolves
+- [x] **QUAL-01**: Site navigation and footer include the Features link, and every route (`/`, `/features`, `/manifesto`, `/methodology`, `/changelog`, `/pricing`, `/mcp`, `/terms`, `/privacy`) resolves
 - [ ] **QUAL-02**: TypeScript typecheck (`tsc`), ESLint, and `next build` all pass with no new errors
 - [ ] **QUAL-03**: No new uses of banned anti-patterns are introduced (raw `<button>`, gradient-clipped text, pure black, `zinc`/`slate` mixing on landing surfaces, `transition: all`, `useAnimationFrame` for decoration)
 
@@ -78,7 +78,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | TOKEN-01 | Phase 1 | Pending |
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
-| FEAT-01 | Phase 2 | Pending |
+| FEAT-01 | Phase 2 | Complete |
 | FEAT-02 | Phase 2 | Pending |
 | FEAT-03 | Phase 2 | Pending |
 | FEAT-04 | Phase 2 | Pending |
@@ -89,7 +89,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | LEGAL-03 | Phase 3 | Pending |
 | LEGAL-04 | Phase 3 | Pending |
 | LEGAL-05 | Phase 3 | Pending |
-| QUAL-01 | Phase 2 | Pending |
+| QUAL-01 | Phase 2 | Complete |
 | QUAL-02 | Phase 4 | Pending |
 | QUAL-03 | Phase 1 | Pending |
 
