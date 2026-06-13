@@ -12,7 +12,7 @@ This milestone unifies the El Portal marketing site under the ink-blue OKLCH tok
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Token Foundation** - Migrate Hero + shared components to OKLCH/CSS variable tokens using identical hex/rgba values — pixel- and motion-identical (nothing changes how it looks)
+- [x] **Phase 1: Token Foundation** - Migrate Hero + shared components to OKLCH/CSS variable tokens using identical hex/rgba values — pixel- and motion-identical (nothing changes how it looks) (completed 2026-06-13)
 - [ ] **Phase 2: Features Page** - New truthful `/features` route (hero → bento → deep-dive rows → CTA), linked from nav and footer
 - [ ] **Phase 3: Legal Pages Rebrand** - Reskin Terms + Privacy to tokens, level Terms up to Privacy's quality, reconcile claims, meet WCAG AA
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
@@ -30,7 +30,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. No new banned anti-patterns are introduced in touched files (raw `<button>`, gradient-clipped text, pure black, `transition: all`, `useAnimationFrame` for decoration). Pre-existing patterns are left untouched this phase.
 **Plans**: 2 plans
   - [x] 01-01-PLAN.md — Add the value-equal --color-ep-* token block to globals.css (foundation; no component touched)
-  - [ ] 01-02-PLAN.md — Migrate the 12 home-page components to reference the value-equal tokens + value-preserving verification
+  - [x] 01-02-PLAN.md — Migrate the 12 home-page components to reference the value-equal tokens + value-preserving verification
 **UI hint**: yes
 
 ### Phase 2: Features Page
@@ -78,7 +78,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Token Foundation | 1/2 | In Progress|  |
+| 1. Token Foundation | 2/2 | Complete   | 2026-06-13 |
 | 2. Features Page | 0/TBD | Not started | - |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
