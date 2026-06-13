@@ -1,6 +1,5 @@
 import {
   CalendarDots,
-  ChartLineUp,
   FilmSlate,
   Folders,
   Heart,
