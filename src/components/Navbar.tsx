@@ -13,6 +13,7 @@ const navLinks = [
     { href: "/manifesto", label: "Manifesto" },
     { href: "/changelog", label: "Changelog" },
     { href: "/methodology", label: "Methodology" },
+    { href: "/features", label: "Features" },
     { href: "/pricing", label: "Pricing" },
 ];
 
