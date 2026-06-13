@@ -102,7 +102,7 @@ export default function MethodologyPreviewSection() {
         {/* CTA — read the full methodology */}
         <div className="mt-16 flex justify-center">
           <Button asChild variant="brand-link" size="lg" className="text-base">
-            <Link href="/methodology" className="group inline-flex items-center gap-1.5">
+            <Link href="/features" className="group inline-flex items-center gap-1.5">
               Read the full methodology
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>

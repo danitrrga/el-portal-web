@@ -7,7 +7,7 @@ const footerColumns = [
     {
         title: "Product",
         links: [
-            { label: "Features", href: "/methodology" },
+            { label: "Features", href: "/features" },
             { label: "Changelog", href: "/changelog" },
             { label: "MCP Integration", href: "/mcp" },
         ],

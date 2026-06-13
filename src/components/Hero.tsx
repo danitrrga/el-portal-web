@@ -156,7 +156,7 @@ export default function Hero() {
                   variant="brand-link"
                   className="text-base"
                 >
-                  <Link href="/methodology">
+                  <Link href="/features">
                     <span className="text-nowrap">Read the methodology</span>
                   </Link>
                 </Button>
