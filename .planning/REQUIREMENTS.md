@@ -20,10 +20,10 @@ Requirements for this milestone. Each maps to a roadmap phase.
 <!-- New /features route. Content grounded in .planning/research/app-features/. -->
 
 - [x] **FEAT-01**: Visitor can reach a new `/features` page from the site navigation and footer
-- [ ] **FEAT-02**: The Features page presents the app's real features using accurate product vocabulary (Version → Cycle → Day, Pulse, Lab, Goals, Trends, Archives), grounded in the app research — no invented or unshipped features are claimed
-- [ ] **FEAT-03**: The Features page uses the hybrid layout — hero intro → bento grid of feature highlights → deep-dive rows for the headline features → closing CTA
-- [ ] **FEAT-04**: The Features page CTA drives the visitor to pricing / get-started
-- [ ] **FEAT-05**: The Features page is on-brand (ink-blue OKLCH tokens, Special Gothic display headings, atmospheric dark surface) and has correct page metadata (title + description)
+- [x] **FEAT-02**: The Features page presents the app's real features using accurate product vocabulary (Version → Cycle → Day, Pulse, Lab, Goals, Trends, Archives), grounded in the app research — no invented or unshipped features are claimed
+- [x] **FEAT-03**: The Features page uses the hybrid layout — hero intro → bento grid of feature highlights → deep-dive rows for the headline features → closing CTA
+- [x] **FEAT-04**: The Features page CTA drives the visitor to pricing / get-started
+- [x] **FEAT-05**: The Features page is on-brand (ink-blue OKLCH tokens, Special Gothic display headings, atmospheric dark surface) and has correct page metadata (title + description)
 - [ ] **FEAT-06**: Features page entrance/scroll animations follow the brand motion system (GPU-composited transform/opacity, custom easing, staggered entrance — no perpetual decorative motion)
 
 ### Legal Pages Rebrand
@@ -79,10 +79,10 @@ Which phases cover which requirements. Populated during roadmap creation.
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
 | FEAT-01 | Phase 2 | Complete |
-| FEAT-02 | Phase 2 | Pending |
-| FEAT-03 | Phase 2 | Pending |
-| FEAT-04 | Phase 2 | Pending |
-| FEAT-05 | Phase 2 | Pending |
+| FEAT-02 | Phase 2 | Complete |
+| FEAT-03 | Phase 2 | Complete |
+| FEAT-04 | Phase 2 | Complete |
+| FEAT-05 | Phase 2 | Complete |
 | FEAT-06 | Phase 2 | Pending |
 | LEGAL-01 | Phase 3 | Pending |
 | LEGAL-02 | Phase 3 | Pending |
