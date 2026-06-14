@@ -92,6 +92,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260613-716 | Footer wordmark rebrand — grain-fill EL PORTAL + canonical brand lockup | 2026-06-13 | 6ccaba4 | [260613-716-footer-wordmark](./quick/260613-716-footer-wordmark/) |
+| 260614-edt | Reskin /privacy + /terms to ink-blue brand: ep tokens, .display headings, no zinc/purple/font-mono | 2026-06-14 | e756cad | [260614-edt-redesign-privacy-and-terms-pages-to-fit-](./quick/260614-edt-redesign-privacy-and-terms-pages-to-fit-/) |
 
 ## Deferred Items
 
