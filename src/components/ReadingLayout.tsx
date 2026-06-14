@@ -10,11 +10,8 @@ interface ReadingLayoutProps {
 export default function ReadingLayout({ children, className }: ReadingLayoutProps) {
     return (
         <div className="relative w-full">
-            {/* Radial blue gradient — matches home hero */}
-            <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[700px] bg-[radial-gradient(circle_at_50%_0%,_rgba(30,64,175,0.15)_0%,_rgba(2,6,23,0)_70%)] opacity-80" />
-
-            {/* Secondary purple gradient orb — depth enhancement */}
-            <div className="pointer-events-none absolute top-[300px] right-[-200px] w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,_rgba(88,28,135,0.08)_0%,_transparent_60%)] opacity-60" />
+            {/* Radial accent gradient — matches home hero */}
+            <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[700px] bg-[radial-gradient(circle_at_50%_0%,_var(--color-ep-accent-alpha-12)_0%,_transparent_70%)] opacity-80" />
 
             {/* Film grain texture overlay */}
             <div
@@ -32,7 +29,7 @@ export default function ReadingLayout({ children, className }: ReadingLayoutProp
                     WebkitMaskImage: "radial-gradient(circle at center, black 40%, transparent 100%)",
                 }}
             >
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-ep-grid-line)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-ep-grid-line)_1px,transparent_1px)] bg-[size:40px_40px]" />
             </div>
 
             {/* Content */}
