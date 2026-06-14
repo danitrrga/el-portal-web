@@ -4,8 +4,8 @@ milestone: v1.0
 milestone_name: milestone
 status: phase-cancelled
 stopped_at: Phase 02 features-page CANCELLED by user (design rejected)
-last_updated: "2026-06-13T19:16:00.000Z"
-last_activity: 2026-06-13 - Completed quick task 260613-716: Footer wordmark rebrand
+last_updated: "2026-06-14T08:45:00.000Z"
+last_activity: 2026-06-14 - Completed quick task 260614-edt: Reskin /privacy + /terms to ink-blue brand
 progress:
   total_phases: 4
   completed_phases: 1
@@ -31,7 +31,7 @@ Plan: plans 02-01…02-04 were executed then reverted; the `/features` page and 
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
 Status: Phase 02 deliverables NOT shipped. ROADMAP.md Phase 02 entry and
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
-Last activity: 2026-06-13
+Last activity: 2026-06-14
 
 Progress: Phase 01 complete; Phase 02 cancelled
 
