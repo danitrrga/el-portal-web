@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
     return (
-        <div className="relative w-full bg-zinc-950 min-h-screen">
+        <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-screen">
             <div
                 className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"
                 style={{
@@ -25,13 +25,13 @@ export default function PrivacyPage() {
                 <ReadingLayout>
                     {/* Hero */}
                     <section className="pt-16 pb-4 text-center">
-                        <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium mb-4">
+                        <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-4">
                             Privacy &amp; Data
                         </p>
-                        <h1 className="text-5xl sm:text-6xl tracking-tight font-medium text-zinc-100 text-balance">
+                        <h1 className="display text-5xl sm:text-6xl text-[var(--color-ep-fg-strong)] text-balance">
                             Your data, fully visible.
                         </h1>
-                        <p className="mt-6 text-lg text-zinc-400 leading-relaxed text-pretty max-w-xl mx-auto">
+                        <p className="mt-6 text-lg text-[var(--color-ep-fg-body)] leading-relaxed text-pretty max-w-xl mx-auto">
                             El Portal is hosted in the EU and built on your consent. This page lists everything we
                             store, everything we never touch, and how to take it all back.
                         </p>
@@ -100,10 +100,10 @@ export default function PrivacyPage() {
                     <Hairline />
 
                     <section>
-                        <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium mb-3">
+                        <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
                             Where your data lives
                         </p>
-                        <h2 className="text-2xl font-semibold tracking-tight text-zinc-100 text-balance mb-8">
+                        <h2 className="display text-2xl text-[var(--color-ep-fg-strong)] text-balance mb-8">
                             Four providers, all in the EU.
                         </h2>
                         <ul>
@@ -133,10 +133,10 @@ export default function PrivacyPage() {
                     <Hairline />
 
                     <section>
-                        <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium mb-3">
+                        <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
                             Your rights
                         </p>
-                        <h2 className="text-2xl font-semibold tracking-tight text-zinc-100 text-balance mb-8">
+                        <h2 className="display text-2xl text-[var(--color-ep-fg-strong)] text-balance mb-8">
                             Take it all back, any time.
                         </h2>
                         <ul>
@@ -164,12 +164,12 @@ export default function PrivacyPage() {
                     </section>
 
                     <footer className="mt-32 mb-16 text-center">
-                        <p className="font-mono text-xs text-zinc-600">Last updated 2026-04-28</p>
-                        <p className="mt-2 text-xs text-zinc-500">
+                        <p className="text-xs text-[var(--color-ep-fg-subtle)]">Last updated 2026-04-28</p>
+                        <p className="mt-2 text-xs text-[var(--color-ep-fg-muted)]">
                             Reach us at{" "}
                             <a
                                 href="mailto:dtarraga.emp@gmail.com"
-                                className="text-zinc-300 underline underline-offset-4 decoration-zinc-600 hover:text-zinc-100 hover:decoration-zinc-400 transition-colors duration-300"
+                                className="text-[var(--color-ep-fg-body)] underline underline-offset-4 decoration-[var(--color-ep-fg-subtle)] hover:text-[var(--color-ep-fg-strong)] hover:decoration-[var(--color-ep-fg-muted)] transition-colors duration-300"
                             >
                                 dtarraga.emp@gmail.com
                             </a>
@@ -184,7 +184,7 @@ export default function PrivacyPage() {
 }
 
 function Hairline() {
-    return <hr className="my-20 border-t border-white/10" />;
+    return <hr className="my-20 border-t border-[var(--color-ep-hairline)]" />;
 }
 
 interface BucketProps {
@@ -199,26 +199,26 @@ interface BucketProps {
 function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
     return (
         <section>
-            <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium mb-3">{tag}</p>
-            <h2 className="text-2xl font-semibold tracking-tight text-zinc-100 text-balance">{title}</h2>
-            <p className="mt-4 text-base text-zinc-400 leading-relaxed text-pretty">{lede}</p>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">{tag}</p>
+            <h2 className="display text-2xl text-[var(--color-ep-fg-strong)] text-balance">{title}</h2>
+            <p className="mt-4 text-base text-[var(--color-ep-fg-body)] leading-relaxed text-pretty">{lede}</p>
 
             <div className="mt-10 grid sm:grid-cols-2 gap-12">
                 <div>
-                    <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium mb-3">
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
                         What we store
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 text-sm text-zinc-400 leading-relaxed">
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
                         {stored.map((item) => (
                             <li key={item}>{item}</li>
                         ))}
                     </ul>
                 </div>
                 <div>
-                    <p className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium mb-3">
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
                         What we never touch
                     </p>
-                    <ul className="list-disc pl-5 space-y-2 text-sm text-zinc-400 leading-relaxed">
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
                         {neverStored.map((item) => (
                             <li key={item}>{item}</li>
                         ))}
@@ -226,19 +226,19 @@ function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
                 </div>
             </div>
 
-            <p className="mt-10 text-xs text-zinc-600 leading-relaxed">{meta}</p>
+            <p className="mt-10 text-xs text-[var(--color-ep-fg-subtle)] leading-relaxed">{meta}</p>
         </section>
     );
 }
 
 function ProviderRow({ name, region, purpose }: { name: string; region: string; purpose: string }) {
     return (
-        <li className="flex items-baseline justify-between gap-4 py-4 border-b border-white/10 last:border-b-0">
+        <li className="flex items-baseline justify-between gap-4 py-4 border-b border-[var(--color-ep-hairline)] last:border-b-0">
             <div className="min-w-0">
-                <p className="text-sm font-semibold text-zinc-100">{name}</p>
-                <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">{purpose}</p>
+                <p className="text-sm font-semibold text-[var(--color-ep-fg-strong)]">{name}</p>
+                <p className="text-xs text-[var(--color-ep-fg-body)] mt-0.5 leading-relaxed">{purpose}</p>
             </div>
-            <span className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium flex-shrink-0">
+            <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium flex-shrink-0">
                 {region}
             </span>
         </li>
@@ -255,12 +255,12 @@ function RightRow({
     action: string;
 }) {
     return (
-        <li className="flex items-start justify-between gap-6 py-5 border-b border-white/10 last:border-b-0">
+        <li className="flex items-start justify-between gap-6 py-5 border-b border-[var(--color-ep-hairline)] last:border-b-0">
             <div className="min-w-0">
-                <p className="text-sm font-semibold text-zinc-100">{title}</p>
-                <p className="text-xs text-zinc-400 mt-0.5 leading-relaxed">{description}</p>
+                <p className="text-sm font-semibold text-[var(--color-ep-fg-strong)]">{title}</p>
+                <p className="text-xs text-[var(--color-ep-fg-body)] mt-0.5 leading-relaxed">{description}</p>
             </div>
-            <span className="text-[11px] uppercase tracking-[0.12em] text-zinc-500 font-medium flex-shrink-0 mt-0.5">
+            <span className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium flex-shrink-0 mt-0.5">
                 {action}
             </span>
         </li>
