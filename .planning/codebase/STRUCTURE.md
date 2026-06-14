@@ -70,8 +70,8 @@ el-portal-hero/
 │       └── utils.ts                 # Utility functions (cn, clsx + merge)
 ├── eslint.config.mjs                # ESLint config (v9)
 ├── CLAUDE.md                        # Project-specific instructions
-├── DESIGN.md                        # Historical design system reference
-├── .impeccable.md                   # Brand identity & design context
+├── .planning/codebase/design/       # Design system (GSD) — replaces DESIGN.md + .impeccable.md
+│       └── (.planning/archive/      #   retired DESIGN.md + .impeccable.md, gitignored)
 ├── GEMINI.md                        # Gemini/Claude integration notes
 ├── tailwind.config.ts               # Tailwind config (or inline in globals.css)
 ├── tsconfig.json                    # TypeScript config
@@ -139,7 +139,7 @@ el-portal-hero/
 - TypeScript: `tsconfig.json`
 - ESLint: `eslint.config.mjs` (v9)
 - Next.js: `next.config.ts`
-- Project instructions: `CLAUDE.md`, `.impeccable.md` (brand), `DESIGN.md` (historical)
+- Project instructions: `CLAUDE.md`; design system: `.planning/codebase/design/` (replaces archived `.impeccable.md` + `DESIGN.md`)
 
 **Core Logic:**
 - Page sections: `src/components/*Section.tsx` — VCD, MCP, SystemBlueprint, Methodology, CTA

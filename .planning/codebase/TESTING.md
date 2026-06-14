@@ -100,7 +100,7 @@ npm run lint     # Run ESLint across all source files
 - Tested visually: No perpetual motion should distract; effect is atmospheric
 - GPU composited via CSS `animation` on transform/opacity properties (not `useAnimationFrame`)
 
-**Motion constraints (per `.impeccable.md`):**
+**Motion constraints (per `design/MOTION.md` + `design/ANTI-PATTERNS.md`):**
 - No `animate-pulse`, `animate-bounce`, `animate-ping` on decorative elements
 - No `repeat: Infinity` on looping animations
 - All animations respect `prefers-reduced-motion: reduce` via CSS

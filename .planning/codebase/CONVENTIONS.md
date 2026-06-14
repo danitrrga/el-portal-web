@@ -139,7 +139,7 @@
 - Wordmark: Inter `font-black` (900) only, NEVER Special Gothic Expanded One
 
 **Spacing & Containers:**
-- Section padding: `py-28` to `py-40` for major sections (per `.impeccable.md`)
+- Section padding: `py-28` to `py-40` for major sections (per `design/TOKENS.md` → Spacing & layout)
 - Card padding: `p-6` to `p-8`
 - Main container: `max-w-5xl px-6 md:px-8`
 - Hero container: `max-w-7xl px-6`
@@ -206,7 +206,7 @@
 - No light mode support — styling decisions are dark-first
 - All backgrounds tinted toward blue-gray, never pure black or raw gray neutrals
 
-**Banned Patterns (from `.impeccable.md`):**
+**Banned Patterns (from `design/ANTI-PATTERNS.md`):**
 - Never use raw `<button>` — wrap with `<Button>` component
 - Never use `background-clip: text` with gradients (instant AI design tell)
 - Never use `rgba(30, 64, 175, ...)` or `rgba(59, 130, 246, ...)` neon blue — use `--color-accent-subtle` instead
