@@ -39,6 +39,31 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **LEGAL-04**: Privacy page factual claims are reconciled with the real app — unverified claims (e.g. a specific hosting city) are corrected or softened; confirmed claims (PostHog EU, opt-in analytics, export/delete, Gemini) are kept
 - [ ] **LEGAL-05**: Both legal pages meet WCAG AA text contrast and use semantic landmarks and a correct heading hierarchy
 
+### Mobile Responsive Retrofit
+
+<!-- Added 2026-07-30. The site is desktop-approved and frozen; this is an additive mobile pass.
+     Contract: .planning/codebase/design/RESPONSIVE.md · Findings: .planning/responsive/SURFACES.md
+     Verified by the committed Playwright/axe harness (`npm run audit:responsive`). -->
+
+- [ ] **RESP-01**: No route scrolls horizontally at any viewport from 320px to 430px — verified by `overflow.spec.ts` across the `reflow-320`, `mobile-360`, `mobile-390`, and `mobile-430` projects
+- [ ] **RESP-02**: `<body>`'s `overflow-x-hidden` is removed and every overflow it was masking is fixed at source (currently `ReadingLayout.tsx:14` overflows 420px; `/changelog` overflows 27px)
+- [ ] **RESP-03**: Every interactive target is at least 44×44 CSS px on touch-sized viewports (WCAG 2.2 SC 2.5.5), with the documented inline-link exception — verified by `touch-targets.spec.ts`
+- [ ] **RESP-04**: `src/app/layout.tsx` exports a `viewport` object with `themeColor` and `colorScheme: 'dark'`, and never sets `maximumScale` or `userScalable: false`
+- [ ] **RESP-05**: Full-height sections use `svh` (with a `vh` fallback declaration) rather than `vh`, so iOS Safari's address bar does not clip content
+- [ ] **RESP-06**: Hand-written `:hover` rules in `globals.css` are wrapped in `@media (hover: hover)` so hover states do not latch on tap
+- [ ] **RESP-07**: A root `<MotionConfig reducedMotion="user">` makes every Framer Motion animation honour the OS reduced-motion preference
+- [ ] **RESP-08**: The desktop rendering at ≥768px is byte-for-byte visually unchanged — every fix is additive (mobile-first default + `md:`/`lg:` restoring today's approved values)
+
+### Security Headers
+
+<!-- Added 2026-07-30. Static marketing site: no auth, no DB, no forms, no PII.
+     Deliberately excludes nonce-based CSP — it would force dynamic rendering,
+     kill CDN caching, and still break Framer Motion's inline style attributes. -->
+
+- [ ] **SEC-01**: `next.config.ts` sets a static (no-nonce) Content-Security-Policy that keeps `frame-ancestors 'none'`, `object-src 'none'`, `base-uri 'self'`, and a restricted `connect-src`, while **preserving static prerendering of all 8 routes**
+- [ ] **SEC-02**: `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` are set, and `poweredByHeader` is disabled
+- [ ] **SEC-03**: Dependabot is configured with grouped weekly updates, and CI fails on high-severity production-dependency advisories (`npm audit --omit=dev --audit-level=high`)
+
 ### Cross-Cutting Quality
 
 - [~] **QUAL-01**: ~~Site navigation and footer include the Features link, and every route (incl. `/features`) resolves~~ — CANCELLED with Phase 2. (General route-resolution health is still covered by Phase 4 / QUAL-02's build gate. Nav/footer now show a "Features" label pointing to `/methodology`.)
@@ -78,6 +103,17 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| RESP-01 | Phase 5 | Pending |
+| RESP-02 | Phase 5 | Pending |
+| RESP-03 | Phase 5 | Pending |
+| RESP-04 | Phase 5 | Pending |
+| RESP-05 | Phase 5 | Pending |
+| RESP-06 | Phase 5 | Pending |
+| RESP-07 | Phase 5 | Pending |
+| RESP-08 | Phase 5 | Pending |
+| SEC-01 | Phase 6 | Pending |
+| SEC-02 | Phase 6 | Pending |
+| SEC-03 | Phase 6 | Pending |
 | TOKEN-01 | Phase 1 | Pending |
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
@@ -97,10 +133,10 @@ Which phases cover which requirements. Populated during roadmap creation.
 | QUAL-03 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 17 total
-- Mapped to phases: 17 ✓
+- v1 requirements: 28 total (17 original + 8 RESP + 3 SEC)
+- Mapped to phases: 28 ✓
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-12*
-*Last updated: 2026-06-12 — TOKEN-03 deferred to v2 (Phase 1 is strictly value-preserving); traceability + counts updated*
+*Last updated: 2026-07-30 — added RESP-01…RESP-08 (Phase 5, mobile responsive retrofit) and SEC-01…SEC-03 (Phase 6, security headers)*
