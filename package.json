@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:responsive": "playwright test",
+    "audit:responsive:ui": "playwright test --ui",
+    "audit:overflow": "playwright test overflow.spec.ts",
+    "audit:a11y": "playwright test a11y.spec.ts",
+    "audit:targets": "playwright test touch-targets.spec.ts",
+    "audit:report": "playwright show-report",
+    "typecheck:e2e": "tsc -p tsconfig.e2e.json"
   },
   "dependencies": {
     "@remotion/player": "^4.0.429",
@@ -23,6 +30,8 @@
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,0 +1,12 @@
+{
+  // The Next build excludes `e2e/` and `playwright.config.ts` (it should not
+  // compile the test harness into the app). This config keeps them type-checked
+  // anyway — run `npm run typecheck:e2e`.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["e2e/**/*.ts", "playwright.config.ts"],
+  "exclude": ["node_modules"]
+}
