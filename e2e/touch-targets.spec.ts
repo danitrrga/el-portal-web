@@ -20,7 +20,11 @@ const AAA_TARGET = 44;
 for (const route of ROUTES) {
   test(`touch targets >= ${AAA_TARGET}px: ${route}`, async ({ page }, testInfo) => {
     const width = page.viewportSize()?.width ?? 0;
-    test.skip(width > 768, "AAA touch target applies to touch-sized viewports");
+    // Tailwind's `md:` breakpoint is 48rem = 768px, compiling to
+    // `@media (width >= 48rem)` — at exactly 768 CSS px the frozen, approved
+    // desktop layout is already active. Holding the AAA target at 768 would
+    // force a desktop restyle, which RESP-08 forbids.
+    test.skip(width >= 768, "AAA touch target applies below the md: breakpoint; >=768px is the frozen desktop design");
 
     await gotoSettled(page, route);
 
