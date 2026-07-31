@@ -47,7 +47,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 - [ ] **RESP-01**: No route scrolls horizontally at any viewport from 320px to 430px — verified by `overflow.spec.ts` across the `reflow-320`, `mobile-360`, `mobile-390`, and `mobile-430` projects
 - [ ] **RESP-02**: `<body>`'s `overflow-x-hidden` is removed and every overflow it was masking is fixed at source (currently `ReadingLayout.tsx:14` overflows 420px; `/changelog` overflows 27px)
-- [ ] **RESP-03**: Every interactive target is at least 44×44 CSS px on touch-sized viewports (WCAG 2.2 SC 2.5.5), with the documented inline-link exception — verified by `touch-targets.spec.ts`
+- [x] **RESP-03**: Every interactive target is at least 44×44 CSS px on touch-sized viewports (WCAG 2.2 SC 2.5.5), with the documented inline-link exception — verified by `touch-targets.spec.ts`
 - [x] **RESP-04**: `src/app/layout.tsx` exports a `viewport` object with `themeColor` and `colorScheme: 'dark'`, and never sets `maximumScale` or `userScalable: false`
 - [x] **RESP-05**: Full-height sections use `svh` (with a `vh` fallback declaration) rather than `vh`, so iOS Safari's address bar does not clip content
 - [x] **RESP-06**: Hand-written `:hover` rules in `globals.css` are wrapped in `@media (hover: hover)` so hover states do not latch on tap
@@ -105,7 +105,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 |-------------|-------|--------|
 | RESP-01 | Phase 5 | Pending |
 | RESP-02 | Phase 5 | Pending |
-| RESP-03 | Phase 5 | Pending |
+| RESP-03 | Phase 5 | Complete |
 | RESP-04 | Phase 5 | Complete |
 | RESP-05 | Phase 5 | Complete |
 | RESP-06 | Phase 5 | Complete |

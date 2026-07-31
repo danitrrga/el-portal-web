@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-01-PLAN.md
-last_updated: "2026-07-31T06:50:36.208Z"
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-07-31T06:59:25.640Z"
 last_activity: 2026-07-31
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 11
-  completed_plans: 7
+  completed_plans: 8
   percent: 33
 ---
 
@@ -26,14 +26,14 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (mobile-responsive-retrofit) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
   section components were deleted. Only surviving change: the Navbar + Footer
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
 Status: Ready to execute
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
 Last activity: 2026-07-31
 
-Progress: [██████░░░░] 64%
+Progress: [███████░░░] 73%
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Progress: [██████░░░░] 64%
 | Phase 02-features-page PP02-03 | 18 min | 1 tasks | 1 files |
 | Phase 02-features-page P02-04 | 15 min | 2 tasks | 2 files |
 | Phase 05 P01 | 9min | 3 tasks | 3 files |
+| Phase 05 P02 | 12min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,8 @@ Recent decisions affecting current work:
 - [Milestone]: Features content derived from grounded app research; truthfulness guardrails enforced (no PWA claim, no shipped Calendar/Todoist sync, verify hosting region).
 - [Milestone]: Terms rebrand = reskin + restructure to Privacy's componentized quality; legal copy preserved.
 - [Phase 05-01]: svh cascade fallback implemented via @supports (min-height: 100svh) instead of a bare duplicate declaration — production lightningcss minifier collapses duplicate same-property declarations in one rule to the last one, silently deleting the vh floor for non-svh browsers; verified empirically
+- [Phase 05-02]: Touch-target AAA skip boundary corrected from width > 768 to width >= 768 to exactly match Tailwind's md: breakpoint (768px), avoiding a forced desktop restyle
+- [Phase 05-02]: CopyButton's raw button intentionally not converted to the shared Button component — out of RESP-01..08 scope, risked /mcp styling regression for no responsive gain
 
 ### Pending Todos
 
@@ -106,6 +109,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-31T06:50:36.201Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-07-31T06:59:25.630Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None
