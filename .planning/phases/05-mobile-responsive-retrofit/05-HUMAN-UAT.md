@@ -37,12 +37,17 @@ expected: Visual confirmation (screen recording, or DevTools "Emulate CSS prefer
 detail: `e2e/motion.spec.ts` asserts only the absence of `animation-iteration-count: infinite`. That is a CSS keyframe check, unaffected by whether `<MotionConfig reducedMotion="user">` exists at all. `MotionProvider`'s existence and wiring are proven; its runtime effect is not tested by anything in this phase.
 result: [pending]
 
+### 6. `.wordmark__fill` gradient `background-clip: text` — scoped exception or reimplement
+expected: Either (a) grant a documented, scoped exception in `.planning/codebase/design/ANTI-PATTERNS.md` for this one decorative, non-heading, `aria-hidden` use, or (b) replace the gradient-clip fill with a non-`background-clip: text` technique (e.g. SVG glyph fill).
+detail: `src/app/globals.css:440-475` defines `.wordmark__fill` using `background-clip: text` with a gradient; consumed by the Footer brand watermark at `src/components/Footer.tsx:118-121`. CLAUDE.md states the ban unconditionally ("Never use `background-clip: text` with a gradient on text — impeccable BAN 2") with no decorative-element carve-out, and no override exists in any phase artifact. Introduced during this phase's Footer redesign and surfaced by the post-gap-closure code review (`05-REVIEW.md` WR-01) — the phase's only `05-REVIEW-FIX.md` addressed the *earlier* review round's numbering, so this finding has never been through a fix pass. Confirmed still present at HEAD.
+result: [pending]
+
 ## Summary
 
-total: 5
+total: 6
 passed: 0
 issues: 0
-pending: 5
+pending: 6
 skipped: 0
 blocked: 0
 
