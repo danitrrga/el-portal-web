@@ -171,11 +171,20 @@ const EXAMPLE_MORNING = `{
 
 /* ─── Shared primitives ───────────────────────────────────────────── */
 
-function CodeBlock({ code }: { code: string }) {
+/**
+ * `tabIndex={0}` is required: the <pre> scrolls horizontally, and a
+ * scrollable region must be keyboard-reachable (axe `scrollable-region-focusable`).
+ * But a focus stop with no role and no accessible name announces as nothing —
+ * five silent stops per /mcp visit. `role="region"` + `aria-label` is what turns
+ * each one into a named landmark a screen reader can announce and skip.
+ */
+function CodeBlock({ code, label }: { code: string; label: string }) {
   return (
     <div className="relative group">
       <pre
         tabIndex={0}
+        role="region"
+        aria-label={`${label} — code sample`}
         className="rounded-lg bg-zinc-900 border border-zinc-800/60 px-4 py-3.5 pr-20 text-[13px] font-mono text-zinc-300 leading-[1.65] overflow-x-auto"
       >
         <code>{code}</code>
@@ -390,11 +399,11 @@ export default function McpPage() {
                 <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-2 mt-4">
                   Stdio (.mcp.json)
                 </p>
-                <CodeBlock code={STDIO_CONFIG} />
+                <CodeBlock code={STDIO_CONFIG} label="Stdio .mcp.json config" />
                 <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-2 mt-5">
                   HTTP endpoint
                 </p>
-                <CodeBlock code={HTTP_CONFIG} />
+                <CodeBlock code={HTTP_CONFIG} label="HTTP endpoint config" />
               </div>
             </div>
 
@@ -418,13 +427,13 @@ export default function McpPage() {
             <H2 id="examples">Examples</H2>
 
             <H3>Get today&apos;s snapshot</H3>
-            <CodeBlock code={EXAMPLE_SNAPSHOT} />
+            <CodeBlock code={EXAMPLE_SNAPSHOT} label="Get today's snapshot" />
 
             <H3>Log a habit</H3>
-            <CodeBlock code={EXAMPLE_LOG_HABIT} />
+            <CodeBlock code={EXAMPLE_LOG_HABIT} label="Log a habit" />
 
             <H3>Morning check-in</H3>
-            <CodeBlock code={EXAMPLE_MORNING} />
+            <CodeBlock code={EXAMPLE_MORNING} label="Morning check-in" />
 
             {/* ── Permissions ──────────────────────────────────── */}
             <H2 id="permissions">Permissions and rate limits</H2>
