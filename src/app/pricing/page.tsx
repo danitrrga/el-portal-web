@@ -337,16 +337,25 @@ export default function PricingPage() {
                     </div>
                     <div className="space-y-2">
                         {faqs.map((faq) => (
+                            /* The `px-5 py-4` inset lives on the <summary>, not on the
+                               <details>: padding on the wrapper is not part of the
+                               disclosure's hit area, which left the tappable box at the
+                               20px text line-box. Moving it makes the whole visible row
+                               tappable (52px) at zero visual cost — the `-mt-1` on the
+                               answer absorbs the summary's new 16px bottom padding so the
+                               12px question-to-answer gap, the 54px closed height and the
+                               133px open height are all byte-identical to before at every
+                               width, desktop included. */
                             <details
                                 key={faq.q}
-                                className="group rounded-lg border px-5 py-4 transition-colors"
+                                className="group rounded-lg border transition-colors"
                                 style={{
                                     background: "rgba(255,255,255,0.015)",
                                     borderColor: BORDER,
                                 }}
                             >
                                 <summary
-                                    className="flex items-center justify-between text-sm font-medium list-none cursor-pointer"
+                                    className="flex min-h-11 items-center justify-between px-5 py-4 text-sm font-medium list-none cursor-pointer md:min-h-0"
                                     style={{ color: FG_STRONG }}
                                 >
                                     <span>{faq.q}</span>
@@ -356,7 +365,7 @@ export default function PricingPage() {
                                     />
                                 </summary>
                                 <p
-                                    className="mt-3 text-sm leading-[1.6]"
+                                    className="-mt-1 px-5 pb-4 text-sm leading-[1.6]"
                                     style={{ color: FG }}
                                 >
                                     {faq.a}

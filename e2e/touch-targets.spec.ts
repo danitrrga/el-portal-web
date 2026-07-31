@@ -40,8 +40,13 @@ for (const route of ROUTES) {
         return `${el.tagName.toLowerCase()}${id}${cls}`;
       };
 
+      // `summary` is the operative control of a <details> disclosure and is
+      // natively focusable/activatable, but it matches none of the other
+      // selectors here. Omitting it meant the suite never measured a single
+      // disclosure control — and <details>/<summary> is the primary
+      // interaction on /features, /pricing and /mcp.
       const targets = document.querySelectorAll<HTMLElement>(
-        'a[href], button, [role="button"], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        'a[href], button, summary, [role="button"], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
 
       for (const el of Array.from(targets)) {
