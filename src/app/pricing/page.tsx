@@ -132,7 +132,7 @@ const faqs = [
 export default function PricingPage() {
     return (
         <div
-            className="relative w-full min-h-screen"
+            className="relative w-full min-h-viewport"
             style={{ background: SECTION_BG }}
         >
             {/* Atmospheric backdrop — top-light radial (matches Hero / CTA recipe) */}

@@ -887,7 +887,7 @@ const ENTRIES: ChangelogEntry[] = [
 
 export default function ChangelogPage() {
   return (
-    <div className="relative min-h-screen w-full" style={{ background: SECTION_BG }}>
+    <div className="relative min-h-viewport w-full" style={{ background: SECTION_BG }}>
       {/* Atmospheric top-light radial — same recipe as CTA / Methodology */}
       <div
         aria-hidden

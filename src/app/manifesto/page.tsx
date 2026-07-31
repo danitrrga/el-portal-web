@@ -169,7 +169,7 @@ function PrincipleCard({ p }: { p: Principle }) {
 export default function ManifestoPage() {
   return (
     <div
-      className="relative min-h-screen w-full"
+      className="relative min-h-viewport w-full"
       style={{ background: SECTION_BG }}
     >
       {/* Atmospheric top-light radial — same recipe as changelog / CTA */}

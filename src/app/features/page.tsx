@@ -859,7 +859,7 @@ function TrendsInsightsSection() {
 export default function MethodologyPage() {
   return (
     <div
-      className="relative min-h-screen w-full"
+      className="relative min-h-viewport w-full"
       style={{ background: SECTION_BG }}
     >
       {/* Atmospheric top-light radial — matches changelog / manifesto */}

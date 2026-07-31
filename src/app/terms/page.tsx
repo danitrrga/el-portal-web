@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
     return (
-        <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-screen">
+        <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-viewport">
             {/* Background grid texture */}
             <div
                 className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"

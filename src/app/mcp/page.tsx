@@ -281,7 +281,7 @@ const tocItems = [
 
 export default function McpPage() {
   return (
-    <div className="relative w-full bg-zinc-950 min-h-screen">
+    <div className="relative w-full bg-zinc-950 min-h-viewport">
       <Navbar />
 
       <div className="mx-auto max-w-5xl px-6 md:px-8 pt-32 pb-24">

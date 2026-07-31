@@ -346,12 +346,12 @@ body {
   line-height: 1.02;
 }
 
-/* Full-viewport-height utility. min-h-screen compiles to a single
-   min-height: 100vh; this adds the svh cascade fallback so iOS Safari's
-   address bar does not clip full-height sections. Split across an @supports
-   guard rather than a bare duplicate declaration — see the body rule above
-   for why: the minifier collapses same-property duplicates and silently
-   drops the vh fallback. */
+/* Full-viewport-height utility. Tailwind's built-in screen-height utility
+   compiles to a single min-height: 100vh; this adds the svh cascade fallback
+   so iOS Safari's address bar does not clip full-height sections. Split
+   across an @supports guard rather than a bare duplicate declaration — see
+   the body rule above for why: the minifier collapses same-property
+   duplicates and silently drops the vh fallback. */
 @utility min-h-viewport {
   min-height: 100vh;
 }
