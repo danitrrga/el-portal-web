@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-05-PLAN.md
-last_updated: "2026-07-31T15:27:09.277Z"
-last_activity: 2026-07-31 -- Phase 05 planning complete
+stopped_at: Completed 05-06-PLAN.md
+last_updated: "2026-07-31T15:44:58.751Z"
+last_activity: 2026-07-31
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 13
-  completed_plans: 11
+  completed_plans: 12
   percent: 33
 ---
 
@@ -26,16 +26,16 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (mobile-responsive-retrofit) — EXECUTING
-Plan: 5 of 5
+Plan: 2 of 7
   section components were deleted. Only surviving change: the Navbar + Footer
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
 Status: Ready to execute
   gaps_found — 3 goal-level gaps (hero H1 42px floor, dashboard bleed off-screen on
   phones, harness blind to container-relative overflow). Next: /gsd:plan-phase 5 --gaps
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
-Last activity: 2026-07-31 -- Phase 05 planning complete
+Last activity: 2026-07-31
 
-Progress: [██████████] 100%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -67,6 +67,7 @@ Progress: [██████████] 100%
 | Phase 05 P03 | 9min | 2 tasks | 2 files |
 | Phase 05 P04 | 12min | 3 tasks | 10 files |
 | Phase 05 P05 | 32min | 3 tasks | 11 files |
+| Phase 05 P06 | 24min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,8 @@ Recent decisions affecting current work:
 - [Phase 05-05]: Empirically verified (temporary JS injection, not shipped) that removing overflow-x-hidden from body does not change ChangelogItem's position:sticky behavior either way -- overflow-x-hidden propagates from body to the viewport in standards mode, so the viewport stays the sticky scrolling box regardless
 - [Phase 05-05]: Fixed axe violations beyond the plan's predicted blast radius (Hero.tsx nested main, heading-order in SystemBlueprintSection/MethodologyPreviewSection/features/pricing, color-contrast in 5 files) because a11y.spec.ts runs with target-size enabled and no viewport skip, surfacing pre-existing defects that predate this phase
 - [Phase 05-05]: Classified color-contrast fixes (FG_SUBTLE hex, text-zinc-500/600) as an explicitly-documented delta rather than md:-gated, since WCAG contrast violations are not breakpoint-scoped -- the same colors were failing at desktop-1440 too
+- [Phase 05-06]: KNOWN_UNFIXED ref field uses short greppable IDs (KU-1..KU-4) instead of full prose, keeping deferred-items.md as the source of the full writeup — Spec file stays lean and the acceptance criterion's grep -F ref-value check passes cleanly against short IDs
+- [Phase 05-06]: isExcluded's six false-positive guards were each verified individually against a named offender before being added, not speculatively — SVG internals, ReadingLayout glow, Hero pill arrow track, and Tailwind truncate spans each had a measured false positive that a specific guard removes
 
 ### Pending Todos
 
@@ -122,6 +125,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-31T07:52:56.972Z
-Stopped at: Completed 05-05-PLAN.md
+Last session: 2026-07-31T15:44:58.746Z
+Stopped at: Completed 05-06-PLAN.md
 Resume file: None

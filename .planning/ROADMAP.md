@@ -132,7 +132,7 @@ Plans:
 - [x] 05-01-PLAN.md — App shell contract: viewport export, root MotionConfig, hover gating, svh cascade + `min-h-viewport` utility (wave 1)
 - [x] 05-02-PLAN.md — Global touch targets: Button size variants, Navbar hamburger/menu, Footer wordmark, CopyButton (wave 1)
 - [x] 05-03-PLAN.md — The two confirmed overflow sources: ReadingLayout 420px glow, /changelog 27px H1 (wave 1)
-- [ ] 05-06-PLAN.md — GAP-03: container-relative overflow assertion (`e2e/containment.spec.ts`), proven RED against unfixed `src/` (wave 1, gap closure)
+- [x] 05-06-PLAN.md — GAP-03: container-relative overflow assertion (`e2e/containment.spec.ts`), proven RED against unfixed `src/` (wave 1, gap closure)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -178,5 +178,5 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 | 2. Features Page | 4/4 | Complete   | 2026-06-13 |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
-| 5. Mobile Responsive Retrofit | 5/5 | Gaps found | 2026-07-31 |
+| 5. Mobile Responsive Retrofit | 6/7 | In Progress|  |
 | 6. Security Headers | 0/TBD | Not started | - |
