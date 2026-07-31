@@ -1,10 +1,25 @@
 ---
 phase: 05-mobile-responsive-retrofit
 verified: 2026-07-31T00:00:00Z
-status: human_needed
-score: 6/8 roadmap success criteria cleanly verified; 2/8 flagged for explicit human/design-owner decision
+status: gaps_found
+score: 6/8 roadmap success criteria cleanly verified; 2/8 flagged for design-owner decision; 3 goal-level gaps found by human inspection that no success criterion covered
 overrides_applied: 0
 re_verification: false
+amended: 2026-07-31T00:00:00Z
+amendment_reason: "Human visual inspection at 390px found three unadapted-layout defects invisible to the harness. Status raised from human_needed to gaps_found. SC1-SC8 measure overflow/target-size/axe/units/build but never operationalise the goal's word 'comfortable', so the phase could pass every criterion while the hero renders unusably on a phone."
+gaps:
+  - id: GAP-01
+    summary: "Hero H1 inline-style clamp has a 42px floor that never shrinks; at 390px the token 'high-performers.' renders 503.3px wide in a 342px container (147%) and the H1 eats 214.1px / 25% of viewport height across 5 lines. Inline style means no breakpoint can override it. src/app/features/page.tsx:898 carries the identical clamp."
+    files: [src/components/Hero.tsx, src/app/features/page.tsx]
+    requirement: RESP-01
+  - id: GAP-02
+    summary: "Dashboard preview bleed `-mr-56` is only neutralised at `sm:` (>=640px), so all four phone widths get the desktop treatment: 36% of the card is off-screen at 390px, only 64% visible."
+    files: [src/components/Hero.tsx]
+    requirement: RESP-01
+  - id: GAP-03
+    summary: "`section.relative.overflow-hidden` masks GAP-01 and GAP-02 from the harness exactly as `overflow-x-hidden` on <body> did before RESP-02 removed it. overflow.spec.ts only asserts documentElement.scrollWidth, so any defect absorbed by an intermediate clipping ancestor is undetectable. Needs a container-relative check."
+    files: [e2e/overflow.spec.ts, src/components/Hero.tsx]
+    requirement: RESP-02
 human_verification:
   - test: "Decide whether the RESP-08 'desktop unchanged' contract accepts the 28 un-gated colour-declaration changes made for WCAG AA contrast remediation (text-zinc-500→400 ×16, text-zinc-600→400 ×7, FG_SUBTLE #5a6478→var(--color-ep-fg-muted-2) ×5), all of which render differently at 1440px and are NOT behind any `md:`/`lg:` gate."
     expected: "Either (a) accept the deviation and add a formal override to this file's frontmatter citing 05-05-SUMMARY.md's 'RESP-08 colour exception' section as justification, or (b) direct that the colours be reverted and the resulting axe color-contrast violations be re-opened as a separate, explicitly-scoped follow-up phase."
@@ -137,7 +152,41 @@ See the `human_verification` list in the frontmatter for the full detail (5 item
 
 ### Gaps Summary
 
-There are no code-level gaps in the sense of missing artifacts, stub implementations, or broken wiring — every mechanical claim in the SUMMARYs was independently re-derived from the live codebase and live test runs in this verification, not taken on faith, and all of it held up. The phase's actual failure mode is narrower and more interesting: two of the roadmap's own literal success criteria (SC5's "svh", SC7's "byte-for-byte unchanged") were knowingly and transparently superseded during execution by the code-review/fix pass, for defensible reasons, but without updating the criteria's source documents or obtaining a recorded accept/reject decision. That is exactly what the escalation-gate pattern exists for — surfacing a real, honest trade-off to a human rather than letting an AI agent's own after-the-fact rationalization stand in for sign-off. Nothing here should block iteration on Phase 6, but Phase 5 should not be considered fully closed until a human has recorded a decision on the two items above and (ideally) performed the literal 1440px / real-device checks the phase's own plan called for.
+**Amended 2026-07-31 after human visual inspection at 390px — status changed from `human_needed` to `gaps_found`.**
+
+The original text of this section (retained below) said there were no code-level gaps. That was accurate *against ROADMAP SC1–SC8 as written*, and wrong about the phase goal. The goal sentence promises every route is "comfortable to use on a phone." None of SC1–SC8 operationalises comfort: they measure horizontal overflow, target size, axe violations, viewport units and build health. A route can satisfy all eight and still be visibly unadapted — which is what a human found on `/` the moment they actually looked at it.
+
+Three measured defects, none detectable by the current harness. All measurements taken against the production build at 320/360/390/430.
+
+#### GAP-01 — Hero H1 has a 42px floor that never shrinks on phones
+
+`src/components/Hero.tsx:116` sets `fontSize: "clamp(42px, 4.2vw, 58px)"` as an **inline style**. At every phone width `4.2vw` is below the floor (16.4px at 390px), so the computed size is exactly 42px at 320, 360, 390 and 430 alike.
+
+At 390px: the token `high-performers.` renders **503.3px wide inside a 342px container** (147% of its box). The browser breaks at the hyphen and `PERFORMERS.` still bleeds through the container padding to the viewport edge. The H1 occupies 5 lines and **214.1px — 25% of an 844px viewport** before any content.
+
+Because it is an inline style, no Tailwind breakpoint can override it. This is structurally the same defect plan 05-03 fixed on `/changelog` (moved out of inline style into a breakpoint-gated class) — but that one was only found because it tripped the overflow harness by 27px. This overflows its container by 161px and trips nothing.
+
+`src/app/features/page.tsx:898` carries the identical clamp and needs the same treatment.
+
+#### GAP-02 — Dashboard preview is 36% off-screen on every phone width
+
+`src/components/Hero.tsx:181` is `relative z-[5] -mr-56 mt-6 overflow-hidden px-2 sm:mr-0 …`. The −224px bleed is neutralised only at `sm:` (≥640px), so all four phone widths get the desktop treatment. Measured at 390px: **64% of the card is visible**, 36% is beyond the viewport edge.
+
+#### GAP-03 — `overflow-hidden` on an ancestor still masks both, exactly as `<body>` did
+
+`section.relative.overflow-hidden` clips GAP-01 and GAP-02, so `document.documentElement.scrollWidth` stays equal to `clientWidth` and `audit:overflow` reports green. RESP-02 was written because `overflow-x-hidden` "clips overflow instead of preventing it — it hides the symptom from both the eye and `documentElement.scrollWidth`." That class was removed from `<body>` in plan 05-05 and the identical pattern remains one level down, doing the identical harm.
+
+The harness gap is the durable problem: `overflow.spec.ts` only asserts on `documentElement.scrollWidth`. Any defect absorbed by an intermediate `overflow-hidden` is invisible to it. Gap closure should add a check that measures elements against *their own* container — text wider than its box, and content extending past a clipping ancestor — so this defect class cannot pass silently again.
+
+#### Not gaps — carried forward unchanged
+
+The five `human_verification` items in this file's frontmatter remain open and are unaffected by the above. Both prior deviations (SC5's `svh`→`dvh`, SC7's 28 un-gated colour declarations) still need a design-owner decision.
+
+---
+
+_Original text of this section, superseded above:_
+
+> There are no code-level gaps in the sense of missing artifacts, stub implementations, or broken wiring — every mechanical claim in the SUMMARYs was independently re-derived from the live codebase and live test runs in this verification, not taken on faith, and all of it held up. The phase's actual failure mode is narrower and more interesting: two of the roadmap's own literal success criteria (SC5's "svh", SC7's "byte-for-byte unchanged") were knowingly and transparently superseded during execution by the code-review/fix pass, for defensible reasons, but without updating the criteria's source documents or obtaining a recorded accept/reject decision. That is exactly what the escalation-gate pattern exists for — surfacing a real, honest trade-off to a human rather than letting an AI agent's own after-the-fact rationalization stand in for sign-off. Nothing here should block iteration on Phase 6, but Phase 5 should not be considered fully closed until a human has recorded a decision on the two items above and (ideally) performed the literal 1440px / real-device checks the phase's own plan called for.
 
 ---
 
