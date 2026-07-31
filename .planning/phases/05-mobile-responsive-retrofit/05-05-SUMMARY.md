@@ -268,7 +268,34 @@ Shapes: **1** = mobile-first default + `md:`/`lg:` restoring the pre-phase value
 | **RESP-05** — `body` + all 8 page roots on `vh`→`svh` cascade | `src/app/globals.css` body rule + `.min-h-viewport` `@utility` (both `@supports (min-height: 100svh)`-gated, 05-01). `grep -rln "min-h-viewport" src/app/page.tsx src/app/*/page.tsx` → all 8 route files (05-04) |
 | **RESP-06** — hand-written `:hover` gated behind `@media (hover: hover)` | `grep -c "@media (hover: hover)" src/app/globals.css` → 4 (scrollbar-thumb, `.card-glow`, `.wordmark__outline`, `.wordmark__fill`; 05-01) |
 | **RESP-07** — root `<MotionConfig reducedMotion="user">` | `src/components/MotionProvider.tsx` (new, 05-01) wired at `src/app/layout.tsx:59` as `<MotionProvider>{children}</MotionProvider>`. Structural evidence only — see "not verified" below for the runtime-behavior caveat |
-| **RESP-08** — every diff hunk classified additive; 1440px confirmed unchanged | Hunk-classification table above: 81/81 hunks classified into 1 of 4 allowed shapes, zero unclassifiable hunks. Automated desktop-1440 parity: `npm run audit:a11y`/`audit:targets`/`audit:overflow` all pass on `desktop-1440` with the SAME visual-affecting classes as the pre-phase baseline (heading-order/landmark/contrast fixes are tag/attribute/token-only, verified zero className or style diffs beyond the token swap itself). See "not verified" below for the outstanding literal human/device sign-off |
+| **RESP-08** — every diff hunk classified additive; 1440px confirmed unchanged | **Upheld for every layout/sizing change, with one enumerated exception: 28 colour declarations changed at all widths, desktop included, as required by the WCAG AA contrast remediation.** Hunk-classification table above: 81/81 hunks classified into 1 of 4 allowed shapes, zero unclassifiable hunks. Automated desktop-1440 parity: `npm run audit:a11y`/`audit:targets`/`audit:overflow` all pass on `desktop-1440`. Every geometry-affecting change is `md:`-restored. See the RESP-08 colour exception below for the enumeration, and "not verified" below for the outstanding literal human/device sign-off |
+
+### RESP-08 colour exception (amended 2026-07-31)
+
+The original wording of the RESP-08 row above claimed the contrast fixes were
+"tag/attribute/token-only, verified zero className or style diffs beyond the token
+swap itself". **That claim was false and has been corrected.** The contrast
+remediation in 05-05 changed 28 colour declarations that are *not* behind a
+breakpoint and therefore render differently at 1440px as well as at 390px:
+
+| Change | Count | Files |
+|---|---|---|
+| `text-zinc-500` → `text-zinc-400` | 16 | `Footer.tsx` (3: lines 72, 80, 105) · `mcp/page.tsx` (13) |
+| `text-zinc-600` → `text-zinc-400` | 7 | `mcp/page.tsx` (7) |
+| `FG_SUBTLE` constant: `#5a6478` → `var(--color-ep-fg-muted-2)` (`#8590a8`) | 5 | `features/page.tsx` · `manifesto/page.tsx` · `pricing/page.tsx` · `ChangelogItem.tsx` · `MethodologyPreviewSection.tsx` |
+
+The `FG_SUBTLE` swap is the largest visual delta and the easiest to under-read from
+its diff footprint: relative luminance goes 0.126 → 0.278, i.e. contrast on the
+`#04060c` section background goes **3.40:1 → 6.32:1**. It applies to eyebrow
+numerals, bullet dashes, accordion `+` markers, the arrow glyph, and the
+"· default" / "lag · 1 day" microlabels on `/features`, `/manifesto`, `/pricing`,
+`/changelog` and the home methodology preview.
+
+These changes are **kept, not reverted**: each one is a justified AA contrast fix,
+and scoping them behind a breakpoint would ship a knowingly-failing desktop. The
+defect being corrected here is the verification artifact asserting they don't
+exist — a reviewer diffing desktop screenshots against a pre-phase baseline will
+see these deltas and should treat them as intended, not as a regression.
 
 ## What was NOT verified, and why (Task 3e)
 
