@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -19,6 +19,18 @@ const navLinks = [
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
+
+    // Escape dismisses the menu. Without this a keyboard user has no way out
+    // except tabbing through every link in the panel. Bound only while open so
+    // the site is not carrying a permanent document-level keydown listener.
+    useEffect(() => {
+        if (!mobileMenuOpen) return;
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setMobileMenuOpen(false);
+        };
+        document.addEventListener("keydown", onKeyDown);
+        return () => document.removeEventListener("keydown", onKeyDown);
+    }, [mobileMenuOpen]);
 
     return (
         <nav
@@ -69,8 +81,14 @@ export default function Navbar() {
                         <Button
                             variant="brand-link"
                             size="icon"
+                            type="button"
                             className="md:hidden"
-                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            // Without aria-expanded a screen reader announces
+                            // "Toggle menu, button" with no indication of whether
+                            // the panel is currently open. axe does not flag this.
+                            aria-expanded={mobileMenuOpen}
+                            aria-controls="mobile-nav"
+                            onClick={() => setMobileMenuOpen((open) => !open)}
                             aria-label="Toggle menu"
                         >
                             {mobileMenuOpen ? (
@@ -85,7 +103,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden border-t border-white/[0.05] bg-[var(--color-ep-mobile-menu-bg)] backdrop-blur-xl rounded-b-2xl">
+                <div id="mobile-nav" className="md:hidden border-t border-white/[0.05] bg-[var(--color-ep-mobile-menu-bg)] backdrop-blur-xl rounded-b-2xl">
                     <div className="px-6 py-4 space-y-2">
                         {navLinks.map((link) => (
                             <Link
