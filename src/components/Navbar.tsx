@@ -34,7 +34,7 @@ export default function Navbar() {
             <div className="px-6">
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link href="/" className="flex min-h-11 items-center gap-2 md:min-h-0">
                         <ElPortalWordmark size={24} />
                     </Link>
 
@@ -65,17 +65,19 @@ export default function Navbar() {
                             <Link href={APP_URL}>Sign Up</Link>
                         </Button>
                         {/* Mobile Hamburger */}
-                        <button
-                            className="md:hidden text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300"
+                        <Button
+                            variant="brand-link"
+                            size="icon"
+                            className="md:hidden"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             aria-label="Toggle menu"
                         >
                             {mobileMenuOpen ? (
-                                <X size={20} />
+                                <X className="size-5" />
                             ) : (
-                                <Menu size={20} />
+                                <Menu className="size-5" />
                             )}
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -83,12 +85,12 @@ export default function Navbar() {
             {/* Mobile Menu */}
             {mobileMenuOpen && (
                 <div className="md:hidden border-t border-white/[0.05] bg-[var(--color-ep-mobile-menu-bg)] backdrop-blur-xl rounded-b-2xl">
-                    <div className="px-6 py-4 space-y-1">
+                    <div className="px-6 py-4 space-y-2">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
                                 className={[
-                                    "block text-sm font-medium py-2 transition-colors duration-300",
+                                    "flex min-h-11 items-center text-sm font-medium transition-colors duration-300",
                                     pathname === link.href
                                         ? "text-[var(--color-ep-fg-strong)]"
                                         : "text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)]",
@@ -100,7 +102,7 @@ export default function Navbar() {
                             </Link>
                         ))}
                         <Link
-                            className="block text-sm font-medium text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300 py-2"
+                            className="flex min-h-11 items-center text-sm font-medium text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300"
                             href={`${APP_URL}/login`}
                             onClick={() => setMobileMenuOpen(false)}
                         >
