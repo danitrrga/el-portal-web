@@ -177,7 +177,7 @@ export default function Hero() {
               ...transitionVariants,
             }}
           >
-            <div className="relative z-[5] -mr-56 mt-6 overflow-hidden px-2 sm:mr-0 sm:mt-8 md:mt-10">
+            <div className="relative z-[5] mt-6 overflow-hidden px-2 sm:mt-8 md:mt-10">
               <div
                 aria-hidden
                 className="absolute inset-0 z-10 from-transparent from-35%"
