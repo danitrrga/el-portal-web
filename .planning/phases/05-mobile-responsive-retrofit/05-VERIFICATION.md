@@ -7,9 +7,11 @@ overrides_applied: 0
 re_verification: false
 amended: 2026-07-31T00:00:00Z
 amendment_reason: "Human visual inspection at 390px found three unadapted-layout defects invisible to the harness. Status raised from human_needed to gaps_found. SC1-SC8 measure overflow/target-size/axe/units/build but never operationalise the goal's word 'comfortable', so the phase could pass every criterion while the hero renders unusably on a phone."
+amendment_2: 2026-07-31T00:00:00Z
+amendment_2_reason: "Measurement correction, not a verdict change. GAP-01's cited overflow magnitudes (503.3px token / 147% of box / 161px container overflow) were measured as if 'high-performers.' were an unbreakable token. It is not — the browser breaks it at the hyphen into 'high-' (142.48px) and 'performers.' (358.47px), and 503.3px is approximately their sum (500.95px), i.e. the width the token would have had unbroken. The real widest rendered line box is 358.47px against a 342px content box: 16px of overflow at 390px, not 161px. Every other GAP-01 figure reproduced exactly. GAP-02's figures reproduced exactly and are unchanged. GAP-03 is structural and carries no magnitudes. status remains gaps_found: the defects are real and the required fixes are unchanged; only the cited magnitudes were wrong. Re-measured independently against a production build (npm run build && npm run start) driven through the harness's own gotoSettled sequence, Chromium, colorScheme dark, at 320/360/390/430."
 gaps:
   - id: GAP-01
-    summary: "Hero H1 inline-style clamp has a 42px floor that never shrinks; at 390px the token 'high-performers.' renders 503.3px wide in a 342px container (147%) and the H1 eats 214.1px / 25% of viewport height across 5 lines. Inline style means no breakpoint can override it. src/app/features/page.tsx:898 carries the identical clamp."
+    summary: "Hero H1 inline-style clamp has a 42px floor that never shrinks: computed font-size is exactly 42px at 320, 360, 390 and 430 alike. At 390px the H1 wraps to 5 lines and eats 214.14px / 25.4% of viewport height; its widest line box ('performers.', after the browser breaks the hyphenated token) renders 358.47px inside a 342px content box, overflowing it by 16px (104.7%). Box overflow across the phone widths is 86 / 46 / 16 / 0px at 320 / 360 / 390 / 430 — it vanishes at 430px while the 42px floor and the 5-line stack persist at every width. Inline style means no breakpoint can override it. src/app/features/page.tsx:898 carries the identical clamp (measured 42px there too, 3 lines, no box overflow). [Magnitudes corrected 2026-07-31 — see amendment_2_reason; originally cited as 503.3px / 147% / 161px.]"
     files: [src/components/Hero.tsx, src/app/features/page.tsx]
     requirement: RESP-01
   - id: GAP-02
@@ -160,17 +162,32 @@ Three measured defects, none detectable by the current harness. All measurements
 
 #### GAP-01 — Hero H1 has a 42px floor that never shrinks on phones
 
-`src/components/Hero.tsx:116` sets `fontSize: "clamp(42px, 4.2vw, 58px)"` as an **inline style**. At every phone width `4.2vw` is below the floor (16.4px at 390px), so the computed size is exactly 42px at 320, 360, 390 and 430 alike.
+**Magnitudes corrected 2026-07-31 (amendment 2). The defect and the required fix are unchanged; the originally cited overflow figures were wrong. Original text of this subsection retained at the end of this section.**
 
-At 390px: the token `high-performers.` renders **503.3px wide inside a 342px container** (147% of its box). The browser breaks at the hyphen and `PERFORMERS.` still bleeds through the container padding to the viewport edge. The H1 occupies 5 lines and **214.1px — 25% of an 844px viewport** before any content.
+`src/components/Hero.tsx:116` sets `fontSize: "clamp(42px, 4.2vw, 58px)"` as an **inline style**. At every phone width `4.2vw` is below the floor (16.4px at 390px), so the computed size is exactly 42px at 320, 360, 390 and 430 alike. **Confirmed by measurement at all four widths.**
 
-Because it is an inline style, no Tailwind breakpoint can override it. This is structurally the same defect plan 05-03 fixed on `/changelog` (moved out of inline style into a breakpoint-gated class) — but that one was only found because it tripped the overflow harness by 27px. This overflows its container by 161px and trips nothing.
+At 390px the H1 wraps to **5 lines** and occupies **214.14px — 25.4% of an 844px viewport** before any content. The browser *does* break the hyphenated token, into `high-` (142.48px) and `performers.` (358.47px). The widest rendered line box is therefore `performers.` at **358.47px inside a 342px content box — 16px of overflow (104.7%)**. That line bleeds through the 24px gutter (right edge 382.47px against a content-box edge of 366px) but stops **7.53px short of the 390px viewport edge**; it does not reach the screen edge.
 
-`src/app/features/page.tsx:898` carries the identical clamp and needs the same treatment.
+Box overflow across the phone widths:
+
+| Viewport | computed font-size | content box | line box | overflow | H1 height | % of viewport height |
+|---|---|---|---|---|---|---|
+| 320 | 42px | 272px | 358px | **86px** | 214.14px | 41.8% |
+| 360 | 42px | 312px | 358px | **46px** | 214.14px | 26.8% |
+| 390 | 42px | 342px | 358px | **16px** | 214.14px | 25.4% |
+| 430 | 42px | 382px | 382px | **0px** | 214.14px | 23.0% |
+
+Note the box-overflow symptom **disappears at 430px** while the 42px floor and the 5-line / 214.14px stack persist at every width. Any gap-closure check that keys on box overflow alone will pass at 430px against unfixed code — the floor and the vertical consumption are the durable signal.
+
+Because it is an inline style, no Tailwind breakpoint can override it. This is structurally the same defect plan 05-03 fixed on `/changelog` (moved out of inline style into a breakpoint-gated class) — but that one was only found because it tripped the overflow harness by 27px. This overflows its container by up to 86px and trips nothing.
+
+`src/app/features/page.tsx:898` carries the identical clamp and needs the same treatment. Measured there: computed font-size is also 42px at 390px, but its longest token (`works.`, 199.98px) fits the 342px box, so it wraps to 3 lines / 128.48px with **zero box overflow** — the floor is present but produces no measurable overflow symptom on that route.
 
 #### GAP-02 — Dashboard preview is 36% off-screen on every phone width
 
 `src/components/Hero.tsx:181` is `relative z-[5] -mr-56 mt-6 overflow-hidden px-2 sm:mr-0 …`. The −224px bleed is neutralised only at `sm:` (≥640px), so all four phone widths get the desktop treatment. Measured at 390px: **64% of the card is visible**, 36% is beyond the viewport edge.
+
+**Re-measured 2026-07-31 (amendment 2) — figures confirmed, no correction needed.** At 390px the framed card (`div.relative.mx-auto.max-w-6xl`) is 63.9% visible and extends 216px past the viewport edge; its `-mr-56` wrapper computes `margin-right: -224px` and extends 224px past. Across the phone widths the card is 59.1 / 62.0 / 63.9 / 66.1% visible at 320 / 360 / 390 / 430 — the off-screen amount is constant at 216px because it is driven by the fixed `-14rem` bleed, not by viewport width.
 
 #### GAP-03 — `overflow-hidden` on an ancestor still masks both, exactly as `<body>` did
 
@@ -181,6 +198,34 @@ The harness gap is the durable problem: `overflow.spec.ts` only asserts on `docu
 #### Not gaps — carried forward unchanged
 
 The five `human_verification` items in this file's frontmatter remain open and are unaffected by the above. Both prior deviations (SC5's `svh`→`dvh`, SC7's 28 un-gated colour declarations) still need a design-owner decision.
+
+---
+
+#### Amendment 2 (2026-07-31) — measurement correction to GAP-01
+
+**Verdict unchanged.** `status` stays `gaps_found`, the score line stands, all three gaps remain open, and the required fixes are identical. What changed is that GAP-01's cited overflow magnitudes were wrong and are now corrected above.
+
+**What was wrong.** The original text cited the token `high-performers.` as rendering *503.3px wide inside a 342px container (147% of its box)*, and the container overflow as *161px*. Those figures treat `high-performers.` as one unbreakable token. It is not — the browser breaks it at the hyphen, and the same paragraph correctly said so. Measured per line box: `high-` is 142.48px and `performers.` is 358.47px; **their sum is 500.95px, which is where the 503.3px figure came from**. The widest thing actually rendered is 358.47px, so the real box overflow at 390px is **16px, not 161px** (and 86px at the worst width, 320px). The related claim that `PERFORMERS.` *"bleeds through the container padding to the viewport edge"* is half right: it does bleed through the 24px gutter, but its right edge lands at 382.47px and stops 7.53px short of the 390px viewport edge.
+
+**What reproduced exactly.** The 42px floor at all four phone widths; 5 lines; 214.14px H1 height; 25.4% of an 844px viewport; the inline-style-cannot-be-overridden diagnosis; the identical clamp at `src/app/features/page.tsx:898`; and every GAP-02 figure. GAP-03 is a structural claim and carries no magnitudes to correct.
+
+**Why the correction matters for gap closure.** A gap-closure check that hard-codes the original magnitudes (e.g. asserting `overflowBy >= 120`) cannot pass against the real codebase and would break the red→green proof it exists to provide. The 430px column above is the sharper point: box overflow is 0px there against unfixed code, so box overflow alone is not a sufficient detector at every phone width.
+
+**A note on wording, left for the design owner.** Amendment 1's `amendment_reason` justifies the `human_needed` → `gaps_found` raise partly on the hero rendering *"unusably on a phone."* At the corrected magnitude the H1 overflows its own box by 16px at 390px and stays inside the viewport, so that word is now carrying more weight than the H1 measurement alone supports. It remains defensible on the strength of the other measured facts — a headline consuming 25.4% of the viewport (41.8% at 320px) and a preview card 36% off-screen — but the original phrasing is left as written rather than silently re-litigated. Amendment 1's text is a historical record of what was believed at the time.
+
+**Method.** Re-measured independently against a production build (`npm run build && npm run start`), Chromium, `colorScheme: dark`, driven through the harness's own `gotoSettled` sequence from `e2e/support/pages.ts` (networkidle → unclip → scroll-settle → `fonts.ready`), at viewports 320×512 / 360×800 / 390×844 / 430×932. Line-box attribution used `Range.getClientRects()` per character. Read-only: no source file was modified to obtain these numbers.
+
+---
+
+#### Original text of the GAP-01 subsection, superseded by amendment 2
+
+> `src/components/Hero.tsx:116` sets `fontSize: "clamp(42px, 4.2vw, 58px)"` as an **inline style**. At every phone width `4.2vw` is below the floor (16.4px at 390px), so the computed size is exactly 42px at 320, 360, 390 and 430 alike.
+>
+> At 390px: the token `high-performers.` renders **503.3px wide inside a 342px container** (147% of its box). The browser breaks at the hyphen and `PERFORMERS.` still bleeds through the container padding to the viewport edge. The H1 occupies 5 lines and **214.1px — 25% of an 844px viewport** before any content.
+>
+> Because it is an inline style, no Tailwind breakpoint can override it. This is structurally the same defect plan 05-03 fixed on `/changelog` (moved out of inline style into a breakpoint-gated class) — but that one was only found because it tripped the overflow harness by 27px. This overflows its container by 161px and trips nothing.
+>
+> `src/app/features/page.tsx:898` carries the identical clamp and needs the same treatment.
 
 ---
 
