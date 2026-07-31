@@ -7,7 +7,15 @@ const SECTION_BG = "#04060c";
 const FG_STRONG = "#f4f6fb";
 const FG = "#aab3c5";
 const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "var(--color-ep-fg-muted-2)";
+// Foreground ramp is intentionally THREE steps on this surface, not four.
+// The AA contrast remediation in phase 05 pointed the old `FG_SUBTLE`
+// (`#5a6478`, 3.40:1 on `#04060c`) at `--color-ep-fg-muted-2` (`#8590a8`,
+// 6.32:1) — the exact value `FG_MUTED` already held. Keeping both names would
+// be a constant that lies: every FG_SUBTLE-vs-FG_MUTED distinction rendered
+// identically. `FG_SUBTLE` is therefore removed rather than left as a dead
+// alias. Restoring a real fourth step needs a new AA-clearing token
+// (`--color-ep-fg-subtle-2` = `#5a6478` does not clear AA) — a design decision,
+// not a mechanical one.
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 const RULE = "rgba(255,255,255,0.06)";
@@ -22,14 +30,14 @@ function SectionEyebrow({ num, label }: { num: string; label: string }) {
     <div className="mb-8 flex items-center gap-3 md:mb-10">
       <span
         className="font-mono text-[11px] tabular-nums"
-        style={{ color: FG_SUBTLE }}
+        style={{ color: FG_MUTED }}
       >
         {num}
       </span>
       <span
         aria-hidden
         className="font-mono text-[10px]"
-        style={{ color: FG_SUBTLE }}
+        style={{ color: FG_MUTED }}
       >
         ·
       </span>
@@ -113,7 +121,7 @@ function ScaleTextContent({ scale }: { scale: Scale }) {
         <span className="font-mono text-xs">
           <span style={{ color: FG_STRONG }}>{scale.duration}</span>
           {scale.isDefault && (
-            <span style={{ color: FG_SUBTLE }}> · default</span>
+            <span style={{ color: FG_MUTED }}> · default</span>
           )}
         </span>
       </div>
@@ -130,7 +138,7 @@ function ScaleTextContent({ scale }: { scale: Scale }) {
       <ul className="space-y-2.5 text-[14px] leading-[1.6]" style={{ color: FG }}>
         {scale.bullets.map((b) => (
           <li key={b} className="flex items-start gap-2.5">
-            <span aria-hidden style={{ color: FG_SUBTLE }}>
+            <span aria-hidden style={{ color: FG_MUTED }}>
               —
             </span>
             <span>{b}</span>
@@ -232,7 +240,7 @@ function DailyScoreSection() {
                     className="size-2.5 rounded-sm border"
                     style={{
                       background: h.done ? ACCENT : "transparent",
-                      borderColor: h.done ? ACCENT : FG_SUBTLE,
+                      borderColor: h.done ? ACCENT : FG_MUTED,
                     }}
                   />
                   <span
@@ -263,7 +271,7 @@ function DailyScoreSection() {
             <ArrowRight
               size={20}
               strokeWidth={1.5}
-              style={{ color: FG_SUBTLE }}
+              style={{ color: FG_MUTED }}
             />
           </div>
 
@@ -346,7 +354,7 @@ function DailyScoreSection() {
             </p>
             <p
               className="mt-2 font-mono text-[11px]"
-              style={{ color: FG_SUBTLE }}
+              style={{ color: FG_MUTED }}
             >
               {c.ex}
             </p>
@@ -422,7 +430,7 @@ function PulseLoopSection() {
               <span
                 aria-hidden
                 className="font-mono text-[18px] leading-none transition-transform duration-200 group-open:rotate-45"
-                style={{ color: FG_SUBTLE }}
+                style={{ color: FG_MUTED }}
               >
                 +
               </span>
@@ -499,7 +507,7 @@ function PulseLoopSection() {
               <span
                 aria-hidden
                 className="font-mono text-[18px] leading-none transition-transform duration-200 group-open:rotate-45"
-                style={{ color: FG_SUBTLE }}
+                style={{ color: FG_MUTED }}
               >
                 +
               </span>
@@ -614,7 +622,7 @@ function HabitsAndGoalsSection() {
                 <span
                   aria-hidden
                   className="mt-[8px] h-px w-2.5 shrink-0"
-                  style={{ background: FG_SUBTLE }}
+                  style={{ background: FG_MUTED }}
                 />
                 <span>{line}</span>
               </li>
@@ -659,7 +667,7 @@ function HabitsAndGoalsSection() {
                 <span
                   aria-hidden
                   className="mt-[8px] h-px w-2.5 shrink-0"
-                  style={{ background: FG_SUBTLE }}
+                  style={{ background: FG_MUTED }}
                 />
                 <span>{line}</span>
               </li>
@@ -775,7 +783,7 @@ function TrendsInsightsSection() {
               </span>
               <span
                 className="font-mono text-[10px] tabular-nums"
-                style={{ color: FG_SUBTLE }}
+                style={{ color: FG_MUTED }}
               >
                 lag · 1 day
               </span>

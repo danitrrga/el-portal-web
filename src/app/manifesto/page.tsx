@@ -5,7 +5,15 @@ const SECTION_BG = "#04060c";
 const FG_STRONG = "#f4f6fb";
 const FG = "#aab3c5";
 const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "var(--color-ep-fg-muted-2)";
+// Foreground ramp is intentionally THREE steps on this surface, not four.
+// The AA contrast remediation in phase 05 pointed the old `FG_SUBTLE`
+// (`#5a6478`, 3.40:1 on `#04060c`) at `--color-ep-fg-muted-2` (`#8590a8`,
+// 6.32:1) — the exact value `FG_MUTED` already held. Keeping both names would
+// be a constant that lies: every FG_SUBTLE-vs-FG_MUTED distinction rendered
+// identically. `FG_SUBTLE` is therefore removed rather than left as a dead
+// alias. Restoring a real fourth step needs a new AA-clearing token
+// (`--color-ep-fg-subtle-2` = `#5a6478` does not clear AA) — a design decision,
+// not a mechanical one.
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 
@@ -116,13 +124,13 @@ function ActLabel({ name, range }: { name: Act; range: string }) {
       <span
         aria-hidden
         className="font-mono text-[10px]"
-        style={{ color: FG_SUBTLE }}
+        style={{ color: FG_MUTED }}
       >
         ·
       </span>
       <span
         className="font-mono text-[11px] tabular-nums"
-        style={{ color: FG_SUBTLE }}
+        style={{ color: FG_MUTED }}
       >
         {range}
       </span>
@@ -145,7 +153,7 @@ function PrincipleCard({ p }: { p: Principle }) {
       <div className="relative">
         <span
           className="mb-3 block font-mono text-[11px] uppercase tracking-[0.22em] tabular-nums"
-          style={{ color: FG_SUBTLE }}
+          style={{ color: FG_MUTED }}
         >
           {p.num}
         </span>
