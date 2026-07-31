@@ -418,13 +418,13 @@ function SectionLabel({
   children: ReactNode;
 }) {
   return (
-    <h4
+    <h3
       className="flex items-center gap-1.5 text-[8px] font-bold uppercase tracking-[0.22em]"
       style={{ color: FG_MUTED }}
     >
       {Icon && <Icon size={9} />}
       {children}
-    </h4>
+    </h3>
   );
 }
 

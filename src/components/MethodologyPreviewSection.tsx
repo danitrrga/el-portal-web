@@ -6,7 +6,7 @@ const SECTION_BG = "var(--color-ep-section-bg)";
 const FG_STRONG = "var(--color-ep-fg-strong)";
 const FG = "var(--color-ep-fg)";
 const FG_MUTED = "var(--color-ep-fg-muted-2)";
-const FG_SUBTLE = "var(--color-ep-fg-subtle-2)";
+const FG_SUBTLE = "var(--color-ep-fg-muted-2)";
 
 const PRINCIPLES = [
   {

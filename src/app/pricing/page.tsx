@@ -11,7 +11,7 @@ const SECTION_BG = "#04060c";
 const FG_STRONG = "#f4f6fb";
 const FG = "#aab3c5";
 const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "#5a6478";
+const FG_SUBTLE = "var(--color-ep-fg-muted-2)";
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 const BORDER = "rgba(255,255,255,0.08)";
@@ -414,12 +414,12 @@ function PricingCard({
 
             {/* Header */}
             <div className="p-6">
-                <h3
+                <h2
                     className="text-base font-semibold"
                     style={{ color: FG_STRONG }}
                 >
                     {tier.name}
-                </h3>
+                </h2>
                 <p
                     className="mt-1 text-xs leading-[1.55]"
                     style={{ color: FG_MUTED }}

@@ -69,7 +69,7 @@ export default function Footer() {
                         <Link href="/" aria-label="El Portal home" className="inline-flex min-h-11 items-center mb-4 md:inline-block md:min-h-0">
                             <ElPortalWordmark size={24} />
                         </Link>
-                        <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
+                        <p className="text-zinc-400 text-sm leading-relaxed max-w-xs">
                             Your personal operating system for intentional living and peak performance.
                         </p>
                     </motion.div>
@@ -77,9 +77,9 @@ export default function Footer() {
                     {/* Link columns */}
                     {footerColumns.map((column) => (
                         <motion.div key={column.title} variants={itemVariants}>
-                            <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 mb-4">
+                            <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-4">
                                 {column.title}
-                            </h4>
+                            </h3>
                             <ul className="space-y-3">
                                 {column.links.map((link) => (
                                     <li key={link.label}>
@@ -98,7 +98,7 @@ export default function Footer() {
 
                 {/* Bottom bar — copyright left, giant grain-fill wordmark right at the same height */}
                 <div className="pt-6 border-t border-white/5 flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-                    <p className="text-sm text-zinc-500 shrink-0">
+                    <p className="text-sm text-zinc-400 shrink-0">
                         &copy; {new Date().getFullYear()} El Portal. All rights reserved.
                     </p>
 

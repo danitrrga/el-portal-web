@@ -174,7 +174,10 @@ const EXAMPLE_MORNING = `{
 function CodeBlock({ code }: { code: string }) {
   return (
     <div className="relative group">
-      <pre className="rounded-lg bg-zinc-900 border border-zinc-800/60 px-4 py-3.5 pr-20 text-[13px] font-mono text-zinc-300 leading-[1.65] overflow-x-auto">
+      <pre
+        tabIndex={0}
+        className="rounded-lg bg-zinc-900 border border-zinc-800/60 px-4 py-3.5 pr-20 text-[13px] font-mono text-zinc-300 leading-[1.65] overflow-x-auto"
+      >
         <code>{code}</code>
       </pre>
       <CopyButton value={code} />
@@ -215,7 +218,7 @@ function H3({ children }: { children: React.ReactNode }) {
 
 function Para({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-zinc-500 text-sm leading-7">{children}</p>
+    <p className="text-zinc-400 text-sm leading-7">{children}</p>
   );
 }
 
@@ -226,7 +229,7 @@ function ToolRow({ tool, write }: { tool: Tool; write: boolean }) {
         <div className="flex items-center gap-3">
           <span
             className={`text-[10px] font-mono font-medium w-8 shrink-0 ${
-              write ? "text-amber-500/70" : "text-blue-400/70"
+              write ? "text-amber-500/70" : "text-blue-400/85"
             }`}
           >
             {write ? "write" : "read"}
@@ -247,19 +250,19 @@ function ToolRow({ tool, write }: { tool: Tool; write: boolean }) {
         </svg>
       </summary>
       <div className="pb-4 pl-11 space-y-3">
-        <p className="text-sm text-zinc-500 leading-6">{tool.description}</p>
+        <p className="text-sm text-zinc-400 leading-6">{tool.description}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <p className="text-[11px] text-zinc-600 uppercase tracking-wider mb-1.5">
+            <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-1.5">
               Parameters
             </p>
-            <p className="text-xs font-mono text-zinc-500 leading-5">{tool.params}</p>
+            <p className="text-xs font-mono text-zinc-400 leading-5">{tool.params}</p>
           </div>
           <div>
-            <p className="text-[11px] text-zinc-600 uppercase tracking-wider mb-1.5">
+            <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-1.5">
               Returns
             </p>
-            <p className="text-xs text-zinc-500 leading-5">{tool.returns}</p>
+            <p className="text-xs text-zinc-400 leading-5">{tool.returns}</p>
           </div>
         </div>
       </div>
@@ -292,7 +295,7 @@ export default function McpPage() {
 
             {/* Hero */}
             <div className="mb-12">
-              <p className="text-[11px] font-mono text-zinc-600 uppercase tracking-widest mb-4">
+              <p className="text-[11px] font-mono text-zinc-400 uppercase tracking-widest mb-4">
                 Model Context Protocol
               </p>
               <h1 className="text-zinc-100 text-3xl font-semibold tracking-tight mb-4 leading-snug">
@@ -304,7 +307,7 @@ export default function McpPage() {
                 habits, and run daily check-ins without leaving your agent
                 workflow.
               </Para>
-              <div className="flex items-center gap-4 mt-5 text-[12px] font-mono text-zinc-600">
+              <div className="flex items-center gap-4 mt-5 text-[12px] font-mono text-zinc-400">
                 <span>12 tools</span>
                 <span>stdio + HTTP</span>
                 <span>JSON-RPC 2.0</span>
@@ -328,7 +331,7 @@ export default function McpPage() {
                   <code className="text-sm font-mono text-zinc-200 shrink-0 w-44">
                     {tool.name}
                   </code>
-                  <p className="text-sm text-zinc-500 leading-5 min-w-0">
+                  <p className="text-sm text-zinc-400 leading-5 min-w-0">
                     {tool.description}
                   </p>
                 </div>
@@ -345,7 +348,7 @@ export default function McpPage() {
                   <code className="text-sm font-mono text-zinc-200 shrink-0 w-44">
                     {tool.name}
                   </code>
-                  <p className="text-sm text-zinc-500 leading-5 min-w-0">
+                  <p className="text-sm text-zinc-400 leading-5 min-w-0">
                     {tool.description}
                   </p>
                 </div>
@@ -384,11 +387,11 @@ export default function McpPage() {
               {/* Step 3 */}
               <div>
                 <H3>3. Add your config</H3>
-                <p className="text-[11px] text-zinc-600 uppercase tracking-wider mb-2 mt-4">
+                <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-2 mt-4">
                   Stdio (.mcp.json)
                 </p>
                 <CodeBlock code={STDIO_CONFIG} />
-                <p className="text-[11px] text-zinc-600 uppercase tracking-wider mb-2 mt-5">
+                <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-2 mt-5">
                   HTTP endpoint
                 </p>
                 <CodeBlock code={HTTP_CONFIG} />
@@ -434,10 +437,10 @@ export default function McpPage() {
                 </p>
                 <ul className="space-y-3.5">
                   <li>
-                    <p className="text-[11px] font-mono text-blue-400/70 uppercase tracking-wider mb-1">
+                    <p className="text-[11px] font-mono text-blue-400/85 uppercase tracking-wider mb-1">
                       read
                     </p>
-                    <p className="text-xs text-zinc-500 leading-5">
+                    <p className="text-xs text-zinc-400 leading-5">
                       Granted on all keys by default. No extra configuration
                       required.
                     </p>
@@ -446,16 +449,16 @@ export default function McpPage() {
                     <p className="text-[11px] font-mono text-amber-500/70 uppercase tracking-wider mb-1">
                       write
                     </p>
-                    <p className="text-xs text-zinc-500 leading-5">
+                    <p className="text-xs text-zinc-400 leading-5">
                       Opt-in per key. Toggle individual write tools during key
                       creation or in key settings.
                     </p>
                   </li>
                   <li>
-                    <p className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mb-1">
+                    <p className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1">
                       storage
                     </p>
-                    <p className="text-xs text-zinc-500 leading-5">
+                    <p className="text-xs text-zinc-400 leading-5">
                       Keys are SHA-256 hashed before storage. Plaintext is never
                       stored and cannot be recovered after creation.
                     </p>
@@ -479,7 +482,7 @@ export default function McpPage() {
                       ] as const
                     ).map(([op, limit]) => (
                       <tr key={op}>
-                        <td className="text-xs text-zinc-500 py-2">{op}</td>
+                        <td className="text-xs text-zinc-400 py-2">{op}</td>
                         <td className="text-xs text-zinc-400 text-right py-2 font-mono">
                           {limit}
                         </td>
@@ -495,7 +498,7 @@ export default function McpPage() {
               <p className="text-zinc-100 text-base font-medium mb-2">
                 Ready to connect?
               </p>
-              <p className="text-sm text-zinc-500 mb-5">
+              <p className="text-sm text-zinc-400 mb-5">
                 Generate your first API key in Settings and drop it into your
                 MCP config. Full read access in under a minute.
               </p>
@@ -523,16 +526,16 @@ export default function McpPage() {
           {/* ── Sticky TOC ───────────────────────────────────────── */}
           <aside className="hidden xl:block w-44 shrink-0">
             <div className="sticky top-28">
-              <p className="text-[11px] font-medium text-zinc-600 uppercase tracking-widest mb-3">
+              <p className="text-[11px] font-medium text-zinc-400 uppercase tracking-widest mb-3">
                 On this page
               </p>
-              <nav>
+              <nav aria-label="On this page">
                 <ul className="space-y-1">
                   {tocItems.map((item) => (
                     <li key={item.id}>
                       <a
                         href={`#${item.id}`}
-                        className="block text-xs text-zinc-500 hover:text-zinc-300 py-0.5 transition-colors duration-150"
+                        className="block text-xs text-zinc-400 hover:text-zinc-300 py-0.5 transition-colors duration-150"
                       >
                         {item.label}
                       </a>

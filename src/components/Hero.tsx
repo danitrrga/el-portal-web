@@ -31,7 +31,7 @@ const transitionVariants = {
 
 export default function Hero() {
   return (
-    <main className="relative overflow-hidden" style={{ background: "var(--color-ep-bg-base)" }}>
+    <section className="relative overflow-hidden" style={{ background: "var(--color-ep-bg-base)" }}>
       {/* Atmospheric blue-tinted radials on the left (adapted from tailark) */}
       <div
         aria-hidden
@@ -200,6 +200,6 @@ export default function Hero() {
           </AnimatedGroup>
         </div>
       </section>
-    </main>
+    </section>
   );
 }

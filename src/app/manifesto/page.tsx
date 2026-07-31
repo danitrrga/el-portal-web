@@ -5,7 +5,7 @@ const SECTION_BG = "#04060c";
 const FG_STRONG = "#f4f6fb";
 const FG = "#aab3c5";
 const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "#5a6478";
+const FG_SUBTLE = "var(--color-ep-fg-muted-2)";
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 

@@ -22,6 +22,7 @@ export default function Navbar() {
 
     return (
         <nav
+            aria-label="Primary"
             className={[
                 "fixed top-4 left-1/2 -translate-x-1/2 z-50",
                 "max-w-5xl w-[calc(100%-2rem)]",

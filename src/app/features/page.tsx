@@ -7,7 +7,7 @@ const SECTION_BG = "#04060c";
 const FG_STRONG = "#f4f6fb";
 const FG = "#aab3c5";
 const FG_MUTED = "#8590a8";
-const FG_SUBTLE = "#5a6478";
+const FG_SUBTLE = "var(--color-ep-fg-muted-2)";
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 const RULE = "rgba(255,255,255,0.06)";
@@ -833,12 +833,12 @@ function TrendsInsightsSection() {
               >
                 Detector
               </span>
-              <h4
+              <h3
                 className="mt-2 text-[14px] font-semibold leading-[1.25] md:text-[15px]"
                 style={{ color: FG_STRONG }}
               >
                 {p.name}
-              </h4>
+              </h3>
               <p
                 className="mt-2 text-[12px] leading-[1.55] md:text-[13px]"
                 style={{ color: FG }}
