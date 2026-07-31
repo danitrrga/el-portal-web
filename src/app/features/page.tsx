@@ -166,9 +166,8 @@ function TemporalHierarchySection() {
         {/* Header — full content width */}
         <div className="max-w-2xl">
           <h2
-            className="display text-balance leading-[1.1]"
+            className="display text-balance leading-[1.1] text-[clamp(1.25rem,1.339vw+0.982rem,1.625rem)] md:text-[clamp(26px,2.6vw,34px)]"
             style={{
-              fontSize: "clamp(26px, 2.6vw, 34px)",
               color: FG_STRONG,
             }}
           >
@@ -198,9 +197,8 @@ function DailyScoreSection() {
 
       <div className="mx-auto max-w-2xl text-center">
         <h2
-          className="display text-balance leading-[1.1]"
+          className="display text-balance leading-[1.1] text-[clamp(1.25rem,1.339vw+0.982rem,1.625rem)] md:text-[clamp(26px,2.6vw,34px)]"
           style={{
-            fontSize: "clamp(26px, 2.6vw, 34px)",
             color: FG_STRONG,
           }}
         >
@@ -292,9 +290,8 @@ function DailyScoreSection() {
               Daily Score
             </span>
             <span
-              className="display mt-2 leading-none tabular-nums"
+              className="display mt-2 leading-none tabular-nums text-[clamp(2rem,5.357vw+0.929rem,3.5rem)] md:text-[clamp(56px,7vw,88px)]"
               style={{
-                fontSize: "clamp(56px, 7vw, 88px)",
                 color: FG_STRONG,
               }}
             >
@@ -386,9 +383,8 @@ function PulseLoopSection() {
         {/* LEFT — intro */}
         <div className="md:sticky md:top-32 md:self-start">
           <h2
-            className="display text-balance leading-[1.1]"
+            className="display text-balance leading-[1.1] text-[clamp(1.25rem,1.339vw+0.982rem,1.625rem)] md:text-[clamp(26px,2.6vw,34px)]"
             style={{
-              fontSize: "clamp(26px, 2.6vw, 34px)",
               color: FG_STRONG,
             }}
           >
@@ -575,9 +571,8 @@ function HabitsAndGoalsSection() {
 
       <div className="mb-10 max-w-2xl">
         <h2
-          className="display text-balance leading-[1.1]"
+          className="display text-balance leading-[1.1] text-[clamp(1.25rem,1.339vw+0.982rem,1.625rem)] md:text-[clamp(26px,2.6vw,34px)]"
           style={{
-            fontSize: "clamp(26px, 2.6vw, 34px)",
             color: FG_STRONG,
           }}
         >
@@ -597,8 +592,8 @@ function HabitsAndGoalsSection() {
         <div className="flex flex-col">
           <div className="flex items-baseline justify-between border-b pb-3 mb-4" style={{ borderColor: RULE }}>
             <h3
-              className="display leading-none"
-              style={{ fontSize: "20px", color: FG_STRONG }}
+              className="display leading-none text-[clamp(1.063rem,0.67vw+0.929rem,1.25rem)] md:text-[20px]"
+              style={{ color: FG_STRONG }}
             >
               Habits
             </h3>
@@ -642,8 +637,8 @@ function HabitsAndGoalsSection() {
         <div className="flex flex-col">
           <div className="flex items-baseline justify-between border-b pb-3 mb-4" style={{ borderColor: RULE }}>
             <h3
-              className="display leading-none"
-              style={{ fontSize: "20px", color: FG_STRONG }}
+              className="display leading-none text-[clamp(1.063rem,0.67vw+0.929rem,1.25rem)] md:text-[20px]"
+              style={{ color: FG_STRONG }}
             >
               Goals
             </h3>
@@ -724,9 +719,8 @@ function TrendsInsightsSection() {
 
       <div className="mx-auto max-w-2xl text-center">
         <h2
-          className="display text-balance leading-[1.1]"
+          className="display text-balance leading-[1.1] text-[clamp(1.25rem,1.339vw+0.982rem,1.625rem)] md:text-[clamp(26px,2.6vw,34px)]"
           style={{
-            fontSize: "clamp(26px, 2.6vw, 34px)",
             color: FG_STRONG,
           }}
         >

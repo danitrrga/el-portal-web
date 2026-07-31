@@ -11,7 +11,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 export default function CTASection() {
   return (
     <section
-      className="relative overflow-hidden py-24 md:py-32"
+      className="relative overflow-hidden py-16 md:py-32"
       style={{ background: SECTION_BG }}
     >
       {/* Top hairline — gradient fade so it doesn't read as a hard rule */}
@@ -35,9 +35,8 @@ export default function CTASection() {
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">
         <h2
-          className="display text-balance"
+          className="display text-balance text-[clamp(1.5rem,2.679vw+0.964rem,2.25rem)] md:text-[clamp(36px,4.6vw,58px)]"
           style={{
-            fontSize: "clamp(36px, 4.6vw, 58px)",
             color: FG_STRONG,
           }}
         >
@@ -45,7 +44,7 @@ export default function CTASection() {
         </h2>
 
         <p
-          className="mt-6 text-base md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
+          className="mt-6 text-[15px] md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
           style={{ color: FG }}
         >
           Open El Portal, draft a 90-day arc, run your first Cycle. The

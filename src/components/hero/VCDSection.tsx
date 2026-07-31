@@ -22,17 +22,17 @@ export default function VCDSection() {
   const dayOfVersion = ACTIVE_CYCLE * CYCLE_LENGTH + (TODAY + 1);
 
   return (
-    <section style={{ background: SECTION_BG }} className="py-24 md:py-32">
+    <section style={{ background: SECTION_BG }} className="py-16 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
           <h2
-            className="display text-balance"
-            style={{ fontSize: "clamp(28px, 3.2vw, 40px)", color: FG_STRONG }}
+            className="display text-balance text-[clamp(1.313rem,1.563vw+1rem,1.75rem)] md:text-[clamp(28px,3.2vw,40px)]"
+            style={{ color: FG_STRONG }}
           >
             Three horizons. One hierarchy.
           </h2>
-          <p className="mt-4 text-base leading-[1.6]" style={{ color: FG }}>
+          <p className="mt-4 text-[15px] md:text-base leading-[1.6]" style={{ color: FG }}>
             Versions plan identity. Cycles run focus. Days carry the score.
           </p>
         </div>

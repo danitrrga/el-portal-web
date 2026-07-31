@@ -166,16 +166,15 @@ export default function PricingPage() {
                 {/* ── Hero ─────────────────────────────────────────── */}
                 <section className="w-full max-w-3xl px-6 pt-40 md:pt-48 pb-12 text-center">
                     <h1
-                        className="display text-balance"
+                        className="display text-balance text-[clamp(1.5rem,2.679vw+0.964rem,2.25rem)] md:text-[clamp(36px,4.6vw,58px)]"
                         style={{
-                            fontSize: "clamp(36px, 4.6vw, 58px)",
                             color: FG_STRONG,
                         }}
                     >
                         Pay once. Own the system.
                     </h1>
                     <p
-                        className="mt-6 text-base md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
+                        className="mt-6 text-[15px] md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
                         style={{ color: FG }}
                     >
                         Start free or unlock everything with one payment. No
@@ -232,9 +231,8 @@ export default function PricingPage() {
                             Compare
                         </span>
                         <h2
-                            className="display text-balance mt-4"
+                            className="display text-balance mt-4 text-[clamp(1.188rem,1.116vw+0.964rem,1.5rem)] md:text-[clamp(24px,2.6vw,32px)]"
                             style={{
-                                fontSize: "clamp(24px, 2.6vw, 32px)",
                                 color: FG_STRONG,
                             }}
                         >
@@ -342,9 +340,8 @@ export default function PricingPage() {
                             FAQ
                         </span>
                         <h2
-                            className="display text-balance mt-4"
+                            className="display text-balance mt-4 text-[clamp(1.188rem,1.116vw+0.964rem,1.5rem)] md:text-[clamp(24px,2.6vw,32px)]"
                             style={{
-                                fontSize: "clamp(24px, 2.6vw, 32px)",
                                 color: FG_STRONG,
                             }}
                         >
