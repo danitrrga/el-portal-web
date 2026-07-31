@@ -45,3 +45,27 @@ scope-boundary rules). Not blockers for the plans that found them.
   `.planning/codebase/design/TOKENS.md` and is the natural starting point if the design
   owner decides to restore a real fourth step (it would need to move to an AA-clearing
   value — `#5a6478` is 3.40:1 on `#04060c`, below the 4.5:1 floor).
+
+## From code review fix pass (WR-08) — NOT fixed, needs design-owner sign-off
+
+- **No `brand` CTA on the site is a pill; every one renders at `border-radius: 8px`.**
+  `buttonVariants.variant.brand` sets `rounded-full`, but `size.sm | lg | xs | icon-xs`
+  each set `rounded-md`. `cn()` is `twMerge(clsx(...))` and cva emits variant before
+  size, so `tailwind-merge` resolves the `rounded-*` conflict to the last class —
+  `rounded-md`. Verified on the production build (`getComputedStyle().borderRadius`),
+  all 8 `[data-slot=button]` elements on `/` at both 1440x900 and 390x844: **`8px`**,
+  including `heroCta` (`brand`/`lg`) and `navSignUp` (`brand`/`sm`). CLAUDE.md specifies
+  "Primary CTA: shadcn `Button` `brand` variant (**pill**, white-alpha border/bg)".
+
+  The one-line fix is to drop the redundant `rounded-md` from the four size variants in
+  `src/components/ui/button.tsx:29-33` — it duplicates the base `rounded-md` on line 8,
+  so removing it is a no-op for `default`/`outline`/`secondary`/`ghost` and restores
+  `rounded-full` for `brand`.
+
+  **Deliberately not applied in this pass.** It is pre-existing (predates phase 05) and
+  it would change the rendered radius of the hero CTA and the nav Sign Up button from
+  8px to a full pill **at every width, desktop included** — which is exactly the
+  frozen-desktop change RESP-08 forbids, and it alters the most visible element on the
+  site. Reconciling "CLAUDE.md says pill" against "the approved desktop design ships
+  8px" is a design-owner decision, not a mechanical code-review fix. Whoever owns the
+  design should either apply the one-liner above or correct the CLAUDE.md claim.
