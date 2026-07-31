@@ -9,9 +9,9 @@ interface ReadingLayoutProps {
 
 export default function ReadingLayout({ children, className }: ReadingLayoutProps) {
     return (
-        <div className="relative w-full">
+        <div className="relative w-full overflow-x-clip">
             {/* Radial accent gradient — matches home hero */}
-            <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[700px] bg-[radial-gradient(circle_at_50%_0%,_var(--color-ep-accent-alpha-12)_0%,_transparent_70%)] opacity-80" />
+            <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full md:w-[1200px] h-[700px] bg-[radial-gradient(circle_at_50%_0%,_var(--color-ep-accent-alpha-12)_0%,_transparent_70%)] opacity-80" />
 
             {/* Film grain texture overlay */}
             <div
