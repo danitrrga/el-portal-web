@@ -3,10 +3,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Sun, Moon } from "lucide-react";
 
-const SECTION_BG = "#04060c";
-const FG_STRONG = "#f4f6fb";
-const FG = "#aab3c5";
-const FG_MUTED = "#8590a8";
+const SECTION_BG = "var(--color-ep-section-bg)";
+const FG_STRONG = "var(--color-ep-fg-strong)";
+const FG = "var(--color-ep-fg)";
+const FG_MUTED = "var(--color-ep-fg-muted-2)";
 // Foreground ramp is intentionally THREE steps on this surface, not four.
 // The AA contrast remediation in phase 05 pointed the old `FG_SUBTLE`
 // (`#5a6478`, 3.40:1 on `#04060c`) at `--color-ep-fg-muted-2` (`#8590a8`,
@@ -16,6 +16,14 @@ const FG_MUTED = "#8590a8";
 // alias. Restoring a real fourth step needs a new AA-clearing token
 // (`--color-ep-fg-subtle-2` = `#5a6478` does not clear AA) — a design decision,
 // not a mechanical one.
+// ACCENT / ACCENT_LIGHT deliberately stay raw hex. They are consumed as
+// hex-alpha template literals (`${ACCENT}14`, `${ACCENT_LIGHT}4d`, ...), and
+// `var(--color-ep-accent)14` is invalid CSS — the swap would silently drop the
+// declaration. The project convention (01-02-PLAN.md) is a pre-baked alpha
+// token per opacity; only `--color-ep-accent-alpha-12/-08` and
+// `--color-ep-accent-light-alpha-80` exist today, and these files need five
+// more (33, 66, 4d, 40, 59). Minting design tokens is a design decision, so
+// this is logged as debt in deferred-items.md rather than guessed at here.
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 const RULE = "rgba(255,255,255,0.06)";

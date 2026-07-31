@@ -22,9 +22,9 @@ export type ChangelogEntry = {
   isRelease?: boolean;
 };
 
-const FG_STRONG = "#f4f6fb";
-const FG = "#aab3c5";
-const FG_MUTED = "#8590a8";
+const FG_STRONG = "var(--color-ep-fg-strong)";
+const FG = "var(--color-ep-fg)";
+const FG_MUTED = "var(--color-ep-fg-muted-2)";
 // Foreground ramp is intentionally THREE steps on this surface, not four.
 // The AA contrast remediation in phase 05 pointed the old `FG_SUBTLE`
 // (`#5a6478`, 3.40:1 on `#04060c`) at `--color-ep-fg-muted-2` (`#8590a8`,
@@ -34,8 +34,8 @@ const FG_MUTED = "#8590a8";
 // alias. Restoring a real fourth step needs a new AA-clearing token
 // (`--color-ep-fg-subtle-2` = `#5a6478` does not clear AA) — a design decision,
 // not a mechanical one.
-const ACCENT = "#4487D6";
-const ACCENT_LIGHT = "#77B7ED";
+const ACCENT = "var(--color-ep-accent)";
+const ACCENT_LIGHT = "var(--color-ep-accent-light)";
 
 export function ChangelogItem({
   entry,
