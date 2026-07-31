@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-06-PLAN.md
-last_updated: "2026-07-31T15:44:58.751Z"
+stopped_at: Completed 05-07-PLAN.md
+last_updated: "2026-07-31T15:58:10.962Z"
 last_activity: 2026-07-31
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 13
-  completed_plans: 12
-  percent: 33
+  completed_plans: 13
+  percent: 50
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (mobile-responsive-retrofit) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
   section components were deleted. Only surviving change: the Navbar + Footer
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
 Status: Ready to execute
@@ -35,7 +35,7 @@ Status: Ready to execute
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
 Last activity: 2026-07-31
 
-Progress: [█████████░] 92%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -68,6 +68,7 @@ Progress: [█████████░] 92%
 | Phase 05 P04 | 12min | 3 tasks | 10 files |
 | Phase 05 P05 | 32min | 3 tasks | 11 files |
 | Phase 05 P06 | 24min | 2 tasks | 4 files |
+| Phase 05 P07 | 38min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,8 @@ Recent decisions affecting current work:
 - [Phase 05-05]: Classified color-contrast fixes (FG_SUBTLE hex, text-zinc-500/600) as an explicitly-documented delta rather than md:-gated, since WCAG contrast violations are not breakpoint-scoped -- the same colors were failing at desktop-1440 too
 - [Phase 05-06]: KNOWN_UNFIXED ref field uses short greppable IDs (KU-1..KU-4) instead of full prose, keeping deferred-items.md as the source of the full writeup — Spec file stays lean and the acceptance criterion's grep -F ref-value check passes cleanly against short IDs
 - [Phase 05-06]: isExcluded's six false-positive guards were each verified individually against a named offender before being added, not speculatively — SVG internals, ReadingLayout glow, Hero pill arrow track, and Tailwind truncate spans each had a measured false positive that a specific guard removes
+- [Phase 05-07]: No sm:/md: restoration added after removing -mr-56 -- the desktop band already computed margin-right:0px from 640px up, so removal with no restore point is the only edit that leaves >=768px untouched
+- [Phase 05-07]: /features H1 clamp converted on the strength of the shared gap statement, not on harness evidence -- the containment sweep never flagged /features because its longest token fits its box even at the 42px floor
 
 ### Pending Todos
 
@@ -125,6 +128,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-31T15:44:58.746Z
-Stopped at: Completed 05-06-PLAN.md
+Last session: 2026-07-31T15:58:10.957Z
+Stopped at: Completed 05-07-PLAN.md
 Resume file: None

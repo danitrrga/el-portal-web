@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [~] **Phase 2: Features Page** — CANCELLED 2026-06-13 (coded design rejected; `/features` route + components deleted). Only surviving change: the Methodology page was relabeled "Features" and its route renamed `/methodology` → `/features`.
 - [ ] **Phase 3: Legal Pages Rebrand** - Reskin Terms + Privacy to tokens, level Terms up to Privacy's quality, reconcile claims, meet WCAG AA
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
-- [ ] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (all 5 plans executed; verification `gaps_found` 2026-07-31 — 3 goal-level gaps, see 05-VERIFICATION.md)
+- [x] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (all 5 plans executed; verification `gaps_found` 2026-07-31 — 3 goal-level gaps, see 05-VERIFICATION.md) (completed 2026-07-31)
 - [ ] **Phase 6: Security Headers** - Static CSP + baseline security headers, with static prerendering preserved
 
 ## Phase Details
@@ -137,7 +137,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 05-04-PLAN.md — Page surfaces: svh on all 8 roots, remaining 44px links, full targets/overflow sweep (wave 2)
-- [ ] 05-07-PLAN.md — GAP-01 + GAP-02: breakpoint-gated hero/features H1 clamp, remove the phone-width dashboard bleed; turns 05-06 green (wave 2, gap closure)
+- [x] 05-07-PLAN.md — GAP-01 + GAP-02: breakpoint-gated hero/features H1 clamp, remove the phone-width dashboard bleed; turns 05-06 green (wave 2, gap closure)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -178,5 +178,5 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 | 2. Features Page | 4/4 | Complete   | 2026-06-13 |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
-| 5. Mobile Responsive Retrofit | 6/7 | In Progress|  |
+| 5. Mobile Responsive Retrofit | 7/7 | Complete   | 2026-07-31 |
 | 6. Security Headers | 0/TBD | Not started | - |
