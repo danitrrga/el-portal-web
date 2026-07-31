@@ -347,17 +347,24 @@ body {
 }
 
 /* Full-viewport-height utility. Tailwind's built-in screen-height utility
-   compiles to a single min-height: 100vh; this adds the svh cascade fallback
-   so iOS Safari's address bar does not clip full-height sections. Split
-   across an @supports guard rather than a bare duplicate declaration — see
-   the body rule above for why: the minifier collapses same-property
-   duplicates and silently drops the vh fallback. */
+   compiles to a single min-height: 100vh; this adds the viewport-relative
+   cascade fallback for browsers without the newer units. Split across an
+   @supports guard rather than a bare duplicate declaration — see the body
+   rule above for why: the minifier collapses same-property duplicates and
+   silently drops the vh fallback.
+
+   The @supports block MUST live inside the @utility body, not beside it as a
+   hand-written `.min-h-viewport` rule. A top-level rule here is emitted
+   *unlayered*, and an unlayered declaration outranks every rule in a cascade
+   layer regardless of specificity or source order — which pinned this utility
+   at the viewport height permanently and made `min-h-0` / `md:min-h-0` /
+   `min-h-11` silently inert on any element carrying it. Nesting keeps both
+   halves inside `@layer utilities` so normal cascade rules apply, and it is
+   also what gives the variants (`md:`, `hover:`) the fallback — a sibling
+   plain class only ever matches the unprefixed utility. */
 @utility min-h-viewport {
   min-height: 100vh;
-}
-
-@supports (min-height: 100svh) {
-  .min-h-viewport {
+  @supports (min-height: 100svh) {
     min-height: 100svh;
   }
 }
