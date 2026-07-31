@@ -111,9 +111,8 @@ export default function Hero() {
 
                 {/* H1 — Special Gothic Expanded One uppercase */}
                 <h1
-                  className="display mt-8 max-w-4xl mx-auto text-balance lg:mt-16"
+                  className="display mt-8 max-w-4xl mx-auto text-balance lg:mt-16 text-[clamp(1.625rem,3.571vw+0.911rem,2.625rem)] md:text-[clamp(42px,4.2vw,58px)]"
                   style={{
-                    fontSize: "clamp(42px, 4.2vw, 58px)",
                     color: "var(--color-ep-fg-strong)",
                   }}
                 >

@@ -893,9 +893,8 @@ export default function MethodologyPage() {
         {/* Hero */}
         <header className="mb-14 md:mb-20">
           <h1
-            className="display text-balance leading-[1.05]"
+            className="display text-balance leading-[1.05] text-[clamp(1.625rem,3.571vw+0.911rem,2.625rem)] md:text-[clamp(42px,4.2vw,58px)]"
             style={{
-              fontSize: "clamp(42px, 4.2vw, 58px)",
               color: FG_STRONG,
             }}
           >
