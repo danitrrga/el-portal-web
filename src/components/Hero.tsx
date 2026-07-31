@@ -79,7 +79,7 @@ export default function Hero() {
                 {/* Announcement pill — promo: first 300 users get Pro lifetime free */}
                 <Link
                   href="/pricing"
-                  className="group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 transition-colors duration-300"
+                  className="group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 transition-colors duration-300 min-h-11 md:min-h-0"
                   style={{
                     background: "var(--color-ep-pill-bg)",
                     borderColor: "var(--color-ep-pill-border)",

@@ -942,7 +942,7 @@ export default function MethodologyPage() {
           </p>
           <Link
             href="/manifesto"
-            className="group mt-4 inline-flex items-center gap-1.5 text-[14px] md:text-[15px] transition-colors"
+            className="group mt-4 inline-flex items-center gap-1.5 text-[14px] md:text-[15px] transition-colors min-h-11 md:min-h-0"
             style={{ color: ACCENT_LIGHT }}
           >
             Read the manifesto
