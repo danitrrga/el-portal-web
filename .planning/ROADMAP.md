@@ -105,7 +105,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Non-goals**: Deleting the dead component tree (tracked separately); the `priority` → `preload` migration on `HeroAppMockup` unless it blocks a criterion; any desktop redesign.
 **Plans**: 5 plans
 Plans:
-- [ ] 05-01-PLAN.md — App shell contract: viewport export, root MotionConfig, hover gating, svh cascade + `min-h-viewport` utility (wave 1)
+- [x] 05-01-PLAN.md — App shell contract: viewport export, root MotionConfig, hover gating, svh cascade + `min-h-viewport` utility (wave 1)
 - [ ] 05-02-PLAN.md — Global touch targets: Button size variants, Navbar hamburger/menu, Footer wordmark, CopyButton (wave 1)
 - [ ] 05-03-PLAN.md — The two confirmed overflow sources: ReadingLayout 420px glow, /changelog 27px H1 (wave 1)
 - [ ] 05-04-PLAN.md — Page surfaces: svh on all 8 roots, remaining 44px links, full targets/overflow sweep (wave 2)
@@ -138,5 +138,5 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 | 2. Features Page | 4/4 | Complete   | 2026-06-13 |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
-| 5. Mobile Responsive Retrofit | 0/TBD | Not started | - |
+| 5. Mobile Responsive Retrofit | 1/5 | In Progress|  |
 | 6. Security Headers | 0/TBD | Not started | - |

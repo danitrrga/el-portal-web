@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: phase-cancelled
-stopped_at: Phase 02 features-page CANCELLED by user (design rejected)
-last_updated: "2026-06-14T08:45:00.000Z"
-last_activity: 2026-06-14 - Completed quick task 260614-edt: Reskin /privacy + /terms to ink-blue brand
+status: executing
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-07-31T06:50:36.208Z"
+last_activity: 2026-07-31
 progress:
-  total_phases: 4
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 25
+  total_phases: 6
+  completed_phases: 2
+  total_plans: 11
+  completed_plans: 7
+  percent: 33
 ---
 
 # Project State
@@ -21,19 +21,19 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** Every page reads as unmistakably El Portal (ink-blue brand system) and describes the app truthfully.
-**Current focus:** Phase 02 — features-page CANCELLED (see below)
+**Current focus:** Phase 05 — mobile-responsive-retrofit
 
 ## Current Position
 
-Phase: 02 (features-page) — CANCELLED by user (design rejected)
-Plan: plans 02-01…02-04 were executed then reverted; the `/features` page and its
+Phase: 05 (mobile-responsive-retrofit) — EXECUTING
+Plan: 2 of 5
   section components were deleted. Only surviving change: the Navbar + Footer
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
-Status: Phase 02 deliverables NOT shipped. ROADMAP.md Phase 02 entry and
+Status: Ready to execute
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
-Last activity: 2026-06-14
+Last activity: 2026-07-31
 
-Progress: Phase 01 complete; Phase 02 cancelled
+Progress: [██████░░░░] 64%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: Phase 01 complete; Phase 02 cancelled
 | Phase 02-features-page P02-02 | 18 min | 3 tasks | 3 files |
 | Phase 02-features-page PP02-03 | 18 min | 1 tasks | 1 files |
 | Phase 02-features-page P02-04 | 15 min | 2 tasks | 2 files |
+| Phase 05 P01 | 9min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,7 @@ Recent decisions affecting current work:
 - [Milestone]: Perpetual-motion removal (TOKEN-03: `animate-pulse`, animated `textShadow`) DEFERRED to v2 — it would change motion.
 - [Milestone]: Features content derived from grounded app research; truthfulness guardrails enforced (no PWA claim, no shipped Calendar/Todoist sync, verify hosting region).
 - [Milestone]: Terms rebrand = reskin + restructure to Privacy's componentized quality; legal copy preserved.
+- [Phase 05-01]: svh cascade fallback implemented via @supports (min-height: 100svh) instead of a bare duplicate declaration — production lightningcss minifier collapses duplicate same-property declarations in one rule to the last one, silently deleting the vh floor for non-svh browsers; verified empirically
 
 ### Pending Todos
 
@@ -104,6 +106,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-13T17:15:00.000Z
-Stopped at: Phase 2 features-page CANCELLED by user — page + components deleted, nav/footer relabeled Methodology→Features
+Last session: 2026-07-31T06:50:36.201Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None
