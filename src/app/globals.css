@@ -213,14 +213,24 @@ body {
   min-height: 100vh;
 }
 
-/* svh cascade fallback, wrapped in @supports rather than relied on as a bare
+/* dvh cascade fallback, wrapped in @supports rather than relied on as a bare
    duplicate declaration: the production build's lightningcss minifier
    collapses two same-property declarations in one rule down to the last one
    (verified empirically), which would silently delete the vh floor for the
-   ~5% of browsers without svh support. @supports is minifier-safe. */
-@supports (min-height: 100svh) {
+   ~5% of browsers without dvh support. @supports is minifier-safe.
+
+   `dvh`, not `svh`. This is a `min-height` floor, so it can only ever make the
+   page taller — it cannot clip anything, and the mobile URL bar was never able
+   to clip it either. What the unit actually decides is where the floor sits
+   relative to the *visual* viewport: `svh` is the smallest viewport height, so
+   with the URL bar retracted the floor falls short of the screen and a strip of
+   the `html` background (#02030a) shows below a short page's own background
+   (#04060c on /changelog, /features, /manifesto, /pricing). `lvh` overshoots
+   and manufactures phantom scroll. `dvh` tracks the visual viewport in both
+   directions, which is exactly what a "fill the screen" floor wants. */
+@supports (min-height: 100dvh) {
   body {
-    min-height: 100svh;
+    min-height: 100dvh;
   }
 }
 
@@ -361,11 +371,16 @@ body {
    `min-h-11` silently inert on any element carrying it. Nesting keeps both
    halves inside `@layer utilities` so normal cascade rules apply, and it is
    also what gives the variants (`md:`, `hover:`) the fallback — a sibling
-   plain class only ever matches the unprefixed utility. */
+   plain class only ever matches the unprefixed utility.
+
+   `dvh` rather than `svh` for the same reason as the body floor above: a
+   min-height cannot clip, so the smallest-viewport unit only buys a gap below
+   the fold when the mobile URL bar retracts. See the body rule for the full
+   argument. */
 @utility min-h-viewport {
   min-height: 100vh;
-  @supports (min-height: 100svh) {
-    min-height: 100svh;
+  @supports (min-height: 100dvh) {
+    min-height: 100dvh;
   }
 }
 
