@@ -69,3 +69,66 @@ scope-boundary rules). Not blockers for the plans that found them.
   site. Reconciling "CLAUDE.md says pill" against "the approved desktop design ships
   8px" is a design-owner decision, not a mechanical code-review fix. Whoever owns the
   design should either apply the one-liner above or correct the CLAUDE.md claim.
+
+## From 05-06 containment sweep
+
+`e2e/containment.spec.ts` (plan 05-06) adds a container-relative check that measures
+elements against their own box (Sweep A) and against the viewport while naming the
+clipping ancestor that hides the escape (Sweep B) — the exact complement of
+`overflow.spec.ts`'s `documentElement.scrollWidth`-only check. Run against the
+unmodified, unfixed `src/` tree, it reproduces GAP-01 and GAP-02 exactly (see
+05-06-SUMMARY.md for the full RED run) and additionally surfaces four out-of-fence
+defects, none of which are GAP-01, GAP-02 or GAP-03. All four are suppressed in
+`containment.spec.ts`'s `KNOWN_UNFIXED` array (never silently — every suppression is
+still pushed onto `testInfo.annotations` on every run) and logged here so they are not
+lost.
+
+### KU-1 — `/features` "Connectedness" badge overflows its own box (Sweep A)
+
+- **Route:** `/features`
+- **Selector:** `span.font-mono.text-[11px].uppercase`
+- **Fires at:** all 7 launchable Chromium viewports, **including desktop-1440** — this
+  is not a phone-only defect, it is width-independent.
+- **Magnitude:** `scrollWidth: 117` vs `clientWidth: 110`, `overflowBy: 7`.
+- **Why out of fence:** not part of GAP-01 (Hero H1), GAP-02 (dashboard preview bleed)
+  or GAP-03 (the harness gap itself, which this plan closes). It is a genuine, small,
+  pre-existing label-overflow bug on the Features page bento grid.
+
+### KU-2 — `/mcp` prose paragraphs overflow their box at phone widths (Sweep A)
+
+- **Route:** `/mcp`
+- **Selector:** `p.text-sm.text-zinc-400.leading-5` (×12 paragraphs)
+- **Fires at:** `reflow-320` and `mobile-360` only; zero offenders at `mobile-390` and
+  wider.
+- **Magnitude:** max `overflowBy` 66px at 320px, 26px at 360px.
+- **Why out of fence:** unrelated component (`/mcp` code-block prose), not the Hero.
+
+### KU-3 — `/privacy` legal-copy paragraphs overflow their box at phone widths (Sweep A)
+
+- **Route:** `/privacy`
+- **Selector prefix:** `p.text-` (×5 paragraphs — `p.text-sm.font-semibold…` and
+  `p.text-xs…` variants)
+- **Fires at:** `reflow-320`, `mobile-360` and `mobile-390`; zero at `mobile-430`.
+- **Magnitude:** max `overflowBy` 73px at 320px, 33px at 360px, 3px at 390px.
+- **Why out of fence:** pre-existing legal-copy layout issue, unrelated to the Hero
+  gaps this phase's gap-closure plans (05-06/05-07) target.
+
+### KU-4 — `/pricing` comparison table clipped by its `overflow-hidden` wrapper (Sweep B) — NEW FINDING
+
+- **Route:** `/pricing`
+- **Clipper:** `div.rounded-xl.border.overflow-hidden`
+- **Selectors:** `table.w-full.text-left.border-collapse` plus 14 descendants
+  (`thead`, `tbody`, `tr.border-b`, `tr.transition-colors` ×N, `th.px-5.py-4.text-[11px]`,
+  `td.px-5.py-3.5.text-center` ×N) — 15 total, the sweep's reporting cap.
+- **Fires at:** `reflow-320`, `mobile-360` and `mobile-390`; zero at `mobile-430`.
+- **Magnitude:** `offscreenBy` up to 77px at 320px, 37px at 360px, 7px at 390px.
+- **Why out of fence:** not GAP-01, GAP-02 or GAP-03 — it is a **newly discovered
+  defect of the exact class GAP-03 exists to catch**: a comparison table clipped by an
+  `overflow-hidden` wrapper, invisible to `overflow.spec.ts`'s
+  `documentElement.scrollWidth` check, found by the new sweep on its first run against
+  unmodified `src/`.
+- **Needs a design-owner decision:** either make the wrapper `overflow-x-auto` with
+  `data-reflow-exempt` (self-scrolling table, per RESPONSIVE.md's sanctioned 2-D-layout
+  pattern), or restructure the pricing comparison table for mobile (e.g. a stacked/card
+  layout below `sm:`). Out of this gap-closure phase's fence — 05-06/05-07 exist to
+  close the harness gap and the two named Hero gaps, not to redesign `/pricing`.
