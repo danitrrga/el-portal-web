@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [~] **Phase 2: Features Page** — CANCELLED 2026-06-13 (coded design rejected; `/features` route + components deleted). Only surviving change: the Methodology page was relabeled "Features" and its route renamed `/methodology` → `/features`.
 - [ ] **Phase 3: Legal Pages Rebrand** - Reskin Terms + Privacy to tokens, level Terms up to Privacy's quality, reconcile claims, meet WCAG AA
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
-- [ ] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged
+- [x] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (completed 2026-07-31)
 - [ ] **Phase 6: Security Headers** - Static CSP + baseline security headers, with static prerendering preserved
 
 ## Phase Details
@@ -109,7 +109,7 @@ Plans:
 - [x] 05-02-PLAN.md — Global touch targets: Button size variants, Navbar hamburger/menu, Footer wordmark, CopyButton (wave 1)
 - [x] 05-03-PLAN.md — The two confirmed overflow sources: ReadingLayout 420px glow, /changelog 27px H1 (wave 1)
 - [x] 05-04-PLAN.md — Page surfaces: svh on all 8 roots, remaining 44px links, full targets/overflow sweep (wave 2)
-- [ ] 05-05-PLAN.md — Remove `overflow-x-hidden`, zero axe violations, full harness + desktop-freeze review (wave 3)
+- [x] 05-05-PLAN.md — Remove `overflow-x-hidden`, zero axe violations, full harness + desktop-freeze review (wave 3)
 **UI hint**: yes
 
 ### Phase 6: Security Headers
@@ -138,5 +138,5 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 | 2. Features Page | 4/4 | Complete   | 2026-06-13 |
 | 3. Legal Pages Rebrand | 0/TBD | Not started | - |
 | 4. Verification & Polish | 0/TBD | Not started | - |
-| 5. Mobile Responsive Retrofit | 4/5 | In Progress|  |
+| 5. Mobile Responsive Retrofit | 5/5 | Complete   | 2026-07-31 |
 | 6. Security Headers | 0/TBD | Not started | - |

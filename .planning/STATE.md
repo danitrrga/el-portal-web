@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-04-PLAN.md
-last_updated: "2026-07-31T07:18:04.733Z"
+status: verifying
+stopped_at: Completed 05-05-PLAN.md
+last_updated: "2026-07-31T07:52:56.979Z"
 last_activity: 2026-07-31
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 11
-  completed_plans: 10
-  percent: 33
+  completed_plans: 11
+  percent: 50
 ---
 
 # Project State
@@ -29,11 +29,11 @@ Phase: 05 (mobile-responsive-retrofit) — EXECUTING
 Plan: 5 of 5
   section components were deleted. Only surviving change: the Navbar + Footer
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
-Status: Ready to execute
+Status: Phase complete — ready for verification
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
 Last activity: 2026-07-31
 
-Progress: [█████████░] 91%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -64,6 +64,7 @@ Progress: [█████████░] 91%
 | Phase 05 P02 | 12min | 3 tasks | 5 files |
 | Phase 05 P03 | 9min | 2 tasks | 2 files |
 | Phase 05 P04 | 12min | 3 tasks | 10 files |
+| Phase 05 P05 | 32min | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [Phase 05-03]: Did not touch ChangelogItem.tsx — the /changelog H1 fluid-clamp fix alone resolved the 27px overflow across the full 7-project harness matrix, so the plan's contingency edit to the release-heading clamp was unnecessary
 - [Phase 05-04]: Reworded globals.css min-h-viewport doc comment to drop literal 'min-h-screen' token, avoiding a false-positive grep regression check — Plan 05-01 wrote a comment documenting what min-h-viewport replaces; the literal string tripped this plan's own zero-hits check even though it was documentation, not a live class
 - [Phase 05-04]: Task 3 full-matrix audit sweep required zero source changes -- all 3 named residual candidates (pricing S-12 badge, manifesto/features clamp floors, mcp pre exemption) were already passing — Prior plans (05-01/02/03) already resolved every overflow and touch-target source; Task 3 confirmed this via the complete 8-route x 7-project matrix rather than needing new fixes
+- [Phase 05-05]: Empirically verified (temporary JS injection, not shipped) that removing overflow-x-hidden from body does not change ChangelogItem's position:sticky behavior either way -- overflow-x-hidden propagates from body to the viewport in standards mode, so the viewport stays the sticky scrolling box regardless
+- [Phase 05-05]: Fixed axe violations beyond the plan's predicted blast radius (Hero.tsx nested main, heading-order in SystemBlueprintSection/MethodologyPreviewSection/features/pricing, color-contrast in 5 files) because a11y.spec.ts runs with target-size enabled and no viewport skip, surfacing pre-existing defects that predate this phase
+- [Phase 05-05]: Classified color-contrast fixes (FG_SUBTLE hex, text-zinc-500/600) as an explicitly-documented delta rather than md:-gated, since WCAG contrast violations are not breakpoint-scoped -- the same colors were failing at desktop-1440 too
 
 ### Pending Todos
 
@@ -116,6 +120,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-31T07:18:04.727Z
-Stopped at: Completed 05-04-PLAN.md
+Last session: 2026-07-31T07:52:56.972Z
+Stopped at: Completed 05-05-PLAN.md
 Resume file: None
