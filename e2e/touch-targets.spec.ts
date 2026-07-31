@@ -17,6 +17,28 @@ test.describe.configure({ mode: "parallel" });
  */
 const AAA_TARGET = 44;
 
+/**
+ * Measurement tolerance, not a relaxation of the 44px contract.
+ *
+ * `getBoundingClientRect()` returns the *transformed* border box. When any
+ * ancestor carries a transform, Chromium computes that quad in float32, so an
+ * element whose layout height is exactly 44px reads back as e.g.
+ * 43.99993896484375. The Hero CTAs sit under a Framer `AnimatedGroup` whose
+ * entrance spring asymptotes rather than terminating, so under parallel load
+ * `settle()` can return while a residual sub-pixel translate
+ * (`matrix(1, 0, 0, 1, 0, 0.0188307)`) is still applied — reproduced directly,
+ * with `offsetHeight === 44` and `getComputedStyle().height === "44px"` on the
+ * very same element. A strict `>= 44` turns that into an intermittent failure
+ * on a button that is, in fact, exactly 44px.
+ *
+ * 0.01px absorbs that quantisation (~160x the observed 6.1e-5 error) while
+ * being ~50x smaller than one device pixel at 3x DPR, so it cannot mask a real
+ * shortfall — genuine violations here are 17px and 20px, not 43.99px. The
+ * sibling `overflow.spec.ts` already carries a far looser `+ 1` px tolerance
+ * for the same class of sub-pixel noise.
+ */
+const EPSILON = 0.01;
+
 for (const route of ROUTES) {
   test(`touch targets >= ${AAA_TARGET}px: ${route}`, async ({ page }, testInfo) => {
     const width = page.viewportSize()?.width ?? 0;
@@ -81,17 +103,22 @@ for (const route of ROUTES) {
           if (inRunningText) continue;
         }
 
+        // `min` arrives already reduced by EPSILON — see its definition for why
+        // an exact `>= 44` is not a safe comparison against a transformed quad.
         if (r.width >= min && r.height >= min) continue;
 
         out.push({
           selector: describe(el),
-          w: Math.round(r.width),
-          h: Math.round(r.height),
+          // Reported to 2dp, not rounded to an integer. `Math.round` turned a
+          // 43.6px failure into the string "44" in the failure message, which
+          // reads as a passing measurement and sends you hunting the wrong bug.
+          w: Math.round(r.width * 100) / 100,
+          h: Math.round(r.height * 100) / 100,
           text: (el.textContent ?? "").trim().slice(0, 40),
         });
       }
       return out;
-    }, AAA_TARGET);
+    }, AAA_TARGET - EPSILON);
 
     if (undersized.length) {
       await testInfo.attach("undersized-targets", {
