@@ -103,13 +103,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   7. **The desktop design is unchanged.** Every diff is additive — a mobile-first default plus `md:`/`lg:` restoring today's values. Verified by before/after visual review at 1440px.
   8. `tsc`, ESLint, and `next build` still pass, and all 8 routes still prerender static.
 **Non-goals**: Deleting the dead component tree (tracked separately); the `priority` → `preload` migration on `HeroAppMockup` unless it blocks a criterion; any desktop redesign.
-**Plans**: 5 plans
+**Plans**: 7 plans (5 executed; 2 gap-closure plans added 2026-07-31)
 Plans:
 - [x] 05-01-PLAN.md — App shell contract: viewport export, root MotionConfig, hover gating, svh cascade + `min-h-viewport` utility (wave 1)
 - [x] 05-02-PLAN.md — Global touch targets: Button size variants, Navbar hamburger/menu, Footer wordmark, CopyButton (wave 1)
 - [x] 05-03-PLAN.md — The two confirmed overflow sources: ReadingLayout 420px glow, /changelog 27px H1 (wave 1)
 - [x] 05-04-PLAN.md — Page surfaces: svh on all 8 roots, remaining 44px links, full targets/overflow sweep (wave 2)
 - [x] 05-05-PLAN.md — Remove `overflow-x-hidden`, zero axe violations, full harness + desktop-freeze review (wave 3)
+- [ ] 05-06-PLAN.md — GAP-03: container-relative overflow assertion (`e2e/containment.spec.ts`), proven RED against unfixed `src/` (wave 1, gap closure)
+- [ ] 05-07-PLAN.md — GAP-01 + GAP-02: breakpoint-gated hero/features H1 clamp, remove the phone-width dashboard bleed; turns 05-06 green (wave 2, gap closure)
 **UI hint**: yes
 
 ### Phase 6: Security Headers
