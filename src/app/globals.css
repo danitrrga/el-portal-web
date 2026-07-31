@@ -181,8 +181,10 @@
   border-radius: 3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
 }
 
 /* Hero text glow */
@@ -211,6 +213,17 @@ body {
   min-height: 100vh;
 }
 
+/* svh cascade fallback, wrapped in @supports rather than relied on as a bare
+   duplicate declaration: the production build's lightningcss minifier
+   collapses two same-property declarations in one rule down to the last one
+   (verified empirically), which would silently delete the vh floor for the
+   ~5% of browsers without svh support. @supports is minifier-safe. */
+@supports (min-height: 100svh) {
+  body {
+    min-height: 100svh;
+  }
+}
+
 /* Card hover glow utility */
 .card-glow {
   position: relative;
@@ -227,8 +240,10 @@ body {
   transition: opacity 500ms ease;
 }
 
-.card-glow:hover::before {
-  opacity: 1;
+@media (hover: hover) {
+  .card-glow:hover::before {
+    opacity: 1;
+  }
 }
 
 /* Neutral focus ring — subtle white ring on interactive elements only */
@@ -331,6 +346,22 @@ body {
   line-height: 1.02;
 }
 
+/* Full-viewport-height utility. min-h-screen compiles to a single
+   min-height: 100vh; this adds the svh cascade fallback so iOS Safari's
+   address bar does not clip full-height sections. Split across an @supports
+   guard rather than a bare duplicate declaration — see the body rule above
+   for why: the minifier collapses same-property duplicates and silently
+   drops the vh fallback. */
+@utility min-h-viewport {
+  min-height: 100vh;
+}
+
+@supports (min-height: 100svh) {
+  .min-h-viewport {
+    min-height: 100svh;
+  }
+}
+
 /* ── Footer wordmark — ghost outline → left-to-right grain fill ──────
    At rest: a faint, chunky hollow outline of EL PORTAL.
    On hover: the outline brightens and a gaussian-noise grain gradient
@@ -375,8 +406,10 @@ body {
   opacity: 0.32;
   transition: opacity 850ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.wordmark:hover .wordmark__outline {
-  opacity: 0.6;
+@media (hover: hover) {
+  .wordmark:hover .wordmark__outline {
+    opacity: 0.6;
+  }
 }
 
 /* Grain-textured fill — revealed left → right via an animated mask.
@@ -412,8 +445,10 @@ body {
   mask-repeat: no-repeat, repeat;
   transition: --wordmark-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.wordmark:hover .wordmark__fill {
-  --wordmark-reveal: 117%;
+@media (hover: hover) {
+  .wordmark:hover .wordmark__fill {
+    --wordmark-reveal: 117%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
