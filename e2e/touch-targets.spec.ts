@@ -51,9 +51,30 @@ for (const route of ROUTES) {
         const r = el.getBoundingClientRect();
         if (r.width === 0 && r.height === 0) continue;
 
-        // SC 2.5.8 "inline" exception: a link inside a sentence is sized by
-        // the line-height of the surrounding text, not by the author.
-        if (el.tagName === "A" && el.closest("p, li")) continue;
+        // SC 2.5.8 "inline" exception: a target *in a sentence or block of
+        // text* is sized by the line-height of the surrounding copy, not by
+        // the author, so it is out of scope.
+        //
+        // The previous form of this check was `el.closest("p, li")`, which
+        // exempted every anchor with a <p> OR <li> ancestor. A standalone
+        // navigation link that merely happens to sit in a <ul><li> is
+        // author-sized and is expressly NOT the inline case — that spelling
+        // silently exempted all seven Footer nav links on all eight routes
+        // and reported green.
+        //
+        // Correct discriminator: an anchor is "inline in running text" only
+        // if its own parent also contains non-whitespace text around it.
+        if (el.tagName === "A") {
+          const parent = el.parentElement;
+          const inRunningText =
+            !!parent &&
+            Array.from(parent.childNodes).some(
+              (n) =>
+                n.nodeType === Node.TEXT_NODE &&
+                (n.textContent ?? "").trim().length > 0,
+            );
+          if (inRunningText) continue;
+        }
 
         if (r.width >= min && r.height >= min) continue;
 

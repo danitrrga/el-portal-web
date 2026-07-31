@@ -85,7 +85,11 @@ export default function Footer() {
                                     <li key={link.label}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-300"
+                                            // Below md: the anchor becomes a full-width 44px row so the
+                                            // tap target meets the AAA contract. `md:inline md:min-h-0`
+                                            // restores the original inline anchor on the frozen desktop
+                                            // design (align-items/min-height are inert on inline boxes).
+                                            className="flex min-h-11 items-center text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-300 md:inline md:min-h-0"
                                         >
                                             {link.label}
                                         </Link>
