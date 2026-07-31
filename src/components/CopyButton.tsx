@@ -22,7 +22,7 @@ export function CopyButton({ value, label = "Copy" }: { value: string; label?: s
       onClick={handleCopy}
       aria-label={copied ? "Copied" : label}
       data-copied={copied}
-      className="group absolute top-2 right-2 inline-flex h-7 w-7 items-center justify-center rounded-md border border-zinc-800/60 bg-zinc-900/70 text-zinc-400 backdrop-blur transition-[color,background-color,border-color,transform] duration-200 ease-out hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-100 active:scale-95 data-[copied=true]:border-emerald-500/30 data-[copied=true]:text-emerald-400"
+      className="group absolute top-2 right-2 inline-flex size-11 md:size-7 items-center justify-center rounded-md border border-zinc-800/60 bg-zinc-900/70 text-zinc-400 backdrop-blur transition-[color,background-color,border-color,transform] duration-200 ease-out hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-100 active:scale-95 data-[copied=true]:border-emerald-500/30 data-[copied=true]:text-emerald-400"
     >
       <span className="relative block h-3.5 w-3.5">
         <Copy

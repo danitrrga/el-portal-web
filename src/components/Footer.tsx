@@ -66,7 +66,7 @@ export default function Footer() {
                 >
                     {/* Brand column */}
                     <motion.div variants={itemVariants} className="col-span-2 md:col-span-1">
-                        <Link href="/" aria-label="El Portal home" className="inline-block mb-4">
+                        <Link href="/" aria-label="El Portal home" className="inline-flex min-h-11 items-center mb-4 md:inline-block md:min-h-0">
                             <ElPortalWordmark size={24} />
                         </Link>
                         <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
