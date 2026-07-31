@@ -903,9 +903,8 @@ export default function ChangelogPage() {
         {/* Hero — Raycast-style: big bold heading, no subtitle */}
         <header className="mb-6 md:mb-10">
           <h1
-            className="display text-balance leading-[1.05]"
+            className="display text-balance leading-[1.05] text-[clamp(2rem,3.92vw+1.12rem,3rem)] md:text-[clamp(48px,6vw,80px)]"
             style={{
-              fontSize: "clamp(48px, 6vw, 80px)",
               color: FG_STRONG,
             }}
           >
