@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-03-PLAN.md
-last_updated: "2026-07-31T07:07:39.253Z"
+stopped_at: Completed 05-04-PLAN.md
+last_updated: "2026-07-31T07:18:04.733Z"
 last_activity: 2026-07-31
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 11
-  completed_plans: 9
+  completed_plans: 10
   percent: 33
 ---
 
@@ -26,14 +26,14 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 05 (mobile-responsive-retrofit) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
   section components were deleted. Only surviving change: the Navbar + Footer
   "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
 Status: Ready to execute
   REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
 Last activity: 2026-07-31
 
-Progress: [████████░░] 82%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -63,6 +63,7 @@ Progress: [████████░░] 82%
 | Phase 05 P01 | 9min | 3 tasks | 3 files |
 | Phase 05 P02 | 12min | 3 tasks | 5 files |
 | Phase 05 P03 | 9min | 2 tasks | 2 files |
+| Phase 05 P04 | 12min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -81,6 +82,8 @@ Recent decisions affecting current work:
 - [Phase 05-02]: CopyButton's raw button intentionally not converted to the shared Button component — out of RESP-01..08 scope, risked /mcp styling regression for no responsive gain
 - [Phase 05-03]: Used overflow-x-clip (never overflow-x-hidden) on ReadingLayout's root wrapper, per phase-level lock, to contain the restored 1200px glow at the 768-1199px band without breaking position:sticky
 - [Phase 05-03]: Did not touch ChangelogItem.tsx — the /changelog H1 fluid-clamp fix alone resolved the 27px overflow across the full 7-project harness matrix, so the plan's contingency edit to the release-heading clamp was unnecessary
+- [Phase 05-04]: Reworded globals.css min-h-viewport doc comment to drop literal 'min-h-screen' token, avoiding a false-positive grep regression check — Plan 05-01 wrote a comment documenting what min-h-viewport replaces; the literal string tripped this plan's own zero-hits check even though it was documentation, not a live class
+- [Phase 05-04]: Task 3 full-matrix audit sweep required zero source changes -- all 3 named residual candidates (pricing S-12 badge, manifesto/features clamp floors, mcp pre exemption) were already passing — Prior plans (05-01/02/03) already resolved every overflow and touch-target source; Task 3 confirmed this via the complete 8-route x 7-project matrix rather than needing new fixes
 
 ### Pending Todos
 
@@ -113,6 +116,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-31T07:07:39.247Z
-Stopped at: Completed 05-03-PLAN.md
+Last session: 2026-07-31T07:18:04.727Z
+Stopped at: Completed 05-04-PLAN.md
 Resume file: None
