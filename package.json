@@ -10,6 +10,7 @@
     "audit:responsive": "playwright test",
     "audit:responsive:ui": "playwright test --ui",
     "audit:overflow": "playwright test overflow.spec.ts",
+    "audit:containment": "playwright test containment.spec.ts",
     "audit:a11y": "playwright test a11y.spec.ts",
     "audit:targets": "playwright test touch-targets.spec.ts",
     "audit:report": "playwright show-report",

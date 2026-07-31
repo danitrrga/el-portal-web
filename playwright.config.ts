@@ -21,7 +21,7 @@ export const VIEWPORTS = {
   "desktop-1440": { width: 1440, height: 900 },
 } as const;
 
-const LAYOUT_SPECS = /(overflow|a11y|touch-targets)\.spec\.ts/;
+const LAYOUT_SPECS = /(overflow|containment|a11y|touch-targets)\.spec\.ts/;
 
 /**
  * Annotated explicitly rather than inferred: spreading a `devices[...]`
