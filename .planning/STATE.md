@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-07-PLAN.md
-last_updated: "2026-07-31T15:58:10.962Z"
+status: ready_to_plan
+stopped_at: Phase 05 complete (7/7) — ready to discuss Phase 6
+last_updated: 2026-08-01T18:45:07.671Z
 last_activity: 2026-07-31
 progress:
   total_phases: 6
@@ -21,19 +21,30 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** Every page reads as unmistakably El Portal (ink-blue brand system) and describes the app truthfully.
-**Current focus:** Phase 05 — mobile-responsive-retrofit
+**Current focus:** Phase 6 — security headers
 
 ## Current Position
 
-Phase: 05 (mobile-responsive-retrofit) — EXECUTING
-Plan: 3 of 7
-  section components were deleted. Only surviving change: the Navbar + Footer
-  "Methodology" page was relabeled "Features" and its route renamed /methodology → /features.
-Status: Ready to execute
-  gaps_found — 3 goal-level gaps (hero H1 42px floor, dashboard bleed off-screen on
-  phones, harness blind to container-relative overflow). Next: /gsd:plan-phase 5 --gaps
-  REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 need disposition (cancel / repurpose).
-Last activity: 2026-07-31
+Phase: 6 — Security Headers
+Plan: Not started
+Status: Ready to plan
+
+  Phase 5 closed 2026-08-01: verification `passed`, 7/7 plans, all 3 goal-level
+  gaps re-measured closed, 6/6 human-verification items resolved (0 blocked)
+  including a physical-iPhone check. One accepted override, OVR-01, covering the
+  WCAG-AA colour remediation that deviates from the desktop-freeze criterion.
+
+  Carried into Phase 6 and beyond (none block phase 6):
+  - REQUIREMENTS.md FEAT-01…FEAT-06 / QUAL-01 still need disposition (cancel /
+    repurpose) after the Phase 2 cancellation.
+  - e2e/motion.spec.ts does not assert RESP-07's runtime behaviour; it was proven
+    once by a frame-count probe but has no standing regression coverage.
+  - KU-4: /pricing comparison table escapes its overflow-hidden wrapper by 77px at
+    320px (deferred-items.md) — needs a design decision.
+  - 05-REVIEW.md IN-01/IN-02 (two unused constants), WR-02/WR-03 (containment
+    sweep suppression breadth and the .slice(0,15) cap).
+
+Last activity: 2026-08-01
 
 Progress: [██████████] 100%
 
@@ -41,7 +52,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 2
+- Total plans completed: 9
 - Average duration: — min
 - Total execution time: — hours
 
@@ -50,6 +61,7 @@ Progress: [██████████] 100%
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 2 | - | - |
+| 05 | 7 | - | - |
 
 **Recent Trend:**
 

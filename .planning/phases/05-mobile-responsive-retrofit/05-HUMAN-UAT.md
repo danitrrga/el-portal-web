@@ -1,5 +1,5 @@
 ---
-status: partial
+status: complete
 phase: 05-mobile-responsive-retrofit
 source: [05-VERIFICATION.md]
 started: 2026-07-31T00:00:00Z
@@ -8,7 +8,7 @@ updated: 2026-08-01T00:00:00Z
 
 ## Current Test
 
-[testing complete — 1 item remains blocked on a physical device, 1 on host packages]
+[testing complete — all 6 items resolved, 0 blocked]
 
 ## Tests
 
@@ -31,10 +31,15 @@ residual: the jank caveat still stands — a physical-iOS check that decorative 
 ### 3. Literal 1440px visual sign-off + real-iPhone check
 expected: Visual parity confirmed at 1440px across all 8 routes for layout, spacing and sizing (colour deltas being the separately-decided exception in test 1); dark theme-color browser chrome and an unclipped hero bottom confirmed on a physical iPhone.
 detail: ROADMAP SC7 and `05-05-PLAN.md` both explicitly require this. `05-05-SUMMARY.md` states plainly it was never performed — no human eyes, no physical device in the execution context. The verifier had neither either. Automated hunk classification and `desktop-1440` Playwright parity are not a substitute.
-result: partial
+result: pass
 desktop_half: pass — discharged by direct measurement rather than eyes. The pre-phase-05 tree (`0f0e978`) was built in a throwaway worktree and pixel-diffed against HEAD, full-page @1440, all 8 routes. Every route ≤0.28% except `/mcp` at 1.913%, and all of it is colour (see test 1). Two measurement errors were found and corrected en route: (a) a first pass reported `/` at 9.97%, which was an artifact of capturing under `reducedMotion: reduce` — phase 05's own `MotionProvider` snaps `whileInView` reveals instantly while the pre-build still animates them, so the two builds were captured at different reveal states; re-running with `no-preference` + a scroll-through pass gave 0.117%. (b) `/pricing`'s FAQ padding reparenting (commit `217c870`) looked like an SC7 violation on box geometry (padding `0` → `20px/16px`, x 93→73, w 582→622) but at 0.156% it sits in the colour-only band, confirming that commit's "visually identical, desktop included" claim.
-iphone_half: BLOCKED — still needs a physical iPhone for dark theme-color browser chrome, unclipped hero bottom on `/` and `/changelog`, and the `dvh` toolbar-transition jank check inherited from test 2. No emulator substitutes for this.
-blocked_by: physical-device
+iphone_half: pass — performed by the design owner on a physical iPhone, 2026-08-01. All four sub-checks confirmed:
+  - dark theme-color browser chrome (Safari UI picks up the dark bar, no light band above the page)
+  - hero bottom unclipped by the address bar on `/` and `/changelog`, on load and after scrolling
+  - no scroll jank on the `dvh` decorative overlays (ReadingLayout glow/grain, `.glass-panel` blur) as the toolbar collapses and expands — this is the specific caveat RESPONSIVE.md retains for `dvh`, and it is the evidence test 2's accepted `dvh` decision was waiting on
+  - general look and feel of this milestone's mobile type scale and spacing on a real handset
+verified_by: design owner (physical device — no emulator substitutes, and none was used)
+closes: the last outstanding item of phase 05's human verification gate
 
 ### 4. `touch-iphone` WebKit project — run once host libs are installed
 expected: All `touch-iphone` tests pass across `overflow.spec.ts`, `touch-targets.spec.ts` and `a11y.spec.ts` for all 8 routes.
@@ -83,22 +88,17 @@ verified: computed styles now report `background-clip: border-box`, `background-
 ## Summary
 
 total: 6
-passed: 5
+passed: 6
 issues: 0
 pending: 0
 skipped: 0
-blocked: 1
+blocked: 0
 
 ## Gaps
 
-[none — no test reported a defect.]
+[none — no test reported a defect, and nothing remains blocked.]
 
-The single remaining item is the physical-iPhone half of test 3: dark theme-color
-browser chrome, unclipped hero bottom on `/` and `/changelog`, and the `dvh`
-toolbar-transition jank check inherited from test 2. No emulator substitutes for
-it, so it stays open until someone runs the site on a real handset.
-
-Everything else is closed. Of the six, three were resolved by measurement rather
+All six items are closed. Of the six, three were resolved by measurement rather
 than by asking a human (tests 3-desktop, 4, 5) — they had been classified
 "human needed" because earlier passes had no probe for them, not because they
 genuinely required human judgement. The three that did require judgement
