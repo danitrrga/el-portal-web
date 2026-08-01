@@ -1,8 +1,16 @@
 ---
 phase: 05-mobile-responsive-retrofit
 verified: 2026-07-31T12:00:00Z
-status: human_needed
-score: 8/8 roadmap success criteria satisfied at the code/harness level (2 with a documented, still-open policy deviation); all 3 goal-level gaps from the prior verification independently confirmed closed; 5 pre-existing human-decision items remain open and unaffected by the gap-closure work
+status: passed
+score: 8/8 roadmap success criteria satisfied. All 3 goal-level gaps from the prior verification independently confirmed closed. All 6 human-verification items resolved (see 05-HUMAN-UAT.md, status complete) — 3 discharged by measurement, 3 decided by the design owner, 0 blocked.
+human_verification_resolved: 2026-08-01
+human_verification_detail:
+  - "Item 1 RESP-08 colour exception — accepted; override OVR-01 below."
+  - "Item 2 RESP-05 svh/dvh — accepted dvh; RESPONSIVE.md and REQUIREMENTS.md corrected to match the code. The residual jank caveat was discharged by the physical-device check in item 3."
+  - "Item 3 1440px + iPhone — desktop half by pixel diff of pre-phase-05 vs HEAD across 8 routes; iPhone half by the design owner on a physical handset, all four sub-checks confirmed."
+  - "Item 4 touch-iphone — run green (40/40) on a supported platform; standing coverage added via .github/workflows/responsive-audit.yml."
+  - "Item 5 RESP-07 reduced motion — passes; frame-count probe shows a 1-frame snap under reduce vs 65 distinct values over 1500ms under no-preference."
+  - "Item 6 Footer wordmark — reimplemented without background-clip:text rather than granted an exception."
 overrides_applied: 1
 overrides:
   - id: OVR-01
@@ -114,12 +122,17 @@ npx playwright test containment.spec.ts --project=reflow-320 --project=mobile-36
 | 2 | `overflow-x-hidden` gone from `<body>`; `ReadingLayout.tsx` and `/changelog` overflows fixed at source | ✓ VERIFIED | `grep -rn "overflow-x-hidden" src` → 0 results (re-checked). Unchanged by gap closure (neither 05-06 nor 05-07 touched these files — confirmed via each plan's `files_modified` frontmatter). |
 | 3 | `npm run audit:targets` passes | ✓ VERIFIED | Unchanged by gap closure. Orchestrator's fresh run shows the same 32 passed / 24 skipped non-env profile as the original verification. |
 | 4 | `npm run audit:a11y` reports zero axe violations | ✓ VERIFIED | Unchanged by gap closure; orchestrator's run shows 112/112 non-env, same as original. |
-| 5 | `viewport` export correct; full-height sections use a viewport-relative unit | ⚠ PARTIAL — see human_verification | Unchanged: code still uses `dvh`, not the `svh` the roadmap/REQUIREMENTS.md text specifies. Gap-closure plans explicitly fenced this out. Routed to human_verification item 2. |
+| 5 | `viewport` export correct; full-height sections use a viewport-relative unit | ✓ VERIFIED (resolved 2026-08-01) | Code uses `dvh`. Was routed to human_verification item 2 because it contradicted the `svh` in RESPONSIVE.md/REQUIREMENTS.md; the design owner accepted `dvh` and both contract documents were corrected to match, the original `svh` rationale having rested on "svh never clips" when every rule here is a `min-height` floor that cannot clip. The residual jank caveat was discharged on a physical iPhone (item 3). |
 | 6 | Hover rules gated behind `@media (hover: hover)`; root `MotionConfig` in place | ✓ VERIFIED (structurally) | Unchanged, re-confirmed present. |
-| 7 | Desktop design unchanged — every diff additive | ✓ VERIFIED for the gap-closure diff itself; ⚠ the pre-existing 28-colour exception still open | The new `git diff 5f4ba1d -- src/` (2 files: `Hero.tsx`, `features/page.tsx`) was independently re-measured in this session at 768/1024/1440 and is byte-identical to the pre-gap-closure baseline (see GAP-01/GAP-02 tables above) — no new desktop deviation was introduced by 05-06/05-07. The **pre-existing** 28 un-gated colour declarations (from the original 5 plans, not gap closure) remain an open human-decision item, unchanged, routed to human_verification item 1. |
+| 7 | Desktop design unchanged — every diff additive | ✓ VERIFIED, with accepted override OVR-01 (resolved 2026-08-01) | The gap-closure diff itself is byte-identical to the pre-gap-closure baseline at 768/1024/1440. The 28 un-gated colour declarations from the original 5 plans are a real deviation, now formally accepted as OVR-01 (SC4 zero-axe beats SC7 desktop-freeze where they conflict). Cost measured rather than asserted: full-page pixel diff of pre-phase-05 `0f0e978` vs HEAD at 1440 across all 8 routes gives `/mcp` 1.913% and everything else 0.095–0.279%, colour only. Confirmed by the design owner on a physical iPhone and at 1440 (item 3). |
 | 8 | `tsc`, ESLint, `next build` pass; all 8 routes prerender static | ✓ VERIFIED | Re-ran `npx tsc --noEmit` (exit 0) and `npm run typecheck:e2e` (exit 0) myself in this session. Production build succeeded as a side effect of the Playwright `webServer` step (`npm run build && npm run start`) run twice in this session without error. Orchestrator independently confirmed `npm run build` succeeded with only the pre-existing font-override warning. |
 
-**Score:** 6/8 truths cleanly VERIFIED, unchanged from the prior pass. 2/8 (SC5, SC7's colour sub-clause) remain real, honestly-documented, **unaffected-by-gap-closure** deviations awaiting a design-owner decision — not code defects.
+**Score:** 8/8 truths VERIFIED as of 2026-08-01. The two that this report originally
+left partial (SC5's `svh`/`dvh` contradiction, SC7's colour sub-clause) were never
+code defects — they were policy questions, and both have since been decided by the
+design owner: SC5 by accepting `dvh` and correcting the contract documents, SC7 by
+accepting override OVR-01 with its cost measured rather than estimated. See
+`05-HUMAN-UAT.md` (status `complete`, 6/6 resolved, 0 blocked).
 
 ### Full-matrix confirmation
 

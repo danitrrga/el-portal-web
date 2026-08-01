@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [~] **Phase 2: Features Page** — CANCELLED 2026-06-13 (coded design rejected; `/features` route + components deleted). Only surviving change: the Methodology page was relabeled "Features" and its route renamed `/methodology` → `/features`.
 - [ ] **Phase 3: Legal Pages Rebrand** - Reskin Terms + Privacy to tokens, level Terms up to Privacy's quality, reconcile claims, meet WCAG AA
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
-- [x] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (all 5 plans executed; verification `gaps_found` 2026-07-31 — 3 goal-level gaps, see 05-VERIFICATION.md) (completed 2026-07-31)
+- [x] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (7/7 plans executed incl. 2 gap-closure; verification `passed` — 3 goal-level gaps closed and re-measured, 6/6 human-verification items resolved incl. a physical-iPhone check, 1 accepted override OVR-01 for the WCAG-AA colour remediation) (completed 2026-08-01)
 - [ ] **Phase 6: Security Headers** - Static CSP + baseline security headers, with static prerendering preserved
 
 ## Phase Details
