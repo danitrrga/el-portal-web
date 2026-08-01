@@ -1,0 +1,120 @@
+# Responsive audit CI
+#
+# Exists primarily to run the `touch-iphone` Playwright project, which cannot
+# run on the maintainer's workstation: Playwright's WebKit build targets the
+# Ubuntu 24.04 ABI (libicu*.so.74, libxml2.so.2, libjxl.so.0.8, and a specific
+# set of flite voice libs), while Arch/CachyOS ships newer sonames. That is a
+# platform incompatibility, not a missing package — no local install fixes it.
+# `ubuntu-latest` is the supported platform, so CI is where that project gets
+# to be real coverage instead of 40 permanently-red tests.
+#
+# Without it, the 7 Chromium projects never emulate `hover: none`, so RESP-06's
+# `@media (hover: hover)` gating has no automated coverage under a genuinely
+# coarse pointer.
+name: Responsive audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# A superseded push should not keep burning a runner. Never cancel on main —
+# those runs are the record of what actually shipped.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  quality:
+    name: Types & lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # App and e2e sources have separate tsconfigs; both must hold.
+      - name: Typecheck app
+        run: npx tsc --noEmit
+
+      - name: Typecheck e2e
+        run: npm run typecheck:e2e
+
+      - name: Lint
+        run: npm run lint
+
+  # Deliberately not sharded. playwright.config.ts's `webServer` runs a full
+  # `next build` per job, so a 2-way shard would double the expensive step to
+  # parallelize ~1.5 minutes of actual test execution — a net loss. Revisit if
+  # the suite grows past a few minutes.
+  responsive:
+    name: Responsive audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Cache browsers on the resolved Playwright version, not the semver range
+      # in package.json — a floating "^1.62.1" would otherwise keep serving a
+      # stale browser bundle after a minor bump.
+      - name: Resolve Playwright version
+        id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+      # Only the two engines the matrix actually uses. `--with-deps` is what
+      # supplies the WebKit system libraries that Arch cannot.
+      - name: Install browsers
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium webkit
+
+      # A cache hit restores the browser binaries but not the apt-level system
+      # libraries, which live outside ~/.cache/ms-playwright. Without this,
+      # cached runs fail exactly the way the local workstation does.
+      - name: Install system deps
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium webkit
+
+      # No explicit build step: playwright.config.ts's `webServer` runs
+      # `npm run build && npm run start -- --port 3987` itself, deliberately
+      # against a production build rather than dev.
+      - name: Run audit
+        run: npm run audit:responsive
+
+      - name: Upload report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      # Traces are written on first retry only, so this is usually empty and
+      # costs nothing; when a test is flaky it is the only way to see why.
+      - name: Upload traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 14
