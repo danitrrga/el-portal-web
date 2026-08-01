@@ -40,10 +40,20 @@ blocked_by: physical-device
 expected: All `touch-iphone` tests pass across `overflow.spec.ts`, `touch-targets.spec.ts` and `a11y.spec.ts` for all 8 routes.
 detail: Blocked — `browserType.launch` fails on missing host libraries. All 40 observed `touch-iphone` failures are identical launch errors, not code regressions. This matters beyond bookkeeping: the 7 Chromium projects that do run never emulate `hover: none`, so RESP-06's `@media (hover: hover)` gating has no automated coverage with a genuinely coarse pointer.
 result: blocked
-blocked_by: host-packages
-correction: the previously recorded remedy — `sudo npx playwright install-deps` — CANNOT work on this machine. It shells out to `apt-get`, and this host is CachyOS (Arch). Playwright's own error text hardcodes the Debian package names (`libicu74`, `libxml2`, `libflite1`) and is misleading here.
-actual_state: `ldconfig -p` shows `libicu` present (24 matches) and `libxml2` present (4 matches); **`libflite` is the only missing library** (0 matches).
-remedy: `sudo pacman -S flite`  (package `extra/flite 2.2-2`), then re-run `npm run audit:responsive` and confirm the 40 `touch-iphone` failures clear.
+blocked_by: platform-incompatibility
+correction_1: the originally recorded remedy — `sudo npx playwright install-deps` — CANNOT work on this machine. It shells out to `apt-get`, and this host is CachyOS (Arch). Playwright's error text hardcodes Debian package names (`libicu74`, `libxml2`, `libflite1`) and is misleading here; it is a static distro mapping, not a live probe of the binary.
+correction_2: a second recorded remedy — `sudo pacman -S flite` — was ALSO wrong. It was inferred from Playwright's Debian package names plus a naive `ldconfig -p | grep -c flite`, not from the binary's real soname requirements. `flite` was installed (0 -> 14 matches) and all 40 `touch-iphone` failures persisted unchanged.
+actual_diagnosis: `ldd` over `~/.cache/ms-playwright/webkit-2336/**` is the ground truth. Playwright's WebKit is built against the Ubuntu 24.04 ABI, and Arch ships NEWER sonames that cannot satisfy it:
+  - wants `libicuuc/libicui18n/libicudata.so.74`  — host has `.so.78`
+  - wants `libxml2.so.2`                          — host has `.so.16`
+  - wants `libjxl.so.0.8`                         — host has `.so.0.11`
+  - wants `libflite_cmu_us_kal/_awb/_rms`, `libflite_cmu_grapheme_lang/_lex`, `libflite_cmu_time_awb` — Arch's `flite` package ships a different voice subset (`kal16`, `slt`, `cmulex`, `usenglish`, `cmu_indic_lex`)
+  (`libwebkitgtk-6.0`, `libjavascriptcoregtk-6.0`, `libWPEWebKit-2.0`, `libwpe-1.0`, `libWPEBackend-fdo-1.0` also show as unresolved to bare `ldd` but ship inside the Playwright bundle and resolve via RPATH at runtime — those are not the blocker.)
+conclusion: this is a structural platform incompatibility, not a missing package. No `pacman` install resolves it; Playwright officially supports only Debian/Ubuntu for its browser builds.
+remedy_options:
+  - "Container (supported path): docker run --rm --network host -v \"$PWD\":/w -w /w mcr.microsoft.com/playwright:v1.62.1-noble npx playwright test --project=touch-iphone"
+  - "CI: no .github/workflows exists yet. An ubuntu-latest job running the full matrix would give this project permanent coverage instead of a one-off local run."
+  - "Accept as locally unavailable and rely on the 7 Chromium projects, acknowledging that RESP-06's `@media (hover: hover)` gating then has no automated coverage under a genuinely coarse pointer."
 
 ### 5. RESP-07 runtime reduced-motion behaviour
 expected: Visual confirmation (screen recording, or DevTools "Emulate CSS prefers-reduced-motion") that Framer's entrance and scroll animations — Hero's `AnimatedGroup`, section `whileInView` reveals — are actually suppressed under `prefers-reduced-motion: reduce`, while opacity/colour transitions remain.
