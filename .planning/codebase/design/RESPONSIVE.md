@@ -155,10 +155,24 @@ No body or UI text below **14px** on mobile. The `text-[10px]` / `text-[11px]` f
 
 | Unit | Use |
 |---|---|
-| **`svh`** | **The default for full-height work.** Small viewport = browser UI expanded. Static, never clips. |
+| **`dvh`** | **The default for full-height work here.** See the amendment below. |
+| `svh` | Small viewport = browser UI expanded. Static, never clips. Correct when a *fixed* height must never change. |
 | `lvh` | Rarely. Equals legacy `vh`. |
-| `dvh` | **Only with a specific tested reason.** It re-resolves as the toolbar animates, forcing per-frame layout — visible jank on complex subtrees. |
 | `vh` | Legacy. On iOS Safari it resolves to the *large* viewport, so a `100vh` hero has its CTA cut off below the fold on load. |
+
+**Amendment (phase 05 UAT item 2, design-owner decision).** This table previously
+made `svh` the default and `dvh` conditional. That ordering rested on the claim that
+`svh` "never clips" — but every full-height rule on this site is a `min-height`
+floor, and a `min-height` cannot clip its content regardless of unit. The stated
+reason for preferring `svh` therefore did not apply. Code review WR-02 corrected the
+implementation to `dvh` (`globals.css` lines ~213, ~231–234, ~380–385); this table
+and REQUIREMENTS.md RESP-05 are now corrected to match, rather than leaving the
+contract contradicting the code.
+
+The jank caveat below still stands and is the reason `dvh` is not a blanket default:
+it re-resolves as the toolbar animates. Outstanding: a physical-iOS check that the
+decorative overlays (ReadingLayout glow/grain, `.glass-panel` blur) do not visibly
+jank during toolbar transitions. Tracked as the remaining half of UAT item 3.
 
 **Never animate to/from `dvh`** — the target moves mid-animation.
 **None of these account for the virtual keyboard** (irrelevant here — no forms).

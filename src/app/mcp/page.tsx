@@ -504,7 +504,7 @@ export default function McpPage() {
 
             {/* CTA */}
             <div className="mt-14 pt-8 border-t border-zinc-800/60">
-              <p className="text-zinc-100 text-base font-medium mb-2">
+              <p className="text-zinc-100 text-[15px] md:text-base font-medium mb-2">
                 Ready to connect?
               </p>
               <p className="text-sm text-zinc-400 mb-5">

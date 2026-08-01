@@ -26,9 +26,11 @@ const McpLogo = (props: React.SVGProps<SVGSVGElement>) => (
 export default function McpIntegrationSection() {
   return (
     <section>
-      <div className="py-24 md:py-32">
+      <div className="py-16 md:py-32">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="aspect-16/10 group relative mx-auto flex max-w-[22rem] items-center justify-between sm:max-w-sm">
+          {/* max-w steps down on phones so the outer nodes — which sit 1/6 of their
+              own width outside the ring box — still clear the page's 24px gutter. */}
+          <div className="aspect-16/10 group relative mx-auto flex max-w-[16rem] items-center justify-between min-[360px]:max-w-[18rem] sm:max-w-sm">
             {/* Outer ring — brand-blue top-light arc */}
             <div
               className="absolute inset-0 flex aspect-square items-center justify-center rounded-full border-t"
@@ -70,7 +72,7 @@ export default function McpIntegrationSection() {
             <div className="absolute inset-x-0 bottom-0 mx-auto my-2 flex w-fit justify-center gap-2">
               <div className="bg-muted relative z-20 rounded-full border p-1">
                 <IntegrationCard
-                  className="shadow-black-950/10 dark:bg-background size-16 border-black/20 shadow-xl dark:border-white/25 dark:shadow-white/15"
+                  className="shadow-black-950/10 dark:bg-background size-14 sm:size-16 border-black/20 shadow-xl dark:border-white/25 dark:shadow-white/15"
                   isCenter={true}
                 >
                   <McpLogo className="text-[var(--color-ep-fg-strong)]" />
@@ -78,17 +80,16 @@ export default function McpIntegrationSection() {
               </div>
             </div>
           </div>
-          <div className="bg-linear-to-t from-background relative z-20 mx-auto mt-12 max-w-lg space-y-6 from-55% text-center">
+          <div className="bg-linear-to-t from-background relative z-20 mx-auto mt-8 md:mt-12 max-w-lg space-y-5 md:space-y-6 from-55% text-center">
             <h2
-              className="display text-balance"
+              className="display text-balance text-[clamp(1.313rem,1.563vw+1rem,1.75rem)] md:text-[clamp(28px,3.2vw,40px)]"
               style={{
-                fontSize: "clamp(28px, 3.2vw, 40px)",
                 color: "var(--color-ep-fg-strong)",
               }}
             >
               Your agent keeps the record.
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-[15px] md:text-base">
               Connect Claude, Cursor, or any MCP-compatible agent. It reads habits, cycles, and trends. Writes back updates. The score moves while you do the work.
             </p>
 
@@ -114,11 +115,18 @@ const IntegrationCard = ({
   return (
     <div
       className={cn(
-        "relative z-30 flex size-12 rounded-full border bg-white shadow-sm shadow-black/5 dark:bg-white/5 dark:backdrop-blur-md",
+        "relative z-30 flex size-10 sm:size-12 rounded-full border bg-white shadow-sm shadow-black/5 dark:bg-white/5 dark:backdrop-blur-md",
         className
       )}
     >
-      <div className={cn("m-auto size-fit *:size-5", isCenter && "*:size-8")}>{children}</div>
+      <div
+        className={cn(
+          "m-auto size-fit *:size-4 sm:*:size-5",
+          isCenter && "*:size-6 sm:*:size-8"
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 };

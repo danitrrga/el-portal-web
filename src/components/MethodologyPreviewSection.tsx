@@ -37,7 +37,7 @@ const PRINCIPLES = [
 export default function MethodologyPreviewSection() {
   return (
     <section
-      className="relative overflow-hidden py-24 md:py-32"
+      className="relative overflow-hidden py-16 md:py-32"
       style={{ background: SECTION_BG }}
     >
       {/* Atmospheric backdrop — same recipe as VCD / CTA */}
@@ -59,16 +59,15 @@ export default function MethodologyPreviewSection() {
             Features
           </span>
           <h2
-            className="display text-balance mt-4"
+            className="display text-balance mt-4 text-[clamp(1.313rem,1.563vw+1rem,1.75rem)] md:text-[clamp(28px,3.2vw,40px)]"
             style={{
-              fontSize: "clamp(28px, 3.2vw, 40px)",
               color: FG_STRONG,
             }}
           >
             A method, not a vibe.
           </h2>
           <p
-            className="mt-5 text-base leading-[1.6] mx-auto max-w-xl"
+            className="mt-5 text-[15px] md:text-base leading-[1.6] mx-auto max-w-xl"
             style={{ color: FG }}
           >
             El Portal isn&apos;t a template you fill in. Every mechanic
@@ -97,7 +96,7 @@ export default function MethodologyPreviewSection() {
                   {p.title}
                 </h3>
                 <p
-                  className="mt-2 text-base leading-[1.6]"
+                  className="mt-2 text-[15px] md:text-base leading-[1.6]"
                   style={{ color: FG }}
                 >
                   {p.body}

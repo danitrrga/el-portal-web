@@ -201,7 +201,7 @@ function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
         <section>
             <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">{tag}</p>
             <h2 className="display text-2xl text-[var(--color-ep-fg-strong)] text-balance">{title}</h2>
-            <p className="mt-4 text-base text-[var(--color-ep-fg-body)] leading-relaxed text-pretty">{lede}</p>
+            <p className="mt-4 text-[15px] md:text-base text-[var(--color-ep-fg-body)] leading-relaxed text-pretty">{lede}</p>
 
             <div className="mt-10 grid sm:grid-cols-2 gap-12">
                 <div>

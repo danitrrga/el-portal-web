@@ -203,9 +203,8 @@ export default function ManifestoPage() {
         {/* Hero */}
         <header className="mb-14 md:mb-20">
           <h1
-            className="display text-balance leading-[1.05]"
+            className="display text-balance leading-[1.05] text-[clamp(1.438rem,2.009vw+1.036rem,2rem)] md:text-[clamp(32px,3.6vw,48px)]"
             style={{
-              fontSize: "clamp(32px, 3.6vw, 48px)",
               color: FG_STRONG,
             }}
           >

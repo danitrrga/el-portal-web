@@ -94,14 +94,11 @@ export function ChangelogItem({
         <h2
           className={
             entry.isRelease
-              ? "display mb-5 text-balance leading-[1.1]"
-              : "mb-4 text-balance text-[24px] font-semibold leading-[1.2] tracking-tight md:text-[28px]"
+              ? "display mb-5 text-balance leading-[1.1] text-[clamp(1.313rem,1.563vw+1rem,1.75rem)] md:text-[clamp(28px,2.8vw,36px)]"
+              : "mb-4 text-balance text-[clamp(1.188rem,2.009vw+0.786rem,1.75rem)] font-semibold leading-[1.2] tracking-tight md:text-[28px]"
           }
           style={{
             color: FG_STRONG,
-            ...(entry.isRelease
-              ? { fontSize: "clamp(28px, 2.8vw, 36px)" }
-              : {}),
           }}
         >
           {entry.title}
