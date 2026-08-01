@@ -3,7 +3,20 @@ phase: 05-mobile-responsive-retrofit
 verified: 2026-07-31T12:00:00Z
 status: human_needed
 score: 8/8 roadmap success criteria satisfied at the code/harness level (2 with a documented, still-open policy deviation); all 3 goal-level gaps from the prior verification independently confirmed closed; 5 pre-existing human-decision items remain open and unaffected by the gap-closure work
-overrides_applied: 0
+overrides_applied: 1
+overrides:
+  - id: OVR-01
+    requirement: RESP-08
+    criterion: "SC7 — desktop rendering at >=768px byte-for-byte visually unchanged"
+    decision: accepted
+    decided_by: design-owner
+    decided: 2026-08-01
+    scope: "The 28 un-gated colour declarations changed for WCAG AA contrast remediation (text-zinc-500->400 x16, text-zinc-600->400 x7, FG_SUBTLE #5a6478 -> var(--color-ep-fg-muted-2) x5). Colour only — no geometry, type-scale or layout deviation is covered by this override."
+    rationale: "SC4 (zero axe violations) and SC7 (desktop freeze) are in direct tension and cannot both hold. SC4 wins: a contrast failure is a real accessibility defect affecting every user, while the SC7 deviation is a small luminance lift on muted secondary copy."
+    measured_cost: "Pixel diff, pre-phase-05 (0f0e978) vs HEAD, full-page at 1440px, all 8 routes, captured with scroll-through so every whileInView reveal fires in both builds: /mcp 1.913%; /manifesto 0.279%; /terms 0.226%; /features 0.182%; /privacy 0.174%; /pricing 0.156%; / 0.117%; /changelog 0.095%."
+    residual_debt: "/mcp is a ~10x outlier because it still mixes zinc-* with the OKLCH token scale (code review 05-REVIEW.md IN-08). Accepted here, but IN-08 remains open as token-consistency debt rather than a contrast issue."
+    verified_not_covered:
+      - "/pricing FAQ padding reparenting (commit 217c870) — box geometry moved but the pixel diff at 0.156% sits in the same band as colour-only routes, confirming the commit's 'visually identical, desktop included' claim. Not an override; no visual deviation."
 re_verification: true
 re_verification_detail:
   previous_status: gaps_found
