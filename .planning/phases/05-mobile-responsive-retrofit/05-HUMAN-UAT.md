@@ -39,8 +39,13 @@ blocked_by: physical-device
 ### 4. `touch-iphone` WebKit project — run once host libs are installed
 expected: All `touch-iphone` tests pass across `overflow.spec.ts`, `touch-targets.spec.ts` and `a11y.spec.ts` for all 8 routes.
 detail: Blocked — `browserType.launch` fails on missing host libraries. All 40 observed `touch-iphone` failures are identical launch errors, not code regressions. This matters beyond bookkeeping: the 7 Chromium projects that do run never emulate `hover: none`, so RESP-06's `@media (hover: hover)` gating has no automated coverage with a genuinely coarse pointer.
-result: blocked
-blocked_by: platform-incompatibility
+result: pass
+resolution: RUN AND GREEN — executed in the supported environment rather than left blocked. `touch-iphone` 40/40 passed; the full matrix then ran 304 passed / 24 skipped / **0 failed** (5.2 min, CI worker count). Reconciles exactly against the local run: 264 local Chromium passes + 40 touch-iphone = 304.
+command: docker run --rm -v "$PWD":/w -v /w/node_modules -v /w/.next -w /w --ipc=host -e CI=true mcr.microsoft.com/playwright:v1.62.1-noble bash -lc 'npm ci && npm run audit:responsive'
+  (the anonymous volumes at /w/node_modules and /w/.next shadow the host's, so the container's Ubuntu-built modules cannot clobber the Arch-built ones)
+significance: RESP-06's `@media (hover: hover)` gating now has genuine coarse-pointer coverage, and it passes. The 40 failures were never a code defect — purely the host platform.
+standing_coverage: `.github/workflows/responsive-audit.yml` runs this matrix on ubuntu-latest for every push to main and every PR, so this stops being a one-off.
+local_caveat: still cannot run on this workstation. Diagnosis retained below because the failure will recur locally and the misleading remedies should not be re-derived.
 correction_1: the originally recorded remedy — `sudo npx playwright install-deps` — CANNOT work on this machine. It shells out to `apt-get`, and this host is CachyOS (Arch). Playwright's error text hardcodes Debian package names (`libicu74`, `libxml2`, `libflite1`) and is misleading here; it is a static distro mapping, not a live probe of the binary.
 correction_2: a second recorded remedy — `sudo pacman -S flite` — was ALSO wrong. It was inferred from Playwright's Debian package names plus a naive `ldconfig -p | grep -c flite`, not from the binary's real soname requirements. `flite` was installed (0 -> 14 matches) and all 40 `touch-iphone` failures persisted unchanged.
 actual_diagnosis: `ldd` over `~/.cache/ms-playwright/webkit-2336/**` is the ground truth. Playwright's WebKit is built against the Ubuntu 24.04 ABI, and Arch ships NEWER sonames that cannot satisfy it:
@@ -78,13 +83,23 @@ verified: computed styles now report `background-clip: border-box`, `background-
 ## Summary
 
 total: 6
-passed: 4
+passed: 5
 issues: 0
 pending: 0
 skipped: 0
-blocked: 2
+blocked: 1
 
 ## Gaps
 
-[none — no test reported a defect. The two blocked items are prerequisite gates
-(a physical iPhone; one host package), not code issues.]
+[none — no test reported a defect.]
+
+The single remaining item is the physical-iPhone half of test 3: dark theme-color
+browser chrome, unclipped hero bottom on `/` and `/changelog`, and the `dvh`
+toolbar-transition jank check inherited from test 2. No emulator substitutes for
+it, so it stays open until someone runs the site on a real handset.
+
+Everything else is closed. Of the six, three were resolved by measurement rather
+than by asking a human (tests 3-desktop, 4, 5) — they had been classified
+"human needed" because earlier passes had no probe for them, not because they
+genuinely required human judgement. The three that did require judgement
+(tests 1, 2, 6) were decided by the design owner on 2026-08-01.
