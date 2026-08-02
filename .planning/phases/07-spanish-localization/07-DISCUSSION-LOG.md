@@ -142,3 +142,42 @@ Phase 5, unrelated to i18n).
 
 *Phase: 07-spanish-localization*
 *Logged: 2026-08-02*
+
+---
+
+## Post-discussion correction (same session)
+
+The `--auto` pass resolved Area 1 with an explicit caveat: D-01 rested on the
+assumption that the El Portal app was English-only UI, which had **not** been
+verified. That assumption was checked before chaining to plan-phase.
+
+**It was false.** `/home/danitrrga/dev/Projects/el-portal` already ships:
+
+- `next-intl@^4.8.3`
+- five locales — `en`, `es`, `fr`, `pt`, `zh`
+- `src/messages/es.json`, 80 KB / 1,711 keys, in production
+
+The auto-selected recommendation had the right *shape* (hybrid: some terms
+translate, some don't) but would have produced **wrong specifics**. Extracting the
+real term pairs shows `Trends` and `Dashboard` stay English in the app despite
+having obvious Spanish equivalents — a split no amount of reasoning would have
+guessed. Drafting copy from the recommendation would have contradicted the shipping
+product on at least those two terms, plus `Cinema` and `Pulse`.
+
+D-01 and D-02 were rewritten: the glossary is now **derived mechanically from the
+app's `es.json`**, not authored. D-02b added for marketing-only concepts the product
+UI never names.
+
+Two knock-on changes:
+
+- Canonical refs gained the app repo's `es.json` and `lib/i18n.ts` (read-only
+  reference — no build-time dependency across repos).
+- "Localizing the app itself" was removed from Deferred; it is already done. The
+  deferred entry for additional locales was re-framed: the marketing site is three
+  locales behind a product that already speaks `fr`/`pt`/`zh`, so the structure
+  should make adding them a data change.
+
+**Process note:** this is the value of flagging assumptions explicitly rather than
+letting a confident recommendation pass as settled. `--auto` picks defaults; it does
+not make them true. The caveat was written into D-01 precisely so it would get
+checked, and checking cost one command.

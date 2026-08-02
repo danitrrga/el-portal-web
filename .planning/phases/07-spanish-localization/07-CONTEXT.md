@@ -37,28 +37,52 @@ in ROADMAP.md's decision table. They are inputs, not open questions:
 - **Locale code `es`** (not `es-ES`) for maximum `hreflang` reach.
 - **Scope: all 8 routes + shared chrome + SEO metadata.**
 
-### Product vocabulary
+### Product vocabulary — CORRECTED after verification
 
-- **D-01: Translate the conceptual primitives, keep proper feature names in English.**
-  `Version → Versión`, `Cycle → Ciclo`, `Day → Día` — these appear constantly as
-  common nouns in prose and leaving them English would make Spanish sentences
-  unreadable. But named features that appear as **UI labels inside the app** —
-  `The Lab`, `The Archives`, `Cinema Mode`, `Daily Pulse` — stay in English, with an
-  optional first-use gloss (`Cinema Mode (modo cine)`).
+> **The assumption behind the original D-01 was false and was checked before
+> planning.** The first pass assumed the El Portal app was English-only UI and
+> recommended inventing a hybrid glossary. Verification of the app repo
+> (`/home/danitrrga/dev/Projects/el-portal`) found it already ships **next-intl
+> 4.8.3 with five locales — `en`, `es`, `fr`, `pt`, `zh`** — and an 80 KB
+> `src/messages/es.json` containing 1,711 keys. The Spanish product vocabulary
+> already exists and is in production.
 
-  Rationale: a reader who sees `El Laboratorio` on the marketing site and then opens
-  an app that says `The Lab` has been actively misled. Marketing copy should not
-  invent a vocabulary the product does not use.
+- **D-01 (revised): The glossary is DERIVED from the app's `es.json`, never
+  authored.** The marketing site must use the exact terms the product already
+  shows users. Authoring a parallel vocabulary would mean a reader is sold
+  "Tendencias" and then opens an app that says "Trends".
 
-  **ASSUMPTION TO VERIFY BEFORE PLANNING:** this rests on the El Portal app being
-  English-only UI. That was not verified — the app lives in a separate repo. If the
-  app is localized (or will be), this decision flips to full translation and the
-  glossary must match the app's own Spanish strings. Planner: confirm first.
+  The app's actual split, extracted from `en.json`/`es.json` key-pairs:
 
-- **D-02: Build a glossary file as a first-class deliverable**, not an afterthought.
-  Every product primitive and feature name gets one canonical Spanish form (or an
-  explicit "do not translate" marker). With ~390 strings across 8 routes, term drift
-  is the most likely quality failure, and it is invisible in per-file review.
+  | English | App Spanish | |
+  |---|---|---|
+  | Versions | **Versiones** | translated |
+  | Cycle | **Ciclo** | translated |
+  | Day | **Día** | translated |
+  | Habits | **Hábitos** | translated |
+  | Goals | **Objetivos** | translated |
+  | Score | **Puntuación** | translated |
+  | Archives | **Archivos** | translated |
+  | Trends | **Trends** | **kept English** |
+  | Dashboard | **Dashboard** | **kept English** |
+  | Cinema | **Cinema** | **kept English** |
+  | Pulse | **Pulse** | **kept English** |
+
+  Note the split is *not* guessable — conceptual primitives translate, but
+  `Trends` and `Dashboard` stay English despite having obvious Spanish
+  equivalents. Any term not in the table above must be looked up in the app's
+  `es.json` before use, not inferred from this pattern.
+
+- **D-02 (revised): Extract the glossary mechanically, not by hand.** Pair
+  `en.json` ↔ `es.json` on shared keys, filter to product nouns, and commit the
+  result into this repo as a static reference file. Do **not** import across
+  repos at build time — the marketing site has no dependency on the app and must
+  not gain one. This is a copied snapshot with a recorded provenance date.
+
+- **D-02b: Terms the app has no string for are a decision, not a gap.** Marketing
+  copy contains concepts the product UI never names. Those get a Spanish form
+  chosen here and appended to the glossary, flagged as marketing-only so a later
+  app change does not silently contradict them.
 
 ### Message catalogue organisation
 
@@ -172,6 +196,19 @@ Under `--auto` these were resolved without prompting and are open to override:
 - `e2e/containment.spec.ts` — the sweep that catches text overflowing its own box.
   **This is the harness most likely to fire on longer Spanish strings.**
 
+### The El Portal app (sibling repo — read-only reference)
+- `/home/danitrrga/dev/Projects/el-portal/src/messages/es.json` — **the
+  authoritative Spanish product vocabulary.** 1,711 keys, in production. Every
+  product term used in marketing copy must match this file. Pair against
+  `en.json` in the same directory to resolve a term.
+- `/home/danitrrga/dev/Projects/el-portal/src/lib/i18n.ts` — the app's next-intl
+  routing/config. Worth reading as a reference implementation: same library, same
+  major version (app on `^4.8.3`, this site targeting `^4.13`). Following its
+  conventions beats inventing parallel ones.
+- The app ships `en`, `es`, `fr`, `pt`, `zh`. This phase adds only `es` to the
+  marketing site, but the `[locale]` structure should not preclude the other
+  three — see Deferred.
+
 ### External
 - [Google — Managing multi-regional and multilingual sites](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)
 - [next-intl — App Router with i18n routing](https://next-intl.dev/docs/getting-started/app-router/with-i18n-routing)
@@ -233,10 +270,14 @@ Under `--auto` these were resolved without prompting and are open to override:
 <deferred>
 ## Deferred Ideas
 
-- **Additional locales beyond `es`.** Explicit non-goal. The `[locale]` structure will
-  make it cheap later; adding one now is scope creep.
-- **Localizing the El Portal app itself.** Separate repo, separate decision. Blocks
-  nothing here, but D-01 depends on knowing the answer.
+- **Additional locales beyond `es`.** Still an explicit non-goal for this phase, but
+  the calculus changed: **the app already ships `fr`, `pt` and `zh` too.** The
+  marketing site is therefore three locales behind a product that already speaks
+  them. Adding them here is out of scope, but the `[locale]` structure and the
+  glossary-extraction script should be built so adding one is a data change, not a
+  refactor. Worth a roadmap entry after this phase lands.
+- **Localizing the El Portal app itself.** Already done — not a future item. Removed
+  as a deferred idea; it was based on the same false assumption D-01 corrected.
 - **Locale-specific pricing or currency.** Explicit non-goal.
 - **RTL support.** No RTL locale is planned.
 - **Paid TMS (Crowdin / Lokalise / Phrase).** Recorded in `07-RESEARCH.md` §5 as
