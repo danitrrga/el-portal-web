@@ -72,7 +72,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **I18N-04**: English URLs are unchanged — `localePrefix: "as-needed"` means `/pricing` stays `/pricing` and Spanish lives at `/es/pricing`. No existing URL 301s
 - [ ] **I18N-05**: Each page emits `hreflang` alternates for `en`/`es` plus `x-default`, per-locale `<title>`/`<meta description>`/OG tags, and `sitemap.xml` covers both locales
 - [ ] **I18N-06**: All 8 routes × 2 locales remain statically prerendered (`○` in build output) — `generateStaticParams` **and** `setRequestLocale` are both present, so no route silently falls back to dynamic rendering
-- [ ] **I18N-07**: Spanish copy uses an impersonal register throughout — infinitive for CTAs, nominal headings, definite article rather than `tu`/`su`. The catalogue contains no `tú`/`usted` pronouns, possessives, or conjugations; any string that cannot be expressed impersonally is flagged rather than silently resolved to one register
+- [ ] **I18N-07**: Spanish copy uses the `tú` register with the subject pronoun always omitted (`Empieza tu primera Versión`, never `Tú empiezas…`), infinitive for CTAs and buttons, and `tú` conjugation for prose. The catalogue contains no `usted`/`ustedes`/`vosotros` and no written subject pronouns; register is consistent across every route including legal copy
 
 ### Cross-Cutting Quality
 

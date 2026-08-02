@@ -169,55 +169,79 @@ remain authoritative?
 and an anti-words list. The anti-words list is English and still needs a Spanish
 equivalent.
 
-**LOCKED (design owner, 2026-08-02): impersonal register — omit the subject, and
-avoid constructions that encode formality at all.**
+**LOCKED (design owner, 2026-08-02, revised same day): `tú` register, subject
+pronoun always omitted.**
 
-Spanish is pro-drop, so omitting the subject pronoun is already the default. The
-important point is that **omitting the pronoun does not by itself avoid the
-`tú`/`usted` choice** — verb conjugation and possessives still encode it:
+The first pass locked a fully impersonal register. Revised after review: pure
+impersonal copy reads institutional and stilted for a product about personal
+identity — *"suena raro."* `tú` it is.
 
-| Encodes register even with no pronoun | Register-neutral |
+**The two instructions are not in conflict.** Spanish is pro-drop, so the subject
+pronoun is dropped regardless of register. "Omit the subject" is satisfied by
+`tú` copy:
+
+| | |
 |---|---|
-| `Empieza tu primera Versión` (tú) | `Empezar la primera Versión` |
-| `Empiece su primera Versión` (usted) | ” |
-| `la fase a la que te comprometes` (tú) | `la fase de compromiso` |
-| `Registra tus hábitos` (tú) | `Registro de hábitos` |
+| ✓ | `Empieza tu primera Versión` — no pronoun written, `tú` conjugation |
+| ✗ | `Tú empiezas tu primera Versión` — pronoun written |
+| ✗ | `Empiece su primera Versión` — `usted` |
 
-Industry practice supports this: the bare infinitive is the register-correct form
-for impersonal written instruction, and is what avoids addressing anyone in
-particular. `usted` additionally reads stiff and dated in product copy.
+What changed is only the fallback when address is unavoidable: use `tú` rather
+than contorting the sentence into `uno`/passive constructions.
+
+`tú` is also the mainstream choice for consumer software in Spanish; `usted` reads
+stiff and dated in product copy, and mixing the two is worse than either.
 
 ### The rule (enforceable, in priority order)
 
-1. **CTAs, buttons, links → infinitive.**
-   `Abrir El Portal`, `Iniciar sesión`, `Crear cuenta`, `Leer la metodología`.
-2. **Headings → nominal phrases**, not sentences with a verb of address.
-   `Tres horizontes. Una jerarquía.`
-3. **Instructional body copy → infinitive, or impersonal `se`.**
-   `Registro de hábitos, objetivos y biometría` / `Se sincroniza automáticamente`.
-4. **`your X` → definite article, never `tu X` / `su X`.**
-   `la primera Versión`, not `tu primera Versión`.
-5. **Second-person relative clauses → nominalise.**
-   `la fase de compromiso`, not `la fase a la que te comprometes`.
-6. **Last resort, if 1–5 genuinely cannot express it:** impersonal `uno`
-   (`llegar a ser uno mismo`). Do **not** silently fall back to `tú` or `usted` —
-   flag the string for a decision instead, so the register stays consistent
-   rather than drifting per-file.
+1. **Never write a subject pronoun** — no `tú`, `usted`, `vosotros`, `ustedes`.
+   Spanish drops it; writing it sounds emphatic or translated-from-English.
+2. **CTAs, buttons, links → infinitive.** Standard UI convention, and it keeps
+   buttons short: `Abrir El Portal`, `Iniciar sesión`, `Crear cuenta`,
+   `Leer la metodología`.
+3. **Headings → nominal where it reads naturally**, `tú` where it does not.
+   `Tres horizontes. Una jerarquía.` but `Empieza tu primera Versión.`
+4. **Prose and instructions addressing the reader → `tú` conjugation.**
+   `Registra hábitos, objetivos y biometría.`
+5. **`your X` → `tu X`.** The definite-article dodge (`la primera Versión`) is no
+   longer required and generally reads colder — prefer `tu primera Versión`.
+6. **Never `usted` / `su` (formal) anywhere.** Not as a fallback, not for legal
+   copy. One register across the whole site.
+7. **Avoid second-person plural entirely.** `vosotros` is Spain-only and
+   `ustedes` is the Latin-American plural — either one geo-marks the copy. Recast
+   to singular `tú` or impersonal instead.
 
-### Known tension — worth watching during execution
+### Manifesto — the surface this revision was for
 
 `/manifesto` (244 lines) is philosophical second-person prose; its English hook is
-*"A method for becoming yourself."* Rendered impersonally
-(`Un método para llegar a ser uno mismo`) the rule holds, but the voice moves
-further from The Companion's intimacy toward something more institutional. That is
-a coherent choice — it is precisely what larger companies sound like — but it is a
-real shift in brand register, not a neutral translation. Flag any manifesto string
-where rule 6 fires so the trade-off is visible rather than accidental.
+*"A method for becoming yourself."* Under the earlier impersonal rule that became
+`Un método para llegar a ser uno mismo` — grammatically fine, but distant, and
+exactly the "suena raro" that prompted the revision. With `tú` it lands as
+intended: `Un método para llegar a ser quien eres.` This is the surface that gains
+most from the change, and the one to sanity-read first once copy exists.
 
-A verification hook worth building: grep the Spanish catalogue for `\btu\b`,
-`\btus\b`, `\bsu\b`, `\busted\b` and tú/usted imperative endings. A non-empty
-result means the register leaked, and it is checkable in CI alongside the
-placeholder-parity gate in §5.
+### Regional neutrality — worth a decision at discuss-phase
+
+The locked locale is generic `es`, not `es-ES`. `tú` is universal across the
+Spanish-speaking world, so the register choice is safe — but **vocabulary is not
+automatically neutral**. Spain-specific words (`ordenador`, `móvil`, `vale`) read
+as foreign in Latin America, and the reverse holds too.
+
+If the audience is specifically Spain, that is fine and the locale should probably
+be `es-ES`. If it is pan-Hispanic, the copy needs neutral vocabulary
+(`computadora`/`dispositivo`, `teléfono`) and the `es` code is correct. Cheaper to
+decide now than to re-edit ~390 strings.
+
+### Verification hook
+
+Grep the Spanish catalogue for `\busted\b`, `\bustedes\b`, `\bvosotros\b`, `\bsu\b`
+/ `\bsus\b` used as second-person possessives, and standalone `\btú\b` as a written
+subject pronoun. A non-empty result means the register leaked. Checkable in CI
+alongside the placeholder-parity gate in §5.
+
+Note `su`/`sus` needs care — it is also the legitimate third-person possessive
+("its trends"), so the check should flag for review rather than hard-fail on that
+token alone.
 
 ---
 
