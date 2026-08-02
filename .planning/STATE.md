@@ -84,6 +84,16 @@ Progress: [██████████] 100%
 
 ## Accumulated Context
 
+### Roadmap Evolution
+
+- Phase 7 added 2026-08-02: Spanish Localization (I18N-01…I18N-06). Research
+  completed before planning — see `07-RESEARCH.md`. Three decisions locked by the
+  design owner: negotiate locale on `/` only (never blanket-redirect, per Google's
+  multi-regional guidance and because Googlebot sends no `Accept-Language`);
+  `localePrefix: "as-needed"` so no existing English URL moves; scope covers all 8
+  routes incl. legal and changelog plus SEO metadata. Library: `next-intl@^4.13`
+  (verified `next: ^16.0.0` peer dep).
+
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.

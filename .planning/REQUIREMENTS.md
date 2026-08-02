@@ -64,6 +64,15 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **SEC-02**: `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy`, and `Permissions-Policy` are set, and `poweredByHeader` is disabled
 - [ ] **SEC-03**: Dependabot is configured with grouped weekly updates, and CI fails on high-severity production-dependency advisories (`npm audit --omit=dev --audit-level=high`)
 
+### Internationalisation (Phase 7)
+
+- [ ] **I18N-01**: Every user-facing string on all 8 routes and in shared chrome (Navbar, Footer, CTA, cards) resolves through a message catalogue rather than being hardcoded in a component, for both `en` and `es`
+- [ ] **I18N-02**: `/` negotiates locale from `Accept-Language`; **no other URL auto-redirects by language**. Precedence is URL prefix → `NEXT_LOCALE` cookie → `Accept-Language` → `en`, so an explicit human choice always outranks a browser guess
+- [ ] **I18N-03**: A language switcher is reachable from every page (nav + footer), meets the 44px touch target from RESP-04, and persists the chosen locale
+- [ ] **I18N-04**: English URLs are unchanged — `localePrefix: "as-needed"` means `/pricing` stays `/pricing` and Spanish lives at `/es/pricing`. No existing URL 301s
+- [ ] **I18N-05**: Each page emits `hreflang` alternates for `en`/`es` plus `x-default`, per-locale `<title>`/`<meta description>`/OG tags, and `sitemap.xml` covers both locales
+- [ ] **I18N-06**: All 8 routes × 2 locales remain statically prerendered (`○` in build output) — `generateStaticParams` **and** `setRequestLocale` are both present, so no route silently falls back to dynamic rendering
+
 ### Cross-Cutting Quality
 
 - [~] **QUAL-01**: ~~Site navigation and footer include the Features link, and every route (incl. `/features`) resolves~~ — CANCELLED with Phase 2. (General route-resolution health is still covered by Phase 4 / QUAL-02's build gate. Nav/footer now show a "Features" label pointing to `/methodology`.)
@@ -114,6 +123,12 @@ Which phases cover which requirements. Populated during roadmap creation.
 | SEC-01 | Phase 6 | Pending |
 | SEC-02 | Phase 6 | Pending |
 | SEC-03 | Phase 6 | Pending |
+| I18N-01 | Phase 7 | Pending |
+| I18N-02 | Phase 7 | Pending |
+| I18N-03 | Phase 7 | Pending |
+| I18N-04 | Phase 7 | Pending |
+| I18N-05 | Phase 7 | Pending |
+| I18N-06 | Phase 7 | Pending |
 | TOKEN-01 | Phase 1 | Pending |
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
@@ -133,10 +148,10 @@ Which phases cover which requirements. Populated during roadmap creation.
 | QUAL-03 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 28 total (17 original + 8 RESP + 3 SEC)
-- Mapped to phases: 28 ✓
+- v1 requirements: 34 total (17 original + 8 RESP + 3 SEC + 6 I18N)
+- Mapped to phases: 34 ✓
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-12*
-*Last updated: 2026-07-30 — added RESP-01…RESP-08 (Phase 5, mobile responsive retrofit) and SEC-01…SEC-03 (Phase 6, security headers)*
+*Last updated: 2026-08-02 — added I18N-01…I18N-06 (Phase 7, Spanish localization). Previously 2026-07-30 — RESP-01…RESP-08 (Phase 5) and SEC-01…SEC-03 (Phase 6).*

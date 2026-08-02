@@ -19,6 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
 - [x] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (7/7 plans executed incl. 2 gap-closure; verification `passed` — 3 goal-level gaps closed and re-measured, 6/6 human-verification items resolved incl. a physical-iPhone check, 1 accepted override OVR-01 for the WCAG-AA colour remediation) (completed 2026-08-01)
 - [ ] **Phase 6: Security Headers** - Static CSP + baseline security headers, with static prerendering preserved
+- [ ] **Phase 7: Spanish Localization** - Every page readable in Spanish, negotiated from the browser at `/` only, with English URLs unchanged and both locales indexable
 
 ## Phase Details
 
@@ -180,3 +181,47 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 | 4. Verification & Polish | 0/TBD | Not started | - |
 | 5. Mobile Responsive Retrofit | 7/7 | Complete   | 2026-07-31 |
 | 6. Security Headers | 0/TBD | Not started | - |
+
+### Phase 7: Spanish Localization
+
+**Goal**: A Spanish speaker lands on the site and reads it in Spanish without doing anything, while an English speaker's experience and every existing English URL stay exactly as they are — and Google can find, crawl and index both language versions.
+**Depends on**: Phase 6 (see sequencing note below)
+**Requirements**: I18N-01, I18N-02, I18N-03, I18N-04, I18N-05, I18N-06
+
+**Locked decisions** (design owner, 2026-08-02, after research):
+
+| Decision | Choice | Why |
+|---|---|---|
+| Detection | Negotiate on `/` only | Google: *"Avoid automatically redirecting users from one language version of a site to a different language version."* Googlebot crawls from the US and sends **no** `Accept-Language`, so blanket redirects can leave one locale permanently unindexed. |
+| Precedence | URL prefix → `NEXT_LOCALE` cookie → `Accept-Language` → `en` | An explicit human choice must outrank a browser guess. This is next-intl's native order. |
+| URL shape | `localePrefix: "as-needed"` — `/pricing` (en), `/es/pricing` (es) | Zero existing URLs move; no 301s, no re-crawl, no lost backlinks. |
+| Library | `next-intl@^4.13` | Declares `next: ^16.0.0` in `peerDependencies` — real Next 16 support, App-Router-native, RSC-first. |
+| Scope | All 8 routes + shared chrome + SEO metadata | Includes legal and changelog — see risks. |
+
+**Success Criteria** (what must be TRUE):
+
+  1. Visiting `/` with a Spanish-preferring browser serves Spanish; with any other browser, English. No other URL auto-redirects by language.
+  2. A visible language switcher exists in the nav and footer on every page, and the choice it sets survives navigation and outranks the browser header on subsequent visits.
+  3. Every existing English URL resolves unchanged, with no redirect and byte-identical routing.
+  4. Every page emits `hreflang` alternates for `en` and `es` plus `x-default`, and `sitemap.xml` lists both locales.
+  5. Per-locale `<title>`, `<meta name="description">` and OG/Twitter tags — no page inherits English metadata while rendering Spanish.
+  6. All 8 routes × 2 locales still prerender as static (`○` in the build output). No route silently becomes dynamic.
+  7. The full Playwright matrix passes for both locales, including the `touch-iphone` project in CI.
+  8. No hardcoded user-facing string remains in a component; all copy resolves through the message catalogue.
+
+**Non-goals**: More than two locales; locale-specific pricing or currency; RTL support; translating the app itself (different repo); a paid TMS.
+
+**Known risks / open questions for discuss-phase**:
+
+  - **Static rendering is the sharp edge.** next-intl needs **both** `generateStaticParams` *and* `setRequestLocale`. Omit the latter and it reads `headers()`, silently dropping pages to dynamic — which would undo the all-static build and collide with Phase 6's CSP.
+  - **Next 16 renamed `middleware.ts` → `app/proxy.ts`** (Node runtime, routing-scoped). Locale negotiation belongs there. Any Phase 6 CSP work that also lands in `proxy.ts` will share the file — see sequencing.
+  - **Changelog is an ongoing cost, not a one-off.** 35 entries / 944 lines, and the `el-portal-changelog` skill syncs new entries from the app repo continuously. Without a translation step in that workflow, the Spanish changelog silently drifts out of parity. Needs a decision: translate on sync, or mark the changelog English-only with a notice.
+  - **Legal text carries meaning risk.** `/privacy` + `/terms` are 465 lines where a mistranslation has consequences. Decide whether machine translation is acceptable or whether the Spanish version needs human review — and whether English remains authoritative.
+  - **Brand voice.** `.planning/codebase/design/BRAND.md` defines a specific register and anti-words. Those constraints need a Spanish equivalent, or the translation will read like a different product.
+
+**Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
+
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 7 to break down)
