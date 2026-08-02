@@ -186,7 +186,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Goal**: A Spanish speaker lands on the site and reads it in Spanish without doing anything, while an English speaker's experience and every existing English URL stay exactly as they are — and Google can find, crawl and index both language versions.
 **Depends on**: Phase 6 (see sequencing note below)
-**Requirements**: I18N-01, I18N-02, I18N-03, I18N-04, I18N-05, I18N-06
+**Requirements**: I18N-01, I18N-02, I18N-03, I18N-04, I18N-05, I18N-06, I18N-07
 
 **Locked decisions** (design owner, 2026-08-02, after research):
 

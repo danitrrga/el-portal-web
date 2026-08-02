@@ -147,7 +147,7 @@ in ROADMAP.md's decision table. They are inputs, not open questions:
   Text is unambiguous and needs no image assets.
 
 - **D-11: Nav on desktop, footer on all viewports, 44px minimum target.** Inherits
-  RESP-04 from Phase 5 — the touch-target suite runs against both locales, so a
+  RESP-03 from Phase 5 — the touch-target suite runs against both locales, so a
   switcher below 44px fails CI rather than shipping.
 
 - **D-12: Switching locale preserves the current route.** `/es/pricing` ↔ `/pricing`,

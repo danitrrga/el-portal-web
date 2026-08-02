@@ -68,7 +68,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 - [ ] **I18N-01**: Every user-facing string on all 8 routes and in shared chrome (Navbar, Footer, CTA, cards) resolves through a message catalogue rather than being hardcoded in a component, for both `en` and `es`
 - [ ] **I18N-02**: `/` negotiates locale from `Accept-Language`; **no other URL auto-redirects by language**. Precedence is URL prefix → `NEXT_LOCALE` cookie → `Accept-Language` → `en`, so an explicit human choice always outranks a browser guess
-- [ ] **I18N-03**: A language switcher is reachable from every page (nav + footer), meets the 44px touch target from RESP-04, and persists the chosen locale
+- [ ] **I18N-03**: A language switcher is reachable from every page (nav + footer), meets the 44px touch target from RESP-03, and persists the chosen locale
 - [ ] **I18N-04**: English URLs are unchanged — `localePrefix: "as-needed"` means `/pricing` stays `/pricing` and Spanish lives at `/es/pricing`. No existing URL 301s
 - [ ] **I18N-05**: Each page emits `hreflang` alternates for `en`/`es` plus `x-default`, per-locale `<title>`/`<meta description>`/OG tags, and `sitemap.xml` covers both locales
 - [ ] **I18N-06**: All 8 routes × 2 locales remain statically prerendered (`○` in build output) — `generateStaticParams` **and** `setRequestLocale` are both present, so no route silently falls back to dynamic rendering
