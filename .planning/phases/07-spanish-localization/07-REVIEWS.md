@@ -28,6 +28,27 @@ plans_reviewed: [07-01-PLAN.md, 07-02-PLAN.md, 07-03-PLAN.md, 07-04-PLAN.md, 07-
 > independent systems. Re-run `/gsd-review --phase 7 --gemini --codex` after
 > authenticating those CLIs if genuine adversarial convergence is wanted.
 
+> **CORRECTION (2026-08-02, added during `/gsd:plan-phase 7 --reviews`) — one
+> finding below is FALSE.** Consensus concern **#3** ("07-06 T1/T2 and 07-07 T4
+> target structures that do not exist") is withdrawn. Checked against `f0adefe`,
+> the exact commit OpenCode reviewed: neither `07-06-PLAN.md` nor `07-07-PLAN.md`
+> ever contained `over 100`, `:102`, `:105`, `:166`, or `register object`. The
+> reviewer misread `07-06-PLAN.md:179` — *"the **register**'s infinitive"*,
+> referring to the *linguistic* register (`tú`/`usted`) that this entire phase is
+> built around — as a code "register object", then fabricated line numbers around
+> that misreading.
+>
+> The *underlying code facts* it cited remain true and were independently
+> re-verified by `gsd-pattern-mapper`: `CTASection.tsx` **is** 71 lines, and
+> `VCDSection.tsx`/`Hero.tsx` copy **is** inline JSX. Only the claim that the
+> plans asserted otherwise was fabricated. Findings **#1** (switcher width) and
+> **#2** (33-vs-35 changelog) were verified twice and are genuine — both are
+> fixed as of commit `935dcc8`.
+>
+> This is the concrete cost of the two authentication failures: with no second
+> model to refute it, a hallucinated finding survived into the consensus section
+> and was only caught downstream at planning time.
+
 ---
 
 ## OpenCode Review
