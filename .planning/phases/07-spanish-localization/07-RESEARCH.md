@@ -207,9 +207,10 @@ stiff and dated in product copy, and mixing the two is worse than either.
    longer required and generally reads colder — prefer `tu primera Versión`.
 6. **Never `usted` / `su` (formal) anywhere.** Not as a fallback, not for legal
    copy. One register across the whole site.
-7. **Avoid second-person plural entirely.** `vosotros` is Spain-only and
-   `ustedes` is the Latin-American plural — either one geo-marks the copy. Recast
-   to singular `tú` or impersonal instead.
+7. **Second-person plural: `vosotros` when needed.** Spain-flavoured Spanish is
+   explicitly fine (design owner, 2026-08-02: *"we don't care, vosotros is
+   fine"*). Do not contort sentences to avoid plural address. `ustedes` as a
+   plural is still out — mixing the two is the actual error.
 
 ### Manifesto — the surface this revision was for
 
@@ -220,28 +221,32 @@ exactly the "suena raro" that prompted the revision. With `tú` it lands as
 intended: `Un método para llegar a ser quien eres.` This is the surface that gains
 most from the change, and the one to sanity-read first once copy exists.
 
-### Regional neutrality — worth a decision at discuss-phase
+### Regional variant — RESOLVED
 
-The locked locale is generic `es`, not `es-ES`. `tú` is universal across the
-Spanish-speaking world, so the register choice is safe — but **vocabulary is not
-automatically neutral**. Spain-specific words (`ordenador`, `móvil`, `vale`) read
-as foreign in Latin America, and the reverse holds too.
+**Spain-flavoured Spanish, no neutrality constraint** (design owner, 2026-08-02).
+`vosotros` and Spain-specific vocabulary (`ordenador`, `móvil`, `vale`) are
+acceptable. Translators should write natural peninsular Spanish rather than
+hedging toward a neutral register.
 
-If the audience is specifically Spain, that is fine and the locale should probably
-be `es-ES`. If it is pan-Hispanic, the copy needs neutral vocabulary
-(`computadora`/`dispositivo`, `teléfono`) and the `es` code is correct. Cheaper to
-decide now than to re-edit ~390 strings.
+**Locale code stays `es`, not `es-ES`.** These are separate choices and it is
+worth not conflating them: the *copy* is Spain-flavoured, but `hreflang="es"`
+targets Spanish speakers everywhere, while `hreflang="es-ES"` narrows to Spain.
+Since a Latin-American reader is better served by peninsular Spanish than by
+English, the broader code maximises reach at no cost. Revisit only if a
+region-specific variant is ever added.
 
 ### Verification hook
 
-Grep the Spanish catalogue for `\busted\b`, `\bustedes\b`, `\bvosotros\b`, `\bsu\b`
-/ `\bsus\b` used as second-person possessives, and standalone `\btú\b` as a written
-subject pronoun. A non-empty result means the register leaked. Checkable in CI
+Hard-fail the build on `\busted\b`, `\bustedes\b`, and standalone `\btú\b` used as
+a written subject pronoun. Those are unambiguous register leaks. Checkable in CI
 alongside the placeholder-parity gate in §5.
 
-Note `su`/`sus` needs care — it is also the legitimate third-person possessive
-("its trends"), so the check should flag for review rather than hard-fail on that
-token alone.
+Two tokens must **not** be in the hard-fail list:
+
+- **`vosotros`** — explicitly allowed (see Regional variant above). Including it
+  would fail the project's own sanctioned copy.
+- **`su` / `sus`** — also the legitimate third-person possessive ("its trends"),
+  so flag for review rather than failing on that token alone.
 
 ---
 
