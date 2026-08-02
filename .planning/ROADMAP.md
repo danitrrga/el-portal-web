@@ -245,12 +245,12 @@ Plans:
 - [ ] 07-09-PLAN.md — `/pricing`, with the plan badge measured and KU-4 re-measured
 - [ ] 07-10-PLAN.md — `/privacy` + `/terms` with the English-governs notice (D-07/D-08)
 - [ ] 07-11-PLAN.md — `/features` extraction into the English catalogue (970 lines)
-- [ ] 07-12-PLAN.md — `/changelog` extraction (35 entries, ISO dates, closed tag keys) and the sync-skill translation step (D-09)
+- [ ] 07-12-PLAN.md — `/changelog` extraction (every entry, count derived from source; ISO dates, closed tag keys) and the sync-skill translation step (D-09)
 
 **Wave 4** *(blocked on Wave 3)* — large translations and SEO
 
 - [ ] 07-13-PLAN.md — `/features` Spanish copy (single-file translation)
-- [ ] 07-14-PLAN.md — `/changelog` Spanish copy, 35 entries with proven parity
+- [ ] 07-14-PLAN.md — `/changelog` Spanish copy, every entry with proven parity against the derived count
 - [ ] 07-15-PLAN.md — Per-locale metadata, `hreflang` + `x-default`, both-locale sitemap
 
 **Wave 5** *(blocked on Wave 4)* — verification
