@@ -72,6 +72,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **I18N-04**: English URLs are unchanged — `localePrefix: "as-needed"` means `/pricing` stays `/pricing` and Spanish lives at `/es/pricing`. No existing URL 301s
 - [ ] **I18N-05**: Each page emits `hreflang` alternates for `en`/`es` plus `x-default`, per-locale `<title>`/`<meta description>`/OG tags, and `sitemap.xml` covers both locales
 - [ ] **I18N-06**: All 8 routes × 2 locales remain statically prerendered (`○` in build output) — `generateStaticParams` **and** `setRequestLocale` are both present, so no route silently falls back to dynamic rendering
+- [ ] **I18N-07**: Spanish copy uses an impersonal register throughout — infinitive for CTAs, nominal headings, definite article rather than `tu`/`su`. The catalogue contains no `tú`/`usted` pronouns, possessives, or conjugations; any string that cannot be expressed impersonally is flagged rather than silently resolved to one register
 
 ### Cross-Cutting Quality
 
@@ -129,6 +130,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | I18N-04 | Phase 7 | Pending |
 | I18N-05 | Phase 7 | Pending |
 | I18N-06 | Phase 7 | Pending |
+| I18N-07 | Phase 7 | Pending |
 | TOKEN-01 | Phase 1 | Pending |
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
@@ -148,10 +150,10 @@ Which phases cover which requirements. Populated during roadmap creation.
 | QUAL-03 | Phase 1 | Pending |
 
 **Coverage:**
-- v1 requirements: 34 total (17 original + 8 RESP + 3 SEC + 6 I18N)
-- Mapped to phases: 34 ✓
+- v1 requirements: 35 total (17 original + 8 RESP + 3 SEC + 7 I18N)
+- Mapped to phases: 35 ✓
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-12*
-*Last updated: 2026-08-02 — added I18N-01…I18N-06 (Phase 7, Spanish localization). Previously 2026-07-30 — RESP-01…RESP-08 (Phase 5) and SEC-01…SEC-03 (Phase 6).*
+*Last updated: 2026-08-02 — added I18N-01…I18N-07 (Phase 7, Spanish localization). Previously 2026-07-30 — RESP-01…RESP-08 (Phase 5) and SEC-01…SEC-03 (Phase 6).*

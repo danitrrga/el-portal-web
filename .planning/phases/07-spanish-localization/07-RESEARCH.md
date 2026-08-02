@@ -163,14 +163,61 @@ remain authoritative?
 
 ---
 
-## 7. Brand-voice constraint
+## 7. Brand voice and register — LOCKED
 
 `.planning/codebase/design/BRAND.md` defines a specific register (The Companion)
-and an anti-words list. A translation that ignores it will read as a different
-product in Spanish. The anti-words list is English; it needs a Spanish equivalent,
-and the register needs a decision on formality — **`tú` vs `usted`** is the single
-most consequential voice choice in Spanish marketing copy and should be made once,
-explicitly, before any copy is written.
+and an anti-words list. The anti-words list is English and still needs a Spanish
+equivalent.
+
+**LOCKED (design owner, 2026-08-02): impersonal register — omit the subject, and
+avoid constructions that encode formality at all.**
+
+Spanish is pro-drop, so omitting the subject pronoun is already the default. The
+important point is that **omitting the pronoun does not by itself avoid the
+`tú`/`usted` choice** — verb conjugation and possessives still encode it:
+
+| Encodes register even with no pronoun | Register-neutral |
+|---|---|
+| `Empieza tu primera Versión` (tú) | `Empezar la primera Versión` |
+| `Empiece su primera Versión` (usted) | ” |
+| `la fase a la que te comprometes` (tú) | `la fase de compromiso` |
+| `Registra tus hábitos` (tú) | `Registro de hábitos` |
+
+Industry practice supports this: the bare infinitive is the register-correct form
+for impersonal written instruction, and is what avoids addressing anyone in
+particular. `usted` additionally reads stiff and dated in product copy.
+
+### The rule (enforceable, in priority order)
+
+1. **CTAs, buttons, links → infinitive.**
+   `Abrir El Portal`, `Iniciar sesión`, `Crear cuenta`, `Leer la metodología`.
+2. **Headings → nominal phrases**, not sentences with a verb of address.
+   `Tres horizontes. Una jerarquía.`
+3. **Instructional body copy → infinitive, or impersonal `se`.**
+   `Registro de hábitos, objetivos y biometría` / `Se sincroniza automáticamente`.
+4. **`your X` → definite article, never `tu X` / `su X`.**
+   `la primera Versión`, not `tu primera Versión`.
+5. **Second-person relative clauses → nominalise.**
+   `la fase de compromiso`, not `la fase a la que te comprometes`.
+6. **Last resort, if 1–5 genuinely cannot express it:** impersonal `uno`
+   (`llegar a ser uno mismo`). Do **not** silently fall back to `tú` or `usted` —
+   flag the string for a decision instead, so the register stays consistent
+   rather than drifting per-file.
+
+### Known tension — worth watching during execution
+
+`/manifesto` (244 lines) is philosophical second-person prose; its English hook is
+*"A method for becoming yourself."* Rendered impersonally
+(`Un método para llegar a ser uno mismo`) the rule holds, but the voice moves
+further from The Companion's intimacy toward something more institutional. That is
+a coherent choice — it is precisely what larger companies sound like — but it is a
+real shift in brand register, not a neutral translation. Flag any manifesto string
+where rule 6 fires so the trade-off is visible rather than accidental.
+
+A verification hook worth building: grep the Spanish catalogue for `\btu\b`,
+`\btus\b`, `\bsu\b`, `\busted\b` and tú/usted imperative endings. A non-empty
+result means the register leaked, and it is checkable in CI alongside the
+placeholder-parity gate in §5.
 
 ---
 

@@ -197,6 +197,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 | URL shape | `localePrefix: "as-needed"` — `/pricing` (en), `/es/pricing` (es) | Zero existing URLs move; no 301s, no re-crawl, no lost backlinks. |
 | Library | `next-intl@^4.13` | Declares `next: ^16.0.0` in `peerDependencies` — real Next 16 support, App-Router-native, RSC-first. |
 | Scope | All 8 routes + shared chrome + SEO metadata | Includes legal and changelog — see risks. |
+| Register | Impersonal — subject omitted, infinitive/nominal throughout | Pro-drop alone does **not** avoid `tú`/`usted`: conjugation and possessives still encode it. Rule is infinitive for CTAs, nominal headings, definite article instead of `tu`/`su`. Never silently fall back to `tú`/`usted`. See `07-RESEARCH.md` §7. |
 
 **Success Criteria** (what must be TRUE):
 
