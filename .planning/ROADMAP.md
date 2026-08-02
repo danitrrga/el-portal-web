@@ -222,7 +222,44 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 0 plans
+**Plans:** 16 plans in 5 waves
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 7 to break down)
+
+**Wave 1** — foundation and reference artifacts
+
+- [ ] 07-01-PLAN.md — next-intl setup, `/`-only negotiation proxy, `[locale]` restructure of all 8 routes, static-prerender proof, namespace + metadata contracts
+- [ ] 07-02-PLAN.md — Product glossary derived from the app's shipped `es.json`, plus the binding Spanish voice contract
+
+**Wave 2** *(blocked on Wave 1)* — harness, shared chrome, register bar
+
+- [ ] 07-03-PLAN.md — Both-locale Playwright harness (16 routes, mirrored KU suppressions) and the register / parity / locale-aware-Link CI gates
+- [ ] 07-04-PLAN.md — `common` namespace (Navbar, Footer, CTASection) and the EN / ES language switcher
+- [ ] 07-05-PLAN.md — `/manifesto` translation, accented-uppercase glyph verification, and the blocking register-approval checkpoint (D-06)
+
+**Wave 3** *(blocked on Wave 2)* — per-surface extraction and translation
+
+- [ ] 07-06-PLAN.md — Home part A: Hero, VCDSection, McpIntegrationSection
+- [ ] 07-07-PLAN.md — Home part B: SystemBlueprintSection, MethodologyPreviewSection
+- [ ] 07-08-PLAN.md — `/mcp` prose, with every code block left untranslated
+- [ ] 07-09-PLAN.md — `/pricing`, with the plan badge measured and KU-4 re-measured
+- [ ] 07-10-PLAN.md — `/privacy` + `/terms` with the English-governs notice (D-07/D-08)
+- [ ] 07-11-PLAN.md — `/features` extraction into the English catalogue (970 lines)
+- [ ] 07-12-PLAN.md — `/changelog` extraction (35 entries, ISO dates, closed tag keys) and the sync-skill translation step (D-09)
+
+**Wave 4** *(blocked on Wave 3)* — large translations and SEO
+
+- [ ] 07-13-PLAN.md — `/features` Spanish copy (single-file translation)
+- [ ] 07-14-PLAN.md — `/changelog` Spanish copy, 35 entries with proven parity
+- [ ] 07-15-PLAN.md — Per-locale metadata, `hreflang` + `x-default`, both-locale sitemap
+
+**Wave 5** *(blocked on Wave 4)* — verification
+
+- [ ] 07-16-PLAN.md — Full both-locale matrix, static-render and routing re-assertion, residual-string audit, suppression reconciliation, human verification pack
+
+**Planning notes** (2026-08-02):
+
+  - `localeDetection` is disabled in next-intl's routing config and re-implemented by hand for the `/` pathname only. next-intl's default middleware negotiates on *every* unprefixed path, which would redirect `/pricing` → `/es/pricing` for a Spanish browser and violate criterion 1.
+  - `/pricing` is a Client Component today and cannot export `generateMetadata`; plan 07-01 splits it into a thin server wrapper plus `PricingClient.tsx`.
+  - Criterion 6 is evidenced from `.next/prerender-manifest.json` rather than from the build-output symbol: routes with `generateStaticParams` report under the SSG marker rather than the plain static marker, so the symbol changes while the property does not.
+  - `07-RESEARCH.md` has no Package Legitimacy Audit table, so plan 07-01 opens with a blocking human package-verification gate before the first install.
