@@ -165,39 +165,56 @@ concurrent execution is a lost append at best and a merge conflict at worst.
 
 ---
 
-## 🔒 PRODUCT TRUTHFULNESS — VERSION/CYCLE/DAY DURATIONS — LOCKED, corrected 2026-08-19
+## 🔒 PRODUCT TRUTHFULNESS — VERSION/CYCLE/DAY — LOCKED, corrected 2026-08-19
 
-**Never state a Version, Cycle, or Day length as a fixed fact.** Version and
-Cycle durations are chosen by the user in the app — 90 days and 15 days are
-*defaults*, not invariants. Prior copy on `/manifesto` (both locales) stated
-"A Version is 90 days. A Cycle is 15." as fact; this was a factual error
-that originated in the English source and was corrected in both catalogues
-together (commit `cdca004`, "fix(07): stop stating Version and Cycle lengths
-as fixed" — 8 files: `manifesto`, `common` (CTA), `Hero.tsx`,
-`VCDSection.tsx`, `PricingClient.tsx`, en and es).
+**Never state Version or Cycle as a fixed number of days — describe what
+they are.** Version and Cycle durations are chosen by the user in the app;
+90 days and 15 days are *defaults*, not invariants. Two corrections landed
+on `/manifesto` principle 02 in sequence, both in `src/messages/{en,es}/
+manifesto.json`:
+
+1. Commit `cdca004` ("fix(07): stop stating Version and Cycle lengths as
+   fixed") removed the false "A Version is 90 days. A Cycle is 15."
+   fixed-duration claim across 8 files (manifesto, `common` (CTA),
+   `Hero.tsx`, `VCDSection.tsx`, `PricingClient.tsx`, en and es) but the
+   replacement wording ("A Version holds the arc...") stated the concept
+   only vaguely.
+2. A follow-up refinement (07-05, same session, principle 02's body only)
+   replaced that vague wording with the actual concept: **a Version is the
+   stretch of time in which an identity is set; a Cycle is a sprint inside
+   that arc, aimed at the specific problems and skills that identity
+   demands.** Current shipped text: *"A Version is the stretch of time you
+   set an identity for. A Cycle is a sprint inside it, aimed at the
+   problems and skills that identity demands. A Day is one."* →
+   *"Una Versión es el periodo en el que fijas una identidad. Un Ciclo es
+   un sprint dentro de ella, dirigido a los problemas y las habilidades que
+   esa identidad exige. Un Día es uno."*
 
 **The rule, for every remaining translation plan (Waves 3-4 — home,
 features, pricing, mcp, changelog):**
 
-- Do **not** write `90 días` / `15 días` (or their English source
-  equivalents) as a stated fact about how long a Version or Cycle *is*.
-  These numbers are illustrative/default values in the app, not product
-  invariants, and asserting them as fixed is a truthfulness defect, not a
-  style choice.
+- **Never state Version or Cycle as a fixed number of days.** Do not write
+  `90 días` / `15 días` (or their English equivalents) as a stated fact
+  about how long a Version or Cycle *is*. These numbers are illustrative
+  defaults in the app, not product invariants, and asserting them as fixed
+  is a truthfulness defect, not a style choice.
+- **Describe what they are, not how long they last:** a Version is the
+  period an identity is set for; a Cycle is a sprint inside that Version,
+  targeting the specific problems and skills that identity demands. That
+  concept — not a duration — is what later plans translate when Version/
+  Cycle come up on home, features, pricing, mcp, or the changelog.
 - Where the English source itself states a fixed duration, that is the
   defect, not something to translate faithfully — flag it and fix the
-  English alongside the Spanish (as `cdca004` did), don't propagate a wrong
-  claim into a second language.
-- The corrected pattern, if useful as a template: *"A Version holds the
-  arc. A Cycle holds the focus. A Day holds the work. You choose how long
-  each one runs."* → *"Una Versión sostiene el arco. Un Ciclo sostiene el
-  foco. Un Día sostiene el trabajo. Eliges cuánto dura cada uno."* — states
-  what each horizon is *for*, and that duration is the user's choice,
-  without a specific number.
+  English alongside the Spanish (as `cdca004` and the follow-up refinement
+  did), don't propagate a wrong claim into a second language.
 - The 90-dot VCD visualisation is an exception by design: its geometry is
   an illustrative example, not a factual claim, and keeps its 90-dot layout
   — only surrounding prose/captions asserting a fixed length are in scope
   of this rule.
+- Out of this plan's scope, tracked separately: the orchestrator applies
+  the same corrected concept to `Hero.tsx`, the pricing FAQ, the features
+  scales table, and the VCD explainer after this plan returns — 07-05 does
+  not touch those files.
 
 This is a rule, not a one-off sentence fix — it binds every later plan's own
 copy, not just the corrected strings already in place.
