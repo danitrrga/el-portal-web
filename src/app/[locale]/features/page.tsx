@@ -86,24 +86,24 @@ type Scale = {
 const SCALES: Scale[] = [
   {
     name: "Version",
-    duration: "Months",
+    duration: "An identity",
     isDefault: true,
     role: "The arc, representing who you're becoming.",
     bullets: [
       "Sets the direction.",
       "Contains its cycles.",
-      "Months long, forming a multi-month identity arc.",
+      "Runs for as long as the identity takes.",
     ],
   },
   {
     name: "Cycle",
-    duration: "Weeks",
+    duration: "A sprint",
     isDefault: true,
     role: "The sprint, defining what to work on now.",
     bullets: [
       "Inside a Version.",
-      "Focused execution toward the arc.",
-      "Weeks long, short enough to actually finish.",
+      "Aimed at the problems and skills that identity demands.",
+      "Short enough to actually finish.",
     ],
   },
   {

@@ -49,7 +49,7 @@ export default function VCDSection() {
           <Caption
             icon={Repeat}
             label="Cycle"
-            body="Focus sprint. Several fit inside a Version."
+            body="Sprint on the skills that identity needs. Several fit inside a Version."
           />
           <Caption
             icon={Sun}
