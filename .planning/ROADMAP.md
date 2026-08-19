@@ -225,13 +225,13 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 16 plans in 6 waves
+**Plans:** 1/16 plans executed
 
 Plans:
 
 **Wave 1** — foundation and reference artifacts
 
-- [ ] 07-01-PLAN.md — next-intl setup, `/`-only negotiation proxy, `[locale]` restructure of all 8 routes, static-prerender proof, namespace + metadata contracts
+- [x] 07-01-PLAN.md — next-intl setup, `/`-only negotiation proxy, `[locale]` restructure of all 8 routes, static-prerender proof, namespace + metadata contracts
 - [ ] 07-02-PLAN.md — Product glossary derived from the app's shipped `es.json`, plus the binding Spanish voice contract
 
 **Wave 2** *(blocked on Wave 1)* — harness, shared chrome, register bar

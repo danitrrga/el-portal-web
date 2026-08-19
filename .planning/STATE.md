@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 7 replanned from review round 2 — 16 plans, 6 waves, verification passed
-last_updated: "2026-08-19T11:38:41.359Z"
-last_activity: 2026-08-19 -- Phase 07 replanned from cross-AI review round 2
+stopped_at: Completed 07-01-PLAN.md (routing foundation, all 8 routes moved under [locale])
+last_updated: "2026-08-19T18:12:48.842Z"
+last_activity: 2026-08-19
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 29
-  completed_plans: 13
+  completed_plans: 14
   percent: 43
 ---
 
@@ -25,8 +25,8 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 
 ## Current Position
 
-Phase: 07 (spanish-localization) — PLANNED, ready to execute
-Plan: 0 of 16 executed
+Phase: 07 (spanish-localization) — EXECUTING
+Plan: 2 of 16
 Status: Ready to execute
 
   16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
@@ -79,9 +79,9 @@ Status: Ready to execute
   - 05-REVIEW.md IN-01/IN-02 (two unused constants), WR-02/WR-03 (containment
     sweep suppression breadth and the .slice(0,15) cap).
 
-Last activity: 2026-08-19 -- Phase 07 replanned from cross-AI review round 2
+Last activity: 2026-08-19
 
-Progress: [██████████] 100%
+Progress: [█████░░░░░] 48%
 
 ## Performance Metrics
 
@@ -116,6 +116,7 @@ Progress: [██████████] 100%
 | Phase 05 P05 | 32min | 3 tasks | 11 files |
 | Phase 05 P06 | 24min | 2 tasks | 4 files |
 | Phase 05 P07 | 38min | 3 tasks | 2 files |
+| Phase 07 P01 | 2h24m | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -155,6 +156,9 @@ Recent decisions affecting current work:
 - [Phase 05-06]: isExcluded's six false-positive guards were each verified individually against a named offender before being added, not speculatively — SVG internals, ReadingLayout glow, Hero pill arrow track, and Tailwind truncate spans each had a measured false positive that a specific guard removes
 - [Phase 05-07]: No sm:/md: restoration added after removing -mr-56 -- the desktop band already computed margin-right:0px from 640px up, so removal with no restore point is the only edit that leaves >=768px untouched
 - [Phase 05-07]: /features H1 clamp converted on the strength of the shared gap statement, not on harness evidence -- the containment sweep never flagged /features because its longest token fits its box even at the 42px floor
+- [Phase 07-01]: createMiddleware writes NEXT_LOCALE unconditionally via syncCookie even with localeDetection:false, but the value is always derived from the URL's own locale prefix, so it can never disagree with an explicit client choice -- no override needed
+- [Phase 07-01]: No src/app/not-found.tsx needed -- [locale] layout's hasLocale guard already returns 404 for unmatched path segments
+- [Phase 07-01]: Pricing split shape locked: PricingClient.tsx holds the byte-identical client body, [locale]/pricing/page.tsx is a thin server wrapper -- plan 07-09 works against this shape
 
 ### Pending Todos
 
@@ -176,6 +180,7 @@ None yet.
 - Privacy hosting-region claim (e.g. a specific city) is NOT verified in app code — confirm with the user / Supabase dashboard before asserting it (affects Phase 3 / LEGAL-04).
 - No automated test suite exists — verification relies on `tsc`, ESLint, `next build`, and manual visual/a11y review (affects Phase 4 / QUAL-02).
 - touch-iphone (WebKit) Playwright project cannot launch in this sandbox — host deps require sudo (see .planning/phases/05-mobile-responsive-retrofit/deferred-items.md). Not a code regression; all 7 other harness projects pass.
+- npm run audit:responsive cannot run: test-results/ and playwright-report/ are root-owned from a prior session, sandbox user has no sudo to clear them (EACCES). Needs sudo rm -rf test-results playwright-report before Phase 5 responsive-audit regression check can run against the new [locale] route tree. Not blocking Wave 2+ execution (affects Phase 07 / final verification wave).
 
 ### Quick Tasks Completed
 
@@ -194,6 +199,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-02T11:10:23.186Z
-Stopped at: Phase 7 context gathered
-Resume file: .planning/phases/07-spanish-localization/07-CONTEXT.md
+Last session: 2026-08-19T18:12:48.837Z
+Stopped at: Completed 07-01-PLAN.md (routing foundation, all 8 routes moved under [locale])
+Resume file: None
