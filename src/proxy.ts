@@ -33,12 +33,59 @@ import { routing } from "@/i18n/routing";
  * AGREES with the URL actually being browsed — it can never disagree with an
  * explicit choice already reflected by the navigation that produced the
  * request. No override was needed to disable it.
+ *
+ * REVISED (plan 07-04, Task 3): the paragraph above was written before this
+ * phase's cross-locale hint (`LocaleHint`) existed, and it undersold the
+ * consequence for a path `syncCookie` DOES disagree with — a reader who
+ * chose `es` at some earlier point, then opens an unprefixed English URL
+ * directly (bookmark, shared link, search result — never through
+ * `LanguageSwitcher`), was having their `es` cookie silently overwritten to
+ * `en` by this same response, before `LocaleHint` ever got to read it
+ * client-side. Confirmed empirically: `curl -b "NEXT_LOCALE=es"
+ * localhost:3987/pricing` came back with `set-cookie: NEXT_LOCALE=en`. That
+ * makes `LocaleHint` permanently unable to fire on the exact page it exists
+ * for, which is exactly the scenario 07-04's own problem statement
+ * describes. `preserveExplicitSpanishChoice` below is the narrow fix: it
+ * restores an incoming `es` cookie on the response ONLY when the path being
+ * served is an unprefixed (English) route the reader reached without going
+ * through the switcher. It never touches `/es/*` (syncing to `es` there is
+ * correct, matches the URL, and is unchanged) and never touches a request
+ * with no cookie or a cookie already `en` (an explicit switch to English,
+ * written by `LanguageSwitcher` before it navigates, always wins — this
+ * function only ever restores `es`, never downgrades `en`).
  */
 const handleI18nRouting = createMiddleware(routing);
 
+function preserveExplicitSpanishChoice(
+  request: NextRequest,
+  response: NextResponse,
+): NextResponse {
+  const { pathname } = request.nextUrl;
+  const isSpanishPath = pathname === "/es" || pathname.startsWith("/es/");
+  if (isSpanishPath) {
+    return response;
+  }
+
+  const incomingLocale = request.cookies.get("NEXT_LOCALE")?.value;
+  if (incomingLocale !== "es") {
+    return response;
+  }
+
+  // Same attributes LanguageSwitcher writes client-side: script-readable
+  // (no httpOnly — impossible from client script and not needed for a UI
+  // preference), no secure (would break local http development), one-year
+  // max-age, SameSite=Lax, path=/.
+  response.cookies.set("NEXT_LOCALE", "es", {
+    path: "/",
+    maxAge: 31536000,
+    sameSite: "lax",
+  });
+  return response;
+}
+
 export default function middleware(request: NextRequest) {
   if (request.nextUrl.pathname !== "/") {
-    return handleI18nRouting(request);
+    return preserveExplicitSpanishChoice(request, handleI18nRouting(request));
   }
 
   const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;

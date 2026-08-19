@@ -32,5 +32,11 @@
   },
   "switcher": {
     "label": "Idioma"
+  },
+  "localeHint": {
+    "message": "Esta página también está disponible en español.",
+    "action": "Ver en español",
+    "dismissLabel": "Cerrar",
+    "label": "Aviso de idioma"
   }
 }

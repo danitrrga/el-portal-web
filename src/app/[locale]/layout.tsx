@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Inter, JetBrains_Mono, Instrument_Serif, Special_Gothic_Expanded_One } from "next/font/google";
 import { MotionProvider } from "@/components/MotionProvider";
+import { LocaleHint } from "@/components/LocaleHint";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -66,6 +67,14 @@ export default async function RootLayout({
 
   setRequestLocale(locale);
 
+  // The hint speaks Spanish on an English page, so its copy resolves from
+  // the "es" catalogue regardless of the surrounding request locale — never
+  // hardcoded here, never duplicated into en/common.json as real content.
+  // Only rendered server-side when the route locale is "en"; the mirror
+  // case (cookie "en" while reading /es/*) is deliberately out of scope —
+  // see 07-04-PLAN.md Task 3.
+  const hintT = locale === "en" ? await getTranslations({ locale: "es", namespace: "common" }) : null;
+
   return (
     <html lang={locale} className="dark">
       <head>
@@ -76,6 +85,14 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider>
           <MotionProvider>{children}</MotionProvider>
+          {hintT && (
+            <LocaleHint
+              message={hintT("localeHint.message")}
+              action={hintT("localeHint.action")}
+              dismissLabel={hintT("localeHint.dismissLabel")}
+              label={hintT("localeHint.label")}
+            />
+          )}
         </NextIntlClientProvider>
       </body>
     </html>
