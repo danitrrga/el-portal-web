@@ -8,22 +8,26 @@ import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import ExternalLink from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ElPortalWordmark } from "./ElPortalWordmark";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app';
 
 const navLinks = [
-    { href: "/manifesto", label: "Manifesto" },
-    { href: "/changelog", label: "Changelog" },
-    { href: "/features", label: "Features" },
-    { href: "/pricing", label: "Pricing" },
-];
+    { href: "/manifesto", key: "manifesto" },
+    { href: "/changelog", key: "changelog" },
+    { href: "/features", key: "features" },
+    { href: "/pricing", key: "pricing" },
+] as const;
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
+    const t = useTranslations("common");
+    const closeMobileMenu = () => setMobileMenuOpen(false);
 
     // Escape dismisses the menu. Without this a keyboard user has no way out
     // except tabbing through every link in the panel. Bound only while open so
@@ -39,7 +43,7 @@ export default function Navbar() {
 
     return (
         <nav
-            aria-label="Primary"
+            aria-label={t("nav.landmarkLabel")}
             className={[
                 "fixed top-4 left-1/2 -translate-x-1/2 z-50",
                 "max-w-5xl w-[calc(100%-2rem)]",
@@ -57,7 +61,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Nav Links */}
-                    <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <div className="hidden md:flex items-center space-x-1 lg:space-x-8 text-sm font-medium">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.href}
@@ -69,18 +73,21 @@ export default function Navbar() {
                                 ].join(" ")}
                                 href={link.href}
                             >
-                                {link.label}
+                                {t(`nav.${link.key}`)}
                             </Link>
                         ))}
                     </div>
 
                     {/* Right Actions */}
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-0 lg:space-x-4">
+                        <div className="hidden md:flex items-center">
+                            <LanguageSwitcher context="navbar" />
+                        </div>
                         <Button asChild variant="brand-link" size="sm" className="hidden sm:inline-flex pr-4">
-                            <ExternalLink href={`${APP_URL}/login`}>Log in</ExternalLink>
+                            <ExternalLink href={`${APP_URL}/login`}>{t("nav.logIn")}</ExternalLink>
                         </Button>
                         <Button asChild variant="brand" size="sm">
-                            <ExternalLink href={APP_URL}>Sign Up</ExternalLink>
+                            <ExternalLink href={APP_URL}>{t("nav.signUp")}</ExternalLink>
                         </Button>
                         {/* Mobile Hamburger */}
                         <Button
@@ -94,7 +101,7 @@ export default function Navbar() {
                             aria-expanded={mobileMenuOpen}
                             aria-controls="mobile-nav"
                             onClick={() => setMobileMenuOpen((open) => !open)}
-                            aria-label="Toggle menu"
+                            aria-label={t("nav.toggleMenu")}
                         >
                             {mobileMenuOpen ? (
                                 <X className="size-5" />
@@ -120,18 +127,21 @@ export default function Navbar() {
                                         : "text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)]",
                                 ].join(" ")}
                                 href={link.href}
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={closeMobileMenu}
                             >
-                                {link.label}
+                                {t(`nav.${link.key}`)}
                             </Link>
                         ))}
                         <ExternalLink
                             className="flex min-h-11 items-center text-sm font-medium text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300"
                             href={`${APP_URL}/login`}
-                            onClick={() => setMobileMenuOpen(false)}
+                            onClick={closeMobileMenu}
                         >
-                            Log in
+                            {t("nav.logIn")}
                         </ExternalLink>
+                        <div className="pt-2 mt-2 border-t border-white/[0.05]">
+                            <LanguageSwitcher context="navbar" onNavigate={closeMobileMenu} />
+                        </div>
                     </div>
                 </div>
             )}

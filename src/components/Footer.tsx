@@ -4,32 +4,34 @@
 // src/i18n/navigation.ts), never next/link.
 import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { ElPortalWordmark } from "./ElPortalWordmark";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const footerColumns = [
     {
-        title: "Product",
+        headingKey: "productHeading",
         links: [
-            { label: "Features", href: "/features" },
-            { label: "Changelog", href: "/changelog" },
-            { label: "MCP Integration", href: "/mcp" },
+            { key: "features", href: "/features" },
+            { key: "changelog", href: "/changelog" },
+            { key: "mcpIntegration", href: "/mcp" },
         ],
     },
     {
-        title: "Company",
+        headingKey: "companyHeading",
         links: [
-            { label: "Manifesto", href: "/manifesto" },
-            { label: "About", href: "/manifesto" },
+            { key: "manifesto", href: "/manifesto" },
+            { key: "about", href: "/manifesto" },
         ],
     },
     {
-        title: "Legal",
+        headingKey: "legalHeading",
         links: [
-            { label: "Privacy", href: "/privacy" },
-            { label: "Terms", href: "/terms" },
+            { key: "privacy", href: "/privacy" },
+            { key: "terms", href: "/terms" },
         ],
     },
-];
+] as const;
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -52,6 +54,8 @@ const itemVariants = {
 };
 
 export default function Footer() {
+    const t = useTranslations("common");
+
     return (
         <footer>
             {/* Section separator */}
@@ -68,23 +72,23 @@ export default function Footer() {
                 >
                     {/* Brand column */}
                     <motion.div variants={itemVariants} className="col-span-2 md:col-span-1">
-                        <Link href="/" aria-label="El Portal home" className="inline-flex min-h-11 items-center mb-4 md:inline-block md:min-h-0">
+                        <Link href="/" aria-label={t("footer.homeAriaLabel")} className="inline-flex min-h-11 items-center mb-4 md:inline-block md:min-h-0">
                             <ElPortalWordmark size={24} />
                         </Link>
                         <p className="text-zinc-400 text-sm leading-relaxed max-w-xs">
-                            Your personal operating system for intentional living and peak performance.
+                            {t("footer.blurb")}
                         </p>
                     </motion.div>
 
                     {/* Link columns */}
                     {footerColumns.map((column) => (
-                        <motion.div key={column.title} variants={itemVariants}>
+                        <motion.div key={column.headingKey} variants={itemVariants}>
                             <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-4">
-                                {column.title}
+                                {t(`footer.${column.headingKey}`)}
                             </h3>
                             <ul className="space-y-3">
                                 {column.links.map((link) => (
-                                    <li key={link.label}>
+                                    <li key={link.key}>
                                         <Link
                                             href={link.href}
                                             // Below md: the anchor becomes a full-width 44px row so the
@@ -93,7 +97,7 @@ export default function Footer() {
                                             // design (align-items/min-height are inert on inline boxes).
                                             className="flex min-h-11 items-center text-sm text-zinc-400 hover:text-zinc-100 transition-colors duration-300 md:inline md:min-h-0"
                                         >
-                                            {link.label}
+                                            {t(`footer.${link.key}`)}
                                         </Link>
                                     </li>
                                 ))}
@@ -102,11 +106,13 @@ export default function Footer() {
                     ))}
                 </motion.div>
 
-                {/* Bottom bar — copyright left, giant grain-fill wordmark right at the same height */}
+                {/* Bottom bar — copyright left, switcher centre, giant grain-fill wordmark right */}
                 <div className="pt-6 border-t border-white/5 flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
                     <p className="text-sm text-zinc-400 shrink-0">
-                        &copy; {new Date().getFullYear()} El Portal. All rights reserved.
+                        {t("footer.copyright", { year: new Date().getFullYear() })}
                     </p>
+
+                    <LanguageSwitcher context="footer" />
 
                     {/* Brand wordmark — ghost outline that fills with grain on hover */}
                     <motion.div

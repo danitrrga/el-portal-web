@@ -18,7 +18,8 @@ export const PortalIcon: React.FC<PortalIconProps> = ({ size = 28, className = '
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
-        aria-label="Portal icon"
+        aria-hidden="true"
+        focusable="false"
     >
         <g transform="translate(397.5, 397.5) scale(1.13) translate(-397.5, -397.5)">
             <mask id="portal-mask" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="123" y="123" width="549" height="549">

@@ -65,7 +65,7 @@ export function LanguageSwitcher({ context, onNavigate }: LanguageSwitcherProps)
           onNavigate?.();
         }}
         className={[
-          "flex min-h-11 min-w-11 items-center justify-center px-3 md:min-h-0 transition-colors duration-300",
+          "flex min-h-11 min-w-11 items-center justify-center px-3 md:min-h-6 transition-colors duration-300",
           locale === "en"
             ? "text-[var(--color-ep-fg-strong)]"
             : "text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)]",
@@ -86,7 +86,7 @@ export function LanguageSwitcher({ context, onNavigate }: LanguageSwitcherProps)
           onNavigate?.();
         }}
         className={[
-          "flex min-h-11 min-w-11 items-center justify-center px-3 md:min-h-0 transition-colors duration-300",
+          "flex min-h-11 min-w-11 items-center justify-center px-3 md:min-h-6 transition-colors duration-300",
           locale === "es"
             ? "text-[var(--color-ep-fg-strong)]"
             : "text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)]",
