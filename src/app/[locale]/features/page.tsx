@@ -1,4 +1,6 @@
-import Link from "next/link";
+// Internal link only — locale-aware Link (see src/i18n/navigation.ts), never
+// next/link.
+import { Link } from "@/i18n/navigation";
 import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";

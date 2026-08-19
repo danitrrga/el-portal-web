@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+// Internal navigation goes through the locale-aware Link (never next/link —
+// see src/i18n/navigation.ts) so a nav click on /es/* stays on the Spanish
+// tree. The absolute external APP_URL destinations (Log in, Sign Up) stay on
+// plain next/link, aliased here to avoid a name collision.
+import { Link } from "@/i18n/navigation";
+import ExternalLink from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -72,10 +77,10 @@ export default function Navbar() {
                     {/* Right Actions */}
                     <div className="flex items-center space-x-4">
                         <Button asChild variant="brand-link" size="sm" className="hidden sm:inline-flex pr-4">
-                            <Link href={`${APP_URL}/login`}>Log in</Link>
+                            <ExternalLink href={`${APP_URL}/login`}>Log in</ExternalLink>
                         </Button>
                         <Button asChild variant="brand" size="sm">
-                            <Link href={APP_URL}>Sign Up</Link>
+                            <ExternalLink href={APP_URL}>Sign Up</ExternalLink>
                         </Button>
                         {/* Mobile Hamburger */}
                         <Button
@@ -120,13 +125,13 @@ export default function Navbar() {
                                 {link.label}
                             </Link>
                         ))}
-                        <Link
+                        <ExternalLink
                             className="flex min-h-11 items-center text-sm font-medium text-[var(--color-ep-fg)] hover:text-[var(--color-ep-fg-strong)] transition-colors duration-300"
                             href={`${APP_URL}/login`}
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             Log in
-                        </Link>
+                        </ExternalLink>
                     </div>
                 </div>
             )}

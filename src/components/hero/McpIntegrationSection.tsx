@@ -2,7 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+// Internal link only — locale-aware Link (see src/i18n/navigation.ts), never
+// next/link.
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { Bot, Cpu, Workflow, BrainCircuit, Cog, Terminal } from "lucide-react";
 

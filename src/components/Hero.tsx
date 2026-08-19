@@ -1,7 +1,11 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+// Internal navigation (the pricing pill, "Read the methodology") uses the
+// locale-aware Link (see src/i18n/navigation.ts); the external APP_URL CTA
+// stays on next/link, aliased to avoid a name collision.
+import { Link } from "@/i18n/navigation";
+import ExternalLink from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
@@ -144,9 +148,9 @@ export default function Hero() {
                 className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
               >
                 <Button key={1} asChild variant="brand" size="lg" className="text-base">
-                  <Link href={APP_URL}>
+                  <ExternalLink href={APP_URL}>
                     <span className="text-nowrap">Open El Portal</span>
-                  </Link>
+                  </ExternalLink>
                 </Button>
                 <Button
                   key={2}

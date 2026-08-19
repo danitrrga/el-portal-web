@@ -1,6 +1,8 @@
 "use client";
 
-import Link from "next/link";
+// Every Footer link is internal — locale-aware Link only (see
+// src/i18n/navigation.ts), never next/link.
+import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { ElPortalWordmark } from "./ElPortalWordmark";
 
