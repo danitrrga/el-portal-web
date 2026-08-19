@@ -52,6 +52,7 @@ not aspiration.
 | [`INTERACTION.md`](./INTERACTION.md) | Button/hover/press feedback, origin-aware popovers, tooltips, focus rings, touch-gated hover, clip-path techniques |
 | [`COMPONENTS.md`](./COMPONENTS.md) | Approved patterns — cards, glass, dot-pattern, separators, badges, CTAs, navbar, iconography + real component map |
 | [`ANTI-PATTERNS.md`](./ANTI-PATTERNS.md) | Permanent bans, the AI-Slop Test, Emil's review checklist, and the current known-debt list |
+| [`SPANISH-VOICE.md`](./SPANISH-VOICE.md) | Binding Spanish register, anti-words, punctuation, product-vocabulary and wordplay-escalation contract (Phase 7) |
 
 ---
 
