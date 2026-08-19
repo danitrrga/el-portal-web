@@ -165,22 +165,75 @@ concurrent execution is a lost append at best and a merge conflict at worst.
 
 ---
 
-## 📦 ACCENTED DISPLAY TYPE — CURRENT, pending 07-05
+## 🔒 ACCENTED DISPLAY TYPE — LOCKED, verified 2026-08-19 (07-05 Task 2)
 
-Whether Special Gothic Expanded One renders `Á É Í Ó Ú Ñ` correctly under the
-`.display` uppercase treatment is **UNVERIFIED** at the time of writing. This
-section is a placeholder for that answer, not the answer itself.
+**Outcome A: verified, no change needed.** Special Gothic Expanded One
+renders `Á É Í Ó Ú Ñ` (and lowercase, and `¿`) correctly under the
+`.display` uppercase treatment. No `subsets` edit, no per-instance wrapper
+padding, no copy rule — Spanish `.display` headings may use accented words
+freely, including uppercase capitals.
 
-Plan 07-05 Task 2 measures it directly (does the font have those glyphs, do
-they clip or render at expected width under the existing display clamp) and
-writes the outcome — and any resulting copy rule (e.g. a fallback for a
-heading that clips) — back into this section. This question is recorded here
-rather than buried in one plan's summary because every Wave 3 and Wave 4 plan
-writes Spanish display headings against this file, and the answer affects
-all of them, not just 07-05's own surface.
+**Method — scripted, not visual (`document.fonts.check` + `measureText` +
+`scrollHeight`/`clientHeight`), run against the production build
+(`localhost:3987/es/manifesto`), probe removed after measurement, no probe
+residue shipped:**
 
-*07-05 fills this in — do not treat the absence of a verified answer here as
-"no risk."*
+1. **Glyph presence** — `document.fonts.check('400 32px "Special Gothic
+   Expanded One"', ch)` for each of 13 characters individually (not one
+   aggregate boolean): `Á É Í Ó Ú Ñ á é í ó ú ñ ¿` → **all 13 `true`**.
+2. **Fallback detection** — `canvas.measureText()` advance width of
+   `ÁÉÍÓÚÑ` at `400 32px`, compared across three font stacks so a silent
+   substitution would show up as identical widths:
+   - Real face (`"Special Gothic Expanded One"`): **147px**
+   - Generic fallback (`sans-serif`): **122.6875px**
+   - `Arial Black` (the substitution CLAUDE.md's stack makes most likely):
+     **122.640625px**
+
+   147px is clearly distinct from both fallback candidates (~122.6px) — the
+   real face is genuinely rendering, not a silent substitution. Computed
+   `font-family` on a live `.display` element also confirmed:
+   `"Special Gothic Expanded One", "Arial Black", sans-serif` with the named
+   face resolving first.
+3. **Diacritic clipping, with a comparative control the task didn't
+   literally ask for but the measurement demanded** — `scrollHeight` vs
+   `clientHeight` of a `.display` probe at the mobile-floor (`23.008px` =
+   `1.438rem`, `manifesto/page.tsx`'s H1 clamp minimum) and desktop-ceiling
+   (`48px`, the same clamp's maximum):
+   - Accented probe (`ÁÉÍÓÚÑ`) — mobile-floor: scrollHeight 26 / clientHeight
+     23 / **delta 3px**. Desktop-ceiling: scrollHeight 55 / clientHeight 49
+     / **delta 6px**.
+   - **Control — the exact same measurement on unaccented ALL-CAPS text**
+     (`PORTAL METODO PRACTICA`, and the manifesto hook itself with its
+     accent stripped) at the identical two sizes: **delta 3px / 6px** —
+     byte-identical to the accented probe.
+   - **This is the finding that resolves the question.** The 3–6px
+     `scrollHeight`/`clientHeight` gap is not caused by the accent marks —
+     it is `.display`'s `line-height: 1.02` producing a small, uniform
+     cap-height overshoot for *any* uppercase text in this font, already
+     present (and already shipped, unremarked, in English) before this
+     phase existed. Accented Spanish capitals introduce **zero additional
+     overshoot** beyond what English's own `.display` headings already
+     carry today. Per-instance wrapper padding was also tested empirically
+     (padding-top from 0–8px on the probe element) and, as expected once the
+     control result was in hand, does not change the delta at all — the
+     gap is intrinsic to the font's vertical metrics at this line-height,
+     not a spacing problem paddable away, and — critically — not something
+     accents make worse.
+   - Real page confirmation: the actual rendered `/es/manifesto` H1
+     (`"Un método para llegar a ser quien eres."`, `.display`, computed
+     font-family confirmed as the named face) measured scrollHeight 147 /
+     clientHeight 141 / delta 6px at the default 1280×720 viewport —
+     consistent with the desktop-ceiling synthetic probe above, and no
+     different from what an unaccented English H1 of the same rendered
+     height would show.
+
+**Consequence:** the manifesto hook renders as `UN MÉTODO PARA LLEGAR A SER
+QUIEN ERES.` under `.display`'s uppercase transform with no missing glyphs,
+no fallback substitution, and no accent-specific clipping. The register
+checkpoint (07-05 Task 3) does not need to weigh a typography-driven reword
+of the hook — the two decisions are not coupled for this phase. Every later
+Wave 3/4 plan may use accented uppercase in `.display` H1/H2 strings without
+checking this section again beyond confirming it still reads LOCKED.
 
 ---
 
