@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 7 planned — 16 plans, 5 waves, ready to execute
-last_updated: "2026-08-19T00:00:00.000Z"
-last_activity: 2026-08-02 -- Phase 07 execution started
+stopped_at: Phase 7 planned — 16 plans, verification passed
+last_updated: "2026-08-19T11:38:41.359Z"
+last_activity: 2026-08-19 -- Phase 07 planning complete
 progress:
   total_phases: 7
   completed_phases: 3
@@ -27,10 +27,22 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 
 Phase: 07 (spanish-localization) — PLANNED, ready to execute
 Plan: 0 of 16 executed
-Status: 16 plans across 5 waves, cross-AI reviewed, revised 2026-08-19 against
-the restated i18n requirements. No open decisions block execution. Nothing
-implemented yet — no `src/i18n`, no `src/proxy.ts`, next-intl not installed.
-Wave 1 (07-01 routing foundation, 07-02 glossary + voice contract) is unblocked.
+Status: Ready to execute
+
+  16 plans across 5 waves. Cross-AI reviewed 2026-08-02, then revised
+  2026-08-19 against the design owner's restated i18n requirements and taken
+  through three gsd-plan-checker iterations — final verdict PASSED, no blockers,
+  no warnings. Requirements coverage 7/7 (I18N-01…I18N-07). No open decisions
+  block execution.
+
+  Nothing implemented yet — no `src/i18n`, no `src/proxy.ts`, next-intl not
+  installed. Wave 1 (07-01 routing foundation, 07-02 glossary + voice contract)
+  is unblocked and has no dependencies.
+
+  Two gates reach the design owner mid-execution rather than after: 07-05 holds
+  a blocking checkpoint to approve the Spanish `tú` register on /es/manifesto
+  before Wave 3 propagates it site-wide, and TRANSLATION-FLAGS.md accumulates
+  the lines whose English effect did not survive, for hand-rewriting.
 
   Phase 5 closed 2026-08-01: verification `passed`, 7/7 plans, all 3 goal-level
   gaps re-measured closed, 6/6 human-verification items resolved (0 blocked)
@@ -51,7 +63,7 @@ Wave 1 (07-01 routing foundation, 07-02 glossary + voice contract) is unblocked.
   - 05-REVIEW.md IN-01/IN-02 (two unused constants), WR-02/WR-03 (containment
     sweep suppression breadth and the .slice(0,15) cap).
 
-Last activity: 2026-08-19 -- Phase 07 plans revised: switcher into the mobile nav,
+Last activity: 2026-08-19 -- Phase 07 planning complete
 cross-locale hint for the cookie, lost-in-translation register
 
 Progress: [██████████] 100%
