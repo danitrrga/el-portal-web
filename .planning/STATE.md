@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 7 planned — 16 plans, verification passed
+stopped_at: Phase 7 replanned from review round 2 — 16 plans, 6 waves, verification passed
 last_updated: "2026-08-19T11:38:41.359Z"
-last_activity: 2026-08-19 -- Phase 07 planning complete
+last_activity: 2026-08-19 -- Phase 07 replanned from cross-AI review round 2
 progress:
   total_phases: 7
   completed_phases: 3
@@ -29,11 +29,27 @@ Phase: 07 (spanish-localization) — PLANNED, ready to execute
 Plan: 0 of 16 executed
 Status: Ready to execute
 
-  16 plans across 5 waves. Cross-AI reviewed 2026-08-02, then revised
-  2026-08-19 against the design owner's restated i18n requirements and taken
-  through three gsd-plan-checker iterations — final verdict PASSED, no blockers,
-  no warnings. Requirements coverage 7/7 (I18N-01…I18N-07). No open decisions
-  block execution.
+  16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
+  2026-08-19 after the plans were revised against the design owner's restated
+  i18n requirements. The second review (codex + opencode) found nine defects the
+  three gsd-plan-checker iterations had missed, all of them in seams between
+  plans rather than inside any one plan: the cross-locale hint had no valid mount
+  point, an explicit switch back to English could loop forever, the mobile-panel
+  close requirement had no component contract, the human sign-off pack still
+  described the opposite of what ships, SEO metadata could be generated before
+  the Spanish copy it describes existed, and CI supplied no site origin to build
+  canonical URLs from. All nine were verified against the repository before being
+  acted on; one reviewer finding was withdrawn as reviewer error.
+
+  Those fixes landed in commit e180d73, re-verified with zero blockers. Two
+  residual warnings (a same-wave shared-file collision described in terms an
+  executor could not act on, and a stale "last plan to edit this workflow"
+  claim) were fixed in place rather than by another planner pass. Requirements
+  coverage 7/7 (I18N-01…I18N-07). No open decisions block execution.
+
+  The wave count moved 5 to 6: adding 07-13 and 07-14 to plan 07-15's
+  dependencies put a dependency inside 07-15's own wave, so metadata moved to
+  wave 5 and final verification to wave 6.
 
   Nothing implemented yet — no `src/i18n`, no `src/proxy.ts`, next-intl not
   installed. Wave 1 (07-01 routing foundation, 07-02 glossary + voice contract)
@@ -41,8 +57,8 @@ Status: Ready to execute
 
   Two gates reach the design owner mid-execution rather than after: 07-05 holds
   a blocking checkpoint to approve the Spanish `tú` register on /es/manifesto
-  before Wave 3 propagates it site-wide, and TRANSLATION-FLAGS.md accumulates
-  the lines whose English effect did not survive, for hand-rewriting.
+  before Wave 3 propagates it site-wide, and the per-plan translation-flag files
+  accumulate the lines whose English effect did not survive, for hand-rewriting.
 
   Phase 5 closed 2026-08-01: verification `passed`, 7/7 plans, all 3 goal-level
   gaps re-measured closed, 6/6 human-verification items resolved (0 blocked)
@@ -63,8 +79,7 @@ Status: Ready to execute
   - 05-REVIEW.md IN-01/IN-02 (two unused constants), WR-02/WR-03 (containment
     sweep suppression breadth and the .slice(0,15) cap).
 
-Last activity: 2026-08-19 -- Phase 07 planning complete
-cross-locale hint for the cookie, lost-in-translation register
+Last activity: 2026-08-19 -- Phase 07 replanned from cross-AI review round 2
 
 Progress: [██████████] 100%
 
