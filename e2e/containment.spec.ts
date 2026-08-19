@@ -41,14 +41,16 @@ type ClipEscape = {
  * it was written to catch without also being red on four unrelated,
  * already-logged findings. See `deferred-items.md` for the full writeup.
  */
-const KNOWN_UNFIXED: {
+type KnownUnfixed = {
   route: string;
   sweep: "A" | "B";
   selector?: string;
   clipper?: string;
   reason: string;
   ref: string;
-}[] = [
+};
+
+const KNOWN_UNFIXED_EN: KnownUnfixed[] = [
   {
     route: "/features",
     sweep: "A",
@@ -82,6 +84,23 @@ const KNOWN_UNFIXED: {
     ref: "KU-4",
   },
 ];
+
+/**
+ * `/es` twins of the four English `KNOWN_UNFIXED` entries above, generated
+ * programmatically (never hand-pasted) so the two lists cannot drift apart —
+ * a future fix deletes one row in `KNOWN_UNFIXED_EN`, not two. Same `ref`
+ * (07-03-PLAN.md Task 2): it is the same underlying layout-caused defect,
+ * now also visible on a second route string, not a new finding. At this
+ * point in the phase `/es/*` still renders English copy (Waves 3-4 have not
+ * run), so the reason string documents inheritance rather than translation.
+ */
+const KNOWN_UNFIXED_ES: KnownUnfixed[] = KNOWN_UNFIXED_EN.map((k) => ({
+  ...k,
+  route: k.route === "/" ? "/es" : `/es${k.route}`,
+  reason: `${k.reason} Inherited verbatim on the /es twin: layout-caused, not copy-caused — English copy still renders on /es/* until Waves 3-4 translate it.`,
+}));
+
+const KNOWN_UNFIXED: KnownUnfixed[] = [...KNOWN_UNFIXED_EN, ...KNOWN_UNFIXED_ES];
 
 for (const route of ROUTES) {
   test(`container-relative overflow: ${route}`, async ({ page }, testInfo) => {
