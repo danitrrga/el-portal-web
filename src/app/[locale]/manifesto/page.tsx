@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { buildPageMetadata } from "@/lib/seo";
@@ -27,72 +27,21 @@ const FG_MUTED = "var(--color-ep-fg-muted-2)";
 const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 
-type Act = "Foundation" | "Method" | "Practice";
-
+// `act` is catalogue-driven text (translated per locale), not a fixed
+// English literal union — the render is a filter (`p.act === act.name`)
+// evaluated entirely within one locale's own catalogue values, so the
+// grouping stays correct even though the strings differ between en/es.
 type Principle = {
   num: string;
-  act: Act;
+  act: string;
   title: string;
   body: string;
 };
 
-const PRINCIPLES: Principle[] = [
-  {
-    num: "01",
-    act: "Foundation",
-    title: "Identity comes first.",
-    body:
-      "You choose who you want to become. The system organizes the rest around that, including the skills your future identity needs, the habits that identity does without thinking, and the work that compounds toward it.",
-  },
-  {
-    num: "02",
-    act: "Foundation",
-    title: "The horizon has three scales.",
-    body:
-      "A Version is 90 days. A Cycle is 15. A Day is one. Strip any of them away and planning collapses into either daydreaming or grind.",
-  },
-  {
-    num: "03",
-    act: "Method",
-    title: "Track what your memory can't hold.",
-    body:
-      "You can't optimize what you can't see, and you can't see what you didn't capture. Log honestly. The patterns that matter aren't the ones you notice in the moment.",
-  },
-  {
-    num: "04",
-    act: "Method",
-    title: "The system reads. You decide.",
-    body:
-      "El Portal weighs the signals, including correlations, recurrences, and ripples. It surfaces what's working. The verdict is yours. A companion, not a coach.",
-  },
-  {
-    num: "05",
-    act: "Method",
-    title: "Friction is signal, not failure.",
-    body:
-      "When the same obstacle keeps showing up across cycles, that's data. The system flags recurrences so you address them at the root, rather than three months from now.",
-  },
-  {
-    num: "06",
-    act: "Practice",
-    title: "Boring beats clever.",
-    body:
-      "Discipline compounds. The system protects the boring parts of the practice so the interesting work has somewhere to land.",
-  },
-  {
-    num: "07",
-    act: "Practice",
-    title: "The right tool disappears.",
-    body:
-      "Check it at boot. Check it at shutdown. Invisible in between, while you do the work it supports.",
-  },
-];
-
-const ACTS: { name: Act; range: string }[] = [
-  { name: "Foundation", range: "01 — 02" },
-  { name: "Method", range: "03 — 05" },
-  { name: "Practice", range: "06 — 07" },
-];
+type ActInfo = {
+  name: string;
+  range: string;
+};
 
 function CardDecorator() {
   const c = "rgba(119, 183, 237, 0.28)";
@@ -122,7 +71,7 @@ function CardDecorator() {
   );
 }
 
-function ActLabel({ name, range }: { name: Act; range: string }) {
+function ActLabel({ name, range }: { name: string; range: string }) {
   return (
     <div className="mb-6 flex items-center gap-3">
       <span
@@ -200,6 +149,15 @@ export default async function ManifestoPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("manifesto");
+
+  // Raw accessor, not per-key lookups: PRINCIPLES/ACTS stay ordered arrays
+  // in the catalogue so the parity gate can compare array lengths and a
+  // reordering shows up as a visible diff. `act` is preserved as DATA on
+  // each principle — the render below is a filter, and translating that
+  // field on one locale silently empties an act if the two sides diverge.
+  const principles = t.raw("principles") as Principle[];
+  const acts = t.raw("acts") as ActInfo[];
 
   return (
     <div
@@ -226,22 +184,20 @@ export default async function ManifestoPage({
               color: FG_STRONG,
             }}
           >
-            A method for becoming yourself.
+            {t("hero.headline")}
           </h1>
           <p
             className="mt-5 max-w-2xl text-[15px] leading-[1.6] md:text-base"
             style={{ color: FG }}
           >
-            El Portal is built around a single conviction: identity isn&apos;t
-            discovered, it&apos;s chosen, designed, rehearsed. The system
-            gives you the structure. You bring the will.
+            {t("hero.body")}
           </p>
         </header>
 
         {/* Three acts: Foundation → Method → Practice */}
         <div className="space-y-14 md:space-y-20">
-          {ACTS.map((act) => {
-            const actPrinciples = PRINCIPLES.filter((p) => p.act === act.name);
+          {acts.map((act) => {
+            const actPrinciples = principles.filter((p) => p.act === act.name);
             return (
               <section key={act.name}>
                 <ActLabel name={act.name} range={act.range} />

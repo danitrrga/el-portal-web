@@ -1,1 +1,55 @@
-{}
+{
+  "hero": {
+    "headline": "Un método para llegar a ser quien eres.",
+    "body": "El Portal se construye sobre una única convicción: la identidad no se descubre, se elige, se diseña, se ensaya. El sistema te da la estructura. Aportas la voluntad."
+  },
+  "acts": [
+    { "name": "Fundamento", "range": "01 — 02" },
+    { "name": "Método", "range": "03 — 05" },
+    { "name": "Práctica", "range": "06 — 07" }
+  ],
+  "principles": [
+    {
+      "num": "01",
+      "act": "Fundamento",
+      "title": "La identidad es lo primero.",
+      "body": "Eliges quién quieres llegar a ser. El sistema organiza el resto en torno a eso: las habilidades que tu futura identidad necesita, los hábitos que esa identidad realiza sin pensar y el trabajo que se acumula hacia ella."
+    },
+    {
+      "num": "02",
+      "act": "Fundamento",
+      "title": "El horizonte tiene tres escalas.",
+      "body": "Una Versión son 90 días. Un Ciclo son 15. Un Día es uno. Quita cualquiera de las tres y la planificación se derrumba, ya sea en ensoñación o en agobio."
+    },
+    {
+      "num": "03",
+      "act": "Método",
+      "title": "Registra lo que tu memoria no puede retener.",
+      "body": "No puedes optimizar lo que no ves, y no puedes ver lo que no capturaste. Registra con honestidad. Los patrones que importan no son los que notas en el momento."
+    },
+    {
+      "num": "04",
+      "act": "Método",
+      "title": "El sistema lee. Decides.",
+      "body": "El Portal pondera las señales: correlaciones, recurrencias y ondas expansivas. Muestra lo que funciona. El veredicto es tuyo. Un compañero, no un entrenador."
+    },
+    {
+      "num": "05",
+      "act": "Método",
+      "title": "La fricción es señal, no fallo.",
+      "body": "Cuando el mismo obstáculo se repite ciclo tras ciclo, eso es un dato. El sistema señala las recurrencias para que las resuelvas de raíz, no dentro de tres meses."
+    },
+    {
+      "num": "06",
+      "act": "Práctica",
+      "title": "Lo aburrido gana a lo ingenioso.",
+      "body": "La disciplina se acumula. El sistema protege las partes aburridas de la práctica para que el trabajo interesante tenga dónde aterrizar."
+    },
+    {
+      "num": "07",
+      "act": "Práctica",
+      "title": "La herramienta correcta desaparece.",
+      "body": "Consúltala al arrancar. Consúltala al apagar. Invisible mientras tanto, mientras haces el trabajo que sostiene."
+    }
+  ]
+}
