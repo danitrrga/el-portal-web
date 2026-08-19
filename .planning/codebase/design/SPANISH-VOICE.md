@@ -165,6 +165,45 @@ concurrent execution is a lost append at best and a merge conflict at worst.
 
 ---
 
+## 🔒 PRODUCT TRUTHFULNESS — VERSION/CYCLE/DAY DURATIONS — LOCKED, corrected 2026-08-19
+
+**Never state a Version, Cycle, or Day length as a fixed fact.** Version and
+Cycle durations are chosen by the user in the app — 90 days and 15 days are
+*defaults*, not invariants. Prior copy on `/manifesto` (both locales) stated
+"A Version is 90 days. A Cycle is 15." as fact; this was a factual error
+that originated in the English source and was corrected in both catalogues
+together (commit `cdca004`, "fix(07): stop stating Version and Cycle lengths
+as fixed" — 8 files: `manifesto`, `common` (CTA), `Hero.tsx`,
+`VCDSection.tsx`, `PricingClient.tsx`, en and es).
+
+**The rule, for every remaining translation plan (Waves 3-4 — home,
+features, pricing, mcp, changelog):**
+
+- Do **not** write `90 días` / `15 días` (or their English source
+  equivalents) as a stated fact about how long a Version or Cycle *is*.
+  These numbers are illustrative/default values in the app, not product
+  invariants, and asserting them as fixed is a truthfulness defect, not a
+  style choice.
+- Where the English source itself states a fixed duration, that is the
+  defect, not something to translate faithfully — flag it and fix the
+  English alongside the Spanish (as `cdca004` did), don't propagate a wrong
+  claim into a second language.
+- The corrected pattern, if useful as a template: *"A Version holds the
+  arc. A Cycle holds the focus. A Day holds the work. You choose how long
+  each one runs."* → *"Una Versión sostiene el arco. Un Ciclo sostiene el
+  foco. Un Día sostiene el trabajo. Eliges cuánto dura cada uno."* — states
+  what each horizon is *for*, and that duration is the user's choice,
+  without a specific number.
+- The 90-dot VCD visualisation is an exception by design: its geometry is
+  an illustrative example, not a factual claim, and keeps its 90-dot layout
+  — only surrounding prose/captions asserting a fixed length are in scope
+  of this rule.
+
+This is a rule, not a one-off sentence fix — it binds every later plan's own
+copy, not just the corrected strings already in place.
+
+---
+
 ## 🔒 ACCENTED DISPLAY TYPE — LOCKED, verified 2026-08-19 (07-05 Task 2)
 
 **Outcome A: verified, no change needed.** Special Gothic Expanded One
