@@ -86,7 +86,7 @@ type Scale = {
 const SCALES: Scale[] = [
   {
     name: "Version",
-    duration: "~90 days",
+    duration: "Months",
     isDefault: true,
     role: "The arc, representing who you're becoming.",
     bullets: [
@@ -97,7 +97,7 @@ const SCALES: Scale[] = [
   },
   {
     name: "Cycle",
-    duration: "~15 days",
+    duration: "Weeks",
     isDefault: true,
     role: "The sprint, defining what to work on now.",
     bullets: [
@@ -657,7 +657,7 @@ function HabitsAndGoalsSection() {
             className="text-[14px] leading-[1.6] mb-4"
             style={{ color: FG }}
           >
-            Outcomes you commit to inside a 15-day window. Two kinds, each
+            Outcomes you commit to inside a single Cycle. Two kinds, each
             with its own definition of done.
           </p>
           <ul className="space-y-2.5">

@@ -128,7 +128,7 @@ export default function Hero() {
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg leading-[1.55]"
                   style={{ color: "var(--color-ep-fg)" }}
                 >
-                  Versions plan a 90-day identity. Cycles run a 15-day focus. Track habits, goals, biometrics... The system analyzes the trends the eye misses.
+                  Versions plan an identity arc. Cycles run the focus inside it. Track habits, goals, biometrics... The system analyzes the trends the eye misses.
                 </p>
               </AnimatedGroup>
 

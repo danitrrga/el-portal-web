@@ -110,11 +110,11 @@ const comparisonFeatures: {
 const faqs = [
     {
         q: "What is a Version?",
-        a: "A Version is a 90-day identity phase, a deliberate container for who you're becoming. Each Version has its own title, persona, macro goals, and habits. When it ends, it's permanently archived so you can see how you've evolved.",
+        a: "A Version is an identity phase whose length you set, a deliberate container for who you're becoming. Each Version has its own title, persona, macro goals, and habits. When it ends, it's permanently archived so you can see how you've evolved.",
     },
     {
         q: "How do Cycles work inside a Version?",
-        a: "Each Version is divided into 15-day Cycles, tactical sprints where you define mini-priorities, select habits, and execute daily. At the end of every Cycle, your performance is snapshotted and you decide which habits to carry forward or kill.",
+        a: "Each Version is divided into Cycles, tactical sprints where you define mini-priorities, select habits, and execute daily. You choose how long a Cycle runs. At the end of every Cycle, your performance is snapshotted and you decide which habits to carry forward or kill.",
     },
     {
         q: "Why is it only $10?",
