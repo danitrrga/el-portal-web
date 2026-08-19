@@ -154,3 +154,11 @@ Every scratch file/mutation was reverted; `git status --short src/messages/` and
 ---
 *Phase: 07-spanish-localization*
 *Completed: 2026-08-19*
+
+## Self-Check: PASSED
+
+All 13 claimed files found on disk (scripts/i18n-gates.mjs, package.json,
+e2e/support/pages.ts, e2e/containment.spec.ts,
+.github/workflows/responsive-audit.yml, the 6 migrated component/page files,
+deferred-items.md, this summary). All 4 claimed commits (`c8535cc`,
+`e1ec5c8`, `9a08fdd`, `55dbaf4`) found in git log.

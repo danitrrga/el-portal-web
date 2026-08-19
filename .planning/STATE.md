@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-02-PLAN.md (glossary + Spanish voice contract)
-last_updated: "2026-08-19T18:22:59.628Z"
+stopped_at: Completed 07-03-PLAN.md (i18n CI gates and locale-aware harness)
+last_updated: "2026-08-19T18:43:54.470Z"
 last_activity: 2026-08-19
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 29
-  completed_plans: 15
+  completed_plans: 16
   percent: 43
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 07 (spanish-localization) — EXECUTING
-Plan: 3 of 16
+Plan: 4 of 16
 Status: Ready to execute
 
   16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
@@ -81,7 +81,7 @@ Status: Ready to execute
 
 Last activity: 2026-08-19
 
-Progress: [█████░░░░░] 52%
+Progress: [██████░░░░] 55%
 
 ## Performance Metrics
 
@@ -118,6 +118,7 @@ Progress: [█████░░░░░] 52%
 | Phase 05 P07 | 38min | 3 tasks | 2 files |
 | Phase 07 P01 | 2h24m | 3 tasks | 11 files |
 | Phase 07 P02 | 35min | 4 tasks | 6 files |
+| Phase 07 P03 | 20min | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -162,6 +163,8 @@ Recent decisions affecting current work:
 - [Phase 07-01]: Pricing split shape locked: PricingClient.tsx holds the byte-identical client body, [locale]/pricing/page.tsx is a thin server wrapper -- plan 07-09 works against this shape
 - [Phase 07-02]: Ambiguity resolution: nav.* namespace priority resolves same-English-value disagreement in the app's own catalogue (44/747 terms), e.g. Goals->Objetivos over the majority Metas, Trends kept-English over Tendencias
 - [Phase 07-02]: Glossary size (747 rows) kept unfiltered beyond the plan's literal syntactic candidate filter, to preserve mechanical/non-curated derivation
+- [Phase 07-03]: Migrated 6 components' internal next/link usage to the locale-aware Link (src/i18n/navigation.ts) -- Gate 3 requires the tree to already be free of next/link-plus-internal-href, and no prior plan had wired the navigation.ts contract into a consuming component
+- [Phase 07-03]: Gate 2's translation-status inference (es === {} -> PENDING/warn-only; any es key -> enforce fully, bidirectionally) replaces a shared allowlist so nine Wave 3/4 plans across two waves never edit the same config file
 
 ### Pending Todos
 
@@ -202,6 +205,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-19T18:22:59.623Z
-Stopped at: Completed 07-02-PLAN.md (glossary + Spanish voice contract)
+Last session: 2026-08-19T18:43:54.465Z
+Stopped at: Completed 07-03-PLAN.md (i18n CI gates and locale-aware harness)
 Resume file: None
