@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 7 context gathered
-last_updated: "2026-08-02T18:51:06.052Z"
-last_activity: 2026-08-02 -- Phase 07 planning complete
+stopped_at: Phase 7 plans revised against restated requirements
+last_updated: "2026-08-19T00:00:00.000Z"
+last_activity: 2026-08-02 -- Phase 07 execution started
 progress:
   total_phases: 7
   completed_phases: 3
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-12)
 
 **Core value:** Every page reads as unmistakably El Portal (ink-blue brand system) and describes the app truthfully.
-**Current focus:** Phase 6 — security headers
+**Current focus:** Phase 07 — spanish-localization
 
 ## Current Position
 
-Phase: 6 — Security Headers
-Plan: Not started
-Status: Ready to execute
+Phase: 07 (spanish-localization) — EXECUTING
+Plan: 1 of 16
+Status: Executing Phase 07
 
   Phase 5 closed 2026-08-01: verification `passed`, 7/7 plans, all 3 goal-level
   gaps re-measured closed, 6/6 human-verification items resolved (0 blocked)
@@ -48,7 +48,8 @@ Status: Ready to execute
   - 05-REVIEW.md IN-01/IN-02 (two unused constants), WR-02/WR-03 (containment
     sweep suppression breadth and the .slice(0,15) cap).
 
-Last activity: 2026-08-02 -- Phase 07 planning complete
+Last activity: 2026-08-19 -- Phase 07 plans revised: switcher into the mobile nav,
+cross-locale hint for the cookie, lost-in-translation register
 
 Progress: [██████████] 100%
 
@@ -134,6 +135,16 @@ None yet.
 ### Blockers/Concerns
 
 [Issues that affect future work]
+
+- **OPEN DECISION (Phase 7, raised 2026-08-19): should the Spanish changelog be
+  cut?** D-09 currently translates all 33-35 entries and extends the
+  `el-portal-changelog` sync skill so every future sync translates too. That is
+  the largest single cost in the phase and the only one that recurs forever, on
+  the lowest-value surface for reaching Spanish readers. Recommended alternative:
+  Spanish page chrome over English entry bodies with a visible notice, which
+  removes the drift problem rather than automating around it. Plans 07-12 and
+  07-14 are unchanged pending the answer — scaling scope down is the design
+  owner's call, not the executor's.
 
 - Privacy hosting-region claim (e.g. a specific city) is NOT verified in app code — confirm with the user / Supabase dashboard before asserting it (affects Phase 3 / LEGAL-04).
 - No automated test suite exists — verification relies on `tsc`, ESLint, `next build`, and manual visual/a11y review (affects Phase 4 / QUAL-02).

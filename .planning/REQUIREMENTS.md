@@ -67,12 +67,12 @@ Requirements for this milestone. Each maps to a roadmap phase.
 ### Internationalisation (Phase 7)
 
 - [ ] **I18N-01**: Every user-facing string on all 8 routes and in shared chrome (Navbar, Footer, CTA, cards) resolves through a message catalogue rather than being hardcoded in a component, for both `en` and `es`
-- [ ] **I18N-02**: `/` negotiates locale from `Accept-Language`; **no other URL auto-redirects by language**. Precedence is URL prefix → `NEXT_LOCALE` cookie → `Accept-Language` → `en`, so an explicit human choice always outranks a browser guess
-- [ ] **I18N-03**: A language switcher is reachable from every page (nav + footer), meets the 44px touch target from RESP-03, and persists the chosen locale
+- [ ] **I18N-02**: `/` negotiates locale from `Accept-Language`; **no other URL auto-redirects by language**. Precedence is URL prefix → `NEXT_LOCALE` cookie → `Accept-Language` → `en`, so an explicit human choice always outranks a browser guess. Outside `/`, a stored choice is honoured by a dismissible in-page hint offering the other locale's twin URL, never by a redirect, and never shown before a choice has been made
+- [ ] **I18N-03**: A language switcher is reachable from every page in the nav at every viewport — the desktop actions row above 768px, the hamburger panel below it — plus the footer, meets the 44px touch target from RESP-03, and persists the chosen locale
 - [ ] **I18N-04**: English URLs are unchanged — `localePrefix: "as-needed"` means `/pricing` stays `/pricing` and Spanish lives at `/es/pricing`. No existing URL 301s
 - [ ] **I18N-05**: Each page emits `hreflang` alternates for `en`/`es` plus `x-default`, per-locale `<title>`/`<meta description>`/OG tags, and `sitemap.xml` covers both locales
 - [ ] **I18N-06**: All 8 routes × 2 locales remain statically prerendered (`○` in build output) — `generateStaticParams` **and** `setRequestLocale` are both present, so no route silently falls back to dynamic rendering
-- [ ] **I18N-07**: Spanish copy uses the `tú` register with the subject pronoun always omitted (`Empieza tu primera Versión`, never `Tú empiezas…`), infinitive for CTAs and buttons, and `tú` conjugation for prose. Spain-flavoured Spanish is intended — `vosotros` and peninsular vocabulary are fine. The catalogue contains no `usted`/`ustedes` and no written subject pronouns; register is consistent across every route including legal copy
+- [ ] **I18N-07**: Spanish copy uses the `tú` register with the subject pronoun always omitted (`Empieza tu primera Versión`, never `Tú empiezas…`), infinitive for CTAs and buttons, and `tú` conjugation for prose. Spain-flavoured Spanish is intended — `vosotros` and peninsular vocabulary are fine. The catalogue contains no `usted`/`ustedes` and no written subject pronouns; register is consistent across every route including legal copy. Any string whose English effect — a pun, a rhythm, a double meaning, a term of art — does not survive into Spanish ships as the best available Spanish AND is recorded in `TRANSLATION-FLAGS.md` for the design owner to re-write by hand
 
 ### Cross-Cutting Quality
 

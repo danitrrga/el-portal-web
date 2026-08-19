@@ -194,6 +194,9 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 |---|---|---|
 | Detection | Negotiate on `/` only | Google: *"Avoid automatically redirecting users from one language version of a site to a different language version."* Googlebot crawls from the US and sends **no** `Accept-Language`, so blanket redirects can leave one locale permanently unindexed. |
 | Precedence | URL prefix → `NEXT_LOCALE` cookie → `Accept-Language` → `en` | An explicit human choice must outrank a browser guess. This is next-intl's native order. |
+| Cookie outside `/` | Honoured by a dismissible in-page hint, never by a redirect | Redirecting an English path on a cookie forces `Vary: Cookie` and takes every English route out of full-page CDN caching on an all-static build. The choice is honoured and visible without paying that. Revised 2026-08-19. |
+| Switcher placement | Nav on every viewport (desktop row above 768px, hamburger panel below) plus the footer | Revises D-11's desktop-nav-only rule: footer-only on mobile makes changing language a scroll-to-the-bottom action on the viewport where pages are longest. Revised 2026-08-19. |
+| Lost wordplay | Recorded in `TRANSLATION-FLAGS.md`, never silently flattened | Spanish here is a re-write in the brand voice, so departure from the English is expected; the failure mode is a line whose effect dies quietly and nobody learns it. Added 2026-08-19. |
 | URL shape | `localePrefix: "as-needed"` — `/pricing` (en), `/es/pricing` (es) | Zero existing URLs move; no 301s, no re-crawl, no lost backlinks. |
 | Library | `next-intl@^4.13` | Declares `next: ^16.0.0` in `peerDependencies` — real Next 16 support, App-Router-native, RSC-first. |
 | Scope | All 8 routes + shared chrome + SEO metadata | Includes legal and changelog — see risks. |
@@ -202,8 +205,8 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 **Success Criteria** (what must be TRUE):
 
   1. Visiting `/` with a Spanish-preferring browser serves Spanish; with any other browser, English. No other URL auto-redirects by language.
-  2. A visible language switcher exists in the nav and footer on every page, and the choice it sets survives navigation and outranks the browser header on subsequent visits.
-  3. Every existing English URL resolves unchanged, with no redirect and byte-identical routing.
+  2. A visible language switcher exists in the nav on every viewport — the desktop actions row above 768px, the hamburger panel below it — and in the footer on every page. The choice it sets survives navigation and outranks the browser header on subsequent visits.
+  3. Every existing English URL resolves unchanged, with no redirect and byte-identical routing. A reader who has explicitly chosen Spanish and then opens an English URL directly is offered the Spanish twin by a dismissible in-page hint — never by a redirect, and never before an explicit choice has been made.
   4. Every page emits `hreflang` alternates for `en` and `es` plus `x-default`, and `sitemap.xml` lists both locales.
   5. Per-locale `<title>`, `<meta name="description">` and OG/Twitter tags — no page inherits English metadata while rendering Spanish.
   6. All 8 routes × 2 locales still prerender as static (`○` in the build output). No route silently becomes dynamic.
@@ -217,6 +220,8 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
   - **Static rendering is the sharp edge.** next-intl needs **both** `generateStaticParams` *and* `setRequestLocale`. Omit the latter and it reads `headers()`, silently dropping pages to dynamic — which would undo the all-static build and collide with Phase 6's CSP.
   - **Next 16 renamed `middleware.ts` → `app/proxy.ts`** (Node runtime, routing-scoped). Locale negotiation belongs there. Any Phase 6 CSP work that also lands in `proxy.ts` will share the file — see sequencing.
   - **Changelog is an ongoing cost, not a one-off.** 35 entries / 944 lines, and the `el-portal-changelog` skill syncs new entries from the app repo continuously. Without a translation step in that workflow, the Spanish changelog silently drifts out of parity. Needs a decision: translate on sync, or mark the changelog English-only with a notice.
+
+    **OPEN — recommended deletion, awaiting the design owner (raised 2026-08-19).** D-09 currently takes the translate-and-extend-the-sync-skill path, and it is the single largest and the only permanently recurring cost in the phase: plan 07-14 in full, most of 07-12, plus a translation step wired into every future changelog sync forever. Release notes are also the lowest-value surface for reaching a Spanish audience. The recommendation is to cut `/es/changelog` to Spanish page chrome over English entry bodies with a visible notice — which deletes the drift problem outright instead of engineering around it — and the cited entry count discrepancy (the plans say 35, the codebase has 33 `version:` occurrences) becomes moot. **Not acted on:** scaling scope down is the design owner's call, so D-09 stands and plans 07-12/07-14 are unchanged until it is answered.
   - **Legal text carries meaning risk.** `/privacy` + `/terms` are 465 lines where a mistranslation has consequences. Decide whether machine translation is acceptable or whether the Spanish version needs human review — and whether English remains authoritative.
   - **Brand voice.** `.planning/codebase/design/BRAND.md` defines a specific register and anti-words. Those constraints need a Spanish equivalent, or the translation will read like a different product.
 

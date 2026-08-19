@@ -146,9 +146,55 @@ in ROADMAP.md's decision table. They are inputs, not open questions:
   languages — a well-documented i18n anti-pattern (which flag represents Spanish?).
   Text is unambiguous and needs no image assets.
 
-- **D-11: Nav on desktop, footer on all viewports, 44px minimum target.** Inherits
-  RESP-03 from Phase 5 — the touch-target suite runs against both locales, so a
-  switcher below 44px fails CI rather than shipping.
+- **D-11 (revised 2026-08-19): Nav on every viewport — the desktop actions row
+  above 768px and the hamburger panel below it — plus the footer, 44px minimum
+  target.** Inherits RESP-03 from Phase 5 — the touch-target suite runs against
+  both locales, so a switcher below 44px fails CI rather than shipping.
+
+  The original decision put the switcher in the nav on desktop only and sent
+  mobile readers to the footer. Revised because footer-only on mobile makes
+  changing language a scroll-to-the-bottom action on exactly the viewport where
+  the pages are longest — present, but not reachable in the sense the
+  requirement means. The footer mount stays as the bottom-of-page fallback, and
+  it remains the instance the touch-target suite measures at 390px. The panel
+  instance only exists in the DOM while the menu is open, so it needs its own
+  measurement and its own close-on-navigate assertion.
+
+- **D-13 (new 2026-08-19): a stored locale choice is honoured on English URLs by
+  a dismissible in-page hint, not by a redirect.** Negotiating at `/` only keeps
+  every English URL redirect-free and keeps Googlebot — which sends no
+  `Accept-Language` — seeing English everywhere, but it also means the
+  `NEXT_LOCALE` cookie, an explicit human choice, is consulted nowhere else. The
+  gap is real: pick ES, then open a bookmarked `/pricing`, and you get English
+  with no sign Spanish exists.
+
+  Redirecting on the cookie would close it and costs too much: an English path
+  that varies by cookie needs `Vary: Cookie`, which takes every English route out
+  of full-page CDN caching on a build that is entirely static. The hint honours
+  the choice and makes it visible without paying that, and it renders only when a
+  choice was actually made — no cookie, no hint. That last part is not a detail:
+  a hint shown to a first-time visitor is the silent browser-override this phase
+  exists to avoid.
+
+  The mirror case — cookie `en` while reading `/es/*` — is deliberately not
+  built. Getting there takes an explicit link, and the switcher is already in the
+  nav on that page.
+
+- **D-14 (new 2026-08-19): a line whose English effect does not survive into
+  Spanish is recorded, not silently flattened.** Spanish copy here is a re-write
+  in the brand voice, so departing from the English is expected and good. The
+  failure mode is narrower and quieter: a line carried by a pun, a rhythm, a
+  double meaning or a term of art gets rendered as a flat accurate sentence, the
+  catalogue looks complete, and the loss is never surfaced.
+
+  Every translation plan appends to
+  `.planning/phases/07-spanish-localization/TRANSLATION-FLAGS.md` — key, English,
+  the Spanish actually shipped, what was lost, which trigger fired — and ends its
+  summary with `TRANSLATION FLAGS: n`. Plan 07-16 fails on a missing line, never
+  on a low count; a gate that demanded rows would manufacture them. The shipped
+  Spanish is always real copy: an empty key or a placeholder is a defect, because
+  the site has to read correctly whether or not the design owner ever rewrites
+  the line.
 
 - **D-12: Switching locale preserves the current route.** `/es/pricing` ↔ `/pricing`,
   never a bounce to the homepage. next-intl's `Link`/`usePathname` handle this; the
