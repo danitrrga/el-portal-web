@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-04-PLAN.md (shared chrome, language switcher, cross-locale hint)
-last_updated: "2026-08-19T19:47:18.915Z"
+stopped_at: Completed 07-05-PLAN.md (/manifesto extracted, D-06 register approved, glyph verdict Outcome A, Version/Cycle truthfulness fix)
+last_updated: "2026-08-19T20:38:44.902Z"
 last_activity: 2026-08-19
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 29
-  completed_plans: 17
+  completed_plans: 18
   percent: 43
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 07 (spanish-localization) — EXECUTING
-Plan: 5 of 16
+Plan: 6 of 16
 Status: Ready to execute
 
   16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
@@ -81,7 +81,7 @@ Status: Ready to execute
 
 Last activity: 2026-08-19
 
-Progress: [██████░░░░] 59%
+Progress: [██████░░░░] 62%
 
 ## Performance Metrics
 
@@ -120,6 +120,7 @@ Progress: [██████░░░░] 59%
 | Phase 07 P02 | 35min | 4 tasks | 6 files |
 | Phase 07 P03 | 20min | 3 tasks | 11 files |
 | Phase 07 P04 | 53min | 4 tasks | 12 files |
+| Phase 07 P05 | 41min | 4 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -168,6 +169,9 @@ Recent decisions affecting current work:
 - [Phase 07-03]: Gate 2's translation-status inference (es === {} -> PENDING/warn-only; any es key -> enforce fully, bidirectionally) replaces a shared allowlist so nine Wave 3/4 plans across two waves never edit the same config file
 - [Phase 07-04]: Fixed a switcher-caused 768px nav overflow (32.6px over in English, 140.6px over in Spanish) via mid-range-only responsive gap classes plus shortening nav.changelog to Cambios (flagged as trigger-4)
 - [Phase 07-04]: Fixed src/proxy.ts syncCookie bug: an explicit NEXT_LOCALE=es choice was being silently overwritten to en on every unprefixed English route, defeating LocaleHint's entire purpose; restored the es cookie on unprefixed-route responses only
+- [Phase 07-05]: D-06 register checkpoint: approve. /es/manifesto register propagates unchanged to Waves 3-4; later es/manifesto.json sentence edits don't reopen the gate, only a rule change does.
+- [Phase 07-05]: Glyph verification Outcome A (no change needed): scripted document.fonts.check + measureText fallback-detection + scrollHeight/clientHeight clipping, with a comparative accented-vs-unaccented control proving the small overshoot is a pre-existing .display line-height property, not accent-specific.
+- [Phase 07-05]: Card 02's Version/Cycle copy corrected in two stages outside this plan's own Task 1 draft: cdca004 (upstream, 8 files) removed a fixed-90/15-day factual error; this plan's 3d975dc then replaced the still-vague replacement with the actual concept (Version = period an identity is set for, Cycle = sprint inside it). Binding rule recorded in SPANISH-VOICE.md for Waves 3-4.
 
 ### Pending Todos
 
@@ -208,6 +212,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-19T19:47:18.909Z
-Stopped at: Completed 07-04-PLAN.md (shared chrome, language switcher, cross-locale hint)
+Last session: 2026-08-19T20:38:44.895Z
+Stopped at: Completed 07-05-PLAN.md (/manifesto extracted, D-06 register approved, glyph verdict Outcome A, Version/Cycle truthfulness fix)
 Resume file: None

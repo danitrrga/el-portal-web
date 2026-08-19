@@ -225,7 +225,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 4/16 plans executed
+**Plans:** 5/16 plans executed
 
 Plans:
 
@@ -238,7 +238,7 @@ Plans:
 
 - [x] 07-03-PLAN.md — Both-locale Playwright harness (16 routes, mirrored KU suppressions) and the register / parity / locale-aware-Link CI gates
 - [x] 07-04-PLAN.md — `common` namespace (Navbar, Footer, CTASection) and the EN / ES language switcher
-- [ ] 07-05-PLAN.md — `/manifesto` translation, accented-uppercase glyph verification, and the blocking register-approval checkpoint (D-06)
+- [x] 07-05-PLAN.md — `/manifesto` translation, accented-uppercase glyph verification, and the blocking register-approval checkpoint (D-06)
 
 **Wave 3** *(blocked on Wave 2)* — per-surface extraction and translation
 
