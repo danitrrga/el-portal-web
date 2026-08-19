@@ -1,6 +1,8 @@
+import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ChangelogItem, type ChangelogEntry } from "@/components/ChangelogItem";
+import { buildPageMetadata } from "@/lib/seo";
 
 const SECTION_BG = "#04060c";
 const FG_STRONG = "#f4f6fb";
@@ -885,7 +887,23 @@ const ENTRIES: ChangelogEntry[] = [
   },
 ];
 
-export default function ChangelogPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata(locale, "changelog");
+}
+
+export default async function ChangelogPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="relative min-h-viewport w-full" style={{ background: SECTION_BG }}>
       {/* Atmospheric top-light radial — same recipe as CTA / Methodology */}

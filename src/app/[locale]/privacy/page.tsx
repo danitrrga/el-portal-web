@@ -1,14 +1,26 @@
-import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReadingLayout from "@/components/ReadingLayout";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    title: "Privacy Policy — El Portal",
-    description: "How El Portal handles your data and protects your privacy.",
-};
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    return buildPageMetadata(locale, "privacy");
+}
 
-export default function PrivacyPage() {
+export default async function PrivacyPage({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    setRequestLocale(locale);
+
     return (
         <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-viewport">
             <div

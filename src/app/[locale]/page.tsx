@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import VCDSection from "@/components/hero/VCDSection";
@@ -6,8 +7,25 @@ import SystemBlueprintSection from "@/components/SystemBlueprintSection";
 import MethodologyPreviewSection from "@/components/MethodologyPreviewSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import { buildPageMetadata } from "@/lib/seo";
 
-export default function Home() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata(locale, "home");
+}
+
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-viewport">
       {/* Background grid texture */}

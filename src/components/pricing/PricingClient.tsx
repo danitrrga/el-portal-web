@@ -145,7 +145,7 @@ const faqs = [
 
 /* ─── Page ────────────────────────────────────────────────────────── */
 
-export default function PricingPage() {
+export default function PricingClient() {
     return (
         <div
             className="relative w-full min-h-viewport"

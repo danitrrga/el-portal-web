@@ -101,7 +101,7 @@ async function runAssertions() {
     );
     record(
       `[${al}] / location ends in /es`,
-      !!location && new URL(location).pathname === "/es",
+      !!location && new URL(location, BASE).pathname === "/es",
       `got location=${location}`,
     );
   }
@@ -164,7 +164,7 @@ async function runAssertions() {
     const location = res.headers.get("location");
     let parsed;
     try {
-      parsed = location ? new URL(location) : null;
+      parsed = location ? new URL(location, BASE) : null;
     } catch {
       parsed = null;
     }

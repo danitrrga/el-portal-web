@@ -1,5 +1,7 @@
+import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { buildPageMetadata } from "@/lib/seo";
 
 const SECTION_BG = "var(--color-ep-section-bg)";
 const FG_STRONG = "var(--color-ep-fg-strong)";
@@ -182,7 +184,23 @@ function PrincipleCard({ p }: { p: Principle }) {
   );
 }
 
-export default function ManifestoPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata(locale, "manifesto");
+}
+
+export default async function ManifestoPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div
       className="relative min-h-viewport w-full"

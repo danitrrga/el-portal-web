@@ -1,14 +1,26 @@
-import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReadingLayout from "@/components/ReadingLayout";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    title: "Terms of Service — El Portal",
-    description: "Terms governing your use of El Portal.",
-};
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    return buildPageMetadata(locale, "terms");
+}
 
-export default function TermsPage() {
+export default async function TermsPage({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    setRequestLocale(locale);
+
     return (
         <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-viewport">
             {/* Background grid texture */}

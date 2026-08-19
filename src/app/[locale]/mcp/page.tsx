@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CopyButton } from "@/components/CopyButton";
+import { buildPageMetadata } from "@/lib/seo";
 
 /* ─── Data ────────────────────────────────────────────────────────── */
 
@@ -291,7 +293,23 @@ const tocItems = [
 
 /* ─── Page ────────────────────────────────────────────────────────── */
 
-export default function McpPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  return buildPageMetadata(locale, "mcp");
+}
+
+export default async function McpPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="relative w-full bg-zinc-950 min-h-viewport">
       <Navbar />
