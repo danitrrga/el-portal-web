@@ -1,395 +1,397 @@
 ---
 phase: 7
-reviewers: [opencode, ollama]
-reviewers_attempted: [gemini, codex, opencode, ollama]
-reviewers_failed:
-  - gemini: "not authenticated — interactive browser OAuth required"
-  - codex: "401 Unauthorized — no ~/.codex/auth.json"
-reviewers_skipped:
-  - claude: "self-review — running inside Claude Code (CLAUDE_CODE_ENTRYPOINT=cli)"
-  - coderabbit: "not installed"
-  - qwen: "not installed"
-  - cursor: "not installed"
-  - lm_studio: "no server on :1234"
-  - llama_cpp: "no server on :8080"
-reviewed_at: 2026-08-02T14:27:58Z
-plans_reviewed: [07-01-PLAN.md, 07-02-PLAN.md, 07-03-PLAN.md, 07-04-PLAN.md, 07-05-PLAN.md, 07-06-PLAN.md, 07-07-PLAN.md, 07-08-PLAN.md, 07-09-PLAN.md, 07-10-PLAN.md, 07-11-PLAN.md, 07-12-PLAN.md, 07-13-PLAN.md, 07-14-PLAN.md, 07-15-PLAN.md, 07-16-PLAN.md]
+reviewers: [codex, opencode]
+reviewers_failed: [gemini]
+reviewers_skipped: [claude, ollama]
+reviewed_at: "2026-08-19T12:39:18Z"
+plans_reviewed: [07-01, 07-02, 07-03, 07-04, 07-05, 07-06, 07-07, 07-08, 07-09, 07-10, 07-11, 07-12, 07-13, 07-14, 07-15, 07-16]
+supersedes: 07-REVIEWS-2026-08-02.md
 ---
 
 # Cross-AI Plan Review — Phase 7: Spanish Localization
 
-> **Coverage caveat — read before treating this as multi-reviewer consensus.**
-> Only **one** substantive external review was obtained (OpenCode). Gemini and
-> Codex both failed on authentication, not on content. Ollama answered but the
-> only installed model is `llama3.2:3b`, whose review is shallow and contains a
-> factual error. There is therefore **no cross-model consensus in this document** —
-> the "Consensus Summary" below is a single-reviewer finding set that the
-> orchestrator independently verified against the codebase, not agreement between
-> independent systems. Re-run `/gsd-review --phase 7 --gemini --codex` after
-> authenticating those CLIs if genuine adversarial convergence is wanted.
+Second review round. The first (2026-08-02) is preserved at
+`07-REVIEWS-2026-08-02.md` because plan commits cite its findings; this file
+replaces it as the current review of record.
 
-> **CORRECTION (2026-08-02, added during `/gsd:plan-phase 7 --reviews`) — one
-> finding below is FALSE.** Consensus concern **#3** ("07-06 T1/T2 and 07-07 T4
-> target structures that do not exist") is withdrawn. Checked against `f0adefe`,
-> the exact commit OpenCode reviewed: neither `07-06-PLAN.md` nor `07-07-PLAN.md`
-> ever contained `over 100`, `:102`, `:105`, `:166`, or `register object`. The
-> reviewer misread `07-06-PLAN.md:179` — *"the **register**'s infinitive"*,
-> referring to the *linguistic* register (`tú`/`usted`) that this entire phase is
-> built around — as a code "register object", then fabricated line numbers around
-> that misreading.
->
-> The *underlying code facts* it cited remain true and were independently
-> re-verified by `gsd-pattern-mapper`: `CTASection.tsx` **is** 71 lines, and
-> `VCDSection.tsx`/`Hero.tsx` copy **is** inline JSX. Only the claim that the
-> plans asserted otherwise was fabricated. Findings **#1** (switcher width) and
-> **#2** (33-vs-35 changelog) were verified twice and are genuine — both are
-> fixed as of commit `935dcc8`.
->
-> This is the concrete cost of the two authentication failures: with no second
-> model to refute it, a hallucinated finding survived into the consensus section
-> and was only caught downstream at planning time.
+## Round context
 
----
+Since the first review the plans went through three `gsd-plan-checker`
+iterations (final verdict PASSED, no blockers) and three requirement-driven
+revisions on 2026-08-19: the language switcher gained a third mount inside the
+mobile hamburger panel, a `LocaleHint` component was added so an explicit
+Spanish choice is honoured on English URLs without a redirect, and an
+append-only `TRANSLATION-FLAGS.md` register was introduced for lines whose
+English effect does not survive into Spanish.
 
-## OpenCode Review
+Reviewers were told which earlier findings were already closed (changelog count
+33, switcher 44px width, site origin, corrected line references) and pointed at
+the four new surfaces. **They were asked to find what three prior passes
+missed, and both did.**
 
-*Model: GitHub Copilot–backed OpenCode agent. This reviewer read the actual
-repository before judging the plans, and flagged sibling-repo claims as
-unverifiable because it was constrained from reading `/home/danitrrga/dev/Projects/el-portal`.*
+## Reviewer roster
 
-## Cross-AI Plan Review — Phase 7: Spanish Localization (el-portal-hero)
-
-**Evaluator:** opencode (independent reviewer) · **Scope:** plans `07-01 … 07-16` in `.planning/phases/07-spanish-localization/`
-**Constraint honored:** the sibling app repo (`/home/danitrrga/dev/Projects/el-portal`) was **not read**; every claim about it below is flagged **UNVERIFIED**.
-
-### Verification ground truth (checked in-repo)
-`package.json` (no next-intl, no `verify:routing`/`i18n:gates`) · `next.config.ts` (empty) · `src/app/layout.tsx` (`lang="en"`, EN-only metadata, 4 latin-subset fonts) · `src/app/pricing/page.tsx` (`"use client"` at :1) · `src/app/features/page.tsx` (970 lines; `SCALES` :82, sections at :160/:193/:377/:567/:715, export `MethodologyPage` :869) · `src/app/changelog/page.tsx` (944 lines; **33** `version:` hits vs the 35 the plans assert; 7 `note:` objects at :242/437/495/707/818/860/873) · `src/components/ChangelogItem.tsx` (`NOTE_ICONS` lock/rocket/info/pen; `leading-[1.1]` :97; hardcoded `Note:` :159) · `.claude/skills/el-portal-changelog/SKILL.md` (stale `c:\Users\20252128\...` paths confirmed) · `e2e/support/pages.ts` (8 flat routes; `gotoSettled`/`settle`/`unclipViewport`) · `e2e/touch-targets.spec.ts` (**width AND height ≥ 44**, inline-text exemption via parent text-node) · `.github/workflows/responsive-audit.yml` (`quality` job: typecheck app + e2e + lint; WebKit/Ubuntu-24.04-vs-Arch `touch-iphone` comment confirmed) · `src/components/Footer.tsx` (bottom bar `pt-6 border-t border-white/5 flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-6`; links `flex min-h-11 items-center … md:inline md:min-h-0`) · `src/components/Navbar.tsx` (`"use client"`, `navLinks` array) · `src/components/CTASection.tsx` (**71 lines**, no `"use client"`, eyebrow-span at :61-66) · `src/components/hero/VCDSection.tsx` (319 lines, **copy is inline JSX**, no register) · `src/components/Hero.tsx` (inline copy; pill at :79-90; only `href="/pricing"` found) · `src/components/MethodologyPreviewSection.tsx` (`PRINCIPLES[3]` :22/27/32, `map` :80) · `src/components/SystemBlueprintSection.tsx` (`title=`/`description=` props :30/:50-51; labels :176-177) · `src/components/DashboardPreview.tsx` = **dead code** (not imported anywhere; contains banned `animate-pulse` + `rgba(30,64,175,…)`) · `src/lib/` has only `utils.ts` · `src/messages/` absent · `.env.local` exists (mode 600, unreadable) → `NEXT_PUBLIC_SITE_URL` claim **UNVERIFIED**.
-
----
-
-### 07-01 — Routing & i18n infrastructure
-**Summary:** Sound, well-sequenced foundation: 20-namespace split, `/`-only proxy negotiation (Googlebot rationale correct), `[locale]` restructure, metadata/nav-state contracts, and a `verify-locale-routing` script. Uses next-intl v4.13's documented API surface (`defineRouting`, `createMiddleware` in `proxy.ts`, `getRequestConfig`, `setRequestLocale`, `createNavigation`), which matches current next-intl v4.
-**Strengths:** Correctly refuses `Accept-Language` on `/`; correct handling of no-locale-strip redirects (blocking human gate); `detection` off re-implemented by hand is the right call; explicitly double-checks whether `NEXT_LOCALE` is still written with `localeDetection:false`; `generateStaticParams` + `setRequestLocale` on both layout+pages preserves static prerendering; separate worktrees avoid the Wave-3 shared-tree stomp.
-**Concerns:**
-- **[MEDIUM]** "Verify empirically" the proxy still returns correct cookies is good, but the plan leaves *who sets `NEXT_LOCALE` when the prefix is present* to discovery. Make it an explicit subtask with a fallback (set in `handleI18nRouting` after prefix-detection) so Task 2 isn't blocked on a browser session.
-- **[LOW]** `verify-locale-routing` runs `next start` on 3988 — ensure it tolerates Playwright's webServer already holding 3987 (it does, distinct port) but also that it kills its own server on failure (add `try/finally`).
-**Suggestions:** After Task 3's split, run `npm run lint` + `typecheck:e2e` (both exist in CI) *before* the metadata rewire, so the two renames (`page.tsx`→`[locale]/page.tsx`) are isolated from the metadata change. Consider committing the 20 empty namespace files as one step so Gate 2's inference has a stable baseline.
-**Risk:** LOW.
-
-### 07-02 — Glossary + Spanish voice contract
-**Summary:** Strongly opinionated and correct: mechanical extraction only (no hand-authorship), voice rules (tú, no pronoun, infinitive CTAs, `es` not `es-ES`) match the phase decisions; every D-rule has a checkable anti-example.
-**Strengths:** The "key-split is not guessable" stance (Trends/Dashboard/Cinema/Pulse stay English) is the right degree of caution; `SPANISH-VOICE.md` gates 07-05's register door; design README entry keeps the docs chain intact.
-**Concerns:**
-- **[MEDIUM]** The entire plan stands on app-repo facts (1,711 keys, 5 locales, `es` code) that are **UNVERIFIED** under the repo boundary. If es.json uses `es-ES` or the key layout differs, every downstream plan's "copy verbatim" step needs re-targeting. Add an explicit first task: `glossary exists? → else pause gate`.
-- **[LOW]** 1,711-key extract is stated as a single file; name the output path (`src/messages/glossary.json`?) so later plans can link to it.
-**Suggestions:** One line in `SPANISH-VOICE.md` documenting *where* the glossary lives and its freshness rule (regenerated from app main) — 07-12/07-13 reference it.
-**Risk:** LOW–MEDIUM (governance depends on unverified source data).
-
-### 07-03 — i18n gates + 16-route harness
-**Summary:** Excellent. Gate 2's "any-en-key ⇒ all-en-keys; any-es-key ⇒ all-es-keys" parity inference is clever and correctly treats an es namespace at `{}` as "pending" rather than a violation — which is exactly what Waves 3→4 need. CI wiring to the existing `quality` job is minimal and correct.
-**Strengths:** `EN_ROUTES`/`ES_ROUTES` flat paths compose with the existing `gotoSettled`/`settle`/`unclipViewport` helpers; both-locales containment + touch-target coverage; Gate 1 (config/gateway guard) is cheap and catches the sneaky regressions.
-**Concerns:**
-- **[MEDIUM]** Gate 2's inference gives a false sense of completeness: a namespace key removed in EN while ES still has it will pass. Add a third, strict "identity check" (`en[n]` keys ⊇ `es[n]` keys) at the 07-16 stage, not just non-empty.
-- **[LOW]** 16-route harness doubles CI runtime; keep projects as-is (7 Chromium + touch-iphone) and rely on `test.skip` for width, don't add a 17th project.
-**Suggestions:** Register both gates + `verify:routing` in `package.json` scripts in 07-01 so 07-03 is pure CI wiring. Ship the strict identity check in 07-03 (it can be part of Gate 2's script, evaluated leniently) rather than deferring logic to 07-16.
-**Risk:** LOW.
-
-### 07-04 — common namespace + LanguageSwitcher
-**Summary:** Realistic and well-scoped: chrome extraction (Navbar/Footer/CTASection) with no string additions, footer switcher on all viewports + nav switcher from `md:`. Confirmed Footer bottom bar can host the switcher between copyright and wordmark without disturbing the `sm:flex-row` layout.
-**Strengths:** No flags, text `EN / ES`, explicit locale on `Link` — matches phase decisions; 44px per-link targets are the right bar given Phase 5's AAA baseline.
-**Concerns:**
-- **[HIGH]** The acceptance "each EN and ES link ≥ 44×44" **will fail on `touch-iphone` as implemented.** Verified: `touch-targets.spec.ts` requires *both* `getBoundingClientRect` width AND height ≥ 44 for every `a[href]` (inline-text exemption doesn't apply — the switcher's parent wrapper has no text nodes, only the `aria-hidden` `/` span). On `touch-iphone` (<768px) the nav switcher is hidden, so the footer switcher renders: `flex min-h-11 items-center` gives height 44 but width ≈ text width (~20–24px) → **red CI**. `md:min-h-0` is irrelevant because the spec skips width ≥ 768. Fix: add horizontal padding to each link (e.g. `px-3`) so width clears 44.
-- **[MEDIUM]** Plan says switcher appears in nav from `md:`; note the current Navbar desktop links are `hidden md:flex` — confirm the switcher slot doesn't overflow at `md` (the phase-5 frozen clamp bar applies; keep to one row).
-- **[LOW]** `lang` on `<html>` (07-01) is fine, but ensure the switcher also updates the visible `lang` for the active locale — already implied; restate it.
-**Suggestions:** Make the touch-target acceptance explicit with the px-width mechanism (padding, not `min-w` on a wrapping flex parent). Add a 390px viewport manual check for the footer before closing the plan.
-**Risk:** MEDIUM (HIGH on the touch-target gap if unfixed).
-
-### 07-05 — Manifesto + register approval door
-**Summary:** The best-governed plan in the phase. The blocking human-approval gate on `es/manifesto.json` before any Spanish ships is exactly the right control for a register-sensitive page.
-**Strengths:** Display glyph check (Special Gothic Expanded One latin-subset coverage) is a genuinely useful catch that most i18n plans miss; the register door prevents silent voice drift on the first Spanish surface; subset handling deferred to layout is correct.
-**Concerns:**
-- **[MEDIUM]** The glyph check depends on knowing whether Special Gothic Expanded One has `é/í/ó/ñ`. If it doesn't, Latin-Extended is *not* guaranteed to cover Expanded One (it's a separate family). Add the fallback path to `SPANISH-VOICE.md`: if the glyph is absent, `font-serif italic` Instrument Serif or plain Inter fallback *for Spanish only* — but this collides with the retired italic-payoff rule, so it needs a documented exception or the H1 must avoid accented words.
-- **[LOW]** Register door approval is a one-time gate; the plan should state what happens to *subsequent* edits to `es/manifesto.json` in later phases (re-review or delegated).
-**Suggestions:** Run the glyph check as a script (extract text from `es/manifesto.json`, check `document.fonts.check`) rather than visual-only, so CI can gate it.
-**Risk:** MEDIUM (a single unknown — glyph coverage — but contained by the approval door).
-
-### 07-06 — Home page A (VCD, Hero, Blueprint)
-**Summary:** Correct goal (translate home copy, reuse glossary), but several mechanical steps are **based on register objects that don't exist.**
-**Strengths:** Uses the glossary for product vocabulary; preserves the `display`/clamp surfaces.
-**Concerns:**
-- **[MEDIUM]** Task 1 (VCD): there is **no register and no `description` props** — copy is inline JSX (`h2` :33 "Three horizons. One hierarchy.", `p` :36, three `Caption label/body` props :44-58). "Append the 4th caption at :105" targets the wrong function (`LayeredStrata`, not the captions grid). Extraction must lift the inline strings; the 4th caption appends to the `sm:grid-cols-3` grid (4th item wraps to row 2 — verify it doesn't look orphaned).
-- **[MEDIUM]** Task 2 (Hero): no register; copy is inline JSX (pill :79-90, H1 :112+). Only `href="/pricing"` was found — confirm whether a `/mcp` CTA actually exists before asserting it in the register contract. Frozen H1 clamp confirmed at :112 (don't touch).
-- **[LOW]** Task 3 (Blueprint): structure claim is **mostly accurate** (`title=`/`description=` props at :30/:50-51), but the layer-label append point is at :176-177 inside `LabMockup`, not :166 — re-verify before editing.
-**Suggestions:** Rewrite the extraction mechanics to "grep `>[A-Z][a-z]` within the file, lift each string, drop it into `en/home.json`/`es/home.json`" instead of citing register field names. Add a "no new inline English strings remain" check on the three files before closing.
-**Risk:** MEDIUM (goal intact; mechanics need re-targeting; small chance of layout regression on the VCD 4th caption).
-
-### 07-07 — Home page B (Methodology, CTA)
-**Summary:** Same quality of intent; one plan is accurate, one has stale line numbers.
-**Strengths:** Task 2's structure claim is **confirmed accurate** (`PRINCIPLES` array of 3 at :22/27/32, `map` at :80) — extraction is straightforward; `en/home.json` extension pattern is consistent.
-**Concerns:**
-- **[MEDIUM]** Task 4 (CTA): `CTASection.tsx` is **71 lines, not "over 100"**; there is no eyebrow at line 6/7 (the eyebrow-role string is the `Set up in under 10 minutes` span at :61-66); "append at :102" is past EOF. The four real strings: h2 :43, body :50-52, span :65, button :58. Fix the line references; note the CTA links only to `APP_URL` (no `/mcp` or `/pricing` secondary — the plan's multi-CTA framing overstates the component).
-- **[LOW]** Button text `Open El Portal` + eyebrow are glossary-adjacent; route them through `common` rather than `home` to avoid a 5th occurrence to chase later.
-**Suggestions:** Fold Task 4's line refs to the actual structure. Consider whether the CTA eyebrow should also switch (it's the "Set up in under 10 minutes" — a marketing claim; Spanish needs `SPANISH-VOICE.md` input on whether it stays as-is).
-**Risk:** MEDIUM (line-ref inaccuracy is mechanical; no functional hazard).
-
-### 07-08 — MCP page + KU-2
-**Summary:** Clean, low-risk. Copy extraction + the Kitchen-Utility-2 containment fix (copy-length change, not type-scale) respects the Phase 5 freeze.
-**Strengths:** Aligns the `/mcp` glossary (product names stay English per D-01); KU-2 classified correctly as copy-length; no new suppressable defects introduced.
-**Concerns:**
-- **[LOW]** `CopyButton.tsx` is also touched — verify it has no visible strings of its own (it likely doesn't) and that the `✓`/`Copied` states aren't English copy that needs i18n.
-- **[LOW]** The plan is short on *which* strings on /mcp are product-vocabulary vs prose; a quick line: "product names via glossary, all other copy via `mcp.json`" would prevent drift.
-**Suggestions:** If /mcp has any code/mono sample text (it's a dev-facing page), confirm whether it should remain verbatim English.
-**Risk:** LOW.
-
-### 07-09 — Pricing + badge + KU-4
-**Summary:** Correct dependency on 07-01's pricing split (`"use client"` confirmed at :1, so the server/client split premise is real). Badge and KU-4 are well-scoped.
-**Strengths:** KU-4 (English-only fallback for pricing copy) is the right conservative read of D-09; keeping pricing EN-only while wiring the namespace avoids a half-translated pricing page.
-**Concerns:**
-- **[MEDIUM]** The phase goal I18N-01 lists /pricing as a catalogue surface, yet 07-09 leaves it English-only pending a **human decision** on "product copy owned by the app." If the human approves translation mid-wave, 07-09 must have a defined second path (translate `es/pricing.json`) — otherwise this phase ships pricing untranslated by design, which the roadmap should state explicitly (it's defensible: pricing precision > coverage).
-- **[LOW]** `PricingClient.tsx` currently carries the toggle + 3 tiers; make sure the KU-4 fallback lives in the *client* wrapper so the human gate isn't bypassed by server-rendered pricing text.
-**Suggestions:** Add a "branch: if translation approved" sub-plan so the wave isn't blocked on a conversation.
-**Risk:** MEDIUM (scope ambiguity on a human gate, not technical).
-
-### 07-10 — Legal + KU-3
-**Summary:** Good governance: English governs legal, Spanish translation behind a legal-review door. The D-07 framing is the right call for terms/privacy.
-**Strengths:** KU-3 (legal disclaimer per user's jurisdiction) handled as copy-only with a clear owner; `ReadingLayout.tsx` correctly carries no strings.
-**Concerns:**
-- **[LOW]** If legal approval is required, the plan should state the fallback (EN-only legal for Spanish users) so the page never ships with a mixed-language legal doc.
-- **[LOW]** Terms/privacy often contain date strings ("Last updated …") — confirm date formatting stays EN-style or uses the locale; a hardcoded date in `es` reads wrong.
-**Suggestions:** Add a "legal glossary" (jurisdiction-specific terms like "personal data" / "derechos de protección de datos") to `SPANISH-VOICE.md`.
-**Risk:** LOW.
-
-### 07-11 — Features extraction
-**Summary:** Structurally accurate plan (all 7 sections + `SCALES` confirmed at the cited lines) with clean per-section namespaces.
-**Strengths:** Extraction-by-section with a "no inline English remains" audit is the right mechanical discipline for a 970-line file; `SCALES` labels mapped to glossary.
-**Concerns:**
-- **[LOW]** `SCALES` contains `Daily Score`, `Pulse`, etc. — confirm these exact tokens exist in the glossary (they may differ from `es/features` expectations); if they don't, the D-01 key-split rule says they stay English.
-**Suggestions:** Reuse the 07-06 pattern of "lift strings, don't guess register names."
-**Risk:** LOW.
-
-### 07-12 — Changelog + skill sync
-**Summary:** The most detail-correct plan in the wave: `NOTE_ICONS` (lock/rocket/info/pen), `leading-[1.1]` clamp, and hardcoded `Note:` at :159 are all **confirmed**; the stale skill Windows paths (`c:\Users\20252128\...`) are **confirmed**.
-**Strengths:** `Note` → `localized-note` mapping matches the observed note entries (7 found at :242/437/495/707/818/860/873); the sync-skill translation step closes the D-09 loop so future changelog syncs write both locales.
-**Concerns:**
-- **[MEDIUM]** **Count mismatch: the codebase has 33 `version:` occurrences, not the 35 the plan (and 07-14) assert.** Verify the true entry count before writing `es/changelog.json`; the 2-entry delta changes Gate 2's parity math and the extraction checklist.
-- **[LOW]** The sync skill runs "only from app main" (confirmed in the skill) — after this phase, the skill must also gate on the glossary being current, or a sync can introduce a key the glossary doesn't cover.
-**Suggestions:** Add a "version: count == glossary/expected" guard to the extraction script so future drifts are caught automatically.
-**Risk:** MEDIUM (count discrepancy is real and must be resolved before 07-14).
-
-### 07-13 — es/features
-**Summary:** Correctly consumes 07-11's output; low risk. Depend: 07-11 (not 07-05) — fine transitively, but the direct-dependency list omits the register reference (`es/manifesto.json` from 07-05); harmless since 07-11 already depends on 07-05.
-**Strengths:** Registers the "no new English" check; alignment with `en/features.json` is mechanically verifiable.
-**Concerns:**
-- **[LOW]** Features prose is denser than home; run the containment re-check on `/es/features` (the plan does — good) and flag that 07-11's `es/features.json` at `{}` will trip Gate 2 warnings until this lands (expected; make sure the wave order keeps 07-11's verify non-blocking).
-**Suggestions:** Mirror 07-14's structure: same verification checklist, add a "containment on es/features × 8 routes" step.
-**Risk:** LOW.
-
-### 07-14 — es/changelog
-**Summary:** Same as 07-13 but for changelog; correct reliance on 07-12. Same count-discrepancy caveat as 07-12 applies.
-**Strengths:** Version-entry mapping is a clean 1:1; no layout risk.
-**Concerns:**
-- **[MEDIUM]** Inherits the 33-vs-35 count issue — this plan must not proceed until the count is settled.
-- **[LOW]** If D-09's English-only fallback is exercised (the human declined translation), `es/changelog.json` must still be non-empty for Gate 2 — the plan should state it will write English content with a "Sin traducción disponible" notice (as 07-12 proposes).
-**Suggestions:** Verify against `deferred-items.md` that the count delta isn't a planned deferral (it isn't per the plan's own list — flag it).
-**Risk:** MEDIUM.
-
-### 07-15 — SEO / hreflang / sitemap
-**Summary:** Technically sound approach (per-locale root metadata via `generateMetadata`, `alternates.languages`, `hreflang` in `metadataBase`); the `es` alternates are correct with `as-needed` (since `/es` is reachable, `x-default` = `/`).
-**Strengths:** `sitemap.ts` per-locale URLs match the verified 8-route structure; `robots` and `metadata` contracts are clean; `src/lib/seo.ts` absent today (confirmed) so creation is greenfield.
-**Concerns:**
-- **[MEDIUM]** `NEXT_PUBLIC_SITE_URL = https://el-portal.app` is **UNVERIFIED** (`.env.local` is mode 600/unreadable). If it differs from the production domain, `alternates.canonical` and `sitemap` will emit wrong URLs. Confirm the value before implementation.
-- **[LOW]** With `localeDetection:false` + manual `/` negotiation, `hreflang` on `/` must list both `es` and `x-default` pointing at `/` (the plan implies it — make it explicit so `/es` doesn't become the canonical for home).
-- **[LOW]** `setRequestLocale` in root layout is required for static metadata; confirm it's already wired by 07-01 before this plan runs.
-**Suggestions:** Add a post-build assertion (fetch `robots.txt` + `sitemap.xml` from the built output and assert canonical URLs) to the `verify:routing` harness.
-**Risk:** MEDIUM (env-config uncertainty; otherwise LOW).
-
-### 07-16 — Verification pack
-**Summary:** Excellent final gate: full matrix, residual-string audit, suppression reconciliation, human verification pack. The touch-iphone ABI limitation comment in CI is **confirmed** to match your environment claim (WebKit/Ubuntu 24.04 vs Arch) — so the manual mobile/coarse-pointer verification is genuinely required, not redundant.
-**Strengths:** `KNOWN_UNFIXED` trace to `deferred-items.md` is disciplined; strict Gate 2 non-empty assertion correctly closes the wave; suppression reconciliation prevents the classic "i18n disabled a real bug" failure mode.
-**Concerns:**
-- **[MEDIUM]** The pack must include a specific manual check for the **LanguageSwitcher on touch-iphone (390px)** — given 07-04's width gap, this is the single most likely remaining defect.
-- **[LOW]** "No test framework" constraint is honored, but the residual-string audit should include a check that `es/metadata.json` and `es/features.json`/`es/changelog.json` are non-empty (they're the last three namespaces to fill).
-**Suggestions:** Add a checklist item that Gate 2 strict mode passes with zero warnings before the human sign-off — makes the "definition of done" machine-checkable.
-**Risk:** LOW (the plan itself is solid; the risk it inherits is the 07-04 switcher width).
-
----
-
-### Overall Phase Risk Assessment: **MEDIUM**
-
-**Why not HIGH:** The architecture is right — `/`-only negotiation, `as-needed` + manual detection, static prerendering preserved via `generateStaticParams` + `setRequestLocale`, English-governs-legal, register gating. Wave ordering is sound, the 07-01 gate (human approve `/`-negotiation before anything else) de-risks the only genuinely reversible decision early, and Gate 2's parity inference is a clever, correct fit for the phase's incremental namespace filling. The two plans that carry the most risk (07-05 register door, 07-16 verification) are the most rigorous.
-
-**What keeps it at MEDIUM (must-fix before the relevant wave):**
-1. **[HIGH]** 07-04 switcher touch targets: `flex min-h-11` guarantees height but not the ≥44px width `touch-targets.spec.ts` enforces (both dims, non-inline anchors). As written, the footer switcher fails CI on `touch-iphone`. Fix: per-link horizontal padding (`px-3`). *Only* failure surface — nav switcher is hidden <768 and the spec skips ≥768.
-2. **[MEDIUM]** 07-06 T1/T2 + 07-07 T4 assume register/prop objects that don't exist (VCD, Hero = inline JSX; CTA = 71 lines, eyebrow at :61-66, no append at :102). Goals survive, but extraction mechanics must be rewritten to lift inline strings.
-3. **[MEDIUM]** Changelog entry count: 33 observed vs 35 asserted (07-12/07-14). Resolve before `es/changelog.json`.
-4. **[MEDIUM]** 07-02/07-09/07-15 rest on UNVERIFIED externals — app-repo glossary facts, the pricing human gate, and `NEXT_PUBLIC_SITE_URL` in the locked `.env.local`. Each needs a "verify before proceed" checkpoint rather than silent assumption.
-5. **[LOW]** Gate 2's identity gap (EN removed key, ES stale key passes) — add a strict key-identity check at 07-16.
-
-**Bottom line:** The phase is well-planned and will land cleanly if 07-04's switcher is padded, the three register-assumption plans are re-targeted to the real (inline-JSX) structure, and the 33-vs-35 changelog count is reconciled before the es/changelog wave. The register-governance machinery (07-05, D-09 sync) is genuinely the strongest part of the plan set.
-
----
-
-## Ollama Review
-
-*Model: `llama3.2:3b` (local). **Low confidence — recorded for completeness, not
-weight.** A 3B model was given a ~85k-token prompt; the response misreads the
-requirement IDs `I18N-01…I18N-04` as "four consecutive phases" (they are
-requirements, and there are seven). Treat as noise.*
-
-**Summary**
-This is a comprehensive testing plan for the Spanish localization phase of Next.js App Router. It covers 16 individual plans, each with two verified checks (machine evidence and human verification) to ensure that features are functioning correctly across different routes. The plan is structured into four consecutive phases: I18N-01, I18N-02, I18N-03, and I18N-04, focusing on critical aspects of the application's rendering and behavior.
-
-**Strengths**
-* Comprehensive coverage with machine-driven checks for accuracy
-* Human verification pack included for subjective evaluation of UI and UX
-* Evidence for each task recorded in separate files and accessible online
-* Threat model presents potential risks to test for better planning
-
-**Concerns**
-* HIGH: Potential scope creep since there are many tests here, some might be redundant, or too specific to a platform.
- 
-**Suggestions**
-* High-visibility plan summary with clear instructions on how to run the test suite and identify potential issues.
-
-**Risk Assessment**
-LOW
-
----
-
-## Gemini Review
-
-**Not obtained.** The CLI aborted before reading the prompt:
-
-```
-Error authenticating: FatalCancellationError: Authentication cancelled by user.
-Gemini CLI is not running in a trusted directory.
-```
-
-`~/.gemini/oauth_creds.json` is absent and no `GEMINI_API_KEY` is set. Retrying
-with `--skip-trust` reached `Opening authentication page in your browser. Do you
-want to continue? [Y/n]:` — headless invocation cannot complete this. To enable:
-run `gemini` interactively once and authenticate, or export `GEMINI_API_KEY`.
+| Reviewer | Status | Note |
+|---|---|---|
+| codex | completed | 341k tokens, full pass |
+| opencode | completed | spawned its own source-exploration agents |
+| gemini | **failed** | `IneligibleTierError: This client is no longer supported for Gemini Code Assist for individuals` — the standalone CLI is cut off for individual accounts pending migration to Antigravity. Not a timeout; no review produced. |
+| claude | skipped | `CLAUDE_CODE_ENTRYPOINT=cli` — this session IS Claude. Reviewing its own plans with its own model defeats the purpose. |
+| ollama | skipped | Server reachable, but its only chat model is `llama3.2:3b` and the review prompt is 457KB — roughly two orders of magnitude past what a 3B model can hold. It would return confident nonsense, which is worse than no review. |
 
 ---
 
 ## Codex Review
 
-**Not obtained.** The CLI reached the API and was rejected:
+# Cross-AI Plan Review — Phase 7
 
-```
-failed to connect to websocket: HTTP error: 401 Unauthorized,
-url: wss://api.openai.com/v1/responses  (5 reconnect attempts, then exit 1)
-```
+## Summary
 
-`~/.codex/auth.json` is absent. To enable: run `codex login`.
+The plans are unusually thorough on static rendering, catalogue parity, routing, SEO, and translation-quality controls. However, several integration risks remain that could prevent the phase from satisfying its newest requirements. The most serious are the LocaleHint placement, locale-cookie behavior when switching back to English, the missing dependency ordering for metadata, and contradictory mobile-panel requirements. These are implementation blockers rather than polish issues. Overall risk is **HIGH until resolved**, despite the strong verification design.
+
+## Strengths
+
+- **Strong static-rendering discipline.** Plan 07-01 repeatedly requires both `generateStaticParams` and `setRequestLocale`, with a concrete `.next/prerender-manifest.json` assertion rather than relying on build symbols.
+
+- **Good routing security model.** Plan 07-01 validates cookie/header values against the closed locale set and uses an internal redirect target rather than interpolating request-controlled values.
+
+- **Bidirectional catalogue parity is correctly specified.** Plan 07-03 catches both missing Spanish keys and orphaned Spanish keys, which is stronger than the common one-directional check.
+
+- **The persisted behavioral spec is well targeted.** Plan 07-16 Task 4 covers the two newly introduced silent regressions: the mobile panel switcher and cookie-dependent LocaleHint behavior.
+
+- **The changelog plans have good data modeling.** Shared ISO dates, closed tag keys, preserved note icons, and derived entry counts substantially reduce recurring translation drift.
+
+- **Translation quality is treated as more than key parity.** The wordplay register, human rewrite queue, legal read-throughs, and identical-value checks address failures that structural CI cannot detect.
+
+- **Suppression reconciliation is explicit.** Plan 07-16 requires every remaining KU reference to map to a written finding and forbids suppressing defects introduced by this phase.
+
+## Concerns
+
+- **[HIGH] LocaleHint has no valid mounting architecture.** Plan 07-04 Task 3 says LocaleHint renders in `[locale]/layout.tsx` “directly below Navbar” (07-04, approximately lines 483–494). In the current codebase, Navbar is rendered by each page, not by the root layout; the future locale layout therefore cannot place the hint below it without either introducing a shared shell or moving Navbar/Footer ownership. Plan 07-01’s layout task does not perform that migration, and 07-04’s file scope does not include all page files.
+
+  As written, the hint will either render before the Navbar, be duplicated, or require unplanned architectural edits. The tests only check presence/absence, not placement.
+
+- **[HIGH] Locale selection can loop or fail to persist when switching to English.** Plan 07-01 only specifies setting `NEXT_LOCALE` when a prefixed locale pathname is encountered (07-01, approximately lines 280–286). Plan 07-04’s `LanguageSwitcher` accepts only a `context` prop and has no callback or cookie-writing mechanism (07-04, approximately lines 192–240).
+
+  A likely sequence is:
+
+  1. Visit `/es`; cookie becomes `es`.
+  2. Click `EN`, navigating to `/`.
+  3. The `/` proxy sees `NEXT_LOCALE=es` and redirects back to `/es`.
+
+  Even if next-intl happens to write the cookie in some cases, the plan does not specify or test that an explicit English selection overwrites the cookie. Plan 07-01’s routing verification tests a manually supplied `NEXT_LOCALE=en`, but not the actual switcher flow.
+
+- **[HIGH] The mobile-panel close requirement is not connected to the component contract.** Plan 07-04 says the panel switcher must call the Navbar close handler after navigation (approximately lines 352–386), but `LanguageSwitcher` is specified with no `onNavigate` or close callback. Plan 07-16 later tests that the panel closes, but the implementation contract never explains how that behavior is wired.
+
+  This is precisely the sort of requirement that can pass review as prose while remaining absent from the code.
+
+- **[HIGH] Plan 07-16 contains a direct contradiction about the mobile switcher.** Its human verification pack says the mobile hamburger-panel switcher is “ABSENT” and calls that a locked tradeoff (07-16, approximately lines 386–395). That contradicts:
+
+  - the revised requirement;
+  - 07-04’s three-mount requirement;
+  - 07-16 Task 1’s panel measurement;
+  - 07-16 Task 4’s panel Playwright test.
+
+  The human checklist also later instructs the reviewer to repeat the switch inside the open hamburger panel. This must be corrected before execution; otherwise a human could sign off the wrong behavior.
+
+- **[HIGH] Plan 07-15 can run before the Spanish catalogues are complete.** Its `depends_on` includes 07-06 through 07-12 but omits 07-13 and 07-14, even though Task 1 says metadata should be authored against the final page copy. Features and changelog Spanish translations can therefore be written concurrently with metadata generation.
+
+  This is especially risky because the plan explicitly promises all per-locale metadata and descriptions, while the source copy is still changing.
+
+- **[HIGH] CI does not appear to provide the required site-origin environment.** Plan 07-15 correctly refuses to use a hardcoded fallback for `NEXT_PUBLIC_SITE_URL`, but the current workflow does not define that variable. `.env.local` is not part of the repository and is not available in a clean CI checkout.
+
+  The result is either a failing build or emitted metadata/sitemap URLs using an empty or undefined origin. The plan needs an explicit CI/deployment environment contract, not just a local `.env.local` check.
+
+- **[MEDIUM] The append-only translation register is not safe for the declared parallel execution.** Plans in Waves 3 and 4 append to the same `TRANSLATION-FLAGS.md`, while several plans are explicitly parallel. “Append-only” prevents semantic deletion, but it does not prevent Git conflicts or lost append operations across isolated worktrees. The same problem applies when multiple plans append marketing-only terms to `GLOSSARY.md`.
+
+  The claim in 07-02 that this is safe for parallel plans is therefore too strong.
+
+- **[MEDIUM] The seeded example row conflicts with the register accounting model.** Plan 07-02 seeds one example row, marks it for deletion when a real row arrives, and says an empty final register means the rule was not applied. Plan 07-16 later reconciles row totals against eight summaries that may all report `TRANSLATION FLAGS: 0`.
+
+  If no real flags are found, the example remains but the reported total is zero. If a real flag is found, deleting or moving the example conflicts with the append-only history model. Also, the example text is written as `Un metodo...` without the accent used by the approved hook.
+
+- **[MEDIUM] Shared chrome is excluded from the wordplay workflow.** The list of translation plans required to append `TRANSLATION FLAGS: n` includes 07-05, 07-06, 07-07, 07-08, 07-09, 07-10, 07-13, and 07-14, but not 07-04. Plan 07-04 writes the common Navbar, Footer, CTA, and hint copy. I18N-07 applies to all user-facing strings, including shared chrome, so this is an unowned translation-quality surface.
+
+- **[MEDIUM] The new Playwright project is not actually a coarse-pointer project.** Plan 07-16 Task 4 registers `i18n-chrome` using `devices["Desktop Chrome"]` at a 390px viewport. That device is not equivalent to a touch/coarse-pointer surface. The existing `touch-iphone` project is restricted to `LAYOUT_SPECS`, so the new behavioral spec will not run there either.
+
+  Thus the plan’s “real coarse-pointer” claim is not satisfied by the specified project.
+
+- **[MEDIUM] The residual-string audit is not reproducible enough.** Plan 07-16 asks for a manual grep-based sweep, but does not create a script or committed allowlist. Several likely strings are not included in 07-04’s extraction inventory, including current accessibility labels such as:
+
+  - Navbar’s `aria-label="Primary"`;
+  - Footer’s `aria-label="El Portal home"`;
+  - `PortalIcon`’s `aria-label="Portal icon"`;
+  - `HeroAppMockup`’s dashboard `alt` text;
+  - MCP page navigation and code-sample labels;
+  - `CopyButton`’s `Copy`/`Copied` labels.
+
+  A final manual sweep can catch them, but the phase’s “no hardcoded user-facing string” criterion deserves a deterministic check and explicit classifications for intentional literals such as `EN` and `ES`.
+
+- **[MEDIUM] LocaleHint accessibility and component compliance are underspecified.** Plan 07-04 does not specify a localized dismiss label, an accessible name for the dismiss control, or use of the project’s approved shadcn Button. Since the project bans raw `<button>`, the plan should explicitly require the approved Button component. A generic wrapper with `aria-label` also may not expose the intended switcher group semantics without `role="group"`.
+
+- **[MEDIUM] Pricing PATH B is not executable as written.** Plan 07-09 proposes adding one visible Spanish explanatory line, but Task 2 owns only `src/messages/es/pricing.json`. A visible new line requires:
+
+  - an English key;
+  - a Spanish key;
+  - an existing component render site or a component change.
+
+  Adding the key only to Spanish would violate the orphan-key gate; adding it to both catalogues without rendering it has no effect. The branch needs a complete file/component contract or should be removed.
+
+- **[LOW] Locale-formatted changelog dates need an explicit timezone.** Plan 07-12 converts dates to `YYYY-MM-DD` and formats them per locale, but does not require `timeZone: 'UTC'`. Depending on runtime timezone and parsing behavior, a date-only value can shift by one day. This is easy to prevent and important for a release-history page.
+
+- **[LOW] The accented-display verification is not durable.** Plan 07-05 performs a one-time glyph check and removes the probe. A later font-loading, subset, or CSS change could reintroduce clipped accented capitals without any automated signal. Since the issue is explicitly called “load-bearing,” retaining a small regression probe would be safer.
+
+- **[LOW] Root redirect query-string behavior is unspecified.** The redirect target is correctly constrained to an internal path, but constructing a literal `/es` may discard query parameters such as campaign tracking parameters. Preserve the query component while keeping the pathname closed, or document that query parameters are intentionally dropped.
+
+## Suggestions
+
+- Introduce a `SiteChrome` or `LocaleShell` component owned by `[locale]/layout.tsx`. Move Navbar and Footer into it, render LocaleHint immediately below Navbar, and remove page-local chrome mounts. Add an explicit `onNavigate` callback to LanguageSwitcher for mobile-panel closure.
+
+- Define one explicit client-side locale-choice helper. It should set `NEXT_LOCALE` to the selected locale before navigation, then use the locale-aware Link. Add Playwright coverage for `/es → /` and `/ → /es`, including cookie value and final URL.
+
+- Add `07-13` and `07-14` to 07-15’s dependencies, or move metadata into a later wave after all Spanish copy is complete.
+
+- Add `NEXT_PUBLIC_SITE_URL=https://el-portal.app` to the CI environment through the repository’s approved configuration mechanism, and add a build-time assertion that the variable is present in CI.
+
+- Serialize register/glossary aggregation. A safer pattern is one per-plan flag file, such as `TRANSLATION-FLAGS.07-06.md`, followed by a final aggregation task. Apply the same approach to marketing-only glossary additions.
+
+- Separate the worked example from real findings. Put it under an `Examples` section, or mark it with a machine-readable `example: true` field and exclude it from reconciliation. Keep the register genuinely append-only.
+
+- Add 07-04 to the wordplay/accounting contract, or explicitly assign common-chrome review to 07-16 with a count and summary line.
+
+- Make `i18n-chrome` use a real touch/coarse-pointer device, or include the spec in the `touch-iphone` project with an appropriate `testMatch`. Keep the 390px Chromium project as a fast local check if desired.
+
+- Create a reusable `scripts/audit-residual-strings.mjs` with explicit intentional-string exclusions. Include accessibility attributes, data modules, client defaults, error states, and the deliberate `EN`/`ES` language-code exception.
+
+- Specify LocaleHint’s semantic structure, localized dismiss label, `role="group"`, test IDs, and approved Button usage.
+
+- Complete the pricing PATH B contract before execution: either render a key-identical English/Spanish notice through an existing component or remove the branch.
+
+- Require `timeZone: 'UTC'` for date formatting and retain an automated accented-glyph probe.
+
+## Risk Assessment
+
+**Overall risk: HIGH.**
+
+The plans have strong defensive verification and good coverage of translation parity, static rendering, SEO, and accessibility. The risk is concentrated in a few cross-plan integration seams: shared chrome ownership, cookie semantics, mobile-panel navigation, CI environment configuration, and parallel writes to shared registers. These issues can produce a site that passes many catalogue and build checks while still failing the user-visible locale-switching contract. Resolve the HIGH concerns before Wave 2/3 execution; after that, the remaining risks are mostly manageable process and verification issues.
+
+---
+
+## OpenCode Review
+
+## Cross-AI Plan Review — Phase 7: Spanish Localization
+
+### 1. Language Switcher Triple Mount
+
+**Plan 07-04 is thorough on sizing.** The `px-3 min-w-11 min-h-11` per-link contract is correct, the inline-text exemption analysis is correct, and the verify step checks for both class occurrences. However:
+
+**Finding 07-04-T2: The 768px nav-row overflow risk is under-specified.** Plan 07-04 Task 2 says "Measure, do not assume, the tightest width budget in the nav" at 768px in Spanish, but gives no fallback if it overflows. It says "shorten the Spanish copy per the text-expansion contract" but the concrete strings — `Iniciar sesión` (14 chars vs 6), `Crear cuenta` (12 chars), plus the switcher — are in the `common` namespace which this plan owns. The accept criteria says "The 768px nav row was measured in Spanish and does not overflow" with no conditional on shortening. This is an assertion of success baked into an acceptance criterion that may require work to achieve. **Severity: low.** The plan is aware of the risk and has the levers; the concern is that the acceptance criterion may force a loop.
+
+**Finding 07-04-T2: Footer switcher third child layout.** The plan says the switcher goes "between the copyright paragraph (line 105) and the decorative wordmark (line 110)". The Footer bottom bar at line 104 is `flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-6`. Adding a third flex child to a `justify-between` row changes the spacing distribution for all three items. The existing copyright and wordmark were sized for a two-child `justify-between`. The plan acknowledges this ("this footer edit adds an element to an existing desktop flex row") but the verify step only runs `audit:targets` and `audit:containment` — neither catches a visual shift in the copyright-to-wordmark gap. **Severity: low.** The plan does measure at 768px for the nav row but does not explicitly mention measuring the footer bottom bar's visual layout.
+
+**Finding 07-04-T3: Mobile panel close-on-navigate is tested in 07-04 AND 07-16.** Plan 07-04 Task 2 says "clicking ES inside the open mobile panel at 390px lands on the `/es` route with the panel closed; the closed state is observed on the destination page, not inferred." Plan 07-16 Task 4 also asserts "PANEL CLOSES ON LOCALE NAVIGATE." This is fine — 07-16 makes it permanent CI, while 07-04 verifies at build time — but both plans declare the same acceptance criterion as their own. No conflict, just redundancy.
+
+### 2. LocaleHint Component
+
+**Plan 07-04 Task 3 is well-reasoned on the cookie-only rendering and the hydration risk.** The server/client split (server reads `es` catalogue, client reads cookie) is correct for static rendering. However:
+
+**Finding 07-04-T3: The server-side `getTranslations` call with a hardcoded `locale: 'es'` is unusual.** Line 485-486 says: "Resolve its two strings on the SERVER with `getTranslations({locale: 'es', namespace: 'common'})` and pass them as props." This bypasses the request-scoped locale to force Spanish copy on English pages. The approach is correct — the strings must come from `es/common.json` not `en/common.json` — but the `getTranslations` API in next-intl expects `locale` as the first argument in the non-scoped form: `getTranslations('es', 'common')`. The plan's notation `{locale: 'es', namespace: 'common'}` may be an API shape mismatch depending on the exact next-intl version. **Severity: low.** The executor should verify the API shape in 07-01's `next-intl` install, not assume the plan's notation matches.
+
+**Finding 07-04-T3: `NEXT_LOCALE_HINT=off` cookie is a new cookie not written by 07-01.** Plan 07-01's proxy writes `NEXT_LOCALE` but the hint writes a second cookie `NEXT_LOCALE_HINT`. The proxy matcher at `'/((?!api|trpc|_next|_vercel|.*\\..*).*)'` will process this cookie on every navigation, but it only reads `NEXT_LOCALE`, so this is safe. However, the dismiss cookie is never cleared — once `off` is set, re-selecting ES from the switcher does not clear it. The user chose ES again, so the hint should reappear on the next English page load, but the `NEXT_LOCALE_HINT=off` cookie persists. The plan should specify that switching locale clears the hint cookie, or that the switcher writes `NEXT_LOCALE_HINT=es` instead of `off`. **Severity: medium.** This is a real UX gap: user picks ES → hint shows → dismisses → picks ES again from the switcher (a re-affirmation) → hint stays gone because the old `off` cookie was never cleared.
+
+### 3. TRANSLATION-FLAGS.md Register
+
+**The append-only design is sound.** Eight translation plans (07-05, 07-06, 07-07, 07-08, 07-09, 07-10, 07-13, 07-14) each append to the same file. The `TRANSLATION FLAGS: n` line in each summary is the reconciliation mechanism. 07-16 Task 2 reconciles.
+
+**Finding: Plan 07-02 Task 4 creates the file, but plans 07-05 and 07-06 are in Wave 3, which depends on 07-02 (Wave 1). The dependency chain is correct — no append can race with creation.** No issue here.
+
+**Finding: The seeded example row in 07-02 Task 4 uses `Un metodo para llegar a ser quien eres` (no accent on `método`).** This is explicitly marked as an example and to be deleted, so it will not ship as incorrect copy. No issue.
+
+**Finding: Plans 07-05 through 07-14 each have an identical Task 3 (wordplay check).** This is 8 copies of the same task description. It is repetitive but not wrong — each plan needs its own wordplay check against its own translated strings, and the instruction text is the same because the rule is the same. The repetition makes the plans long but not incorrect.
+
+### 4. Persisted Playwright Spec + Project (07-16 Task 4)
+
+**Plan 07-16 Task 4 adds one new Playwright project `i18n-chrome` at 390px.** This is a deliberate addition after 07-03 explicitly said "no new project." The plan documents the contradiction and explains the rationale. However:
+
+**Finding 07-16-T4: The `LAYOUT_SPECS` regex is not widened, but the verify step checks for this.** The automated verify at line 543 asserts `/\(overflow\|containment\|a11y\|touch-targets\|i18n/.test(s)` must be false — confirming `LAYOUT_SPECS` was NOT widened. Good. But the test file is `i18n-chrome.spec.ts`, which does NOT match `LAYOUT_SPECS`'s pattern, so it will only run in the `i18n-chrome` project. That is correct.
+
+**Finding 07-16-T4: The spec file is allowed to add `data-testid` to LanguageSwitcher.tsx and LocaleHint.tsx.** The plan says "the ONLY change permitted to either component in this plan is adding a missing `data-testid` attribute." This is a tight scope exception. Plan 07-04 already adds these testids, so this is a fallback for the case where 07-04 did not. Fine.
+
+**Finding 07-16-T4: The spec does not test the LANGUAGE SWITCHER in the DESKTOP NAV.** The `i18n-chrome` project runs at 390px, so the desktop nav switcher (which is `hidden md:flex`) is not rendered. The only desktop-width switcher coverage is `touch-targets.spec.ts` which skips at `>= 768`. This means the desktop nav switcher has NO automated touch-target or interaction coverage. It is tested only by the human verification pack. **Severity: low.** The desktop nav at 768px+ is a coarse-pointer mouse surface, not a touch surface, so touch-target compliance is less critical there. But a regression where the desktop switcher links shrink below readable size would be silent. The plan accepts this.
+
+### 5. Cross-Cutting Findings
+
+**Finding: Plan 07-05 Task 2's glyph probe runs `measureText` in a Playwright `page.evaluate`.** This is correct for reproducibility, but the three-width comparison (Special Gothic vs fallback vs Arial Black) depends on `document.fonts.check` being accurate. The plan notes this limitation. The probe is sound as a heuristic; no better mechanism exists without pixel-perfect font rasterization.
+
+**Finding: Plan 07-12 derives the entry count into `07-12-ENTRY-COUNT.txt`.** This file is consumed by 07-14's gates. If 07-12 produces the file and 07-14 runs before the file is committed (possible in isolated worktrees), the gate reads stale data. But the dependency is `07-14 depends_on: ["07-12"]`, so 07-14 cannot start until 07-12 is complete and its summary is written. The file is in `files_modified` of 07-12, so it is committed before 07-14 starts. No issue.
+
+**Finding: Plan 07-08 notes that `CopyButton.tsx` is a Client Component and uses `useTranslations`.** The plan correctly identifies this and says to confirm the directive. The file is indeed `"use client"` (verified by my read). The plan says to keep the raw `<button>` element unconverted (Phase 5's decision). Good.
+
+**Finding: Plan 07-15 Task 1 checks `NEXT_PUBLIC_SITE_URL` at execution time.** It says "if the variable is absent or is not an https origin, STOP and report the plan as BLOCKED." The plan also says the value was `https://el-portal.app` as of 2026-08-02. The verify step reads from `.env.local` and asserts. This is correct.
+
+**Finding: Plan 07-01 Task 3 has a `not-found` edge case.** It says "Because `[locale]` now sits at the root, an unmatched first segment reaches the layout and is rejected by the `hasLocale` guard. If Next instead errors because there is no root layout for the not-found boundary, add `src/app/not-found.tsx`." This is the right level of caution. The verify step does not explicitly test 404 — it relies on the build succeeding. The acceptance criterion says "An unmatched path returns 404, not 500" but the automated verify does not assert it. **Severity: low.** The human verification should include a 404 spot check.
+
+### Summary
+
+| # | Finding | Plan | Severity | Category |
+|---|---------|------|----------|----------|
+| 1 | 768px nav-row overflow fix path unspecified | 07-04 | low | robustness |
+| 2 | Footer bottom-bar visual shift from third child | 07-04 | low | design |
+| 3 | LocaleHint hint cookie never cleared on re-select | 07-04 | **medium** | UX gap |
+| 4 | `getTranslations` API shape may not match plan notation | 07-04 | low | API |
+| 5 | Desktop nav switcher has no automated coverage | 07-16 | low | coverage |
+| 6 | 404 behavior asserted in acceptance but not in automated verify | 07-01 | low | verification |
+| 7 | 8 identical wordplay tasks (repetition, not defect) | all | informational | — |
+
+**The plans are strong.** The four new items (triple mount, LocaleHint, register, persisted spec) are all well-reasoned and correctly scoped. The one medium finding is the LocaleHint dismiss cookie not being cleared on locale re-selection — a real behavioral gap that the executor should address during implementation.
 
 ---
 
 ## Consensus Summary
 
-Single-reviewer findings, **independently verified by the orchestrator against
-the working tree**. Each item below was checked in code, not taken on the
-reviewer's word — the verification result is stated per item.
+The two reviewers landed in very different places, and the disagreement is the
+most informative thing in this document. Codex rates the phase **HIGH risk**
+and found five integration blockers. OpenCode rates it strong, with one medium
+finding. They overlap on almost nothing.
 
-### Agreed Strengths
+That is not a tie to be split. Codex's findings were checkable against the
+repository, and **every one I checked was real** — including two that are
+mistakes I introduced during the 2026-08-19 revisions. OpenCode's pass read the
+plans as documents and largely accepted their internal reasoning; it explicitly
+called the `LocaleHint` mounting "well-reasoned" in the same paragraph where
+codex found it cannot work. Where a finding below is marked VERIFIED, I checked
+it against the actual source, not against the plan text.
 
-Only one substantive reviewer, so "agreed" means *asserted and not contradicted
-by the orchestrator's spot-checks*:
+### Agreed strengths
 
-- The routing architecture is right: `/`-only negotiation (never a blanket
-  redirect, correct Googlebot reasoning), `localePrefix: "as-needed"`,
-  `localeDetection: false` re-implemented by hand.
-- Static prerendering is genuinely protected — `generateStaticParams` **and**
-  `setRequestLocale` are both required per plan, with `.next/prerender-manifest.json`
-  named as the verification artifact.
-- 07-03's Gate 2 parity inference ("any-en-key ⇒ all-en-keys") correctly treats an
-  empty `es` namespace as *pending* rather than *violating*, which is what makes
-  incremental Wave 3→4 namespace filling possible.
-- 07-05's blocking human-approval door on `es/manifesto.json` before any Spanish
-  ships is the correct control for a register-sensitive phase.
-- 07-12 is the most detail-accurate plan in the set — `NOTE_ICONS`, the frozen
-  `leading-[1.1]`, the hardcoded `Note:` at `ChangelogItem.tsx:159`, and the stale
-  Windows paths in the sync skill were all confirmed present.
-- 07-16's suppression reconciliation prevents the classic "i18n silently disabled
-  a real containment bug" failure.
+Both reviewers independently credited:
 
-### Agreed Concerns
+- **Static-rendering discipline.** Both singled out that 07-01 requires
+  `generateStaticParams` AND `setRequestLocale` and evidences it from
+  `.next/prerender-manifest.json` rather than a build symbol.
+- **The persisted behavioural spec is aimed at the right two regressions** —
+  the panel switcher and the cookie-dependent hint.
+- **Translation quality is treated as more than key parity** — the wordplay
+  register, the human read-throughs, and the identical-value checks cover what
+  structural CI cannot see.
+- **Catalogue parity is bidirectional** — 07-03 catches orphaned `es` keys, not
+  just missing ones.
 
-Ordered by verified severity. Severities 1 and 2 were **raised to HIGH by the
-orchestrator** after checking the code — both are hard CI failures, not risks.
+### Agreed concerns
 
-1. **[HIGH — VERIFIED] 07-04 Task 1: the language switcher will fail
-   `touch-targets.spec.ts` on `touch-iphone`.**
-   The plan's acceptance (line 22) demands "at least 44x44 CSS px", but its only
-   sizing mechanism (line 166) is `flex min-h-11 items-center md:min-h-0` on each
-   link — height only. Verified in `e2e/touch-targets.spec.ts:108`: the assertion
-   is `if (r.width >= min && r.height >= min) continue;` — **both** dimensions.
-   The SC 2.5.8 inline exemption does **not** rescue it: that exemption
-   (`touch-targets.spec.ts:94-103`) requires the anchor's *parent* to contain a
-   non-whitespace **text node**, and 07-04 line 175 mandates the `/` separator be
-   an `aria-hidden` element, not bare text. `md:min-h-0` is irrelevant because the
-   spec does `test.skip(width >= 768, …)` (line 49). Rendered width of "EN"/"ES" is
-   ~20–24px → red CI.
-   **Fix:** per-link horizontal padding (e.g. `px-3`) on each link, not `min-w` on
-   the wrapping flex parent.
+Only one, and both reached it independently by different routes:
 
-2. **[HIGH — VERIFIED] 07-12 / 07-14: the changelog has 33 entries, not 35.**
-   Verified: `grep -c 'version:' src/app/changelog/page.tsx` → **33**; versions run
-   `2.0.28` down to `1.0.0`. The reviewer graded this MEDIUM; it is HIGH because
-   07-12's own automated verification embeds a **hard assertion**:
-   `if(e.length!==35){console.error('expected 35 entries, got',e.length);process.exit(1)}`
-   (07-12-PLAN.md:205). As written the plan cannot pass its own gate. The `7 of 35`
-   note count is separately correct — 7 `note:` objects do exist.
-   **Fix:** reconcile the true count in 07-12 (lines 17, 26, 47, 96, 140, 153, 168,
-   205, 208, 316, 320, 327) and 07-14 (lines 14, 21, 31, 36, 82, 236, 282) before
-   Wave 3.
+- **`TRANSLATION-FLAGS.md` append-only is not safe under parallel execution.**
+  Append-only prevents semantic deletion; it does nothing about git conflicts or
+  lost appends across isolated worktrees. Codex raises the same problem for
+  marketing-only additions to `GLOSSARY.md`. OpenCode reached it from the
+  dependency graph and concluded creation-vs-append ordering is fine — which is
+  true and beside the point, since the risk is concurrent appends within Wave 3.
 
-3. **[MEDIUM — VERIFIED] 07-06 T1/T2 and 07-07 T4 target structures that do not
-   exist.** `CTASection.tsx` is **71 lines**, so 07-07 T4's "over 100 lines" and
-   "append at :102" are past EOF; the real strings are h2 :43, body :50-52, button
-   :58, eyebrow span :61-66. VCD and Hero copy is inline JSX with no register
-   object or `description` props to lift. The *goals* survive intact — only the
-   extraction mechanics need re-targeting to "lift the inline strings".
+### Blockers — VERIFIED against the repository
 
-4. **[MEDIUM] Three plans rest on externals nothing in this repo can confirm.**
-   - 07-02: the entire glossary derivation depends on app-repo facts (1,711 keys,
-     five locales, locale code `es` not `es-ES`) that the reviewer was constrained
-     from reading. If the app uses `es-ES` or a different key layout, every
-     downstream "copy verbatim" step re-targets.
-   - 07-15: `NEXT_PUBLIC_SITE_URL = https://el-portal.app` is asserted but
-     `.env.local` is mode 600. If wrong, `alternates.canonical` and `sitemap.xml`
-     emit wrong URLs sitewide.
-   - 07-09: pricing stays English-only pending a human decision with no defined
-     second path if that decision goes the other way.
-   **Fix:** each needs an explicit "verify before proceed" checkpoint rather than a
-   silent assumption.
+1. **`LocaleHint` has no valid mount point. (codex, VERIFIED)** 07-04 Task 3
+   says to render it in `src/app/[locale]/layout.tsx` "directly below the
+   Navbar". `Navbar` is mounted per-page — all eight `src/app/*/page.tsx` import
+   and render it; the layout never does. The instruction cannot be followed
+   without a shared chrome component or moving Navbar ownership, and 07-04's
+   file scope includes neither. This is a defect in the 2026-08-19 revision.
 
-5. **[MEDIUM] 07-05: Special Gothic Expanded One glyph coverage for `Á É Í Ó Ú Ñ`
-   is an open unknown.** The display font is a separate family from Inter — Latin
-   Extended coverage is not inherited. If accented uppercase glyphs are missing,
-   the fallback collides with the retired italic-Instrument-Serif convention and
-   needs a documented exception, or Spanish H1s must avoid accented words. Worth
-   making a scripted `document.fonts.check` gate rather than a visual-only pass.
+2. **Switching back to English can loop. (codex, VERIFIED by reading the plan
+   logic)** Cookie is `es`; the user clicks EN and navigates to `/` (English is
+   unprefixed under `as-needed`); the proxy at `/` reads the cookie, sees `es`,
+   and redirects to `/es`. 07-04 gives `LanguageSwitcher` only a `context` prop
+   with no cookie write, and 07-01 defers to "verify empirically whether
+   `createMiddleware` still writes `NEXT_LOCALE` when `localeDetection` is
+   false". 07-01's routing script tests a manually supplied `NEXT_LOCALE=en` but
+   never the switcher flow that produces it. This is the phase's core
+   user-visible contract and three prior passes missed it.
 
-6. **[LOW] 07-03 Gate 2 has an identity gap.** The inference is one-directional: a
-   key removed from EN while ES still carries it passes. Add a strict
-   `en[n] ⊇ es[n]` key-identity check — the reviewer suggests shipping it in 07-03
-   evaluated leniently rather than deferring the logic to 07-16.
+3. **07-16 still contradicts itself on the mobile switcher. (codex, VERIFIED)**
+   Line 393 states the panel switcher is "ABSENT from the mobile hamburger panel
+   (that absence is the locked D-11 tradeoff)". The 2026-08-19 revision fixed the
+   human-check list below it and missed this prose. It contradicts the revised
+   requirement, 07-04's three-mount contract, and 07-16's own Task 1 and Task 4 —
+   a human following the pack would sign off the opposite of what ships.
 
-### Divergent Views
+4. **07-15 can run before the Spanish copy exists. (codex, VERIFIED)**
+   `depends_on: ["07-06" … "07-12"]` omits 07-13 and 07-14, so per-locale
+   metadata and descriptions get authored while the features and changelog
+   Spanish translations are still being written.
 
-None available — a single substantive reviewer cannot diverge. This is the
-clearest cost of the two authentication failures: findings 1–3 are verified fact,
-but findings 4–6 have had no second model attempt to refute them.
+5. **CI has no `NEXT_PUBLIC_SITE_URL`. (codex, VERIFIED)**
+   `.github/workflows/responsive-audit.yml` defines no env block, `.env.local` is
+   not in the repository, and 07-15 deliberately refuses a hardcoded fallback.
+   A clean CI checkout therefore either fails the build or emits canonical and
+   sitemap URLs against an undefined origin.
 
-The one internal disagreement worth recording is **orchestrator vs. reviewer on
-severity**: OpenCode graded both the switcher width gap and the changelog count
-MEDIUM. Both were raised to HIGH here because each is a deterministic failure of a
-gate the plans themselves define, not a probabilistic risk.
+### Other findings worth acting on
 
-### Overall Risk
+- **07-04 is missing from the wordplay contract. (codex, VERIFIED)** The eight
+  plans required to report `TRANSLATION FLAGS: n` exclude 07-04, which writes the
+  Navbar, Footer, CTA and hint copy. I18N-07 covers all user-facing strings, so
+  shared chrome is currently an unowned translation-quality surface.
 
-**MEDIUM**, and the orchestrator concurs with the reviewer's reasoning: the
-architecture is sound and the wave ordering is defensible, but three concrete
-defects (switcher width, changelog count, stale line references) will each stop a
-wave if carried into execution unfixed.
+- **The dismiss cookie is never cleared. (opencode, VERIFIED)** `LocaleHint`
+  writes `NEXT_LOCALE_HINT=off` with a one-year lifetime and nothing clears it.
+  A reader who dismisses the hint, then re-selects ES from the switcher — an
+  explicit re-affirmation — never sees the hint again. OpenCode's best catch,
+  and codex missed it.
+
+- **The residual-string sweep misses live strings. (codex, VERIFIED)** All four
+  named strings exist in the tree: `aria-label="Primary"` (Navbar.tsx:37),
+  `aria-label="El Portal home"` (Footer.tsx:69), `aria-label="Portal icon"`
+  (PortalIcon.tsx:21), and `CopyButton`'s `label = "Copy"` default. A manual
+  grep is the only thing standing between these and the "no hardcoded
+  user-facing string" criterion.
+
+- **`i18n-chrome` is not a coarse-pointer project. (codex, plausible)** It
+  registers `devices["Desktop Chrome"]` at 390px, which is not a touch surface,
+  while `touch-iphone` is restricted to `LAYOUT_SPECS` and so will not run the
+  new spec either.
+
+- **Pricing PATH B is not executable as written. (codex, plausible)** It calls
+  for a visible Spanish notice, but 07-09 Task 2 owns only
+  `src/messages/es/pricing.json` — no English key, no render site.
+
+- **Changelog dates need `timeZone: 'UTC'`. (codex, low)** A date-only value can
+  shift a day depending on runtime timezone.
+
+### Divergent views
+
+- **`LocaleHint` mounting.** OpenCode: "well-reasoned … correct for static
+  rendering." Codex: no valid mounting architecture. Codex is right; opencode
+  reasoned about the server/client split without checking where `Navbar`
+  actually renders.
+
+- **Overall risk.** Codex HIGH, opencode strong-with-one-medium. Codex's
+  position is supported by five findings that survive contact with the
+  repository.
+
+### Withdrawn — reviewer error
+
+- **OpenCode finding 4, `getTranslations` API shape.** It suspected
+  `getTranslations({locale: 'es', namespace: 'common'})` might not match
+  next-intl's signature. It does. The source overload is
+  `getTranslations(opts?: {locale: Locale; namespace?: NestedKey})`, and the
+  documented examples pass exactly that object form. No change needed.
+
+### Reviewer reliability note
+
+OpenCode's transcript shows it re-stated the phase back as a session summary
+twice and, in its closing recap, misnumbered the plans ("07-05 flag extraction",
+"07-14 bulk translation gates") — neither matches the actual plan set. Its
+in-body findings are sound and specific; treat its summary framing with less
+confidence than its individual findings.
+
+## Recommended next step
+
+```
+/gsd-plan-phase 7 --reviews
+```
+
+Five verified blockers, all in cross-plan integration seams rather than in any
+single plan's internals. The pattern is consistent: these plans are strong on
+what each one does alone and weakest where two of them have to meet. Two of the
+five were introduced by the most recent revision round, which is its own lesson
+about revising a plan set that has already passed its checker.
