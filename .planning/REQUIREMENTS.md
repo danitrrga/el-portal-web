@@ -72,7 +72,7 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [x] **I18N-04**: English URLs are unchanged — `localePrefix: "as-needed"` means `/pricing` stays `/pricing` and Spanish lives at `/es/pricing`. No existing URL 301s
 - [ ] **I18N-05**: Each page emits `hreflang` alternates for `en`/`es` plus `x-default`, per-locale `<title>`/`<meta description>`/OG tags, and `sitemap.xml` covers both locales
 - [x] **I18N-06**: All 8 routes × 2 locales remain statically prerendered (`○` in build output) — `generateStaticParams` **and** `setRequestLocale` are both present, so no route silently falls back to dynamic rendering
-- [ ] **I18N-07**: Spanish copy uses the `tú` register with the subject pronoun always omitted (`Empieza tu primera Versión`, never `Tú empiezas…`), infinitive for CTAs and buttons, and `tú` conjugation for prose. Spain-flavoured Spanish is intended — `vosotros` and peninsular vocabulary are fine. The catalogue contains no `usted`/`ustedes` and no written subject pronouns; register is consistent across every route including legal copy. Any string whose English effect — a pun, a rhythm, a double meaning, a term of art — does not survive into Spanish ships as the best available Spanish AND is recorded in `TRANSLATION-FLAGS.md` for the design owner to re-write by hand
+- [x] **I18N-07**: Spanish copy uses the `tú` register with the subject pronoun always omitted (`Empieza tu primera Versión`, never `Tú empiezas…`), infinitive for CTAs and buttons, and `tú` conjugation for prose. Spain-flavoured Spanish is intended — `vosotros` and peninsular vocabulary are fine. The catalogue contains no `usted`/`ustedes` and no written subject pronouns; register is consistent across every route including legal copy. Any string whose English effect — a pun, a rhythm, a double meaning, a term of art — does not survive into Spanish ships as the best available Spanish AND is recorded in `TRANSLATION-FLAGS.md` for the design owner to re-write by hand
 
 ### Cross-Cutting Quality
 
@@ -130,7 +130,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | I18N-04 | Phase 7 | Complete |
 | I18N-05 | Phase 7 | Pending |
 | I18N-06 | Phase 7 | Complete |
-| I18N-07 | Phase 7 | Pending |
+| I18N-07 | Phase 7 | Complete |
 | TOKEN-01 | Phase 1 | Pending |
 | TOKEN-02 | Phase 1 | Complete |
 | TOKEN-04 | Phase 1 | Pending |
