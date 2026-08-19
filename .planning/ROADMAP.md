@@ -225,7 +225,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 16 plans in 5 waves
+**Plans:** 16 plans in 6 waves
 
 Plans:
 
@@ -250,15 +250,18 @@ Plans:
 - [ ] 07-11-PLAN.md — `/features` extraction into the English catalogue (970 lines)
 - [ ] 07-12-PLAN.md — `/changelog` extraction (every entry, count derived from source; ISO dates, closed tag keys) and the sync-skill translation step (D-09)
 
-**Wave 4** *(blocked on Wave 3)* — large translations and SEO
+**Wave 4** *(blocked on Wave 3)* — large translations
 
 - [ ] 07-13-PLAN.md — `/features` Spanish copy (single-file translation)
 - [ ] 07-14-PLAN.md — `/changelog` Spanish copy, every entry with proven parity against the derived count
-- [ ] 07-15-PLAN.md — Per-locale metadata, `hreflang` + `x-default`, both-locale sitemap
 
-**Wave 5** *(blocked on Wave 4)* — verification
+**Wave 5** *(blocked on Wave 4)* — SEO
 
-- [ ] 07-16-PLAN.md — Full both-locale matrix, static-render and routing re-assertion, residual-string audit, suppression reconciliation, human verification pack
+- [ ] 07-15-PLAN.md — Per-locale metadata, `hreflang` + `x-default`, both-locale sitemap, and the `NEXT_PUBLIC_SITE_URL` environment contract (CI variable + build-time assertion)
+
+**Wave 6** *(blocked on Wave 5)* — verification
+
+- [ ] 07-16-PLAN.md — Full both-locale matrix, static-render and routing re-assertion, committed residual-string gate, register/glossary aggregation, suppression reconciliation, human verification pack
 
 **Planning notes** (2026-08-02):
 
@@ -266,3 +269,12 @@ Plans:
   - `/pricing` is a Client Component today and cannot export `generateMetadata`; plan 07-01 splits it into a thin server wrapper plus `PricingClient.tsx`.
   - Criterion 6 is evidenced from `.next/prerender-manifest.json` rather than from the build-output symbol: routes with `generateStaticParams` report under the SSG marker rather than the plain static marker, so the symbol changes while the property does not.
   - `07-RESEARCH.md` has no Package Legitimacy Audit table, so plan 07-01 opens with a blocking human package-verification gate before the first install.
+
+**Replanning notes** (2026-08-19, second cross-AI review — `07-REVIEWS.md`):
+
+  - **Wave count moved from 5 to 6.** Plan 07-15 authors metadata and descriptions against final page copy but depended only on 07-06…07-12, so `/features` (07-13) and `/changelog` (07-14) Spanish copy was still moving while their search snippets were being written. 07-13 and 07-14 are now explicit dependencies; 07-15 moved to Wave 5 and 07-16 to Wave 6. One extra wave, bought with Spanish metadata that cannot be written from copy that later changed.
+  - **The language switcher, not the proxy, persists an explicit locale choice.** Under `localePrefix: "as-needed"` a reader on `/es` choosing EN navigates to the unprefixed `/`, where the negotiation reads a still-`es` cookie and returns them to `/es` — English unreachable through the site's own control. `LanguageSwitcher` now writes `NEXT_LOCALE` (and expires `NEXT_LOCALE_HINT`) before navigating, and `e2e/i18n-chrome.spec.ts` asserts both directions on URL *and* cookie value.
+  - **`LocaleHint` is fixed-position.** `Navbar` and `Footer` are mounted by each page rather than by a layout, so a layout-level hint renders above the nav. Fixed positioning makes placement independent of DOM order. Hoisting the chrome into a shared `SiteChrome` shell was considered and rejected: the eight pages have differing outer wrappers, and reconciling them is out of scope for this phase.
+  - **The translation register and marketing-only glossary are one file per plan.** A single shared markdown table is a git conflict or a lost append under parallel wave execution. Nine per-plan files (07-04 included — it owns the shared chrome copy) are aggregated by 07-16.
+  - **The residual-string criterion became a committed script** (`scripts/audit-residual-strings.mjs` plus a reasoned allowlist) wired into CI, replacing a one-time manual grep. Its scan surface covers accessibility attributes, default parameter values, data modules and error states — the categories that let `aria-label="Primary"`, `label = "Copy"` and the hero image `alt` survive the original extraction inventory.
+  - **`/pricing` has no English-fallback branch.** 07-09's PATH B was deleted: it was not executable within that plan's file scope, and I18N-01 requires the page translated.
