@@ -14,7 +14,8 @@
     "audit:a11y": "playwright test a11y.spec.ts",
     "audit:targets": "playwright test touch-targets.spec.ts",
     "audit:report": "playwright show-report",
-    "typecheck:e2e": "tsc -p tsconfig.e2e.json"
+    "typecheck:e2e": "tsc -p tsconfig.e2e.json",
+    "verify:routing": "node scripts/verify-locale-routing.mjs"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.13",
