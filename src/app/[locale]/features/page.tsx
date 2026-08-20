@@ -1,7 +1,7 @@
 // Internal link only — locale-aware Link (see src/i18n/navigation.ts), never
 // next/link.
 import { Link } from "@/i18n/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ArrowRight, Sun, Moon } from "lucide-react";
@@ -32,6 +32,15 @@ const ACCENT = "#4487D6";
 const ACCENT_LIGHT = "#77B7ED";
 const RULE = "rgba(255,255,255,0.06)";
 const RULE_STRONG = "rgba(255,255,255,0.14)";
+
+/**
+ * Return type of `getTranslations("features")` — threaded through every
+ * section helper below that needs a catalogue lookup. These are plain
+ * functions, not Server Components, so `t` is fetched once in the page and
+ * passed down rather than re-fetched per section (mirrors `mcp/page.tsx`'s
+ * `Translator` convention).
+ */
+type Translator = Awaited<ReturnType<typeof getTranslations>>;
 
 /* ────────────────────────────────────────────────────────────────────
    Section eyebrow — same vocabulary as changelog version pills /
@@ -76,50 +85,20 @@ function SectionEyebrow({ num, label }: { num: string; label: string }) {
    ──────────────────────────────────────────────────────────────────── */
 
 type Scale = {
-  name: "Version" | "Cycle" | "Day";
+  name: string;
   duration: string;
   isDefault: boolean;
   role: string;
   bullets: string[];
 };
 
-const SCALES: Scale[] = [
-  {
-    name: "Version",
-    duration: "An identity",
-    isDefault: true,
-    role: "The arc, representing who you're becoming.",
-    bullets: [
-      "Sets the direction.",
-      "Contains its cycles.",
-      "Runs for as long as the identity takes.",
-    ],
-  },
-  {
-    name: "Cycle",
-    duration: "A sprint",
-    isDefault: true,
-    role: "The sprint, defining what to work on now.",
-    bullets: [
-      "Inside a Version.",
-      "Aimed at the problems and skills that identity demands.",
-      "Short enough to actually finish.",
-    ],
-  },
-  {
-    name: "Day",
-    duration: "1 day",
-    isDefault: false,
-    role: "The reps, the only scale you actually live in.",
-    bullets: [
-      "Inside a Cycle.",
-      "Atomic, with one set of habits and one score.",
-      "Where everything compounds from.",
-    ],
-  },
-];
-
-function ScaleTextContent({ scale }: { scale: Scale }) {
+function ScaleTextContent({
+  scale,
+  defaultLabel,
+}: {
+  scale: Scale;
+  defaultLabel: string;
+}) {
   return (
     <div className="flex flex-col">
       {/* Scale Header */}
@@ -133,11 +112,11 @@ function ScaleTextContent({ scale }: { scale: Scale }) {
         <span className="font-mono text-xs">
           <span style={{ color: FG_STRONG }}>{scale.duration}</span>
           {scale.isDefault && (
-            <span style={{ color: FG_MUTED }}> · default</span>
+            <span style={{ color: FG_MUTED }}> · {defaultLabel}</span>
           )}
         </span>
       </div>
-      
+
       {/* Role / Description */}
       <p
         className="text-[15px] font-medium leading-[1.5] mb-4"
@@ -161,10 +140,13 @@ function ScaleTextContent({ scale }: { scale: Scale }) {
   );
 }
 
-function TemporalHierarchySection() {
+function TemporalHierarchySection({ t }: { t: Translator }) {
+  const scales = t.raw("scales") as Scale[];
+  const defaultLabel = t("temporalHierarchy.defaultLabel");
+
   return (
     <section>
-      <SectionEyebrow num="01" label="Temporal Hierarchy" />
+      <SectionEyebrow num="01" label={t("temporalHierarchy.eyebrow")} />
 
       <div className="flex flex-col gap-10 md:gap-14">
         {/* Header — full content width */}
@@ -175,15 +157,15 @@ function TemporalHierarchySection() {
               color: FG_STRONG,
             }}
           >
-            Version, Cycle, Day.
+            {t("temporalHierarchy.heading")}
           </h2>
         </div>
 
         {/* Clean typographic grid without card chrome — just text and layout */}
         <div className="grid gap-8 md:grid-cols-3 md:gap-12">
-          <ScaleTextContent scale={SCALES[0]} />
-          <ScaleTextContent scale={SCALES[1]} />
-          <ScaleTextContent scale={SCALES[2]} />
+          <ScaleTextContent scale={scales[0]} defaultLabel={defaultLabel} />
+          <ScaleTextContent scale={scales[1]} defaultLabel={defaultLabel} />
+          <ScaleTextContent scale={scales[2]} defaultLabel={defaultLabel} />
         </div>
       </div>
     </section>
@@ -194,10 +176,30 @@ function TemporalHierarchySection() {
    02 — The Daily Score
    features-6: centered heading + visual + 3 micro-cards below.
    ──────────────────────────────────────────────────────────────────── */
-function DailyScoreSection() {
+
+type HabitChip = { name: string; weightLabel: string };
+type WeightTier = { weightLabel: string; example: string; body: string };
+
+// Weight numbers and the demo `done` state are illustrative UI data, not
+// text — they cannot legitimately differ between locales, so they stay in
+// code, index-aligned with the catalogue's `dailyScore.habitChips` array.
+const HABIT_CHIP_META: { weight: number; done: boolean }[] = [
+  { weight: 1, done: true },
+  { weight: 4, done: true },
+  { weight: 2, done: false },
+];
+
+// Multiplier digits (×1 / ×2 / ×4) are illustrative UI data, not text —
+// index-aligned with the catalogue's `dailyScore.weightTiers` array.
+const WEIGHT_TIER_MULTIPLIERS = ["1", "2", "4"];
+
+function DailyScoreSection({ t }: { t: Translator }) {
+  const habitChips = t.raw("dailyScore.habitChips") as HabitChip[];
+  const weightTiers = t.raw("dailyScore.weightTiers") as WeightTier[];
+
   return (
     <section>
-      <SectionEyebrow num="02" label="The Daily Score" />
+      <SectionEyebrow num="02" label={t("dailyScore.eyebrow")} />
 
       <div className="mx-auto max-w-2xl text-center">
         <h2
@@ -206,15 +208,13 @@ function DailyScoreSection() {
             color: FG_STRONG,
           }}
         >
-          One number, honestly weighted.
+          {t("dailyScore.heading")}
         </h2>
         <p
           className="mt-5 text-[15px] leading-[1.65] md:text-base"
           style={{ color: FG }}
         >
-          Every habit carries a weight. Your day rolls up into a single
-          number, not a streak count or a vibe, representing the share of the
-          weight you actually moved.
+          {t("dailyScore.body")}
         </p>
       </div>
 
@@ -229,48 +229,47 @@ function DailyScoreSection() {
         <div className="grid items-center gap-8 md:grid-cols-[1fr_auto_auto]">
           {/* Habit chips column */}
           <div className="space-y-2.5">
-            {[
-              { name: "Stretch 5 min", w: "LOW", weight: 1, done: true },
-              { name: "Deep work 90m", w: "HIGH", weight: 4, done: true },
-              { name: "Read 20 pages", w: "MED", weight: 2, done: false },
-            ].map((h) => (
-              <div
-                key={h.name}
-                className="flex items-center justify-between gap-3 rounded-md border px-3.5 py-2.5"
-                style={{
-                  background: h.done
-                    ? "rgba(119,183,237,0.04)"
-                    : "rgba(255,255,255,0.012)",
-                  borderColor: h.done ? `${ACCENT}33` : RULE_STRONG,
-                }}
-              >
-                <div className="flex items-center gap-3">
+            {habitChips.map((h, i) => {
+              const meta = HABIT_CHIP_META[i];
+              return (
+                <div
+                  key={h.name}
+                  className="flex items-center justify-between gap-3 rounded-md border px-3.5 py-2.5"
+                  style={{
+                    background: meta.done
+                      ? "rgba(119,183,237,0.04)"
+                      : "rgba(255,255,255,0.012)",
+                    borderColor: meta.done ? `${ACCENT}33` : RULE_STRONG,
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden
+                      className="size-2.5 rounded-sm border"
+                      style={{
+                        background: meta.done ? ACCENT : "transparent",
+                        borderColor: meta.done ? ACCENT : FG_MUTED,
+                      }}
+                    />
+                    <span
+                      className="text-[13px] md:text-[14px]"
+                      style={{
+                        color: meta.done ? FG_STRONG : FG_MUTED,
+                        textDecoration: meta.done ? "none" : "none",
+                      }}
+                    >
+                      {h.name}
+                    </span>
+                  </div>
                   <span
-                    aria-hidden
-                    className="size-2.5 rounded-sm border"
-                    style={{
-                      background: h.done ? ACCENT : "transparent",
-                      borderColor: h.done ? ACCENT : FG_MUTED,
-                    }}
-                  />
-                  <span
-                    className="text-[13px] md:text-[14px]"
-                    style={{
-                      color: h.done ? FG_STRONG : FG_MUTED,
-                      textDecoration: h.done ? "none" : "none",
-                    }}
+                    className="font-mono text-[10px] uppercase tracking-[0.16em] tabular-nums"
+                    style={{ color: FG_MUTED }}
                   >
-                    {h.name}
+                    {h.weightLabel} · {meta.weight}
                   </span>
                 </div>
-                <span
-                  className="font-mono text-[10px] uppercase tracking-[0.16em] tabular-nums"
-                  style={{ color: FG_MUTED }}
-                >
-                  {h.w} · {h.weight}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Arrow */}
@@ -291,7 +290,7 @@ function DailyScoreSection() {
               className="font-mono text-[10px] uppercase tracking-[0.22em]"
               style={{ color: FG_MUTED }}
             >
-              Daily Score
+              {t("dailyScore.scoreLabel")}
             </span>
             <span
               className="display mt-2 leading-none tabular-nums text-[clamp(2rem,5.357vw+0.929rem,3.5rem)] md:text-[clamp(56px,7vw,88px)]"
@@ -305,7 +304,7 @@ function DailyScoreSection() {
               className="mt-2 font-mono text-[11px] tabular-nums"
               style={{ color: FG_MUTED }}
             >
-              5 of 7 weight
+              {t("dailyScore.scoreSubtext")}
             </span>
           </div>
         </div>
@@ -313,28 +312,9 @@ function DailyScoreSection() {
 
       {/* Three micro-cards — the weight scale */}
       <div className="mt-8 grid gap-4 md:grid-cols-3">
-        {[
-          {
-            w: "LOW",
-            n: "1",
-            ex: "5-minute stretch · 1-glass of water",
-            body: "Frictionless. Cheap to maintain, easy to lose.",
-          },
-          {
-            w: "MEDIUM",
-            n: "2",
-            ex: "20-minute read · 30-minute walk",
-            body: "Repeatable. The middle of the habit stack.",
-          },
-          {
-            w: "HIGH",
-            n: "4",
-            ex: "90-minute deep work · long training session",
-            body: "Costly. The work that actually moves the cycle.",
-          },
-        ].map((c) => (
+        {weightTiers.map((c, i) => (
           <div
-            key={c.w}
+            key={c.weightLabel}
             className="rounded-lg border p-5"
             style={{
               background: "rgba(255,255,255,0.015)",
@@ -346,13 +326,13 @@ function DailyScoreSection() {
                 className="font-mono text-[11px] uppercase tracking-[0.22em]"
                 style={{ color: FG_MUTED }}
               >
-                {c.w}
+                {c.weightLabel}
               </span>
               <span
                 className="font-mono text-[20px] tabular-nums leading-none"
                 style={{ color: FG_STRONG }}
               >
-                ×{c.n}
+                ×{WEIGHT_TIER_MULTIPLIERS[i]}
               </span>
             </div>
             <p
@@ -365,7 +345,7 @@ function DailyScoreSection() {
               className="mt-2 font-mono text-[11px]"
               style={{ color: FG_MUTED }}
             >
-              {c.ex}
+              {c.example}
             </p>
           </div>
         ))}
@@ -378,10 +358,16 @@ function DailyScoreSection() {
    03 — The Pulse Loop
    QA-1: left intro + right collapsible accordion (native <details>).
    ──────────────────────────────────────────────────────────────────── */
-function PulseLoopSection() {
+
+type PulseStep = { label: string; body: string };
+
+function PulseLoopSection({ t }: { t: Translator }) {
+  const morningSteps = t.raw("pulseLoop.morning.steps") as PulseStep[];
+  const eveningSteps = t.raw("pulseLoop.evening.steps") as PulseStep[];
+
   return (
     <section>
-      <SectionEyebrow num="03" label="The Pulse Loop" />
+      <SectionEyebrow num="03" label={t("pulseLoop.eyebrow")} />
 
       <div className="grid gap-10 md:grid-cols-[1fr_1.3fr] md:gap-14">
         {/* LEFT — intro */}
@@ -392,21 +378,19 @@ function PulseLoopSection() {
               color: FG_STRONG,
             }}
           >
-            Twice a day.
+            {t("pulseLoop.heading")}
           </h2>
           <p
             className="mt-5 text-[15px] leading-[1.65] md:text-base"
             style={{ color: FG }}
           >
-            Morning frames intent. Evening logs reality. The gap between
-            the two is where the signal lives.
+            {t("pulseLoop.body")}
           </p>
           <p
             className="mt-4 text-[14px] leading-[1.6]"
             style={{ color: FG_MUTED }}
           >
-            Two short check-ins build the dataset the rest of the system
-            reads from.
+            {t("pulseLoop.subBody")}
           </p>
         </div>
 
@@ -432,7 +416,7 @@ function PulseLoopSection() {
                   className="text-[14px] font-semibold md:text-[15px]"
                   style={{ color: FG_STRONG }}
                 >
-                  Morning check-in
+                  {t("pulseLoop.morning.label")}
                 </span>
               </div>
               <span
@@ -451,39 +435,21 @@ function PulseLoopSection() {
                 className="text-[13px] leading-[1.6] md:text-[14px]"
                 style={{ color: FG }}
               >
-                Four short steps. Each one calibrates the day before the
-                day begins.
+                {t("pulseLoop.morning.intro")}
               </p>
               <ul className="mt-4 space-y-2">
-                {[
-                  {
-                    k: "Mood",
-                    v: "Where you are right now, on a calm scale.",
-                  },
-                  {
-                    k: "Sleep",
-                    v: "Quality of the night that just ended.",
-                  },
-                  {
-                    k: "Feelings",
-                    v: "What's actually present, selected from a bank of named emotions.",
-                  },
-                  {
-                    k: "Focus",
-                    v: "The one thing you want today to be about.",
-                  },
-                ].map((s) => (
+                {morningSteps.map((s) => (
                   <li
-                    key={s.k}
+                    key={s.label}
                     className="grid grid-cols-[88px_1fr] gap-3 text-[13px] leading-[1.55]"
                   >
                     <span
                       className="font-mono text-[11px] uppercase tracking-[0.18em] pt-[2px]"
                       style={{ color: FG_MUTED }}
                     >
-                      {s.k}
+                      {s.label}
                     </span>
-                    <span style={{ color: FG }}>{s.v}</span>
+                    <span style={{ color: FG }}>{s.body}</span>
                   </li>
                 ))}
               </ul>
@@ -509,7 +475,7 @@ function PulseLoopSection() {
                   className="text-[14px] font-semibold md:text-[15px]"
                   style={{ color: FG_STRONG }}
                 >
-                  Evening check-in
+                  {t("pulseLoop.evening.label")}
                 </span>
               </div>
               <span
@@ -528,31 +494,21 @@ function PulseLoopSection() {
                 className="text-[13px] leading-[1.6] md:text-[14px]"
                 style={{ color: FG }}
               >
-                Eight short steps. The evening pass is denser because the
-                evening has the data.
+                {t("pulseLoop.evening.intro")}
               </p>
               <ul className="mt-4 space-y-2">
-                {[
-                  { k: "Mood", v: "Where you landed after the day's work." },
-                  { k: "Productivity", v: "How much of the day actually compounded." },
-                  { k: "Stress", v: "Load you carried, not the load you planned." },
-                  { k: "Motivation", v: "Pull toward the work, or against it." },
-                  { k: "Energy", v: "Biological state at sundown." },
-                  { k: "Connectedness", v: "Time spent in the people who matter." },
-                  { k: "Feelings", v: "Named emotions from the same bank as morning." },
-                  { k: "Activities", v: "What you actually did — for the trend layer to read." },
-                ].map((s) => (
+                {eveningSteps.map((s) => (
                   <li
-                    key={s.k}
+                    key={s.label}
                     className="grid grid-cols-[110px_1fr] gap-3 text-[13px] leading-[1.55]"
                   >
                     <span
                       className="font-mono text-[11px] uppercase tracking-[0.18em] pt-[2px]"
                       style={{ color: FG_MUTED }}
                     >
-                      {s.k}
+                      {s.label}
                     </span>
-                    <span style={{ color: FG }}>{s.v}</span>
+                    <span style={{ color: FG }}>{s.body}</span>
                   </li>
                 ))}
               </ul>
@@ -568,10 +524,13 @@ function PulseLoopSection() {
    04 — Habits & Goals
    features-5: two parallel concepts side-by-side + carry-over anchor.
    ──────────────────────────────────────────────────────────────────── */
-function HabitsAndGoalsSection() {
+function HabitsAndGoalsSection({ t }: { t: Translator }) {
+  const habitsBullets = t.raw("habitsAndGoals.habits.bullets") as string[];
+  const goalsBullets = t.raw("habitsAndGoals.goals.bullets") as string[];
+
   return (
     <section>
-      <SectionEyebrow num="04" label="Habits & Goals" />
+      <SectionEyebrow num="04" label={t("habitsAndGoals.eyebrow")} />
 
       <div className="mb-10 max-w-2xl">
         <h2
@@ -580,14 +539,13 @@ function HabitsAndGoalsSection() {
             color: FG_STRONG,
           }}
         >
-          Two primitives. Different time scales.
+          {t("habitsAndGoals.heading")}
         </h2>
         <p
           className="mt-5 text-[15px] leading-[1.65] md:text-base"
           style={{ color: FG }}
         >
-          Habits are the daily atoms. Goals are the cycle-scoped
-          outcomes. Together they cover both ends of the practice.
+          {t("habitsAndGoals.body")}
         </p>
       </div>
 
@@ -599,28 +557,23 @@ function HabitsAndGoalsSection() {
               className="display leading-none text-[clamp(1.063rem,0.67vw+0.929rem,1.25rem)] md:text-[20px]"
               style={{ color: FG_STRONG }}
             >
-              Habits
+              {t("habitsAndGoals.habits.heading")}
             </h3>
             <span
               className="font-mono text-[10px] uppercase tracking-[0.22em]"
               style={{ color: FG_MUTED }}
             >
-              Daily
+              {t("habitsAndGoals.habits.scopeLabel")}
             </span>
           </div>
           <p
             className="text-[14px] leading-[1.6] mb-4"
             style={{ color: FG }}
           >
-            Weighted recurring actions. They feed the daily score and the
-            consistency layer beneath it.
+            {t("habitsAndGoals.habits.body")}
           </p>
           <ul className="space-y-2.5">
-            {[
-              "Three weight tiers: LOW (1), MEDIUM (2), and HIGH (4).",
-              "Recurrence configured per habit, not assumed.",
-              "Don't auto-carry between cycles, remaining deliberate by design.",
-            ].map((line) => (
+            {habitsBullets.map((line) => (
               <li
                 key={line}
                 className="flex items-start gap-2.5 text-[13px] leading-[1.55] md:text-[14px]"
@@ -644,28 +597,23 @@ function HabitsAndGoalsSection() {
               className="display leading-none text-[clamp(1.063rem,0.67vw+0.929rem,1.25rem)] md:text-[20px]"
               style={{ color: FG_STRONG }}
             >
-              Goals
+              {t("habitsAndGoals.goals.heading")}
             </h3>
             <span
               className="font-mono text-[10px] uppercase tracking-[0.22em]"
               style={{ color: FG_MUTED }}
             >
-              Cycle
+              {t("habitsAndGoals.goals.scopeLabel")}
             </span>
           </div>
           <p
             className="text-[14px] leading-[1.6] mb-4"
             style={{ color: FG }}
           >
-            Outcomes you commit to inside a single Cycle. Two kinds, each
-            with its own definition of done.
+            {t("habitsAndGoals.goals.body")}
           </p>
           <ul className="space-y-2.5">
-            {[
-              "task_project, with bounded scope, finished or not.",
-              "consistency_metric, representing a rate you hold across the cycle.",
-              "Carry across cycles via lineage, keeping the same goal across multiple cycles.",
-            ].map((line) => (
+            {goalsBullets.map((line) => (
               <li
                 key={line}
                 className="flex items-start gap-2.5 text-[13px] leading-[1.55] md:text-[14px]"
@@ -695,15 +643,13 @@ function HabitsAndGoalsSection() {
             className="font-mono text-[10px] uppercase tracking-[0.22em] font-medium shrink-0"
             style={{ color: ACCENT_LIGHT }}
           >
-            Carry-over
+            {t("habitsAndGoals.carryOver.label")}
           </span>
           <p
             className="text-[13px] leading-[1.55] md:text-[14px]"
             style={{ color: FG }}
           >
-            Goals can travel across cycles via a lineage link, keeping the same
-            journey across multiple sprints. Habits start fresh each cycle, by
-            choice.
+            {t("habitsAndGoals.carryOver.body")}
           </p>
         </div>
       </div>
@@ -716,10 +662,15 @@ function HabitsAndGoalsSection() {
    features-6: centered heading + visual + 4 micro-cards (one per
    pattern detector).
    ──────────────────────────────────────────────────────────────────── */
-function TrendsInsightsSection() {
+
+type Detector = { name: string; body: string };
+
+function TrendsInsightsSection({ t }: { t: Translator }) {
+  const detectors = t.raw("trendsInsights.detectors") as Detector[];
+
   return (
     <section>
-      <SectionEyebrow num="05" label="Trends & Insights" />
+      <SectionEyebrow num="05" label={t("trendsInsights.eyebrow")} />
 
       <div className="mx-auto max-w-2xl text-center">
         <h2
@@ -728,15 +679,13 @@ function TrendsInsightsSection() {
             color: FG_STRONG,
           }}
         >
-          The system reads the data you generate.
+          {t("trendsInsights.heading")}
         </h2>
         <p
           className="mt-5 text-[15px] leading-[1.65] md:text-base"
           style={{ color: FG }}
         >
-          A correlation engine and a set of pattern detectors look for
-          repeating signals across your habits, vitals, and feelings,
-          writing them up plainly.
+          {t("trendsInsights.body")}
         </p>
       </div>
 
@@ -760,22 +709,20 @@ function TrendsInsightsSection() {
                 className="text-[14px] font-semibold leading-[1.3] md:text-[15px]"
                 style={{ color: FG_STRONG }}
               >
-                Sleep quality → next-day mood
+                {t("trendsInsights.insightCard.title")}
               </p>
               <span
                 className="font-mono text-[13px] tabular-nums"
                 style={{ color: FG_STRONG }}
               >
-                ↑ 24%
+                {t("trendsInsights.insightCard.delta")}
               </span>
             </div>
             <p
               className="mt-1.5 text-[12px] leading-[1.5] md:text-[13px]"
               style={{ color: FG_MUTED }}
             >
-              Nights you sleep above your median predict a higher mood
-              the morning after. Strong, repeated across the last two
-              cycles.
+              {t("trendsInsights.insightCard.body")}
             </p>
             <div className="mt-3 flex items-center gap-3">
               <span
@@ -785,13 +732,13 @@ function TrendsInsightsSection() {
                   color: FG_STRONG,
                 }}
               >
-                Correlation
+                {t("trendsInsights.insightCard.tag")}
               </span>
               <span
                 className="font-mono text-[10px] tabular-nums"
                 style={{ color: FG_MUTED }}
               >
-                lag · 1 day
+                {t("trendsInsights.insightCard.lag")}
               </span>
             </div>
           </div>
@@ -805,7 +752,7 @@ function TrendsInsightsSection() {
             className="font-mono text-[10px] uppercase tracking-[0.22em]"
             style={{ color: FG_MUTED }}
           >
-            Pattern detectors
+            {t("trendsInsights.detectorsLabel")}
           </span>
           <div
             aria-hidden
@@ -815,24 +762,7 @@ function TrendsInsightsSection() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              name: "Burnout",
-              body: "Energy drops sharply over three days against a two-week baseline.",
-            },
-            {
-              name: "Regression",
-              body: "A habit you held for a week or more has dropped to zero for three days running.",
-            },
-            {
-              name: "Weekday Blind Spot",
-              body: "A habit you nail most days collapses on a single day of the week.",
-            },
-            {
-              name: "Sleep Lag",
-              body: "A night of low sleep predicts a measurable drop in next-day performance.",
-            },
-          ].map((p) => (
+          {detectors.map((p) => (
             <div
               key={p.name}
               className="rounded-lg border p-5"
@@ -845,7 +775,7 @@ function TrendsInsightsSection() {
                 className="font-mono text-[10px] uppercase tracking-[0.22em]"
                 style={{ color: FG_MUTED }}
               >
-                Detector
+                {t("trendsInsights.detectorEyebrow")}
               </span>
               <h3
                 className="mt-2 text-[14px] font-semibold leading-[1.25] md:text-[15px]"
@@ -886,6 +816,18 @@ export default async function MethodologyPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  let t = await getTranslations("features");
+  // `src/messages/es/features.json` sits at exactly `{}` until plan 07-13
+  // translates it — the PENDING state `scripts/i18n-gates.mjs` Gate 2 already
+  // models deliberately for a two-wave extraction/translation split. Falling
+  // back to the English translator here (scoped to this page only, never
+  // touching the shared i18n request config) is what lets `/es/features`
+  // keep prerendering with temporarily-English copy in the interim, instead
+  // of throwing MISSING_MESSAGE from a bare `t()`/`t.raw()` call. Once 07-13
+  // fills the file, `t.has()` is true and this branch stops firing.
+  if (!t.has("hero.heading")) {
+    t = await getTranslations({ locale: "en", namespace: "features" });
+  }
 
   return (
     <div
@@ -912,49 +854,47 @@ export default async function MethodologyPage({
               color: FG_STRONG,
             }}
           >
-            How El Portal works.
+            {t("hero.heading")}
           </h1>
           <p
             className="mt-5 max-w-2xl text-[15px] leading-[1.6] md:text-base"
             style={{ color: FG }}
           >
-            A method, not a vibe. Five mechanics, layered. The system
-            reads, organizes, and surfaces signal, leaving you to stay focused on
-            the work that earns it.
+            {t("hero.body")}
           </p>
         </header>
 
         {/* 5 method sections — hairline dividers between */}
         <div className="space-y-20 md:space-y-28">
-          <TemporalHierarchySection />
+          <TemporalHierarchySection t={t} />
 
           <div
             aria-hidden
             className="h-px"
             style={{ background: RULE }}
           />
-          <DailyScoreSection />
+          <DailyScoreSection t={t} />
 
           <div
             aria-hidden
             className="h-px"
             style={{ background: RULE }}
           />
-          <PulseLoopSection />
+          <PulseLoopSection t={t} />
 
           <div
             aria-hidden
             className="h-px"
             style={{ background: RULE }}
           />
-          <HabitsAndGoalsSection />
+          <HabitsAndGoalsSection t={t} />
 
           <div
             aria-hidden
             className="h-px"
             style={{ background: RULE }}
           />
-          <TrendsInsightsSection />
+          <TrendsInsightsSection t={t} />
         </div>
 
         {/* Closing — subtle link back to manifesto */}
@@ -966,15 +906,14 @@ export default async function MethodologyPage({
             className="max-w-2xl text-[14px] leading-[1.65] md:text-[15px]"
             style={{ color: FG_MUTED }}
           >
-            The method is the floor, and the convictions underneath it are
-            what make it worth running.
+            {t("closing.body")}
           </p>
           <Link
             href="/manifesto"
             className="group mt-4 inline-flex items-center gap-1.5 text-[14px] md:text-[15px] transition-colors min-h-11 md:min-h-0"
             style={{ color: ACCENT_LIGHT }}
           >
-            Read the manifesto
+            {t("closing.cta")}
             <ArrowRight
               size={15}
               strokeWidth={1.5}
