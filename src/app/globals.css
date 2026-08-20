@@ -400,6 +400,11 @@ body {
   display: grid;
   justify-content: end;
   isolation: isolate;
+  /* -webkit-text-stroke paints centred on the glyph outline, so half of it
+     falls outside the text box. The mark is flush right inside an
+     overflow:hidden box, so without this the outer half of the stroke on the
+     final "L" is shaved off. Exactly half the stroke width, no more. */
+  padding-inline-end: calc(clamp(1.25px, 0.32vw, 4px) / 2);
   /* Mask grain — biased near-opaque; mainly erodes the advancing reveal edge
      so the fill front looks granular rather than a clean wipe line. */
   --wordmark-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.12' intercept='0.88'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -413,7 +418,13 @@ body {
   text-transform: uppercase;
   letter-spacing: -0.01em;
   line-height: 0.85;
-  font-size: clamp(1.9rem, 8.6vw, 7.6rem);
+  /* Sized off the wordmark's own box (cqw), not the viewport. "EL PORTAL" in
+     Special Gothic Expanded One measures ~6.32x its font-size, so 15cqw keeps
+     the whole word, plus the outer half of its text-stroke, inside the box at
+     any width the footer row leaves it. A vw-based size could not know that
+     the Spanish copyright line is longer than the English one and steals that
+     width, which clipped "EL" off the front of the Spanish footer. */
+  font-size: clamp(1.5rem, 15cqw, 7.6rem);
   white-space: nowrap;
   user-select: none;
 }

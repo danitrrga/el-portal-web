@@ -113,14 +113,18 @@ export default function Footer() {
                         {t("footer.copyright", { year: new Date().getFullYear() })}
                     </p>
 
-                    {/* Brand wordmark — ghost outline that fills with grain on hover */}
+                    {/* Brand wordmark — ghost outline that fills with grain on hover.
+                        flex-1 + @container so the mark sizes off THIS box, not the
+                        viewport: the Spanish copyright line is longer than the
+                        English one, which left the nowrap wordmark wider than its
+                        own box and clipped "EL" off the front. */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                         viewport={{ once: true }}
                         aria-hidden="true"
-                        className="min-w-0 overflow-hidden"
+                        className="@container min-w-0 flex-1 overflow-hidden"
                     >
                         <div className="wordmark">
                             <span className="wordmark__layer wordmark__outline">El Portal</span>
