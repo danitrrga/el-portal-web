@@ -25,6 +25,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
+# 07-15: sitemap.xml, canonicals and hreflang alternates are built from
+# NEXT_PUBLIC_SITE_URL at `next build` time (src/lib/seo.ts throws
+# E_MISSING_SITE_ORIGIN otherwise). `.env.local` supplies this locally but is
+# not in the repository, so a clean CI checkout needs it from a repository
+# variable instead. Workflow-level, not step-level: `playwright.config.ts`'s
+# `webServer` runs `npm run build && npm run start` from inside the
+# `responsive` job, so the value has to be visible to a process this workflow
+# never names directly, and `quality`'s own `npm run build`-adjacent checks
+# (tsc, i18n gates) need it too.
+env:
+  NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+
 # Actions are pinned to floating majors that run on the Node 24 runtime. The v4
 # line targets Node 20, which the runner now force-upgrades while emitting a
 # deprecation warning. The only behavioural change in the v5 line that touches

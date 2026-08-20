@@ -1,1 +1,34 @@
-{}
+{
+  "home": {
+    "title": "El Portal — The Personal Operating System",
+    "description": "El Portal is the personal operating system for high performers. Track habits, run Cycles inside a Version, and let the system surface the patterns you miss."
+  },
+  "features": {
+    "title": "How It Works — El Portal",
+    "description": "See how El Portal works: Versions, Cycles, Days, weighted habits, and twice-daily check-ins that feed the Trends & Insights the system reads for you."
+  },
+  "manifesto": {
+    "title": "The Manifesto — El Portal",
+    "description": "A method for becoming yourself. Identity isn't discovered: it's chosen, designed, and rehearsed. Seven principles behind the system El Portal runs on."
+  },
+  "changelog": {
+    "title": "Changelog — El Portal",
+    "description": "Every shipped change to El Portal: new features, fixes, and performance improvements, released as they ship, no batching, no surprises."
+  },
+  "mcp": {
+    "title": "MCP Server — El Portal",
+    "description": "Connect Claude, Cursor, or any MCP-compatible agent to El Portal. Read cycle state, log habits, and run check-ins without leaving your agent workflow."
+  },
+  "pricing": {
+    "title": "Pricing — El Portal",
+    "description": "Start free with the full system, or pay once for Lifetime access with AI on top. No subscriptions, no tiers above Lifetime, no renewals."
+  },
+  "privacy": {
+    "title": "Privacy Policy — El Portal",
+    "description": "How El Portal handles your data and protects your privacy."
+  },
+  "terms": {
+    "title": "Terms of Service — El Portal",
+    "description": "Terms governing your use of El Portal."
+  }
+}
