@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 4: Verification & Polish** - Whole-site typecheck, lint, build, and route audit pass clean
 - [x] **Phase 5: Mobile Responsive Retrofit** - Every route is comfortable at 320–430px, with the approved desktop design unchanged (7/7 plans executed incl. 2 gap-closure; verification `passed` — 3 goal-level gaps closed and re-measured, 6/6 human-verification items resolved incl. a physical-iPhone check, 1 accepted override OVR-01 for the WCAG-AA colour remediation) (completed 2026-08-01)
 - [ ] **Phase 6: Security Headers** - Static CSP + baseline security headers, with static prerendering preserved
-- [ ] **Phase 7: Spanish Localization** - Every page readable in Spanish, negotiated from the browser at `/` only, with English URLs unchanged and both locales indexable
+- [x] **Phase 7: Spanish Localization** - Every page readable in Spanish, negotiated from the browser at `/` only, with English URLs unchanged and both locales indexable (completed 2026-08-20)
 
 ## Phase Details
 
@@ -225,7 +225,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 15/16 plans executed
+**Plans:** 16/16 plans complete
 
 Plans:
 
@@ -261,7 +261,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5)* — verification
 
-- [ ] 07-16-PLAN.md — Full both-locale matrix, static-render and routing re-assertion, committed residual-string gate, register/glossary aggregation, suppression reconciliation, human verification pack
+- [x] 07-16-PLAN.md — Full both-locale matrix, static-render and routing re-assertion, committed residual-string gate, register/glossary aggregation, suppression reconciliation, human verification pack
 
 **Planning notes** (2026-08-02):
 
