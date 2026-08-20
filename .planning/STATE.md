@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-08-PLAN.md
-last_updated: "2026-08-20T08:35:56.600Z"
+stopped_at: Completed 07-09-PLAN.md
+last_updated: "2026-08-20T09:28:24.163Z"
 last_activity: 2026-08-20
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 29
-  completed_plans: 21
+  completed_plans: 22
   percent: 43
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 07 (spanish-localization) — EXECUTING
-Plan: 9 of 16
+Plan: 10 of 16
 Status: Ready to execute
 
   16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
@@ -81,7 +81,7 @@ Status: Ready to execute
 
 Last activity: 2026-08-20
 
-Progress: [███████░░░] 72%
+Progress: [████████░░] 76%
 
 ## Performance Metrics
 
@@ -124,6 +124,7 @@ Progress: [███████░░░] 72%
 | Phase 07 P06 | 45min | 3 tasks | 6 files |
 | Phase 07 P07 | 15min | 3 tasks | 6 files |
 | Phase 07-spanish-localization P08 | 50min | 3 tasks | 6 files |
+| Phase 07 P09 | 40min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -181,6 +182,9 @@ Recent decisions affecting current work:
 - [Phase 07]: 07-07: 'The Lab' stays kept-English in Spanish alongside 'Trends' — GLOSSARY.md's nav.lab entry (nav-priority resolution) overrides the plan's interfaces framing
 - [Phase 07-08]: Tool.params/returns stay hardcoded English in both /mcp locales (literal type-signature/wire-shape documentation); only Tool.description is translated — plan interfaces text names only name+description as translate/never-translate; params contain quoted enum literals the real API must match verbatim
 - [Phase 07-08]: Fixed a NEW containment offender: ToolRow role-badge (w-8, 32px) overflowed under Spanish 'escritura' at every viewport; widened to w-16 in both locales — not a KU-2 twin, no English counterpart, could not be suppressed per plan's own decision tree
+- [Phase 07-09]: Price/count numerals embedded in prose (FAQ price mentions, promo banner, plan badge signup count) are ICU {price}/{count} placeholders, not just the tier price/period pair
+- [Phase 07-09]: Tier/plan brand names Initiate and Lifetime kept English, matching the app's own kept-English convention for El Portal Free / El Portal Pro
+- [Phase 07-09]: Fixed two Spanish-only containment regressions at source (shared CSS Grid card overflow from the Lifetime CTA text; a worsened KU-4 escape from a long comparison-table row) by shortening Spanish copy per the plan's decision tree - no data-reflow-exempt added
 
 ### Pending Todos
 
@@ -203,6 +207,7 @@ None yet.
 - No automated test suite exists — verification relies on `tsc`, ESLint, `next build`, and manual visual/a11y review (affects Phase 4 / QUAL-02).
 - touch-iphone (WebKit) Playwright project cannot launch in this sandbox — host deps require sudo (see .planning/phases/05-mobile-responsive-retrofit/deferred-items.md). Not a code regression; all 7 other harness projects pass.
 - npm run audit:responsive cannot run: test-results/ and playwright-report/ are root-owned from a prior session, sandbox user has no sudo to clear them (EACCES). Needs sudo rm -rf test-results playwright-report before Phase 5 responsive-audit regression check can run against the new [locale] route tree. Not blocking Wave 2+ execution (affects Phase 07 / final verification wave).
+- 07-09: src/messages/en/pricing.json and es/pricing.json were hand-edited/repaired outside this plan's execution while it was running (comparisonFeatures rewritten 19 rows -> 12, two new rows added, several renamed). 07-09's own commits are unaffected, but whoever runs 07-16's final sweep must re-verify i18n:gates/build/Playwright against the post-repair catalogues before trusting pricing namespace status, and must re-measure KU-4 against the new comparisonFeatures set.
 
 ### Quick Tasks Completed
 
@@ -221,6 +226,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-20T08:35:56.591Z
-Stopped at: Completed 07-08-PLAN.md
+Last session: 2026-08-20T09:28:24.155Z
+Stopped at: Completed 07-09-PLAN.md
 Resume file: None
