@@ -56,8 +56,24 @@ export default function Navbar() {
             <div className="px-6">
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
+                    {/* Two instances rather than one, because the lockup sets its
+                        size as an inline font-size and the expanded display face
+                        is wide: at 320px a 24px mark plus the Spanish "Crear
+                        cuenta" pill pushed this row 2px past the viewport. 20px
+                        below md matches what the El Portal app itself uses in
+                        MobileHeader. The responsive display class goes on a
+                        wrapper, not on the lockup itself: its root already
+                        carries `inline-flex`, and two display utilities on one
+                        element are resolved by stylesheet order, not attribute
+                        order, so `hidden` did not reliably win and both marks
+                        rendered. */}
                     <Link href="/" className="flex min-h-11 items-center gap-2 md:min-h-0">
-                        <ElPortalWordmark size={24} />
+                        <span className="md:hidden">
+                            <ElPortalWordmark size={20} />
+                        </span>
+                        <span className="hidden md:block">
+                            <ElPortalWordmark size={24} />
+                        </span>
                     </Link>
 
                     {/* Desktop Nav Links */}
