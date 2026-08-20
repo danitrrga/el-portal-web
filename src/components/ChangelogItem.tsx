@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Lock, Rocket, Info, PenLine } from "lucide-react";
+import { getFormatter, getTranslations } from "next-intl/server";
 
 const NOTE_ICONS = {
   lock: Lock,
@@ -8,13 +9,27 @@ const NOTE_ICONS = {
   pen: PenLine,
 } as const;
 
+// Closed tag-key set — mirrors the `tags.*` labels in the `changelog`
+// catalogue and the el-portal-changelog skill's own table. A key outside
+// this set is a missing-key error at render time, not a silently unstyled
+// badge.
+export type TagKey =
+  | "newFeature"
+  | "improvement"
+  | "optimization"
+  | "fix"
+  | "hotfix"
+  | "release";
+
 export type BulletItem = { lead?: string; body: string };
 export type NoteItem = { icon: keyof typeof NOTE_ICONS; text: string };
 
 export type ChangelogEntry = {
   version: string;
+  // ISO date value ("YYYY-MM-DD"), stored once and shared across locales.
+  // Formatted per-locale at render time — never translated as a string.
   date: string;
-  tags: string[];
+  tags: TagKey[];
   title: string;
   body: string;
   bullets?: BulletItem[];
@@ -37,7 +52,7 @@ const FG_MUTED = "var(--color-ep-fg-muted-2)";
 const ACCENT = "var(--color-ep-accent)";
 const ACCENT_LIGHT = "var(--color-ep-accent-light)";
 
-export function ChangelogItem({
+export async function ChangelogItem({
   entry,
   isLast,
 }: {
@@ -45,6 +60,28 @@ export function ChangelogItem({
   isLast?: boolean;
 }) {
   const NoteIcon = entry.note ? NOTE_ICONS[entry.note.icon] : null;
+
+  // `ChangelogItem` reads its own translator rather than receiving one from
+  // the page — same page-scoped English-fallback shape 07-11 used for
+  // `/features`, so this component keeps working while
+  // `src/messages/es/changelog.json` is still `{}` (Gate 2 PENDING state,
+  // filled by plan 07-14).
+  let t = await getTranslations("changelog");
+  if (!t.has("noteLabel")) {
+    t = await getTranslations({ locale: "en", namespace: "changelog" });
+  }
+
+  const format = await getFormatter();
+  // `entry.date` is a bare ISO date ("YYYY-MM-DD"), which `Date` parses as
+  // midnight UTC. `timeZone: "UTC"` on the formatter is not optional here —
+  // without it, a runtime whose zone sits behind UTC renders the previous
+  // day (T-07-12-05).
+  const formattedDate = format.dateTime(new Date(entry.date), {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    timeZone: "UTC",
+  });
 
   return (
     <article
@@ -69,10 +106,11 @@ export function ChangelogItem({
           v{entry.version}
         </span>
         <time
+          dateTime={entry.date}
           className="block text-[13px]"
           style={{ color: FG_MUTED }}
         >
-          {entry.date}
+          {formattedDate}
         </time>
         {entry.tags.length > 0 && (
           <div
@@ -82,7 +120,7 @@ export function ChangelogItem({
             {entry.tags.map((tag, i) => (
               <span key={tag} className="inline-flex items-center">
                 {i > 0 && <span className="mr-2 select-none">·</span>}
-                {tag}
+                {t(`tags.${tag}`)}
               </span>
             ))}
           </div>
@@ -156,7 +194,7 @@ export function ChangelogItem({
             />
             <span>
               <strong className="font-semibold not-italic" style={{ color: FG }}>
-                Note:
+                {t("noteLabel")}:
               </strong>{" "}
               {entry.note.text}
             </span>
