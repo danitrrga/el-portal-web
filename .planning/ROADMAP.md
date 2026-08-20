@@ -225,7 +225,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 7/16 plans executed
+**Plans:** 8/16 plans executed
 
 Plans:
 
@@ -244,7 +244,7 @@ Plans:
 
 - [x] 07-06-PLAN.md — Home part A: Hero, VCDSection, McpIntegrationSection
 - [x] 07-07-PLAN.md — Home part B: SystemBlueprintSection, MethodologyPreviewSection
-- [ ] 07-08-PLAN.md — `/mcp` prose, with every code block left untranslated
+- [x] 07-08-PLAN.md — `/mcp` prose, with every code block left untranslated
 - [ ] 07-09-PLAN.md — `/pricing`, with the plan badge measured and KU-4 re-measured
 - [ ] 07-10-PLAN.md — `/privacy` + `/terms` with the English-governs notice (D-07/D-08)
 - [ ] 07-11-PLAN.md — `/features` extraction into the English catalogue (970 lines)
