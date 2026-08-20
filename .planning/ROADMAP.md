@@ -225,7 +225,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 12/16 plans executed
+**Plans:** 13/16 plans executed
 
 Plans:
 
@@ -252,7 +252,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)* — large translations
 
-- [ ] 07-13-PLAN.md — `/features` Spanish copy (single-file translation)
+- [x] 07-13-PLAN.md — `/features` Spanish copy (single-file translation)
 - [ ] 07-14-PLAN.md — `/changelog` Spanish copy, every entry with proven parity against the derived count
 
 **Wave 5** *(blocked on Wave 4)* — SEO
