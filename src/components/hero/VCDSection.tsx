@@ -1,6 +1,7 @@
 "use client";
 
 import { Compass, Repeat, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const SECTION_BG = "var(--color-ep-section-bg)";
 const FG_STRONG = "var(--color-ep-fg-strong-white)";
@@ -18,7 +19,21 @@ const TODAY = 11; // 0-indexed: day 12 of 15
 const CYCLE_LENGTH = 15;
 const CYCLES_PER_VERSION = 6;
 
+// Version / Cycle / Day, in this fixed order — matches the order of
+// `home.vcd.captions` in the catalogue. Icons are visual configuration and
+// stay in code; the words themselves come from the catalogue once, and both
+// the Caption grid below and BandLabel inside LayeredStrata read from the
+// same `captions` array so the two renderings of each word cannot drift.
+const HORIZON_ICONS = [Compass, Repeat, Sun] as const;
+
+type VcdCaption = {
+  label: string;
+  body: string;
+};
+
 export default function VCDSection() {
+  const t = useTranslations("home");
+  const captions = t.raw("vcd.captions") as VcdCaption[];
   const dayOfVersion = ACTIVE_CYCLE * CYCLE_LENGTH + (TODAY + 1);
 
   return (
@@ -30,32 +45,25 @@ export default function VCDSection() {
             className="display text-balance text-[clamp(1.313rem,1.563vw+1rem,1.75rem)] md:text-[clamp(28px,3.2vw,40px)]"
             style={{ color: FG_STRONG }}
           >
-            Three horizons. One hierarchy.
+            {t("vcd.heading")}
           </h2>
           <p className="mt-4 text-[15px] md:text-base leading-[1.6]" style={{ color: FG }}>
-            Versions plan identity. Cycles run focus. Days carry the score.
+            {t("vcd.subheading")}
           </p>
         </div>
 
-        <LayeredStrata dayOfVersion={dayOfVersion} />
+        <LayeredStrata dayOfVersion={dayOfVersion} captions={captions} />
 
         {/* Captions */}
         <div className="mt-2 sm:mt-4 grid gap-8 sm:grid-cols-3 sm:gap-10 max-w-3xl mx-auto">
-          <Caption
-            icon={Compass}
-            label="Version"
-            body="Identity arc. The phase you're committing to."
-          />
-          <Caption
-            icon={Repeat}
-            label="Cycle"
-            body="Sprint on the skills that identity needs. Several fit inside a Version."
-          />
-          <Caption
-            icon={Sun}
-            label="Day"
-            body="Atomic unit. Weighted habits roll into one number."
-          />
+          {captions.map((caption, i) => (
+            <Caption
+              key={caption.label}
+              icon={HORIZON_ICONS[i]}
+              label={caption.label}
+              body={caption.body}
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -98,7 +106,13 @@ function Caption({
 }
 
 /* ─── Layered strata — 3 horizons sharing one NOW ───────────────── */
-function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
+function LayeredStrata({
+  dayOfVersion,
+  captions,
+}: {
+  dayOfVersion: number;
+  captions: VcdCaption[];
+}) {
   const totalDays = CYCLES_PER_VERSION * CYCLE_LENGTH; // 90
   const nowPct = ((dayOfVersion - 0.5) / totalDays) * 100;
   const activeStartPct = (ACTIVE_CYCLE * CYCLE_LENGTH) / totalDays * 100;
@@ -143,7 +157,7 @@ function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
         }}
       >
         {/* VERSION */}
-        <BandLabel icon={Compass} label="Version" />
+        <BandLabel icon={HORIZON_ICONS[0]} label={captions[0].label} />
         <VersionStratum
           activeStartPct={activeStartPct}
           activeEndPct={activeEndPct}
@@ -151,11 +165,11 @@ function LayeredStrata({ dayOfVersion }: { dayOfVersion: number }) {
         />
 
         {/* CYCLE */}
-        <BandLabel icon={Repeat} label="Cycle" />
+        <BandLabel icon={HORIZON_ICONS[1]} label={captions[1].label} />
         <CycleStratum />
 
         {/* DAY */}
-        <BandLabel icon={Sun} label="Day" />
+        <BandLabel icon={HORIZON_ICONS[2]} label={captions[2].label} />
         <DayStratum nowPct={nowPct} totalDays={totalDays} />
       </div>
 
