@@ -19,7 +19,8 @@
     "i18n:gates": "node scripts/i18n-gates.mjs",
     "i18n:gates:strict": "node scripts/i18n-gates.mjs --strict",
     "i18n:sync": "node scripts/i18n-sync.mjs",
-    "i18n:sync:check": "node scripts/i18n-sync.mjs --check"
+    "i18n:sync:check": "node scripts/i18n-sync.mjs --check",
+    "audit:strings": "node scripts/audit-residual-strings.mjs"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.13",
