@@ -348,6 +348,14 @@ body {
 }
 
 /* Display heading utility — Special Gothic Expanded One, all-caps */
+/* Brand display face, family only — no uppercase, tracking or line-height of
+   its own. `.display` is the heading treatment; this is the bare family hook the
+   wordmark lockup needs, matching the class of the same name in the El Portal
+   app so ElPortalWordmark can be shared between the two verbatim. */
+.font-display {
+  font-family: var(--font-special-gothic-expanded), "Arial Black", sans-serif;
+}
+
 .display {
   font-family: var(--font-special-gothic-expanded), "Arial Black", sans-serif;
   font-weight: 400;
