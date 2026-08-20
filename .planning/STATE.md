@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-11-PLAN.md
-last_updated: "2026-08-20T13:29:27.570Z"
+stopped_at: Completed 07-12-PLAN.md
+last_updated: "2026-08-20T13:48:08.120Z"
 last_activity: 2026-08-20
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 29
-  completed_plans: 24
+  completed_plans: 25
   percent: 43
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 07 (spanish-localization) — EXECUTING
-Plan: 12 of 16
+Plan: 13 of 16
 Status: Ready to execute
 
   16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
@@ -81,7 +81,7 @@ Status: Ready to execute
 
 Last activity: 2026-08-20
 
-Progress: [████████░░] 83%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
@@ -127,6 +127,7 @@ Progress: [████████░░] 83%
 | Phase 07 P09 | 40min | 3 tasks | 5 files |
 | Phase 07-spanish-localization P10 | 19min | 3 tasks | 6 files |
 | Phase 07 P11 | 55min | 2 tasks | 2 files |
+| Phase 07 P12 | 50min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -191,6 +192,8 @@ Recent decisions affecting current work:
 - [Phase 07-spanish-localization]: 07-10: Terms 'Lifetime' kept English/capitalized, matching 07-09's pricing tier-name convention rather than the app's generic 'de por vida' adjective — Avoids cross-page inconsistency for the same commercial concept
 - [Phase 07]: features catalogue: one top-level key per section (hero, scales, temporalHierarchy, dailyScore, pulseLoop, habitsAndGoals, trendsInsights, closing), arrays for ordered content — Locks the contract plan 07-13 needs to translate /es/features as a pure JSON write with zero component edits
 - [Phase 07]: page-scoped t.has() English fallback in features/page.tsx, not a src/i18n/request.ts change — Lets /es/features keep prerendering while es/features.json is still {} (Gate 2 PENDING state); scoped to this plan's own file because a human was concurrently hand-editing src/i18n/request.ts. Plan 07-12 (changelog) will likely need the same pattern.
+- [Phase 07]: Changelog dates stored as ISO strings, rendered via next-intl getFormatter with an explicit timeZone: UTC pin (day: '2-digit' to match existing zero-padded days) — Removes a whole translatable-string class from every future changelog sync and prevents a date-only value rendering one day early on a non-UTC runtime
+- [Phase 07]: .claude/skills/el-portal-changelog/SKILL.md corrected on disk but not git-committed for 07-12 — Project .gitignore blanket-excludes .claude/ (only AGENT-SYSTEM.md allow-listed); CLAUDE.md frames .claude/ as LifeOS-governed, not a project git deliverable — CLAUDE.md takes precedence over the plan's commit expectation per harness enforcement rule
 
 ### Pending Todos
 
@@ -232,6 +235,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-20T13:29:27.562Z
-Stopped at: Completed 07-11-PLAN.md
+Last session: 2026-08-20T13:48:08.090Z
+Stopped at: Completed 07-12-PLAN.md
 Resume file: None
