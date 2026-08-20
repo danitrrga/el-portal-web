@@ -243,7 +243,7 @@ function ToolRow({ tool, write, t }: { tool: Tool; write: boolean; t: Translator
       <summary className="flex items-center justify-between py-3 cursor-pointer list-none">
         <div className="flex items-center gap-3">
           <span
-            className={`text-[10px] font-mono font-medium w-8 shrink-0 ${
+            className={`text-[10px] font-mono font-medium w-16 shrink-0 ${
               write ? "text-amber-500/70" : "text-blue-400/85"
             }`}
           >

@@ -1,1 +1,115 @@
-{}
+{
+  "hero": {
+    "eyebrow": "Model Context Protocol",
+    "title": "Conecta tu agente de IA a El Portal.",
+    "description": "El servidor MCP de El Portal expone tu sistema operativo personal a cualquier cliente de IA compatible con MCP. Lee el estado de tu ciclo, registra hábitos y haz tus check-ins diarios sin salir del flujo de trabajo de tu agente.",
+    "stats": {
+      "tools": "12 herramientas",
+      "transport": "stdio + HTTP",
+      "protocol": "JSON-RPC 2.0"
+    }
+  },
+  "toc": {
+    "heading": "En esta página",
+    "items": {
+      "capabilities": "Capacidades",
+      "gettingStarted": "Primeros pasos",
+      "toolReference": "Referencia de herramientas",
+      "examples": "Ejemplos",
+      "permissions": "Permisos"
+    }
+  },
+  "codeSampleLabel": "{label} — ejemplo de código",
+  "sections": {
+    "capabilities": {
+      "heading": "Capacidades",
+      "intro": "Las herramientas de lectura se conceden en todas las claves por defecto. Las herramientas de escritura requieren activación explícita al crear la clave.",
+      "readToolsHeading": "Herramientas de lectura",
+      "writeToolsHeading": "Herramientas de escritura"
+    },
+    "gettingStarted": {
+      "heading": "Primeros pasos",
+      "step1": {
+        "heading": "1. Generar una clave de API",
+        "body": "Ve a <settingsPath>Configuración > Claves de API</settingsPath> en El Portal. Tu clave se muestra una sola vez al crearla. Cópiala de inmediato. Las claves empiezan con <code>ep_</code> seguido de 64 caracteres hexadecimales. Se procesan con un hash SHA-256 antes de guardarse y no se pueden recuperar después de la creación. Hasta 10 claves activas por cuenta, con vencimiento opcional de hasta 365 días."
+      },
+      "step2": {
+        "heading": "2. Elegir un transporte",
+        "body": "Usa <stdioTag>stdio</stdioTag> para herramientas de IA locales (Cursor, Claude Desktop, Continue). Usa <httpTag>HTTP</httpTag> para agentes basados en la web o integraciones personalizadas del lado del servidor."
+      },
+      "step3": {
+        "heading": "3. Añadir tu configuración",
+        "stdioCaption": "Stdio (.mcp.json)",
+        "stdioCodeLabel": "Configuración stdio de .mcp.json",
+        "httpCaption": "Endpoint HTTP",
+        "httpCodeLabel": "Configuración del endpoint HTTP"
+      }
+    },
+    "toolReference": {
+      "heading": "Referencia de herramientas",
+      "intro": "Todas las herramientas usan JSON-RPC 2.0 a través del protocolo MCP. Expande cada entrada para ver los parámetros y los valores de retorno.",
+      "readBadge": "lectura",
+      "writeBadge": "escritura",
+      "parametersLabel": "Parámetros",
+      "returnsLabel": "Retorno"
+    },
+    "examples": {
+      "heading": "Ejemplos",
+      "snapshot": "Obtener el snapshot de hoy",
+      "logHabit": "Registrar un hábito",
+      "morning": "Check-in matutino"
+    },
+    "permissions": {
+      "heading": "Permisos y límites de frecuencia",
+      "model": {
+        "title": "Modelo de permisos",
+        "read": {
+          "label": "lectura",
+          "body": "Se concede en todas las claves por defecto. No requiere configuración adicional."
+        },
+        "write": {
+          "label": "escritura",
+          "body": "Activación opcional por clave. Activa o desactiva cada herramienta de escritura al crear la clave o en los ajustes de la clave."
+        },
+        "storage": {
+          "label": "almacenamiento",
+          "body": "Las claves se procesan con un hash SHA-256 antes de guardarse. El texto plano nunca se almacena y no se puede recuperar después de la creación."
+        }
+      },
+      "rateLimits": {
+        "title": "Límites de frecuencia",
+        "readTools": { "op": "Herramientas de lectura", "limit": "Sin límite" },
+        "writeTools": { "op": "Herramientas de escritura", "limit": "30 / min" },
+        "keyCreation": { "op": "Creación de claves", "limit": "5 / h" },
+        "activeKeys": { "op": "Claves activas", "limit": "10 por cuenta" }
+      }
+    }
+  },
+  "cta": {
+    "heading": "¿Listo para conectar?",
+    "body": "Genera tu primera clave de API en Configuración e insértala en tu configuración de MCP. Acceso de lectura completo en menos de un minuto.",
+    "button": "Abrir Configuración"
+  },
+  "tools": {
+    "read": {
+      "portal_snapshot": "Estado completo del dashboard. Ciclo activo, hábitos con rachas y done_today, objetivos, puntuación diaria. Secciones opcionales: pulse_today, archivos, identidad, mantras.",
+      "portal_review": "Datos de revisión del ciclo. Puntuaciones diarias, porcentajes de consistencia de hábitos, días restantes.",
+      "portal_history": "Consulta versiones, ciclos o debriefs anteriores. Filtra por versión o estado.",
+      "portal_search": "Búsqueda de texto completo en objetivos, hábitos, archivos y mantras. Hasta 50 resultados."
+    },
+    "write": {
+      "portal_log_habits": "Registra hábitos como hechos o no hechos para cualquier fecha. Compatible con upsert. Lotes de hasta 30. Devuelve rachas actualizadas y la puntuación diaria.",
+      "portal_pulse": "Lee o escribe los check-ins de Pulse matutinos y vespertinos. Cubre ánimo, energía, sueño, estrés, rendimiento, sentimientos y reflexión.",
+      "portal_create_cycle": "Crea un ciclo completo en una sola llamada: objetivos, hábitos, prioridades, mantras y objetivos trasladados de ciclos anteriores.",
+      "portal_debrief_cycle": "Cierra un ciclo. El servidor calcula las estadísticas (puntuación media, mejores hábitos, tasa de finalización de objetivos). Aportas la reflexión.",
+      "portal_create": "Crea nuevas entidades: versión, objetivo, hábito, archivo, mantra o elemento de identidad. Lotes de hasta 10.",
+      "portal_update": "Actualización parcial de cualquier tipo de entidad. Lotes de hasta 10 operaciones.",
+      "portal_delete": "Elimina entidades por ID. Aplica en cascada cuando corresponde. Lotes de hasta 10.",
+      "portal_settings": "Lee o actualiza tu perfil de usuario y tus preferencias de la app."
+    }
+  },
+  "copyButton": {
+    "copy": "Copiar",
+    "copied": "Copiado"
+  }
+}
