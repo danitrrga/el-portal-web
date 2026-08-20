@@ -4,7 +4,7 @@
     "subheading": "Start free or unlock everything with one payment. No subscriptions, no tiers above this, no renewals.",
     "badge": {
       "eyebrow": "Early access",
-      "text": "Launching soon · First {count} signups get Lifetime free at launch"
+      "text": "Launching soon"
     }
   },
   "tiers": [
@@ -56,18 +56,66 @@
     }
   },
   "comparisonFeatures": [
-    { "name": "Habit Tracking + Goal System", "initiate": true, "lifetime": true },
-    { "name": "The Lab", "initiate": true, "lifetime": true },
-    { "name": "The Archives", "initiate": true, "lifetime": true },
-    { "name": "Cinema Mode", "initiate": true, "lifetime": true },
-    { "name": "Daily Pulse (mood + vitals)", "initiate": true, "lifetime": true },
-    { "name": "Trends", "initiate": true, "lifetime": true },
-    { "name": "Command bar", "initiate": true, "lifetime": true },
-    { "name": "Internationalization (5 languages)", "initiate": true, "lifetime": true },
-    { "name": "Storage", "initiate": "60 MB", "lifetime": "Unlimited" },
-    { "name": "MCP integration + API keys", "initiate": "—", "lifetime": true },
-    { "name": "AI Insight Narratives", "initiate": "—", "lifetime": true },
-    { "name": "Deep statistical analysis", "initiate": "—", "lifetime": true }
+    {
+      "name": "Habit Tracking + Goal System",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "The Lab",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "The Archives",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Cinema Mode",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Daily Pulse (mood + vitals)",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Trends",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Command bar",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Internationalization (5 languages)",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Storage",
+      "initiate": "60 MB",
+      "lifetime": "Unlimited"
+    },
+    {
+      "name": "MCP integration + API keys",
+      "initiate": "—",
+      "lifetime": true
+    },
+    {
+      "name": "AI Insight Narratives",
+      "initiate": "—",
+      "lifetime": true
+    },
+    {
+      "name": "Deep statistical analysis",
+      "initiate": "—",
+      "lifetime": true
+    }
   ],
   "faq": {
     "eyebrow": "FAQ",
