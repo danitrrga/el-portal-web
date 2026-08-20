@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { CopyButton } from "@/components/CopyButton";
@@ -7,9 +7,17 @@ import { buildPageMetadata } from "@/lib/seo";
 
 /* ─── Data ────────────────────────────────────────────────────────── */
 
+/**
+ * `description` intentionally lives OUT of this data structure — it is the
+ * only translatable field on a Tool, so it is looked up from the `mcp`
+ * catalogue by `name` (`tools.read.<name>` / `tools.write.<name>`) instead.
+ * `params` and `returns` stay here, in English, in both locales: they are
+ * TypeScript-shaped type signatures and API-response descriptions that
+ * double as documentation of the literal wire format — translating them
+ * would describe a contract the API does not actually expose.
+ */
 interface Tool {
   name: string;
-  description: string;
   params: string;
   returns: string;
 }
@@ -17,31 +25,23 @@ interface Tool {
 const readTools: Tool[] = [
   {
     name: "portal_snapshot",
-    description:
-      "Full dashboard state. Active cycle, habits with streaks and done_today, goals, daily score. Optional sections: pulse_today, archives, identity, mantras.",
     params: 'include?: ("pulse_today" | "archives" | "identity" | "mantras")[]',
     returns:
       "Snapshot object with cycle, habits array, goals array, daily score, and any requested optional sections.",
   },
   {
     name: "portal_review",
-    description:
-      "Cycle review data. Daily scores, habit consistency percentages, days remaining.",
     params: 'include?: ("insights" | "pulse_history" | "debrief_stats")[]',
     returns:
       "Review object with scores array, consistency map, days remaining, and optional extras.",
   },
   {
     name: "portal_history",
-    description:
-      "Browse past versions, cycles, or debriefs. Filter by version or status.",
     params: 'type: "version" | "cycle" | "debrief", version?: string, status?: string',
     returns: "Array of matching historical records ordered by creation date.",
   },
   {
     name: "portal_search",
-    description:
-      "Full-text search across goals, habits, archives, and mantras. Up to 50 results.",
     params: "query: string, limit?: number (max 50)",
     returns: "Array of matching entities with type, id, title, and excerpt.",
   },
@@ -50,60 +50,46 @@ const readTools: Tool[] = [
 const writeTools: Tool[] = [
   {
     name: "portal_log_habits",
-    description:
-      "Log habits done or undone for any date. Upsert-safe. Batch up to 30. Returns updated streaks and daily score.",
     params:
       "entries: { habit_id: string; status: boolean; date?: string }[], up to 30",
     returns: "Array of updated habit records with current streak and revised daily score.",
   },
   {
     name: "portal_pulse",
-    description:
-      "Read or write morning/evening pulse check-ins. Covers mood, energy, sleep, stress, performance, feelings, and reflection.",
     params:
       'action: "read" | "write", section: "morning" | "evening", data?: PulseData',
     returns: "Current pulse check-in data for the given section, or confirmation of write.",
   },
   {
     name: "portal_create_cycle",
-    description:
-      "Create a complete cycle in one call: goals, habits, priorities, mantras, and carry-over goals from previous cycles.",
     params:
       "title: string, goals: Goal[], habits: Habit[], priorities?: string[], mantras?: string[], carry_over?: string[]",
     returns: "Created cycle object with all nested entities and generated IDs.",
   },
   {
     name: "portal_debrief_cycle",
-    description:
-      "Close a cycle. Server computes stats (average score, top habits, goal completion rate). You provide the reflection.",
     params: "cycle_id: string, reflection: string",
     returns:
       "Debrief record with server-computed stats, reflection text, and closed cycle summary.",
   },
   {
     name: "portal_create",
-    description:
-      "Create new entities: version, goal, habit, archive, mantra, or identity item. Batch up to 10.",
     params: "entities: { type: EntityType; data: EntityData }[], up to 10",
     returns: "Array of created entities with generated IDs and timestamps.",
   },
   {
     name: "portal_update",
-    description: "Partial update any entity type. Batch up to 10 operations.",
     params:
       "operations: { type: EntityType; id: string; data: Partial<EntityData> }[], up to 10",
     returns: "Array of updated entities reflecting the applied changes.",
   },
   {
     name: "portal_delete",
-    description:
-      "Delete entities by ID. Cascades where applicable. Batch up to 10.",
     params: "items: { type: EntityType; id: string }[], up to 10",
     returns: "Confirmation array with deleted IDs and cascade summary per item.",
   },
   {
     name: "portal_settings",
-    description: "Read or update your user profile and app preferences.",
     params: 'action: "read" | "update", data?: Partial<UserSettings>',
     returns: "Current or updated user settings object.",
   },
@@ -174,19 +160,33 @@ const EXAMPLE_MORNING = `{
 /* ─── Shared primitives ───────────────────────────────────────────── */
 
 /**
+ * Return type of `getTranslations("mcp")` — the shared translator threaded
+ * through every server-side helper below that needs to look up a catalogue
+ * string (`CodeBlock`'s aria-label, `ToolRow`'s description/labels). Passed
+ * as a prop rather than re-fetched per helper because these are plain
+ * functions, not Server Components, and all render inside one request.
+ */
+type Translator = Awaited<ReturnType<typeof getTranslations>>;
+
+/**
  * `tabIndex={0}` is required: the <pre> scrolls horizontally, and a
  * scrollable region must be keyboard-reachable (axe `scrollable-region-focusable`).
  * But a focus stop with no role and no accessible name announces as nothing —
  * five silent stops per /mcp visit. `role="region"` + `aria-label` is what turns
  * each one into a named landmark a screen reader can announce and skip.
+ *
+ * The aria-label is an ICU message (`mcp.codeSampleLabel`, `"{label} — code
+ * sample"`) with a `{label}` placeholder rather than string concatenation
+ * around a translated `label` — concatenation around a translated fragment
+ * is the classic way to produce copy a language cannot reorder.
  */
-function CodeBlock({ code, label }: { code: string; label: string }) {
+function CodeBlock({ code, label, t }: { code: string; label: string; t: Translator }) {
   return (
     <div className="relative group">
       <pre
         tabIndex={0}
         role="region"
-        aria-label={`${label} — code sample`}
+        aria-label={t("codeSampleLabel", { label })}
         className="rounded-lg bg-zinc-900 border border-zinc-800/60 px-4 py-3.5 pr-20 text-[13px] font-mono text-zinc-300 leading-[1.65] overflow-x-auto"
       >
         <code>{code}</code>
@@ -233,7 +233,11 @@ function Para({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ToolRow({ tool, write }: { tool: Tool; write: boolean }) {
+function ToolRow({ tool, write, t }: { tool: Tool; write: boolean; t: Translator }) {
+  const roleLabel = t(
+    write ? "sections.toolReference.writeBadge" : "sections.toolReference.readBadge",
+  );
+  const description = t(`tools.${write ? "write" : "read"}.${tool.name}`);
   return (
     <details className="group border-b border-zinc-800/50 last:border-0">
       <summary className="flex items-center justify-between py-3 cursor-pointer list-none">
@@ -243,7 +247,7 @@ function ToolRow({ tool, write }: { tool: Tool; write: boolean }) {
               write ? "text-amber-500/70" : "text-blue-400/85"
             }`}
           >
-            {write ? "write" : "read"}
+            {roleLabel}
           </span>
           <code className="text-sm font-mono text-zinc-200">{tool.name}</code>
         </div>
@@ -261,17 +265,17 @@ function ToolRow({ tool, write }: { tool: Tool; write: boolean }) {
         </svg>
       </summary>
       <div className="pb-4 pl-11 space-y-3">
-        <p className="text-sm text-zinc-400 leading-6">{tool.description}</p>
+        <p className="text-sm text-zinc-400 leading-6">{description}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-1.5">
-              Parameters
+              {t("sections.toolReference.parametersLabel")}
             </p>
             <p className="text-xs font-mono text-zinc-400 leading-5">{tool.params}</p>
           </div>
           <div>
             <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-1.5">
-              Returns
+              {t("sections.toolReference.returnsLabel")}
             </p>
             <p className="text-xs text-zinc-400 leading-5">{tool.returns}</p>
           </div>
@@ -284,11 +288,11 @@ function ToolRow({ tool, write }: { tool: Tool; write: boolean }) {
 /* ─── TOC ─────────────────────────────────────────────────────────── */
 
 const tocItems = [
-  { id: "capabilities", label: "Capabilities" },
-  { id: "getting-started", label: "Getting started" },
-  { id: "tool-reference", label: "Tool reference" },
-  { id: "examples", label: "Examples" },
-  { id: "permissions", label: "Permissions" },
+  { id: "capabilities", key: "capabilities" },
+  { id: "getting-started", key: "gettingStarted" },
+  { id: "tool-reference", key: "toolReference" },
+  { id: "examples", key: "examples" },
+  { id: "permissions", key: "permissions" },
 ] as const;
 
 /* ─── Page ────────────────────────────────────────────────────────── */
@@ -309,6 +313,7 @@ export default async function McpPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("mcp");
 
   return (
     <div className="relative w-full bg-zinc-950 min-h-viewport">
@@ -323,32 +328,24 @@ export default async function McpPage({
             {/* Hero */}
             <div className="mb-12">
               <p className="text-[11px] font-mono text-zinc-400 uppercase tracking-widest mb-4">
-                Model Context Protocol
+                {t("hero.eyebrow")}
               </p>
               <h1 className="text-zinc-100 text-3xl font-semibold tracking-tight mb-4 leading-snug">
-                Connect your AI agent to El Portal.
+                {t("hero.title")}
               </h1>
-              <Para>
-                The El Portal MCP server exposes your personal operating system
-                to any MCP-compatible AI client. Read your cycle state, log
-                habits, and run daily check-ins without leaving your agent
-                workflow.
-              </Para>
+              <Para>{t("hero.description")}</Para>
               <div className="flex items-center gap-4 mt-5 text-[12px] font-mono text-zinc-400">
-                <span>12 tools</span>
-                <span>stdio + HTTP</span>
-                <span>JSON-RPC 2.0</span>
+                <span>{t("hero.stats.tools")}</span>
+                <span>{t("hero.stats.transport")}</span>
+                <span>{t("hero.stats.protocol")}</span>
               </div>
             </div>
 
             {/* ── Capabilities ─────────────────────────────────── */}
-            <H2 id="capabilities">Capabilities</H2>
-            <Para>
-              Read tools are granted on all keys by default. Write tools require
-              explicit opt-in at key creation time.
-            </Para>
+            <H2 id="capabilities">{t("sections.capabilities.heading")}</H2>
+            <Para>{t("sections.capabilities.intro")}</Para>
 
-            <H3>Read tools</H3>
+            <H3>{t("sections.capabilities.readToolsHeading")}</H3>
             <div className="rounded-lg border border-zinc-800/60 overflow-hidden mb-6">
               {readTools.map((tool) => (
                 <div
@@ -359,13 +356,13 @@ export default async function McpPage({
                     {tool.name}
                   </code>
                   <p className="text-sm text-zinc-400 leading-5 min-w-0">
-                    {tool.description}
+                    {t(`tools.read.${tool.name}`)}
                   </p>
                 </div>
               ))}
             </div>
 
-            <H3>Write tools</H3>
+            <H3>{t("sections.capabilities.writeToolsHeading")}</H3>
             <div className="rounded-lg border border-zinc-800/60 overflow-hidden">
               {writeTools.map((tool) => (
                 <div
@@ -376,118 +373,135 @@ export default async function McpPage({
                     {tool.name}
                   </code>
                   <p className="text-sm text-zinc-400 leading-5 min-w-0">
-                    {tool.description}
+                    {t(`tools.write.${tool.name}`)}
                   </p>
                 </div>
               ))}
             </div>
 
             {/* ── Getting started ──────────────────────────────── */}
-            <H2 id="getting-started">Getting started</H2>
+            <H2 id="getting-started">{t("sections.gettingStarted.heading")}</H2>
 
             <div className="space-y-8">
               {/* Step 1 */}
               <div>
-                <H3>1. Generate an API key</H3>
+                <H3>{t("sections.gettingStarted.step1.heading")}</H3>
                 <Para>
-                  Go to{" "}
-                  <span className="text-zinc-300">Settings &gt; API Keys</span>{" "}
-                  in El Portal. Your key is shown once on creation. Copy it
-                  immediately. Keys start with <InlineCode>ep_</InlineCode>{" "}
-                  followed by 64 hex characters. SHA-256 hashed before storage,
-                  never recoverable after creation. Up to 10 active keys per
-                  account, with optional expiry up to 365 days.
+                  {t.rich("sections.gettingStarted.step1.body", {
+                    settingsPath: (chunks) => (
+                      <span className="text-zinc-300">{chunks}</span>
+                    ),
+                    code: (chunks) => <InlineCode>{chunks}</InlineCode>,
+                  })}
                 </Para>
               </div>
 
               {/* Step 2 */}
               <div>
-                <H3>2. Choose a transport</H3>
+                <H3>{t("sections.gettingStarted.step2.heading")}</H3>
                 <Para>
-                  Use <span className="text-zinc-300">stdio</span> for local AI
-                  tools (Cursor, Claude Desktop, Continue). Use{" "}
-                  <span className="text-zinc-300">HTTP</span> for web-based
-                  agents or custom server-side integrations.
+                  {t.rich("sections.gettingStarted.step2.body", {
+                    stdioTag: (chunks) => (
+                      <span className="text-zinc-300">{chunks}</span>
+                    ),
+                    httpTag: (chunks) => (
+                      <span className="text-zinc-300">{chunks}</span>
+                    ),
+                  })}
                 </Para>
               </div>
 
               {/* Step 3 */}
               <div>
-                <H3>3. Add your config</H3>
+                <H3>{t("sections.gettingStarted.step3.heading")}</H3>
                 <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-2 mt-4">
-                  Stdio (.mcp.json)
+                  {t("sections.gettingStarted.step3.stdioCaption")}
                 </p>
-                <CodeBlock code={STDIO_CONFIG} label="Stdio .mcp.json config" />
+                <CodeBlock
+                  code={STDIO_CONFIG}
+                  label={t("sections.gettingStarted.step3.stdioCodeLabel")}
+                  t={t}
+                />
                 <p className="text-[11px] text-zinc-400 uppercase tracking-wider mb-2 mt-5">
-                  HTTP endpoint
+                  {t("sections.gettingStarted.step3.httpCaption")}
                 </p>
-                <CodeBlock code={HTTP_CONFIG} label="HTTP endpoint config" />
+                <CodeBlock
+                  code={HTTP_CONFIG}
+                  label={t("sections.gettingStarted.step3.httpCodeLabel")}
+                  t={t}
+                />
               </div>
             </div>
 
             {/* ── Tool reference ───────────────────────────────── */}
-            <H2 id="tool-reference">Tool reference</H2>
-            <Para>
-              All tools use JSON-RPC 2.0 via the MCP protocol. Expand each
-              entry for parameter shapes and return values.
-            </Para>
+            <H2 id="tool-reference">{t("sections.toolReference.heading")}</H2>
+            <Para>{t("sections.toolReference.intro")}</Para>
 
             <div className="mt-6 rounded-lg border border-zinc-800/60 px-4">
               {readTools.map((tool) => (
-                <ToolRow key={tool.name} tool={tool} write={false} />
+                <ToolRow key={tool.name} tool={tool} write={false} t={t} />
               ))}
               {writeTools.map((tool) => (
-                <ToolRow key={tool.name} tool={tool} write={true} />
+                <ToolRow key={tool.name} tool={tool} write={true} t={t} />
               ))}
             </div>
 
             {/* ── Examples ─────────────────────────────────────── */}
-            <H2 id="examples">Examples</H2>
+            <H2 id="examples">{t("sections.examples.heading")}</H2>
 
-            <H3>Get today&apos;s snapshot</H3>
-            <CodeBlock code={EXAMPLE_SNAPSHOT} label="Get today's snapshot" />
+            <H3>{t("sections.examples.snapshot")}</H3>
+            <CodeBlock
+              code={EXAMPLE_SNAPSHOT}
+              label={t("sections.examples.snapshot")}
+              t={t}
+            />
 
-            <H3>Log a habit</H3>
-            <CodeBlock code={EXAMPLE_LOG_HABIT} label="Log a habit" />
+            <H3>{t("sections.examples.logHabit")}</H3>
+            <CodeBlock
+              code={EXAMPLE_LOG_HABIT}
+              label={t("sections.examples.logHabit")}
+              t={t}
+            />
 
-            <H3>Morning check-in</H3>
-            <CodeBlock code={EXAMPLE_MORNING} label="Morning check-in" />
+            <H3>{t("sections.examples.morning")}</H3>
+            <CodeBlock
+              code={EXAMPLE_MORNING}
+              label={t("sections.examples.morning")}
+              t={t}
+            />
 
             {/* ── Permissions ──────────────────────────────────── */}
-            <H2 id="permissions">Permissions and rate limits</H2>
+            <H2 id="permissions">{t("sections.permissions.heading")}</H2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
               {/* Permission model */}
               <div className="rounded-lg border border-zinc-800/60 p-5">
                 <p className="text-sm font-medium text-zinc-300 mb-4">
-                  Permission model
+                  {t("sections.permissions.model.title")}
                 </p>
                 <ul className="space-y-3.5">
                   <li>
                     <p className="text-[11px] font-mono text-blue-400/85 uppercase tracking-wider mb-1">
-                      read
+                      {t("sections.permissions.model.read.label")}
                     </p>
                     <p className="text-xs text-zinc-400 leading-5">
-                      Granted on all keys by default. No extra configuration
-                      required.
+                      {t("sections.permissions.model.read.body")}
                     </p>
                   </li>
                   <li>
                     <p className="text-[11px] font-mono text-amber-500/70 uppercase tracking-wider mb-1">
-                      write
+                      {t("sections.permissions.model.write.label")}
                     </p>
                     <p className="text-xs text-zinc-400 leading-5">
-                      Opt-in per key. Toggle individual write tools during key
-                      creation or in key settings.
+                      {t("sections.permissions.model.write.body")}
                     </p>
                   </li>
                   <li>
                     <p className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider mb-1">
-                      storage
+                      {t("sections.permissions.model.storage.label")}
                     </p>
                     <p className="text-xs text-zinc-400 leading-5">
-                      Keys are SHA-256 hashed before storage. Plaintext is never
-                      stored and cannot be recovered after creation.
+                      {t("sections.permissions.model.storage.body")}
                     </p>
                   </li>
                 </ul>
@@ -496,22 +510,24 @@ export default async function McpPage({
               {/* Rate limits */}
               <div className="rounded-lg border border-zinc-800/60 p-5">
                 <p className="text-sm font-medium text-zinc-300 mb-4">
-                  Rate limits
+                  {t("sections.permissions.rateLimits.title")}
                 </p>
                 <table className="w-full">
                   <tbody className="divide-y divide-zinc-800/50">
                     {(
                       [
-                        ["Read tools", "Unlimited"],
-                        ["Write tools", "30 / min"],
-                        ["Key creation", "5 / hr"],
-                        ["Active keys", "10 per account"],
+                        "readTools",
+                        "writeTools",
+                        "keyCreation",
+                        "activeKeys",
                       ] as const
-                    ).map(([op, limit]) => (
-                      <tr key={op}>
-                        <td className="text-xs text-zinc-400 py-2">{op}</td>
+                    ).map((row) => (
+                      <tr key={row}>
+                        <td className="text-xs text-zinc-400 py-2">
+                          {t(`sections.permissions.rateLimits.${row}.op`)}
+                        </td>
                         <td className="text-xs text-zinc-400 text-right py-2 font-mono">
-                          {limit}
+                          {t(`sections.permissions.rateLimits.${row}.limit`)}
                         </td>
                       </tr>
                     ))}
@@ -523,17 +539,14 @@ export default async function McpPage({
             {/* CTA */}
             <div className="mt-14 pt-8 border-t border-zinc-800/60">
               <p className="text-zinc-100 text-[15px] md:text-base font-medium mb-2">
-                Ready to connect?
+                {t("cta.heading")}
               </p>
-              <p className="text-sm text-zinc-400 mb-5">
-                Generate your first API key in Settings and drop it into your
-                MCP config. Full read access in under a minute.
-              </p>
+              <p className="text-sm text-zinc-400 mb-5">{t("cta.body")}</p>
               <Link
                 href={`${process.env.NEXT_PUBLIC_APP_URL ?? 'https://app.el-portal.app'}/settings`}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-100 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 px-4 py-2 rounded-lg transition-colors duration-150 min-h-11 md:min-h-0"
               >
-                Open Settings
+                {t("cta.button")}
                 <svg
                   className="w-3.5 h-3.5 text-zinc-400"
                   viewBox="0 0 20 20"
@@ -554,9 +567,9 @@ export default async function McpPage({
           <aside className="hidden xl:block w-44 shrink-0">
             <div className="sticky top-28">
               <p className="text-[11px] font-medium text-zinc-400 uppercase tracking-widest mb-3">
-                On this page
+                {t("toc.heading")}
               </p>
-              <nav aria-label="On this page">
+              <nav aria-label={t("toc.heading")}>
                 <ul className="space-y-1">
                   {tocItems.map((item) => (
                     <li key={item.id}>
@@ -564,7 +577,7 @@ export default async function McpPage({
                         href={`#${item.id}`}
                         className="block text-xs text-zinc-400 hover:text-zinc-300 py-0.5 transition-colors duration-150"
                       >
-                        {item.label}
+                        {t(`toc.items.${item.key}`)}
                       </a>
                     </li>
                   ))}

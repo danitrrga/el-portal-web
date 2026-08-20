@@ -1,1 +1,115 @@
-{}
+{
+  "hero": {
+    "eyebrow": "Model Context Protocol",
+    "title": "Connect your AI agent to El Portal.",
+    "description": "The El Portal MCP server exposes your personal operating system to any MCP-compatible AI client. Read your cycle state, log habits, and run daily check-ins without leaving your agent workflow.",
+    "stats": {
+      "tools": "12 tools",
+      "transport": "stdio + HTTP",
+      "protocol": "JSON-RPC 2.0"
+    }
+  },
+  "toc": {
+    "heading": "On this page",
+    "items": {
+      "capabilities": "Capabilities",
+      "gettingStarted": "Getting started",
+      "toolReference": "Tool reference",
+      "examples": "Examples",
+      "permissions": "Permissions"
+    }
+  },
+  "codeSampleLabel": "{label} — code sample",
+  "sections": {
+    "capabilities": {
+      "heading": "Capabilities",
+      "intro": "Read tools are granted on all keys by default. Write tools require explicit opt-in at key creation time.",
+      "readToolsHeading": "Read tools",
+      "writeToolsHeading": "Write tools"
+    },
+    "gettingStarted": {
+      "heading": "Getting started",
+      "step1": {
+        "heading": "1. Generate an API key",
+        "body": "Go to <settingsPath>Settings > API Keys</settingsPath> in El Portal. Your key is shown once on creation. Copy it immediately. Keys start with <code>ep_</code> followed by 64 hex characters. SHA-256 hashed before storage, never recoverable after creation. Up to 10 active keys per account, with optional expiry up to 365 days."
+      },
+      "step2": {
+        "heading": "2. Choose a transport",
+        "body": "Use <stdioTag>stdio</stdioTag> for local AI tools (Cursor, Claude Desktop, Continue). Use <httpTag>HTTP</httpTag> for web-based agents or custom server-side integrations."
+      },
+      "step3": {
+        "heading": "3. Add your config",
+        "stdioCaption": "Stdio (.mcp.json)",
+        "stdioCodeLabel": "Stdio .mcp.json config",
+        "httpCaption": "HTTP endpoint",
+        "httpCodeLabel": "HTTP endpoint config"
+      }
+    },
+    "toolReference": {
+      "heading": "Tool reference",
+      "intro": "All tools use JSON-RPC 2.0 via the MCP protocol. Expand each entry for parameter shapes and return values.",
+      "readBadge": "read",
+      "writeBadge": "write",
+      "parametersLabel": "Parameters",
+      "returnsLabel": "Returns"
+    },
+    "examples": {
+      "heading": "Examples",
+      "snapshot": "Get today's snapshot",
+      "logHabit": "Log a habit",
+      "morning": "Morning check-in"
+    },
+    "permissions": {
+      "heading": "Permissions and rate limits",
+      "model": {
+        "title": "Permission model",
+        "read": {
+          "label": "read",
+          "body": "Granted on all keys by default. No extra configuration required."
+        },
+        "write": {
+          "label": "write",
+          "body": "Opt-in per key. Toggle individual write tools during key creation or in key settings."
+        },
+        "storage": {
+          "label": "storage",
+          "body": "Keys are SHA-256 hashed before storage. Plaintext is never stored and cannot be recovered after creation."
+        }
+      },
+      "rateLimits": {
+        "title": "Rate limits",
+        "readTools": { "op": "Read tools", "limit": "Unlimited" },
+        "writeTools": { "op": "Write tools", "limit": "30 / min" },
+        "keyCreation": { "op": "Key creation", "limit": "5 / hr" },
+        "activeKeys": { "op": "Active keys", "limit": "10 per account" }
+      }
+    }
+  },
+  "cta": {
+    "heading": "Ready to connect?",
+    "body": "Generate your first API key in Settings and drop it into your MCP config. Full read access in under a minute.",
+    "button": "Open Settings"
+  },
+  "tools": {
+    "read": {
+      "portal_snapshot": "Full dashboard state. Active cycle, habits with streaks and done_today, goals, daily score. Optional sections: pulse_today, archives, identity, mantras.",
+      "portal_review": "Cycle review data. Daily scores, habit consistency percentages, days remaining.",
+      "portal_history": "Browse past versions, cycles, or debriefs. Filter by version or status.",
+      "portal_search": "Full-text search across goals, habits, archives, and mantras. Up to 50 results."
+    },
+    "write": {
+      "portal_log_habits": "Log habits done or undone for any date. Upsert-safe. Batch up to 30. Returns updated streaks and daily score.",
+      "portal_pulse": "Read or write morning/evening pulse check-ins. Covers mood, energy, sleep, stress, performance, feelings, and reflection.",
+      "portal_create_cycle": "Create a complete cycle in one call: goals, habits, priorities, mantras, and carry-over goals from previous cycles.",
+      "portal_debrief_cycle": "Close a cycle. Server computes stats (average score, top habits, goal completion rate). You provide the reflection.",
+      "portal_create": "Create new entities: version, goal, habit, archive, mantra, or identity item. Batch up to 10.",
+      "portal_update": "Partial update any entity type. Batch up to 10 operations.",
+      "portal_delete": "Delete entities by ID. Cascades where applicable. Batch up to 10.",
+      "portal_settings": "Read or update your user profile and app preferences."
+    }
+  },
+  "copyButton": {
+    "copy": "Copy",
+    "copied": "Copied"
+  }
+}
