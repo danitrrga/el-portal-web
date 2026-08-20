@@ -1,4 +1,5 @@
-import { setRequestLocale } from "next-intl/server";
+import { Fragment } from "react";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReadingLayout from "@/components/ReadingLayout";
@@ -13,6 +14,27 @@ export async function generateMetadata({
     return buildPageMetadata(locale, "privacy");
 }
 
+interface BucketData {
+    tag: string;
+    title: string;
+    lede: string;
+    stored: string[];
+    neverStored: string[];
+    meta: string;
+}
+
+interface ProviderData {
+    name: string;
+    region: string;
+    purpose: string;
+}
+
+interface RightData {
+    title: string;
+    description: string;
+    action: string;
+}
+
 export default async function PrivacyPage({
     params,
 }: {
@@ -20,6 +42,13 @@ export default async function PrivacyPage({
 }) {
     const { locale } = await params;
     setRequestLocale(locale);
+
+    const t = await getTranslations("legal");
+    const buckets = t.raw("privacy.buckets") as BucketData[];
+    const providers = t.raw("privacy.providers") as ProviderData[];
+    const rights = t.raw("privacy.rights") as RightData[];
+    const storedLabel = t("privacy.storedLabel");
+    const neverStoredLabel = t("privacy.neverStoredLabel");
 
     return (
         <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-viewport">
@@ -38,107 +67,41 @@ export default async function PrivacyPage({
                     {/* Hero */}
                     <section className="pt-16 pb-4 text-center">
                         <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-4">
-                            Privacy &amp; Data
+                            {t("privacy.eyebrow")}
                         </p>
                         <h1 className="display text-5xl sm:text-6xl text-[var(--color-ep-fg-strong)] text-balance">
-                            Your data, fully visible.
+                            {t("privacy.h1")}
                         </h1>
+                        <p className="mt-6 text-sm text-[var(--color-ep-fg-muted)] max-w-xl mx-auto">
+                            {t("authority.notice")}
+                        </p>
                         <p className="mt-6 text-lg text-[var(--color-ep-fg-body)] leading-relaxed text-pretty max-w-xl mx-auto">
-                            El Portal is hosted in the EU and built on your consent. This page lists everything we
-                            store, everything we never touch, and how to take it all back.
+                            {t("privacy.intro")}
                         </p>
                     </section>
 
                     <Hairline />
 
-                    <Bucket
-                        tag="Required"
-                        title="Mood, habit, and cycle data"
-                        lede="The entries you log. Without these the app cannot work for you."
-                        stored={[
-                            "Mood and feelings you check in with",
-                            "Habits you mark done or undone",
-                            "Work cycles, goals, and reflections you write",
-                            "Your account email and username",
-                        ]}
-                        neverStored={[
-                            "Anything from outside the app",
-                            "Browsing history or activity on other sites",
-                            "Location, contacts, or device sensors",
-                        ]}
-                        meta="Stored only after you explicitly consent at signup."
-                    />
-
-                    <Hairline />
-
-                    <Bucket
-                        tag="Optional — default off"
-                        title="Anonymous usage stats"
-                        lede="We log feature taps, navigation, and load times so we can see what works and what is slow. No content, no cookies."
-                        stored={[
-                            "Which screens were opened",
-                            "Which features were tapped",
-                            "Page-load and route-change timings",
-                            "Error codes when something breaks",
-                        ]}
-                        neverStored={[
-                            "The text you write or the values you log",
-                            "Any IP address (dropped before storage)",
-                            "Cookies of any kind",
-                        ]}
-                        meta="EU-hosted in Frankfurt. Your toggle controls everything."
-                    />
-
-                    <Hairline />
-
-                    <Bucket
-                        tag="Optional — default off"
-                        title="Reports and your reactions"
-                        lede="When you ask El Portal for an AI report, we save the report and how you reacted to it. Over time, this helps us write reports that feel more like you."
-                        stored={[
-                            "The mood and habit summary the report was based on",
-                            "The report text we wrote you",
-                            "Your reaction (kept open, dismissed, asked again, marked helpful)",
-                        ]}
-                        neverStored={[
-                            "Your name or account ID (replaced with a random hash)",
-                            "Slide text or anything you write into a slide",
-                            "Photos you upload",
-                            "Free-form reflections or journal entries",
-                        ]}
-                        meta="Encrypted at rest. Never sold, never sent to ad networks, never shared with third-party AI providers."
-                    />
+                    {buckets.map((bucket, i) => (
+                        <Fragment key={bucket.title}>
+                            <Bucket {...bucket} storedLabel={storedLabel} neverStoredLabel={neverStoredLabel} />
+                            {i < buckets.length - 1 && <Hairline />}
+                        </Fragment>
+                    ))}
 
                     <Hairline />
 
                     <section>
                         <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
-                            Where your data lives
+                            {t("privacy.providersEyebrow")}
                         </p>
                         <h2 className="display text-2xl text-[var(--color-ep-fg-strong)] text-balance mb-8">
-                            Four providers, all in the EU.
+                            {t("privacy.providersHeading")}
                         </h2>
                         <ul>
-                            <ProviderRow
-                                name="Supabase"
-                                region="EU — Frankfurt"
-                                purpose="Primary database. Stores your account, entries, and consent log."
-                            />
-                            <ProviderRow
-                                name="PostHog Cloud"
-                                region="EU — Frankfurt"
-                                purpose="Anonymous usage stats. Only active if you opt in."
-                            />
-                            <ProviderRow
-                                name="Vercel"
-                                region="EU — edge"
-                                purpose="Hosts the app and runs server functions."
-                            />
-                            <ProviderRow
-                                name="Google Gemini"
-                                region="EU"
-                                purpose="Generates AI report text. Only invoked when you request a report."
-                            />
+                            {providers.map((provider) => (
+                                <ProviderRow key={provider.name} {...provider} />
+                            ))}
                         </ul>
                     </section>
 
@@ -146,39 +109,22 @@ export default async function PrivacyPage({
 
                     <section>
                         <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
-                            Your rights
+                            {t("privacy.rightsEyebrow")}
                         </p>
                         <h2 className="display text-2xl text-[var(--color-ep-fg-strong)] text-balance mb-8">
-                            Take it all back, any time.
+                            {t("privacy.rightsHeading")}
                         </h2>
                         <ul>
-                            <RightRow
-                                title="Export everything"
-                                description="Download a single file with everything we have on you."
-                                action="Settings — Privacy — Download"
-                            />
-                            <RightRow
-                                title="Delete everything"
-                                description="Permanently erases your account and all your data. Cannot be undone."
-                                action="Settings — Privacy — Delete"
-                            />
-                            <RightRow
-                                title="Change your mind any time"
-                                description="Flip any toggle in Settings — Privacy. We apply the change right away and keep a record of every choice."
-                                action="Settings — Privacy"
-                            />
-                            <RightRow
-                                title="Get in touch"
-                                description="If something feels off, write to us or contact your local data protection authority."
-                                action="dtarraga.emp@gmail.com"
-                            />
+                            {rights.map((right) => (
+                                <RightRow key={right.title} {...right} />
+                            ))}
                         </ul>
                     </section>
 
                     <footer className="mt-32 mb-16 text-center">
-                        <p className="text-xs text-[var(--color-ep-fg-subtle)]">Last updated 2026-04-28</p>
+                        <p className="text-xs text-[var(--color-ep-fg-subtle)]">{t("privacy.lastUpdated")}</p>
                         <p className="mt-2 text-xs text-[var(--color-ep-fg-muted)]">
-                            Reach us at{" "}
+                            {t("privacy.reachUs")}{" "}
                             <a
                                 href="mailto:dtarraga.emp@gmail.com"
                                 className="text-[var(--color-ep-fg-body)] underline underline-offset-4 decoration-[var(--color-ep-fg-subtle)] hover:text-[var(--color-ep-fg-strong)] hover:decoration-[var(--color-ep-fg-muted)] transition-colors duration-300"
@@ -199,16 +145,12 @@ function Hairline() {
     return <hr className="my-20 border-t border-[var(--color-ep-hairline)]" />;
 }
 
-interface BucketProps {
-    tag: string;
-    title: string;
-    lede: string;
-    stored: string[];
-    neverStored: string[];
-    meta: string;
+interface BucketProps extends BucketData {
+    storedLabel: string;
+    neverStoredLabel: string;
 }
 
-function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
+function Bucket({ tag, title, lede, stored, neverStored, meta, storedLabel, neverStoredLabel }: BucketProps) {
     return (
         <section>
             <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">{tag}</p>
@@ -218,7 +160,7 @@ function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
             <div className="mt-10 grid sm:grid-cols-2 gap-12">
                 <div>
                     <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
-                        What we store
+                        {storedLabel}
                     </p>
                     <ul className="list-disc pl-5 space-y-2 text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
                         {stored.map((item) => (
@@ -228,7 +170,7 @@ function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
                 </div>
                 <div>
                     <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--color-ep-fg-muted)] font-medium mb-3">
-                        What we never touch
+                        {neverStoredLabel}
                     </p>
                     <ul className="list-disc pl-5 space-y-2 text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
                         {neverStored.map((item) => (
@@ -243,7 +185,7 @@ function Bucket({ tag, title, lede, stored, neverStored, meta }: BucketProps) {
     );
 }
 
-function ProviderRow({ name, region, purpose }: { name: string; region: string; purpose: string }) {
+function ProviderRow({ name, region, purpose }: ProviderData) {
     return (
         <li className="flex items-baseline justify-between gap-4 py-4 border-b border-[var(--color-ep-hairline)] last:border-b-0">
             <div className="min-w-0">
@@ -257,15 +199,7 @@ function ProviderRow({ name, region, purpose }: { name: string; region: string; 
     );
 }
 
-function RightRow({
-    title,
-    description,
-    action,
-}: {
-    title: string;
-    description: string;
-    action: string;
-}) {
+function RightRow({ title, description, action }: RightData) {
     return (
         <li className="flex items-start justify-between gap-6 py-5 border-b border-[var(--color-ep-hairline)] last:border-b-0">
             <div className="min-w-0">

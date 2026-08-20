@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ReadingLayout from "@/components/ReadingLayout";
@@ -13,6 +13,23 @@ export async function generateMetadata({
     return buildPageMetadata(locale, "terms");
 }
 
+interface TermsSection {
+    heading: string;
+    body: string;
+}
+
+interface TermsListSection {
+    heading: string;
+    intro: string;
+    items: string[];
+}
+
+interface TermsTwoBodySection {
+    heading: string;
+    body1: string;
+    body2: string;
+}
+
 export default async function TermsPage({
     params,
 }: {
@@ -20,6 +37,21 @@ export default async function TermsPage({
 }) {
     const { locale } = await params;
     setRequestLocale(locale);
+
+    const t = await getTranslations("legal");
+    const agreement = t.raw("terms.agreement") as TermsSection;
+    const description = t.raw("terms.description") as TermsSection;
+    const userAccounts = t.raw("terms.userAccounts") as TermsListSection;
+    const acceptableUse = t.raw("terms.acceptableUse") as TermsListSection;
+    const intellectualProperty = t.raw("terms.intellectualProperty") as TermsTwoBodySection;
+    const userContent = t.raw("terms.userContent") as TermsTwoBodySection;
+    const paymentTerms = t.raw("terms.paymentTerms") as TermsListSection;
+    const disclaimers = t.raw("terms.disclaimers") as TermsSection;
+    const limitationOfLiability = t.raw("terms.limitationOfLiability") as TermsSection;
+    const termination = t.raw("terms.termination") as TermsTwoBodySection;
+    const governingLaw = t.raw("terms.governingLaw") as TermsSection;
+    const changes = t.raw("terms.changes") as TermsSection;
+    const contact = t.raw("terms.contact") as TermsSection;
 
     return (
         <div className="relative w-full bg-[var(--color-ep-bg-base)] min-h-viewport">
@@ -39,10 +71,13 @@ export default async function TermsPage({
                     {/* Header */}
                     <header className="pt-16 pb-12">
                         <h1 className="display text-3xl md:text-4xl text-[var(--color-ep-fg-strong)] mb-3">
-                            Terms of Service
+                            {t("terms.h1")}
                         </h1>
                         <p className="text-sm text-[var(--color-ep-fg-muted)]">
-                            Last updated — April 13, 2026
+                            {t("terms.lastUpdated")}
+                        </p>
+                        <p className="mt-3 text-sm text-[var(--color-ep-fg-muted)]">
+                            {t("authority.notice")}
                         </p>
                     </header>
 
@@ -50,146 +85,142 @@ export default async function TermsPage({
                     <div className="space-y-10 pb-24">
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Agreement to Terms
+                                {agreement.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                By accessing or using El Portal (&ldquo;the Service&rdquo;), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service. These terms apply to all users, whether free or paid.
+                                {agreement.body}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Description of Service
+                                {description.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                El Portal is a mobile-first personal operating system designed for intentional living and peak performance. It provides tools for habit tracking, deep work cycles, task management, and personal analytics through a structured Version &rarr; Cycle &rarr; Day framework.
+                                {description.body}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                User Accounts
+                                {userAccounts.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed mb-4">
-                                To use El Portal, you must create an account. You are responsible for:
+                                {userAccounts.intro}
                             </p>
                             <ul className="list-disc list-inside text-sm text-[var(--color-ep-fg-body)] leading-relaxed space-y-2">
-                                <li>Providing accurate and complete registration information</li>
-                                <li>Maintaining the security of your account credentials</li>
-                                <li>All activity that occurs under your account</li>
-                                <li>Notifying us immediately of any unauthorized access</li>
+                                {userAccounts.items.map((item) => (
+                                    <li key={item}>{item}</li>
+                                ))}
                             </ul>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Acceptable Use
+                                {acceptableUse.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed mb-4">
-                                You agree not to:
+                                {acceptableUse.intro}
                             </p>
                             <ul className="list-disc list-inside text-sm text-[var(--color-ep-fg-body)] leading-relaxed space-y-2">
-                                <li>Use the Service for any unlawful purpose</li>
-                                <li>Attempt to reverse engineer, decompile, or disassemble any part of the Service</li>
-                                <li>Scrape, crawl, or use automated tools to extract data from the Service</li>
-                                <li>Interfere with or disrupt the Service&apos;s infrastructure</li>
-                                <li>Impersonate another person or misrepresent your affiliation</li>
-                                <li>Upload malicious code, viruses, or harmful content</li>
+                                {acceptableUse.items.map((item) => (
+                                    <li key={item}>{item}</li>
+                                ))}
                             </ul>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Intellectual Property
+                                {intellectualProperty.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed mb-4">
-                                The Service, including its design, code, branding, and methodology, is owned by El Portal and protected by intellectual property laws. You may not copy, modify, or distribute any part of the Service without explicit permission.
+                                {intellectualProperty.body1}
                             </p>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                The El Portal name, logo, and visual identity are trademarks. Nothing in these terms grants you rights to use them.
+                                {intellectualProperty.body2}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                User Content
+                                {userContent.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed mb-4">
-                                You retain full ownership of all content you create within El Portal — habits, tasks, notes, cycles, and performance data. We do not claim ownership of your content.
+                                {userContent.body1}
                             </p>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                By using the Service, you grant us a limited license to store, process, and display your content solely for the purpose of providing the Service to you.
+                                {userContent.body2}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Payment Terms
+                                {paymentTerms.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed mb-4">
-                                El Portal offers a free tier and a one-time lifetime purchase. By making a payment, you acknowledge:
+                                {paymentTerms.intro}
                             </p>
                             <ul className="list-disc list-inside text-sm text-[var(--color-ep-fg-body)] leading-relaxed space-y-2">
-                                <li>The lifetime license is a one-time, non-recurring payment</li>
-                                <li>Refund requests are handled on a case-by-case basis within 14 days of purchase</li>
-                                <li>Access to paid features is granted immediately upon payment confirmation</li>
+                                {paymentTerms.items.map((item) => (
+                                    <li key={item}>{item}</li>
+                                ))}
                             </ul>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Disclaimers
+                                {disclaimers.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                El Portal is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo; without warranties of any kind, express or implied. We do not guarantee that the Service will be uninterrupted, error-free, or secure at all times. Your use of the Service is at your sole risk.
+                                {disclaimers.body}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Limitation of Liability
+                                {limitationOfLiability.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                To the maximum extent permitted by law, El Portal and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of data, revenue, or profits, arising from your use of the Service. Our total liability shall not exceed the amount you paid for the Service in the twelve months preceding the claim.
+                                {limitationOfLiability.body}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Termination
+                                {termination.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed mb-4">
-                                You may delete your account at any time through the app settings. Upon deletion, all your data will be permanently removed within 30 days.
+                                {termination.body1}
                             </p>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                We reserve the right to suspend or terminate your account if you violate these terms. We will provide notice where reasonably possible.
-                            </p>
-                        </section>
-
-                        <section>
-                            <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Governing Law
-                            </h2>
-                            <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                These terms are governed by and construed in accordance with applicable law, without regard to conflict of law principles. Any disputes shall be resolved in the courts of the jurisdiction where El Portal operates.
+                                {termination.body2}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Changes to These Terms
+                                {governingLaw.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                We may update these Terms of Service from time to time. Changes take effect when posted on this page. Continued use of El Portal after changes constitutes acceptance of the revised terms.
+                                {governingLaw.body}
                             </p>
                         </section>
 
                         <section>
                             <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
-                                Contact
+                                {changes.heading}
                             </h2>
                             <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
-                                For questions about these terms, reach us at{" "}
+                                {changes.body}
+                            </p>
+                        </section>
+
+                        <section>
+                            <h2 className="display text-xl text-[var(--color-ep-fg-strong)] mb-4">
+                                {contact.heading}
+                            </h2>
+                            <p className="text-sm text-[var(--color-ep-fg-body)] leading-relaxed">
+                                {contact.body}{" "}
                                 <a
                                     href="mailto:dtarraga.emp@gmail.com"
                                     className="text-[var(--color-ep-fg-body)] underline underline-offset-4 decoration-[var(--color-ep-fg-subtle)] hover:text-[var(--color-ep-fg-strong)] hover:decoration-[var(--color-ep-fg-muted)] transition-colors duration-300"
