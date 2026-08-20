@@ -225,7 +225,7 @@ Phases 5 and 6 are independent of each other and of 3/4 — they may run in any 
 
 **Sequencing note**: listed after Phase 6, but Phase 6 (CSP) and this phase both touch response headers and potentially `app/proxy.ts`. If Phase 6 implements CSP in `proxy.ts`, doing i18n first — or at least writing the CSP aware of a future locale proxy — avoids reworking that file twice.
 
-**Plans:** 14/16 plans executed
+**Plans:** 15/16 plans executed
 
 Plans:
 
@@ -257,7 +257,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4)* — SEO
 
-- [ ] 07-15-PLAN.md — Per-locale metadata, `hreflang` + `x-default`, both-locale sitemap, and the `NEXT_PUBLIC_SITE_URL` environment contract (CI variable + build-time assertion)
+- [x] 07-15-PLAN.md — Per-locale metadata, `hreflang` + `x-default`, both-locale sitemap, and the `NEXT_PUBLIC_SITE_URL` environment contract (CI variable + build-time assertion)
 
 **Wave 6** *(blocked on Wave 5)* — verification
 

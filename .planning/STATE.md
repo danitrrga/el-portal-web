@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-13-PLAN.md
-last_updated: "2026-08-20T14:24:58.117Z"
+stopped_at: Completed 07-15-PLAN.md
+last_updated: "2026-08-20T14:38:03.909Z"
 last_activity: 2026-08-20
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 29
-  completed_plans: 27
+  completed_plans: 28
   percent: 43
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-12)
 ## Current Position
 
 Phase: 07 (spanish-localization) — EXECUTING
-Plan: 15 of 16
+Plan: 16 of 16
 Status: Ready to execute
 
   16 plans across 6 waves. Cross-AI reviewed twice — 2026-08-02, then again on
@@ -81,7 +81,7 @@ Status: Ready to execute
 
 Last activity: 2026-08-20
 
-Progress: [█████████░] 93%
+Progress: [██████████] 97%
 
 ## Performance Metrics
 
@@ -130,6 +130,7 @@ Progress: [█████████░] 93%
 | Phase 07 P12 | 50min | 2 tasks | 4 files |
 | Phase 07-spanish-localization P13 | 55min | 3 tasks | 3 files |
 | Phase 07-spanish-localization P14 | 1h10min | 3 tasks | 3 files |
+| Phase 07 P15 | 35min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -199,6 +200,8 @@ Recent decisions affecting current work:
 - [Phase 07-13]: Productivity axis label translated as 'Rendimiento' matching mcp.json sibling rendering, not the more literal 'Productividad'; kept safely under KU-1's 110px label-column overflow threshold.
 - [Phase 07-13]: Four pattern-detector names (Burnout/Regression/Weekday Blind Spot/Sleep Lag) are marketing-only coinages, not app UI strings; recorded in src/messages/glossary-additions/07-13.md.
 - [Phase 07-14]: Spanish changelog tag labels coined (Novedad/Mejora/Optimización/Corrección/Parche urgente/Lanzamiento); MoodOrb kept English (glossary-additions/07-14.md); 'sin fricciones' avoided for 'seamlessly' per anti-word ban
+- [Phase 07]: 07-15: CI origin wiring supersedes plan Task 1(a) — no gh variable set run; workflow env block added, repository variable must be created manually (see 07-15-SUMMARY.md)
+- [Phase 07]: 07-15: src/lib/seo.ts's VALUE_PRESERVED_METADATA object removed once privacy/terms strings moved into metadata.json — one code path for all 8 RouteKeys
 
 ### Pending Todos
 
@@ -240,6 +243,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-08-20T14:24:55.433Z
-Stopped at: Completed 07-13-PLAN.md
+Last session: 2026-08-20T14:38:03.903Z
+Stopped at: Completed 07-15-PLAN.md
 Resume file: None
