@@ -103,17 +103,17 @@
     },
     {
       "name": "Integración MCP + claves de API",
-      "initiate": "-",
+      "initiate": "—",
       "lifetime": true
     },
     {
       "name": "Narrativas de Insights con IA",
-      "initiate": "-",
+      "initiate": "—",
       "lifetime": true
     },
     {
       "name": "Análisis estadístico profundo",
-      "initiate": "-",
+      "initiate": "—",
       "lifetime": true
     }
   ],

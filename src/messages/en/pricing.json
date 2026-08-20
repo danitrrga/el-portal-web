@@ -65,9 +65,9 @@
     { "name": "Command bar", "initiate": true, "lifetime": true },
     { "name": "Internationalization (5 languages)", "initiate": true, "lifetime": true },
     { "name": "Storage", "initiate": "60 MB", "lifetime": "Unlimited" },
-    { "name": "MCP integration + API keys", "initiate": "-", "lifetime": true },
-    { "name": "AI Insight Narratives", "initiate": "-", "lifetime": true },
-    { "name": "Deep statistical analysis", "initiate": "-", "lifetime": true }
+    { "name": "MCP integration + API keys", "initiate": "—", "lifetime": true },
+    { "name": "AI Insight Narratives", "initiate": "—", "lifetime": true },
+    { "name": "Deep statistical analysis", "initiate": "—", "lifetime": true }
   ],
   "faq": {
     "eyebrow": "FAQ",
