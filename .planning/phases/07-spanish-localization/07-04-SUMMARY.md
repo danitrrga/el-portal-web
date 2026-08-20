@@ -185,6 +185,10 @@ None - no external service configuration required. (The `test-results`/`playwrig
 - The one open item: `nav.changelog` ("Cambios") and `footer.changelog` ("Changelog") now say different things for the same destination — flagged in `TRANSLATION-FLAGS.07-04.md` for the design owner, not silently left inconsistent.
 - 07-16 has one glossary-additions file (`07-04.md`, 9 terms) and one translation-flags file (`07-04.md`, 1 row) ready to merge.
 
+TRANSLATION FLAGS: 1
+
+*(Added by plan 07-16 during aggregation — this summary originally omitted the required `TRANSLATION FLAGS: n` line despite `TRANSLATION-FLAGS.07-04.md` carrying 1 row; the count matches that file's own row count, verified by 07-16 before merging.)*
+
 ---
 *Phase: 07-spanish-localization*
 *Completed: 2026-08-19*

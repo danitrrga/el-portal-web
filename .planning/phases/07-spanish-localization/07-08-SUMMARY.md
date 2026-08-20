@@ -130,6 +130,10 @@ None - no external service configuration required.
 - KU-2 numbers for `/es/mcp` are now on record (44px/4px/0px/0px @ 320/360/390/430) for plan 07-16's final verification pass to reference, rather than that plan having to re-derive them from scratch.
 - No blockers for downstream wave-3/4 plans. The `params`/`returns`-stay-in-code decision (see Decisions Made #1) is worth flagging to 07-16 or the design owner as a precedent other technical-surface plans (if any remain) may want to follow consistently.
 
+TRANSLATION FLAGS: 0
+
+*(Added by plan 07-16 during aggregation — this summary originally omitted the required `TRANSLATION FLAGS: n` line despite `TRANSLATION-FLAGS.07-08.md` explicitly stating "Zero rows fired." A plan reporting 0 is a legitimate claim its author made; 07-16 verified the 0-row file matches this 0 count before merging.)*
+
 ---
 *Phase: 07-spanish-localization*
 *Completed: 2026-08-20*

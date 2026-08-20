@@ -857,10 +857,38 @@ Seeded with the terms the site demonstrably already uses in component code
 no equivalent string anywhere in the app's catalogues (verified: neither
 `"Methodology"` nor `"Manifesto"` appears in `en.json`):
 
-| English | Spanish | Why the app has no string |
-|---|---|---|
-| Methodology | Metodología | Marketing/content concept (the "how it works" page and its preview section) — the app product has no in-app screen or string named this |
-| Manifesto | Manifiesto | Marketing/editorial page name — a philosophical statement page that exists only on the marketing site |
+| English | Spanish | Why the app has no string | Plan |
+|---|---|---|---|
+| Methodology | Metodología | Marketing/content concept (the "how it works" page and its preview section) — the app product has no in-app screen or string named this | 07-02 |
+| Manifesto | Manifiesto | Marketing/editorial page name — a philosophical statement page that exists only on the marketing site | 07-02 |
+| Primary (nav landmark aria-label) | Principal | Marketing-site-only nav landmark; the app has no equivalent `<nav aria-label>` string to reuse | 07-04 |
+| Toggle menu | Alternar menú | Marketing-site-only hamburger control; the app's own mobile nav (if any) is a different component with its own string | 07-04 |
+| Changelog (nav) | Cambios | No prior glossary entry. Shortened from the literal loanword "Changelog" (kept verbatim in the footer instance below) to close a 768px nav-row width deficit the new language switcher introduced — see TRANSLATION-FLAGS.07-04.md | 07-04 |
+| Changelog (footer) | Changelog | No prior glossary entry; kept as the common untranslated loanword used across Spanish dev/tech products, not width-constrained the way the nav instance is | 07-04 |
+| Pricing | Precios | Marketing-site-only nav/footer label; the app has no public pricing page of its own | 07-04 |
+| MCP Integration | Integración MCP | Marketing-site-only footer link label describing a product feature page, not an app string | 07-04 |
+| About | Sobre nosotros | Marketing-site-only footer link label (points at /manifesto under a second, distinct English label from "Manifesto") | 07-04 |
+| El Portal home | Inicio de El Portal | Marketing-site-only aria-label on the footer wordmark link; the app's own logo link (if any) is a different component | 07-04 |
+| Language notice (aside landmark label) | Aviso de idioma | Marketing-site-only accessible name for the cross-locale hint region; no app equivalent exists | 07-04 |
+| biometrics | biometría | Marketing-site-only prose noun (Hero sub-copy, "Track habits, goals, biometrics...") describing a data category the app tracks; the app's own catalogue has no single `Biometrics` UI label to reuse — it exposes biometric data through several specific metric screens, not one named string. Standard-dictionary Spanish term, not a coinage. | 07-06 |
+| Initiate (tier/plan name) | Initiate | Marketing-site-only pricing tier name; the app has no public pricing page and therefore no tier literally named "Initiate." Kept English rather than translated, matching the existing convention `GLOSSARY.md` already records for the app's own settings-page plan names — "El Portal Free" and "El Portal Pro" are both `kept English` (`settings.account.elPortalFree` / `settings.account.elPortalPro`). A plan/tier brand name is treated the same way a product name is: it identifies a specific offering, not a translatable concept. | 07-09 |
+| Lifetime (tier/plan name) | Lifetime | Same reasoning as Initiate above. Note this is a distinct decision from the common noun "lifetime," which the app itself translates elsewhere (`settings.account.lifetime` → "De por vida," `settings.account.lifetimeAccess` → "Acceso de por vida") — this plan's own prose uses that translated form everywhere the word appears as an adjective/description (e.g. `tiers[1].period`: "pago único"; `comparisonFeatures` row "Actualizaciones de por vida, sin renovaciones"). Only the tier's own proper name, capitalized and used as a card heading/column header, stays "Lifetime." | 07-09 |
+| Command bar | Barra de comandos | Added to the comparison table by the design owner after this plan shipped (2026-08-20). `GLOSSARY.md` has no row for it — the app ships no string containing "command bar" — so this is a coinage. Translated rather than kept English: unlike The Lab or Trends it is a generic UI affordance, not a named surface of the product, and a Spanish reader who opens the app will not be looking for a labelled "Command bar" to match it against. | 07-09 (post-plan edit) |
+| Deep statistical analysis | Análisis estadístico profundo | Added by the design owner in the same edit. Generic descriptive phrase rather than a product noun; no app string to match. Translated directly. | 07-09 (post-plan edit) |
+| Burnout (pattern-detector name) | Agotamiento | Marketing-site-only detector display name. The app's own catalogue never names this detector "Burnout" — it only ships the resulting headline/body copy (`trends.insights.patternHeadline` = "Energy dropped sharply" / "La energía cayó bruscamente"), never a standalone category label. This page coined the four detector names to give each pattern-detector card a title; GLOSSARY.md has no row to resolve against. | 07-13 |
+| Regression (pattern-detector name) | Retroceso | Same situation as Burnout above — the app exposes only the rendered copy for this detector (`trends.insights.regressionHeadline`/`regressionBody`), never a standalone category name. Coined for this page's four-card detector grid. | 07-13 |
+| Weekday Blind Spot (pattern-detector name) | Punto Ciego Semanal | Same situation — the app's `blindspotHeadline`/`blindspotBody` keys carry the rendered per-instance copy only, never a standalone detector-category name. Coined for this page. | 07-13 |
+| Sleep Lag (pattern-detector name) | Desfase del Sueño | Same situation — no app string names this detector category directly; this page coined the label. See `TRANSLATION-FLAGS.07-13.md` for the rhythm/brevity loss this specific coinage costs against the English "X Lag" pattern. | 07-13 |
+| Productivity (Pulse evening check-in axis label, standalone noun) | Rendimiento | GLOSSARY.md has no isolated row for this axis as a standalone noun — the app's only "productivity" strings are the five answer-option labels (`pulse.checkin.productivityLabel1-5`: Improductivo/Lento/Decente/Productivo/En llamas) and the full check-in question sentence ("¿Qué tan productivo fuiste?"), neither of which is a short chip-style axis label. Followed `src/messages/es/mcp.json`'s own sibling rendering of this exact axis in `tools.write.portal_pulse` ("Cubre ánimo, energía, sueño, estrés, rendimiento, sentimientos y reflexión") rather than coining a fresh word, so the two pages describing the same Pulse evening categories stay consistent. | 07-13 |
+| Carry-over (Goals section label) | Continuidad | GLOSSARY.md's only close match is the verb phrase "Carry Forward → Continuar" (`goalsPage.carryForward`, an action button), not a noun label for a page section describing the carry-over mechanic itself. Translated as a noun rather than reused as a verb button label, since this is a static section heading, not an actionable control. | 07-13 |
+| MoodOrb (Daily Pulse feature name, v2.0.13 entry) | MoodOrb | GLOSSARY.md has no row for this — it is the proper-noun name of a specific UI widget (the glowing sphere on the evening check-in), not a common noun the app's `en.json`/`es.json` catalogues name as translatable copy. Kept English by decision, consistent with the app's own precedent for other UI feature proper nouns that stay English regardless of locale (Cinema, Trends, Dashboard, Pulse, The Lab). | 07-14 |
+
+**Merged by plan 07-16** from all nine `src/messages/glossary-additions/07-NN.md`
+files (07-05, 07-07, 07-08 and 07-10 contributed zero rows — every product
+noun those pages needed already resolved through this glossary's derived
+section). 21 rows merged, in plan order, wording copied verbatim from each
+source file. No coinage conflicts were found — every English term across all
+nine files was unique. See `07-16-SUMMARY.md` for the reconciliation.
 
 **THIS SECTION IS NOT APPENDED TO IN PLACE BY LATER PLANS.** Waves 3 and 4
 run in parallel; several plans coining a term each would either conflict on
