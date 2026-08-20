@@ -1,1 +1,79 @@
-{}
+{
+  "blueprintHeader": {
+    "badge": "SISTEMA DE COMPORTAMIENTO Y RECONOCIMIENTO DE PATRONES",
+    "title": "Deja de adivinar. Empieza a ejecutar con precisión determinista."
+  },
+  "mockup": {
+    "lab": {
+      "cardTitle": "The Lab",
+      "cardDescription": "Donde diseñas, ejecutas e iteras tu sistema de desarrollo personal.",
+      "cycleName": "Ciclo 6",
+      "activeLabel": "Activo",
+      "dateRange": "16 may — 30 may",
+      "prioritiesLabel": "Prioridades",
+      "priorities": [
+        "Bloque compuesto",
+        "Sitio web v2",
+        "Reto sub-22 en 5K"
+      ],
+      "frictionLabel": "Fricción",
+      "frictionItems": [
+        "El volumen de carrera invade las horas de trabajo profundo",
+        "El móvil supera las 2h en los días de descanso"
+      ],
+      "goalsLabel": "Objetivos",
+      "goals": [
+        "Carrera 5K sub-22",
+        "Sitio web v2",
+        "100 clientes de pago",
+        "Leer 12 libros"
+      ]
+    },
+    "trends": {
+      "cardTitle": "Trends",
+      "cardDescription": "Un motor de correlación y un modelo de IA evalúan tus registros diarios y tus datos biométricos para encontrar patrones ocultos.",
+      "weeklySummaryLabel": "Resumen Semanal",
+      "summaryBody": "Dos semanas de hábitos que se acumulan. La meditación reduce el estrés nocturno casi un tercio, y el sueño alimenta directamente el ánimo.",
+      "summaryHighlight": "Los martes marcan el pico.",
+      "dataRevealsLabel": "Lo que revelan tus datos",
+      "newBadge": "Nuevo",
+      "insights": [
+        {
+          "headline": "Meditar 10 min → 28% mejor ánimo",
+          "body": "Los días que completas Meditar 10 min, tu ánimo tiende a ser mejor.",
+          "date": "Hoy"
+        },
+        {
+          "headline": "Trabajo profundo 90 min → 16% más bienestar",
+          "body": "En los días con bloque de trabajo profundo (90 min), tu bienestar tiende a ser mayor.",
+          "date": "hace 3 días"
+        },
+        {
+          "headline": "Pantalla nocturna → 12% peor ánimo por la mañana",
+          "body": "El uso del móvil después de las 22:00 tiende a bajar el ánimo del día siguiente.",
+          "date": "hace 5 días"
+        }
+      ]
+    }
+  },
+  "methodology": {
+    "eyebrow": "Funciones",
+    "heading": "Un método, no una moda.",
+    "subheading": "El Portal no es una plantilla que rellenas. Cada mecánica responde a tres principios que dan forma al resto del sistema.",
+    "principles": [
+      {
+        "title": "La identidad impulsa el comportamiento.",
+        "body": "Decides quién quieres llegar a ser. Los Ciclos se alinean con esa dirección, centrados en las habilidades y hábitos que exige tu identidad futura. Los Días te mantienen constante."
+      },
+      {
+        "title": "La recopilación de datos es esencial",
+        "body": "No puedes mejorar lo que no entiendes. Registra las partes de tu vida que importan y construye una imagen más clara de cómo piensas, trabajas y vives."
+      },
+      {
+        "title": "El sistema trabaja para ti.",
+        "body": "Haces el trabajo. El sistema analiza patrones, pondera señales y muestra lo que más importa. Una herramienta curada, diseñada para apoyar tu crecimiento, no para exigir tu atención."
+      }
+    ],
+    "cta": "Leer la metodología completa"
+  }
+}
