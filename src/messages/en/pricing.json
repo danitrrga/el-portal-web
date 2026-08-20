@@ -56,25 +56,18 @@
     }
   },
   "comparisonFeatures": [
-    { "name": "Versions, Cycles, Days", "initiate": "Unlimited", "lifetime": "Unlimited" },
     { "name": "Habit Tracking + Goal System", "initiate": true, "lifetime": true },
-    { "name": "The Lab — Cycle planner", "initiate": true, "lifetime": true },
+    { "name": "The Lab", "initiate": true, "lifetime": true },
     { "name": "The Archives", "initiate": true, "lifetime": true },
     { "name": "Cinema Mode", "initiate": true, "lifetime": true },
     { "name": "Daily Pulse (mood + vitals)", "initiate": true, "lifetime": true },
-    { "name": "Trends — basic analytics", "initiate": true, "lifetime": true },
-    { "name": "Keyboard-centric design", "initiate": true, "lifetime": true },
-    { "name": "Drag-and-drop reordering", "initiate": true, "lifetime": true },
-    { "name": "Mobile experience", "initiate": true, "lifetime": true },
+    { "name": "Trends", "initiate": true, "lifetime": true },
+    { "name": "Command bar", "initiate": true, "lifetime": true },
     { "name": "Internationalization (5 languages)", "initiate": true, "lifetime": true },
-    { "name": "MCP integration + API keys", "initiate": true, "lifetime": true },
     { "name": "Storage", "initiate": "60 MB", "lifetime": "Unlimited" },
-    { "name": "AI Insight Narratives", "initiate": "—", "lifetime": true },
-    { "name": "Reflection Sentiment Analysis", "initiate": "—", "lifetime": true },
-    { "name": "Weekly Digest emails", "initiate": "—", "lifetime": true },
-    { "name": "Founding Member badge", "initiate": "—", "lifetime": true },
-    { "name": "Direct line to the creator", "initiate": "—", "lifetime": true },
-    { "name": "Lifetime updates, zero renewals", "initiate": "—", "lifetime": true }
+    { "name": "MCP integration + API keys", "initiate": "-", "lifetime": true },
+    { "name": "AI Insight Narratives", "initiate": "-", "lifetime": true },
+    { "name": "Deep statistical analysis", "initiate": "-", "lifetime": true }
   ],
   "faq": {
     "eyebrow": "FAQ",

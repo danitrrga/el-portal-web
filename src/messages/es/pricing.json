@@ -56,25 +56,66 @@
     }
   },
   "comparisonFeatures": [
-    { "name": "Versiones, Ciclos, Días", "initiate": "Ilimitado", "lifetime": "Ilimitado" },
-    { "name": "Seguimiento de Hábitos + Sistema de Objetivos", "initiate": true, "lifetime": true },
-    { "name": "The Lab — planificador de Ciclos", "initiate": true, "lifetime": true },
-    { "name": "Los Archivos", "initiate": true, "lifetime": true },
-    { "name": "Modo Cinema", "initiate": true, "lifetime": true },
-    { "name": "Pulse Diario (ánimo + signos vitales)", "initiate": true, "lifetime": true },
-    { "name": "Trends — análisis básico", "initiate": true, "lifetime": true },
-    { "name": "Diseño centrado en el teclado", "initiate": true, "lifetime": true },
-    { "name": "Reordenar arrastrando y soltando", "initiate": true, "lifetime": true },
-    { "name": "Experiencia móvil", "initiate": true, "lifetime": true },
-    { "name": "5 idiomas", "initiate": true, "lifetime": true },
-    { "name": "Integración MCP + claves de API", "initiate": true, "lifetime": true },
-    { "name": "Almacenamiento", "initiate": "60 MB", "lifetime": "Ilimitado" },
-    { "name": "Narrativas de Insights con IA", "initiate": "—", "lifetime": true },
-    { "name": "Análisis de sentimiento de reflexiones", "initiate": "—", "lifetime": true },
-    { "name": "Correos de resumen semanal", "initiate": "—", "lifetime": true },
-    { "name": "Insignia de Miembro Fundador", "initiate": "—", "lifetime": true },
-    { "name": "Línea directa con el creador", "initiate": "—", "lifetime": true },
-    { "name": "Actualizaciones de por vida, sin renovaciones", "initiate": "—", "lifetime": true }
+    {
+      "name": "Seguimiento de Hábitos + Sistema de Objetivos",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "The Lab",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Los Archivos",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Modo Cinema",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Pulse Diario (ánimo + signos vitales)",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Trends",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Barra de comandos",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "5 idiomas",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Almacenamiento",
+      "initiate": "60 MB",
+      "lifetime": "Ilimitado"
+    },
+    {
+      "name": "Integración MCP + claves de API",
+      "initiate": "-",
+      "lifetime": true
+    },
+    {
+      "name": "Narrativas de Insights con IA",
+      "initiate": "-",
+      "lifetime": true
+    },
+    {
+      "name": "Análisis estadístico profundo",
+      "initiate": "-",
+      "lifetime": true
+    }
   ],
   "faq": {
     "eyebrow": "FAQ",

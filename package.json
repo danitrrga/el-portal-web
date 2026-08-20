@@ -17,7 +17,9 @@
     "typecheck:e2e": "tsc -p tsconfig.e2e.json",
     "verify:routing": "node scripts/verify-locale-routing.mjs",
     "i18n:gates": "node scripts/i18n-gates.mjs",
-    "i18n:gates:strict": "node scripts/i18n-gates.mjs --strict"
+    "i18n:gates:strict": "node scripts/i18n-gates.mjs --strict",
+    "i18n:sync": "node scripts/i18n-sync.mjs",
+    "i18n:sync:check": "node scripts/i18n-sync.mjs --check"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.13",
