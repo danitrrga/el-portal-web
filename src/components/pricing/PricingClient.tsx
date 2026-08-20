@@ -1,10 +1,15 @@
 "use client";
 
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Check, ChevronDown } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+// This page has no internal Link — the only Link on it is the external
+// APP_URL CTA in PricingCard, which stays on next/link per
+// src/i18n/navigation.ts's own doc comment (absolute external URLs are
+// reserved for next/link; @/i18n/navigation's Link is for internal routes).
+import Link from "next/link";
 
 /* ─── Brand palette (matches Hero / VCD / CTA / Methodology) ──────── */
 const SECTION_BG = "var(--color-ep-section-bg)";
@@ -35,117 +40,80 @@ const BORDER_STRONG = "rgba(255,255,255,0.14)";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 
-/* ─── Data ────────────────────────────────────────────────────────── */
+/* ─── Price data — numerals and currency symbols stay in code, never in the
+   catalogue. Keyed by the tier's name (a kept-English brand term in both
+   locales — see src/messages/glossary-additions/07-09.md) rather than by
+   array index, so a translator reordering the Spanish `tiers` array can
+   never silently attach the wrong price to the wrong tier. ─────────────── */
+const TIER_PRICE: Record<string, string> = {
+    Initiate: "$0",
+    Lifetime: "$10",
+};
+const TIER_FEATURED: Record<string, boolean> = {
+    Initiate: false,
+    Lifetime: true,
+};
+const LIFETIME_PRICE = TIER_PRICE.Lifetime;
+const FOUNDING_MEMBER_COUNT = 30;
 
-const tiers = [
-    {
-        name: "Initiate",
-        description: "The full system. Free, forever.",
-        price: "$0",
-        period: "forever free",
-        cta: "Begin your journey",
-        featured: false,
-        features: [
-            "Unlimited Versions, Cycles, and Days",
-            "Dual-progression Goals (streaks + projects)",
-            "Habit tracking + daily performance scoring",
-            "The Lab — Cycle planner",
-            "The Archives — full knowledge base",
-            "Cinema Mode — 5 immersive slides",
-            "Daily Pulse — mood & vitals",
-            "Trends — basic analytics",
-            "MCP integration + API keys",
-            "Mobile experience · 5 languages",
-            "60 MB storage",
-        ],
-    },
-    {
-        name: "Lifetime",
-        description: "Everything in Initiate, plus AI on top.",
-        price: "$10",
-        period: "one-time",
-        cta: "Claim Lifetime access",
-        featured: true,
-        badge: "Free for first 30",
-        features: [
-            "Everything in Initiate",
-            "Unlimited storage (vs 60 MB)",
-            "AI Insight Narratives — weekly auto-summaries",
-            "Reflection Sentiment Analysis",
-            "Weekly Digest emails",
-            "Founding Member badge",
-            "Direct line to the creator",
-            "Early access to new features",
-            "Lifetime updates, zero renewals",
-        ],
-    },
-] as const;
+/**
+ * Manual ICU-style placeholder substitution for strings pulled via `t.raw()`.
+ * `t.raw()` returns the message verbatim (no ICU formatting applied), which
+ * is required to keep `tiers`/`comparisonFeatures`/`faqs` as catalogue
+ * arrays — so any `{name}` placeholder inside a raw array item is resolved
+ * here instead. A missing var leaves the token untouched rather than
+ * throwing, so a placeholder-set mismatch surfaces as visible unresolved
+ * text instead of a runtime crash.
+ */
+function interpolate(template: string, vars: Record<string, string | number>): string {
+    return template.replace(/\{(\w+)\}/g, (match, key: string) =>
+        key in vars ? String(vars[key]) : match,
+    );
+}
 
-const comparisonFeatures: {
+/* ─── Data shapes read from the `pricing` catalogue ──────────────────── */
+type TierMessage = {
+    name: string;
+    description: string;
+    period: string;
+    cta: string;
+    badge?: string;
+    features: string[];
+};
+
+type ComparisonRow = {
     name: string;
     initiate: string | boolean;
     lifetime: string | boolean;
-}[] = [
-        { name: "Versions, Cycles, Days", initiate: "Unlimited", lifetime: "Unlimited" },
-        { name: "Habit Tracking + Goal System", initiate: true, lifetime: true },
-        { name: "The Lab — Cycle planner", initiate: true, lifetime: true },
-        { name: "The Archives", initiate: true, lifetime: true },
-        { name: "Cinema Mode", initiate: true, lifetime: true },
-        { name: "Daily Pulse (mood + vitals)", initiate: true, lifetime: true },
-        { name: "Trends — basic analytics", initiate: true, lifetime: true },
-        { name: "Keyboard-centric design", initiate: true, lifetime: true },
-        { name: "Drag-and-drop reordering", initiate: true, lifetime: true },
-        { name: "Mobile experience", initiate: true, lifetime: true },
-        { name: "Internationalization (5 languages)", initiate: true, lifetime: true },
-        { name: "MCP integration + API keys", initiate: true, lifetime: true },
-        { name: "Storage", initiate: "60 MB", lifetime: "Unlimited" },
-        { name: "AI Insight Narratives", initiate: "—", lifetime: true },
-        { name: "Reflection Sentiment Analysis", initiate: "—", lifetime: true },
-        { name: "Weekly Digest emails", initiate: "—", lifetime: true },
-        { name: "Founding Member badge", initiate: "—", lifetime: true },
-        { name: "Direct line to the creator", initiate: "—", lifetime: true },
-        { name: "Lifetime updates, zero renewals", initiate: "—", lifetime: true },
-    ];
+};
 
-const faqs = [
-    {
-        q: "What is a Version?",
-        a: "A Version is the stretch of time you set an identity for, a deliberate container for who you're becoming. Each Version has its own title, persona, macro goals, and habits. When it ends, it's permanently archived so you can see how you've evolved.",
-    },
-    {
-        q: "How do Cycles work inside a Version?",
-        a: "Each Version is divided into Cycles, tactical sprints aimed at the problems and skills that identity demands, where you define mini-priorities, select habits, and execute daily. At the end of every Cycle, your performance is snapshotted and you decide which habits to carry forward or kill.",
-    },
-    {
-        q: "Why is it only $10?",
-        a: "El Portal is built for serious operators, not for profit margins. A one-time $10 payment unlocks everything. Future updates are included. No subscriptions, no renewals, no hidden fees. You pay once and the whole system is yours, forever.",
-    },
-    {
-        q: "What is Trends and what data powers it?",
-        a: "Trends displays all the data collected so you can access it and visualize it at anytime. Insights are computed with all the data collects, your habits, goal progress, daily mood and energy check-ins, and Cycle scores. You can see how consistent you've been, how your mood lines up with your output, and how each Cycle compares to the last. In the future, as we expand the app, we will be able to offer much more comprehensive analytics systems, tracking biometric data and more. Connecting a smart band or apple health, we can use sleep, heart rate, recovery, screen time... To relate it to your performance in all ways.",
-    },
-    {
-        q: "What's actually different about the free tier?",
-        a: "Less than you might think. Initiate gives you the whole working system — unlimited Versions, Cycles, and Days, the full Lab, Archives, Cinema Mode, basic Trends, Pulse check-ins, mobile, MCP, all of it. The only real ceilings are storage (60 MB cap) and the AI layer on top (narratives, sentiment, weekly digest emails). Your data is never deleted regardless of tier.",
-    },
-    {
-        q: "When does Lifetime billing launch?",
-        a: "El Portal is launching soon. As a thank-you for showing up early, the first 30 signups get the Pro tier activated for free at launch — no payment required, kept for life. Everyone after that pays the one-time $10 through Stripe (PCI-DSS Level 1, card details never touch El Portal's servers).",
-    },
-    {
-        q: "What happens to my data?",
-        a: "Your data will never be sold or shared with third parties. It will always remain under your ownership. You can export all your data at any time in a JSON format or delete it on demand.",
-    },
-    {
-        q: "Is my payment secure?",
-        a: "Yes. Payments are processed by Stripe, a PCI-DSS Level 1 certified provider used by millions of businesses worldwide. Your card details never touch El Portal's servers. They go directly to Stripe over an encrypted connection, and we only receive a confirmation token. No card numbers, no CVVs, no storage on our end.",
-    },
-
-];
+type FaqMessage = { q: string; a: string };
 
 /* ─── Page ────────────────────────────────────────────────────────── */
 
 export default function PricingClient() {
+    const t = useTranslations("pricing");
+
+    const tiers = (t.raw("tiers") as TierMessage[]).map((tier) => ({
+        ...tier,
+        price: TIER_PRICE[tier.name] ?? "",
+        featured: TIER_FEATURED[tier.name] ?? false,
+        badge: tier.badge
+            ? interpolate(tier.badge, { count: FOUNDING_MEMBER_COUNT })
+            : undefined,
+    }));
+
+    const comparisonFeatures = t.raw("comparisonFeatures") as ComparisonRow[];
+
+    const faqs = (t.raw("faqs") as FaqMessage[]).map((faq) => ({
+        q: interpolate(faq.q, { price: LIFETIME_PRICE, count: FOUNDING_MEMBER_COUNT }),
+        a: interpolate(faq.a, { price: LIFETIME_PRICE, count: FOUNDING_MEMBER_COUNT }),
+    }));
+
+    const heroBadgeText = interpolate(t("hero.badge.text"), {
+        count: FOUNDING_MEMBER_COUNT,
+    });
+
     return (
         <div
             className="relative w-full min-h-viewport"
@@ -171,14 +139,13 @@ export default function PricingClient() {
                             color: FG_STRONG,
                         }}
                     >
-                        Pay once. Own the system.
+                        {t("hero.heading")}
                     </h1>
                     <p
                         className="mt-6 text-[15px] md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
                         style={{ color: FG }}
                     >
-                        Start free or unlock everything with one payment. No
-                        subscriptions, no tiers above this, no renewals.
+                        {t("hero.subheading")}
                     </p>
 
                     {/* Promo banner */}
@@ -197,7 +164,7 @@ export default function PricingClient() {
                                 className="w-1.5 h-1.5 rounded-full"
                                 style={{ background: ACCENT_LIGHT }}
                             />
-                            Early access
+                            {t("hero.badge.eyebrow")}
                         </span>
                         <span
                             className="block h-3 w-px"
@@ -207,7 +174,7 @@ export default function PricingClient() {
                             className="text-xs font-medium"
                             style={{ color: FG_STRONG }}
                         >
-                            Launching soon · First 30 signups get Lifetime free at launch
+                            {heroBadgeText}
                         </span>
                     </div>
                 </section>
@@ -228,7 +195,7 @@ export default function PricingClient() {
                             className="text-[11px] font-medium uppercase tracking-[0.22em]"
                             style={{ color: FG_MUTED }}
                         >
-                            Compare
+                            {t("comparison.eyebrow")}
                         </span>
                         <h2
                             className="display text-balance mt-4 text-[clamp(1.188rem,1.116vw+0.964rem,1.5rem)] md:text-[clamp(24px,2.6vw,32px)]"
@@ -236,7 +203,7 @@ export default function PricingClient() {
                                 color: FG_STRONG,
                             }}
                         >
-                            Feature by feature.
+                            {t("comparison.heading")}
                         </h2>
                     </div>
                     <div
@@ -253,19 +220,19 @@ export default function PricingClient() {
                                         className="px-5 py-4 text-[11px] font-medium uppercase tracking-[0.16em]"
                                         style={{ color: FG_MUTED }}
                                     >
-                                        Feature
+                                        {t("comparison.columns.feature")}
                                     </th>
                                     <th
                                         className="px-5 py-4 text-[11px] font-medium uppercase tracking-[0.16em] text-center"
                                         style={{ color: FG_MUTED }}
                                     >
-                                        Initiate
+                                        {t("comparison.columns.initiate")}
                                     </th>
                                     <th
                                         className="px-5 py-4 text-[11px] font-bold uppercase tracking-[0.16em] text-center"
                                         style={{ color: FG_STRONG }}
                                     >
-                                        Lifetime
+                                        {t("comparison.columns.lifetime")}
                                     </th>
                                 </tr>
                             </thead>
@@ -337,7 +304,7 @@ export default function PricingClient() {
                             className="text-[11px] font-medium uppercase tracking-[0.22em]"
                             style={{ color: FG_MUTED }}
                         >
-                            FAQ
+                            {t("faq.eyebrow")}
                         </span>
                         <h2
                             className="display text-balance mt-4 text-[clamp(1.188rem,1.116vw+0.964rem,1.5rem)] md:text-[clamp(24px,2.6vw,32px)]"
@@ -345,7 +312,7 @@ export default function PricingClient() {
                                 color: FG_STRONG,
                             }}
                         >
-                            Common questions.
+                            {t("faq.heading")}
                         </h2>
                     </div>
                     <div className="space-y-2">
