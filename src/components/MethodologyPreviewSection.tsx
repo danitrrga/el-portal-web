@@ -2,6 +2,7 @@
 // next/link.
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 
 const SECTION_BG = "var(--color-ep-section-bg)";
@@ -18,25 +19,23 @@ const FG_MUTED = "var(--color-ep-fg-muted-2)";
 // (`--color-ep-fg-subtle-2` = `#5a6478` does not clear AA) — a design decision,
 // not a mechanical one.
 
-const PRINCIPLES = [
-  {
-    num: "01",
-    title: "Identity drives behavior.",
-    body: "You decide who you want to become. Cycles align around that direction, focusing on the skills and habits your future identity requires. Days keep you consistent.",
-  },
-  {
-    num: "02",
-    title: "Data collection is essential",
-    body: "You can’t improve what you don’t understand. Track the parts of your life that matter, and build a clearer picture of how you think, work, and live.",
-  },
-  {
-    num: "03",
-    title: "The system works for you.",
-    body: "You do the work. The system analyzes patterns, weighs signals, and surfaces what matters most. A curated tool designed to support your growth, not demand your attention.",
-  },
-];
+// "01"/"02"/"03" are a pure sequence marker, not translatable content — a
+// hardcoded number that can never legitimately differ between locales stays
+// in code rather than becoming a phantom translatable string in the
+// catalogue (see 07-07-PLAN.md Task 1). The catalogue's
+// `methodology.principles` array holds only `title`/`body`, index-aligned
+// with this list.
+const PRINCIPLE_NUMBERS = ["01", "02", "03"];
 
-export default function MethodologyPreviewSection() {
+type CataloguePrinciple = { title: string; body: string };
+
+// Stays a Server Component (getTranslations from next-intl/server) — this is
+// a static marketing section with no interactivity, and adding a client
+// directive here would ship it into the client bundle for no gain.
+export default async function MethodologyPreviewSection() {
+  const t = await getTranslations("blueprint");
+  const principles = t.raw("methodology.principles") as CataloguePrinciple[];
+
   return (
     <section
       className="relative overflow-hidden py-16 md:py-32"
@@ -58,7 +57,7 @@ export default function MethodologyPreviewSection() {
             className="text-[11px] font-medium uppercase tracking-[0.22em]"
             style={{ color: FG_MUTED }}
           >
-            Features
+            {t("methodology.eyebrow")}
           </span>
           <h2
             className="display text-balance mt-4 text-[clamp(1.313rem,1.563vw+1rem,1.75rem)] md:text-[clamp(28px,3.2vw,40px)]"
@@ -66,29 +65,28 @@ export default function MethodologyPreviewSection() {
               color: FG_STRONG,
             }}
           >
-            A method, not a vibe.
+            {t("methodology.heading")}
           </h2>
           <p
             className="mt-5 text-[15px] md:text-base leading-[1.6] mx-auto max-w-xl"
             style={{ color: FG }}
           >
-            El Portal isn&apos;t a template you fill in. Every mechanic
-            answers to three principles that shape the rest of the system.
+            {t("methodology.subheading")}
           </p>
         </div>
 
         {/* Principles — numbered stack, editorial */}
         <ol className="space-y-10">
-          {PRINCIPLES.map((p) => (
+          {principles.map((p, i) => (
             <li
-              key={p.num}
+              key={p.title}
               className="grid grid-cols-[auto_1fr] gap-6 md:gap-8"
             >
               <span
                 className="text-[14px] font-medium tabular-nums leading-[1.15] pt-1"
                 style={{ color: FG_MUTED }}
               >
-                {p.num}
+                {PRINCIPLE_NUMBERS[i]}
               </span>
               <div>
                 <h3
@@ -112,7 +110,7 @@ export default function MethodologyPreviewSection() {
         <div className="mt-16 flex justify-center">
           <Button asChild variant="brand-link" size="lg" className="text-base">
             <Link href="/features" className="group inline-flex items-center gap-1.5">
-              Read the full methodology
+              {t("methodology.cta")}
               <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
           </Button>
