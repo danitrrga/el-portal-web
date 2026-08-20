@@ -6,7 +6,6 @@ import { Link } from "@/i18n/navigation";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { ElPortalWordmark } from "./ElPortalWordmark";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const footerColumns = [
     {
@@ -106,13 +105,13 @@ export default function Footer() {
                     ))}
                 </motion.div>
 
-                {/* Bottom bar — copyright left, switcher centre, giant grain-fill wordmark right */}
+                {/* Bottom bar — copyright left, giant grain-fill wordmark right. The
+                    language switcher lives in the navbar only; a second one here
+                    collided with the wordmark. */}
                 <div className="pt-6 border-t border-white/5 flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
                     <p className="text-sm text-zinc-400 shrink-0">
                         {t("footer.copyright", { year: new Date().getFullYear() })}
                     </p>
-
-                    <LanguageSwitcher context="footer" />
 
                     {/* Brand wordmark — ghost outline that fills with grain on hover */}
                     <motion.div
