@@ -1,1 +1,117 @@
-{}
+{
+  "hero": {
+    "heading": "Paga una vez. Sé dueño del sistema.",
+    "subheading": "Empieza gratis u obtén acceso completo con un único pago. Sin suscripciones, sin niveles superiores a este, sin renovaciones.",
+    "badge": {
+      "eyebrow": "Acceso anticipado",
+      "text": "Lanzamiento próximo · Los primeros {count} en registrarse obtienen Lifetime gratis en el lanzamiento"
+    }
+  },
+  "tiers": [
+    {
+      "name": "Initiate",
+      "description": "El sistema completo. Gratis, para siempre.",
+      "period": "gratis para siempre",
+      "cta": "Empezar tu viaje",
+      "features": [
+        "Versiones, Ciclos y Días ilimitados",
+        "Objetivos de doble progresión (rachas + proyectos)",
+        "Seguimiento de hábitos + puntuación de rendimiento diaria",
+        "The Lab — planificador de Ciclos",
+        "Los Archivos — base de conocimiento completa",
+        "Modo Cinema — 5 diapositivas envolventes",
+        "Pulse Diario — ánimo y signos vitales",
+        "Trends — análisis básico",
+        "Integración MCP + claves de API",
+        "Experiencia móvil · 5 idiomas",
+        "60 MB de almacenamiento"
+      ]
+    },
+    {
+      "name": "Lifetime",
+      "description": "Todo lo de Initiate, más IA.",
+      "period": "pago único",
+      "cta": "Obtener acceso",
+      "badge": "Gratis para los primeros {count}",
+      "features": [
+        "Todo lo de Initiate",
+        "Almacenamiento ilimitado (frente a 60 MB)",
+        "Narrativas de Insights con IA — resúmenes automáticos semanales",
+        "Análisis de sentimiento de reflexiones",
+        "Correos de resumen semanal",
+        "Insignia de Miembro Fundador",
+        "Línea directa con el creador",
+        "Acceso anticipado a nuevas funciones",
+        "Actualizaciones de por vida, sin renovaciones"
+      ]
+    }
+  ],
+  "comparison": {
+    "eyebrow": "Comparar",
+    "heading": "Función por función.",
+    "columns": {
+      "feature": "Función",
+      "initiate": "Initiate",
+      "lifetime": "Lifetime"
+    }
+  },
+  "comparisonFeatures": [
+    { "name": "Versiones, Ciclos, Días", "initiate": "Ilimitado", "lifetime": "Ilimitado" },
+    { "name": "Seguimiento de Hábitos + Sistema de Objetivos", "initiate": true, "lifetime": true },
+    { "name": "The Lab — planificador de Ciclos", "initiate": true, "lifetime": true },
+    { "name": "Los Archivos", "initiate": true, "lifetime": true },
+    { "name": "Modo Cinema", "initiate": true, "lifetime": true },
+    { "name": "Pulse Diario (ánimo + signos vitales)", "initiate": true, "lifetime": true },
+    { "name": "Trends — análisis básico", "initiate": true, "lifetime": true },
+    { "name": "Diseño centrado en el teclado", "initiate": true, "lifetime": true },
+    { "name": "Reordenar arrastrando y soltando", "initiate": true, "lifetime": true },
+    { "name": "Experiencia móvil", "initiate": true, "lifetime": true },
+    { "name": "5 idiomas", "initiate": true, "lifetime": true },
+    { "name": "Integración MCP + claves de API", "initiate": true, "lifetime": true },
+    { "name": "Almacenamiento", "initiate": "60 MB", "lifetime": "Ilimitado" },
+    { "name": "Narrativas de Insights con IA", "initiate": "—", "lifetime": true },
+    { "name": "Análisis de sentimiento de reflexiones", "initiate": "—", "lifetime": true },
+    { "name": "Correos de resumen semanal", "initiate": "—", "lifetime": true },
+    { "name": "Insignia de Miembro Fundador", "initiate": "—", "lifetime": true },
+    { "name": "Línea directa con el creador", "initiate": "—", "lifetime": true },
+    { "name": "Actualizaciones de por vida, sin renovaciones", "initiate": "—", "lifetime": true }
+  ],
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Preguntas frecuentes."
+  },
+  "faqs": [
+    {
+      "q": "¿Qué es una Versión?",
+      "a": "Una Versión es el periodo en el que fijas una identidad, un contenedor deliberado para quien te estás convirtiendo. Cada Versión tiene su propio título, persona, macro-objetivos y hábitos. Cuando termina, se archiva de forma permanente para que puedas ver cómo has evolucionado."
+    },
+    {
+      "q": "¿Cómo funcionan los Ciclos dentro de una Versión?",
+      "a": "Cada Versión se divide en Ciclos, sprints tácticos dirigidos a los problemas y las habilidades que esa identidad exige, donde defines mini-prioridades, seleccionas hábitos y ejecutas a diario. Al final de cada Ciclo, tu rendimiento queda registrado y decides qué hábitos continuar o eliminar."
+    },
+    {
+      "q": "¿Por qué solo cuesta {price}?",
+      "a": "El Portal está pensado para quienes se lo toman en serio, no para maximizar márgenes. Un pago único de {price} da acceso a todo. Las futuras actualizaciones están incluidas. Sin suscripciones, sin renovaciones, sin cargos ocultos. Pagas una vez y el sistema entero es tuyo, para siempre."
+    },
+    {
+      "q": "¿Qué es Trends y qué datos lo alimentan?",
+      "a": "Trends muestra todos los datos recopilados para que puedas consultarlos y visualizarlos en cualquier momento. Los insights se calculan con todos esos datos: tus hábitos, el progreso de tus objetivos, los check-ins diarios de ánimo y energía, y las puntuaciones de Ciclo. Puedes ver cuánta consistencia has mantenido, cómo se relaciona tu ánimo con tu producción, y cómo se compara cada Ciclo con el anterior. En el futuro, a medida que ampliemos la aplicación, podremos ofrecer sistemas de análisis mucho más completos, con seguimiento de datos biométricos y más. Conectando una pulsera inteligente o Apple Health, podremos usar el sueño, el ritmo cardíaco, la recuperación, el tiempo de pantalla… para relacionarlo con tu rendimiento en todos los sentidos."
+    },
+    {
+      "q": "¿Qué cambia realmente en el nivel gratuito?",
+      "a": "Menos de lo que imaginas. Initiate te da el sistema completo en funcionamiento — Versiones, Ciclos y Días ilimitados, The Lab completo, Archivos, Modo Cinema, Trends básico, check-ins de Pulse, móvil, MCP, todo. Los únicos límites reales son el almacenamiento (tope de 60 MB) y la capa de IA (narrativas, sentimiento, correos de resumen semanal). Tus datos nunca se eliminan, sea cual sea tu nivel."
+    },
+    {
+      "q": "¿Cuándo se activa la facturación de Lifetime?",
+      "a": "El Portal se lanza pronto. Como agradecimiento por llegar pronto, los primeros {count} en registrarse obtienen el nivel Pro activado gratis en el lanzamiento — sin pago necesario, para siempre. Todos los demás pagan el pago único de {price} a través de Stripe (PCI-DSS Level 1, los datos de tu tarjeta nunca tocan los servidores de El Portal)."
+    },
+    {
+      "q": "¿Qué pasa con mis datos?",
+      "a": "Tus datos nunca se venderán ni se compartirán con terceros. Siempre permanecerán bajo tu propiedad. Puedes exportar todos tus datos en cualquier momento en formato JSON o eliminarlos cuando quieras."
+    },
+    {
+      "q": "¿Es seguro mi pago?",
+      "a": "Sí. Los pagos los procesa Stripe, un proveedor certificado PCI-DSS Level 1 usado por millones de empresas en todo el mundo. Los datos de tu tarjeta nunca tocan los servidores de El Portal. Van directos a Stripe mediante una conexión cifrada, y solo recibimos un token de confirmación. Sin números de tarjeta, sin CVV, sin almacenamiento por nuestra parte."
+    }
+  ]
+}
