@@ -90,14 +90,32 @@ const KNOWN_UNFIXED_EN: KnownUnfixed[] = [
  * programmatically (never hand-pasted) so the two lists cannot drift apart —
  * a future fix deletes one row in `KNOWN_UNFIXED_EN`, not two. Same `ref`
  * (07-03-PLAN.md Task 2): it is the same underlying layout-caused defect,
- * now also visible on a second route string, not a new finding. At this
- * point in the phase `/es/*` still renders English copy (Waves 3-4 have not
- * run), so the reason string documents inheritance rather than translation.
+ * now also visible on a second route string, not a new finding.
+ *
+ * REVISED by 07-16 (final verification, all translation waves landed): the
+ * original generic "English copy still renders on /es/* until Waves 3-4
+ * translate it" suffix is now false and has been replaced with the actual
+ * measured Spanish numbers plan 07-08 (KU-2), 07-09 (KU-4), 07-10 (KU-3) and
+ * 07-13 (KU-1) recorded, re-confirmed directly by 07-16 against the current
+ * production build. See 07-16-SUMMARY.md and
+ * `.planning/phases/05-mobile-responsive-retrofit/deferred-items.md`'s
+ * "From 07-16" section for the full reconciliation.
  */
+const ES_REASON_OVERRIDE: Record<string, string> = {
+  "KU-1":
+    'No longer reproduces on /es/features: "Connectedness" (117px, 7px over) was translated to "Conexión" (shorter), confirmed 0px overflow at both 320px and 1440px (07-13, re-confirmed by 07-16). The suppression entry is KEPT, never removed — it stays available if a future copy change re-widens the label — but it is currently UNUSED on this route: the sweep finds nothing here for it to match.',
+  "KU-2":
+    "Re-measured on /es/mcp (07-08, re-confirmed by 07-16): 44px @320px / 4px @360px / 0px @390px / 0px @430px — better than the unchanged English baseline (66/26/0/0) at every width, but still reproduces (nonzero) at 320px and 360px, so the suppression is still active on this route.",
+  "KU-3":
+    "Re-measured on /es/privacy (07-10, re-confirmed by 07-16): 15px @320px / 0px @360px / 0px @390px / 0px @430px — better than the unchanged English baseline (73/33/3/0), reproduces only at 320px now. /es/terms carries zero overflow at all four widths, matching the unchanged English /terms baseline — this suppression's scope was always /privacy only, never /terms.",
+  "KU-4":
+    "Re-measured on /es/pricing by 07-16 against the current build (the comparisonFeatures row count changed from 19 to 12 after 07-09 shipped its own re-measurement): 62px @320px / 22px @360px / 0px @390px / 0px @430px — identical to 07-09's own numbers, confirming the row-count change did not alter this table's overflow, and still better than the unchanged English baseline (77/37/7/0) at every width. Still reproduces (nonzero) at 320px and 360px.",
+};
+
 const KNOWN_UNFIXED_ES: KnownUnfixed[] = KNOWN_UNFIXED_EN.map((k) => ({
   ...k,
   route: k.route === "/" ? "/es" : `/es${k.route}`,
-  reason: `${k.reason} Inherited verbatim on the /es twin: layout-caused, not copy-caused — English copy still renders on /es/* until Waves 3-4 translate it.`,
+  reason: ES_REASON_OVERRIDE[k.ref] ?? `${k.reason} (unreconciled — see 07-16-SUMMARY.md)`,
 }));
 
 const KNOWN_UNFIXED: KnownUnfixed[] = [...KNOWN_UNFIXED_EN, ...KNOWN_UNFIXED_ES];
