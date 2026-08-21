@@ -132,3 +132,98 @@ lost.
   pattern), or restructure the pricing comparison table for mobile (e.g. a stacked/card
   layout below `sm:`). Out of this gap-closure phase's fence — 05-06/05-07 exist to
   close the harness gap and the two named Hero gaps, not to redesign `/pricing`.
+
+## From 07-16 (phase 07 spanish-localization final verification)
+
+Findings from the final both-locale audit that are genuinely out of this plan's
+declared `files_modified` scope, or are pre-existing debt this plan measured but
+did not (and should not) fix at source. None of these block phase 07 sign-off —
+see `07-16-SUMMARY.md` for the full write-up.
+
+### KU-1..KU-4 reconciliation against the translated Spanish tree
+
+All four `KNOWN_UNFIXED` entries in `e2e/containment.spec.ts` were re-measured
+against the fully-translated Spanish tree (previously they only existed against
+an English-copy-on-`/es/*` placeholder state). Every ref still traces to a
+written finding here (this file); none were removed, none were added for a
+defect phase 07 introduced.
+
+- **KU-1** (`/features` "Connectedness" 7px overflow) — still reproduces on
+  English (117px/110px, 7px over, unchanged, all 7 launchable viewports). No
+  longer reproduces on `/es/features`: plan 07-13 translated the label to
+  "Conexión" (8 chars vs. 14), independently confirmed 0px overflow at 320px
+  and 1440px by 07-16 directly against the production build. The suppression
+  entry is **kept, not removed** (per `KNOWN_UNFIXED`'s "still pushed onto
+  annotations, never silently dropped" contract) but is **currently unused**
+  on the Spanish route — a future reader should not mistake an unused
+  suppression for a hidden defect. If the English label is ever also
+  shortened, this entry should be deleted only once both twins stop
+  reproducing, per the existing "delete both twins together" rule.
+- **KU-2** (`/mcp` prose paragraph overflow) — re-measured by 07-08 on
+  `/es/mcp`: 44px/4px/0px/0px @ 320/360/390/430, vs. the unchanged English
+  baseline 66px/26px/0px/0px. Better than English at every width, but still
+  reproduces (nonzero) at 320px and 360px on both trees — suppression stays
+  active on both.
+- **KU-3** (`/privacy` legal-copy paragraph overflow) — re-measured by 07-10
+  on `/es/privacy`: 15px/0px/0px/0px @ 320/360/390/430, vs. the unchanged
+  English baseline 73px/33px/3px/0px. Better than English, reproduces only at
+  320px now. `/es/terms` carries zero overflow at all four widths (this
+  suppression's scope was always `/privacy` only, never `/terms`).
+- **KU-4** (`/pricing` comparison-table clip escape) — originally re-measured
+  by 07-09 at 62px/22px/0px/0px @ 320/360/390/430 (vs. the unchanged English
+  baseline 77px/37px/7px/0px). The `comparisonFeatures` row count changed
+  from 19 to 12 after 07-09 shipped (a later, out-of-plan design-owner edit);
+  07-16 re-measured directly against the current production build and got
+  **identical numbers** (62/22/0/0) — the row-count change did not alter this
+  table's overflow behaviour. Still reproduces at 320px and 360px on both
+  trees; still better than English at every width.
+
+`e2e/containment.spec.ts`'s `KNOWN_UNFIXED_ES` generation was updated from a
+generic "English copy still renders on /es/* until Waves 3-4 translate it"
+suffix (now false) to per-ref measured reason strings carrying the numbers
+above.
+
+### Additional dead-code components found by the residual-string sweep
+
+Plan 07-16's `scripts/audit-residual-strings.mjs` (a new, permanent,
+CI-wired gate) surfaced four more zero-import components beyond the
+already-known `DashboardPreview.tsx` (05-06/07-PATTERNS.md), each confirmed
+by `grep -rn "<ComponentName>" src/` returning only the component's own
+declaration file:
+
+- `src/components/animations/PerformanceMetric.tsx` (139 lines) — an
+  unused "P_daily Algorithm" formula/animation illustration, same shape and
+  purpose as `DashboardPreview.tsx`.
+- `src/components/MethodologyCard.tsx` (44 lines) — an unused card wrapper
+  component (title/subtitle/accordion "Deep Dive" pattern) with no caller.
+- `src/components/remotion/AsymptoticCurve.tsx` and
+  `src/components/remotion/CyclicalRings.tsx` — unused Remotion video
+  compositions; no `remotion.config.ts` or Root entry point references
+  either file, and no `package.json` script renders them.
+
+All four are allowlisted in `scripts/residual-strings-allowlist.mjs` with
+the same "excluded because nothing renders it, not because its strings were
+handled" reasoning the plan's own text already applies to
+`DashboardPreview.tsx`. Deleting all five dead-code files (this one plus the
+four above) is a housekeeping item for a later phase — out of 07-16's
+declared `files_modified` scope, which does not include any of them.
+`PerformanceMetric.tsx` additionally carries the same banned `animate-pulse`
+and `rgba(30,64,175,...)` patterns `DashboardPreview.tsx` does, for the same
+future cleanup pass.
+
+### Footer language switcher — confirmed intentional, not a regression
+
+`e2e/touch-targets.spec.ts` and `07-04-SUMMARY.md`'s own Gate Proofs table
+both describe measuring a footer-mounted `LanguageSwitcher` instance. As of
+commit `044e0c4` ("fix(07-04): drop the footer language switcher, keep the
+navbar one" — landed the same day as the switcher's own build, before this
+plan ran), the footer mount was deliberately removed: at desktop widths the
+switcher sat on top of the giant grain-fill "El Portal" wordmark in the
+footer's bottom bar and obscured it. `Footer.tsx` now carries zero
+`LanguageSwitcher` mounts (confirmed: `footer.querySelectorAll('[data-testid^="locale-switch-"]')`
+returns 0 at every measured width). D-11's switcher-mount count is **two**,
+not three: the desktop actions row (`md:` and up) and the `#mobile-nav`
+hamburger panel (below `md:`) — both render the same `LanguageSwitcher`
+component. 07-16 measured only these two mounts; any prior-plan text
+describing a third (footer) mount is stale as of `044e0c4` and should be
+read as historical, not current.

@@ -1,0 +1,158 @@
+{
+  "hero": {
+    "heading": "Pay once. Own the system.",
+    "subheading": "Start free or unlock everything with one payment. No subscriptions, no tiers above this, no renewals.",
+    "badge": {
+      "eyebrow": "Early access",
+      "text": "Launching soon"
+    }
+  },
+  "tiers": [
+    {
+      "name": "Initiate",
+      "description": "The full system. Free, forever.",
+      "period": "forever free",
+      "cta": "Begin your journey",
+      "features": [
+        "Unlimited Versions, Cycles, and Days",
+        "Dual-progression Goals (streaks + projects)",
+        "Habit tracking + daily performance scoring",
+        "The Lab — Cycle planner",
+        "The Archives — full knowledge base",
+        "Cinema Mode — 5 immersive slides",
+        "Daily Pulse — mood & vitals",
+        "Trends — basic analytics",
+        "MCP integration + API keys",
+        "Mobile experience · 5 languages",
+        "60 MB storage"
+      ]
+    },
+    {
+      "name": "Lifetime",
+      "description": "Everything in Initiate, plus AI on top.",
+      "period": "one-time",
+      "cta": "Claim Lifetime access",
+      "badge": "Free for first {count}",
+      "features": [
+        "Everything in Initiate",
+        "Unlimited storage (vs 60 MB)",
+        "AI Insight Narratives — weekly auto-summaries",
+        "Reflection Sentiment Analysis",
+        "Weekly Digest emails",
+        "Founding Member badge",
+        "Direct line to the creator",
+        "Early access to new features",
+        "Lifetime updates, zero renewals"
+      ]
+    }
+  ],
+  "comparison": {
+    "eyebrow": "Compare",
+    "heading": "Feature by feature.",
+    "columns": {
+      "feature": "Feature",
+      "initiate": "Initiate",
+      "lifetime": "Lifetime"
+    }
+  },
+  "comparisonFeatures": [
+    {
+      "name": "Habit Tracking + Goal System",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "The Lab",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "The Archives",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Cinema Mode",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Daily Pulse (mood + vitals)",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Trends",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Command bar",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Internationalization (5 languages)",
+      "initiate": true,
+      "lifetime": true
+    },
+    {
+      "name": "Storage",
+      "initiate": "60 MB",
+      "lifetime": "Unlimited"
+    },
+    {
+      "name": "MCP integration + API keys",
+      "initiate": "—",
+      "lifetime": true
+    },
+    {
+      "name": "AI Insight Narratives",
+      "initiate": "—",
+      "lifetime": true
+    },
+    {
+      "name": "Deep statistical analysis",
+      "initiate": "—",
+      "lifetime": true
+    }
+  ],
+  "faq": {
+    "eyebrow": "FAQ",
+    "heading": "Common questions."
+  },
+  "faqs": [
+    {
+      "q": "What is a Version?",
+      "a": "A Version is the stretch of time you set an identity for, a deliberate container for who you're becoming. Each Version has its own title, persona, macro goals, and habits. When it ends, it's permanently archived so you can see how you've evolved."
+    },
+    {
+      "q": "How do Cycles work inside a Version?",
+      "a": "Each Version is divided into Cycles, tactical sprints aimed at the problems and skills that identity demands, where you define mini-priorities, select habits, and execute daily. At the end of every Cycle, your performance is snapshotted and you decide which habits to carry forward or kill."
+    },
+    {
+      "q": "Why is it only {price}?",
+      "a": "El Portal is built for serious operators, not for profit margins. A one-time {price} payment unlocks everything. Future updates are included. No subscriptions, no renewals, no hidden fees. You pay once and the whole system is yours, forever."
+    },
+    {
+      "q": "What is Trends and what data powers it?",
+      "a": "Trends displays all the data collected so you can access it and visualize it at anytime. Insights are computed with all the data collects, your habits, goal progress, daily mood and energy check-ins, and Cycle scores. You can see how consistent you've been, how your mood lines up with your output, and how each Cycle compares to the last. In the future, as we expand the app, we will be able to offer much more comprehensive analytics systems, tracking biometric data and more. Connecting a smart band or apple health, we can use sleep, heart rate, recovery, screen time... To relate it to your performance in all ways."
+    },
+    {
+      "q": "What's actually different about the free tier?",
+      "a": "Less than you might think. Initiate gives you the whole working system — unlimited Versions, Cycles, and Days, the full Lab, Archives, Cinema Mode, basic Trends, Pulse check-ins, mobile, MCP, all of it. The only real ceilings are storage (60 MB cap) and the AI layer on top (narratives, sentiment, weekly digest emails). Your data is never deleted regardless of tier."
+    },
+    {
+      "q": "When does Lifetime billing launch?",
+      "a": "El Portal is launching soon. As a thank-you for showing up early, the first {count} signups get the Pro tier activated for free at launch — no payment required, kept for life. Everyone after that pays the one-time {price} through Stripe (PCI-DSS Level 1, card details never touch El Portal's servers)."
+    },
+    {
+      "q": "What happens to my data?",
+      "a": "Your data will never be sold or shared with third parties. It will always remain under your ownership. You can export all your data at any time in a JSON format or delete it on demand."
+    },
+    {
+      "q": "Is my payment secure?",
+      "a": "Yes. Payments are processed by Stripe, a PCI-DSS Level 1 certified provider used by millions of businesses worldwide. Your card details never touch El Portal's servers. They go directly to Stripe over an encrypted connection, and we only receive a confirmation token. No card numbers, no CVVs, no storage on our end."
+    }
+  ]
+}

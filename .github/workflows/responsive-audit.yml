@@ -25,6 +25,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
+# 07-15: sitemap.xml, canonicals and hreflang alternates are built from
+# NEXT_PUBLIC_SITE_URL at `next build` time (src/lib/seo.ts throws
+# E_MISSING_SITE_ORIGIN otherwise). `.env.local` supplies this locally but is
+# not in the repository, so a clean CI checkout needs it from a repository
+# variable instead. Workflow-level, not step-level: `playwright.config.ts`'s
+# `webServer` runs `npm run build && npm run start` from inside the
+# `responsive` job, so the value has to be visible to a process this workflow
+# never names directly, and `quality`'s own `npm run build`-adjacent checks
+# (tsc, i18n gates) need it too.
+env:
+  NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+
 # Actions are pinned to floating majors that run on the Node 24 runtime. The v4
 # line targets Node 20, which the runner now force-upgrades while emitting a
 # deprecation warning. The only behavioural change in the v5 line that touches
@@ -55,6 +67,32 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      # scripts/i18n-gates.mjs (07-03). Translation status is INFERRED from
+      # the catalogue, never configured here: a namespace with zero es keys
+      # only warns ("not yet translated"), a namespace with ANY es key is
+      # enforced fully — a PARTIALLY translated namespace fails, an entirely
+      # untranslated one does not. Key identity is enforced in BOTH
+      # directions once a namespace has started: an en key missing from a
+      # non-empty es fails, and an es key with no en counterpart also fails
+      # (an orphaned Spanish key left behind by a deleted English string).
+      # No allowlist, env var, or namespace list lives here or anywhere else
+      # — nine Wave 3/4 plans run across two waves and would otherwise be
+      # editing the same shared list in parallel. The strict form
+      # (`npm run i18n:gates:strict`, which upgrades the not-yet-translated
+      # warning to a failure) is run only by the phase's final verification
+      # plan (07-16), to assert no namespace was left behind.
+      - name: i18n gates
+        run: npm run i18n:gates
+
+      # scripts/audit-residual-strings.mjs (07-16). Rerunnable replacement
+      # for a one-time human grep: walks src/**/*.{ts,tsx} for JSX text,
+      # accessibility-attribute literals, destructured-prop defaults,
+      # module-level const/array data and error/status strings that never
+      # reached a message catalogue. scripts/residual-strings-allowlist.mjs
+      # is the committed, reasoned exception list this step checks against.
+      - name: Residual hardcoded strings
+        run: npm run audit:strings
 
   # Deliberately not sharded. playwright.config.ts's `webServer` runs a full
   # `next build` per job, so a 2-way shard would double the expensive step to

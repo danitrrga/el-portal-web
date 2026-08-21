@@ -1,8 +1,13 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+// Internal navigation (the pricing pill, "Read the methodology") uses the
+// locale-aware Link (see src/i18n/navigation.ts); the external APP_URL CTA
+// stays on next/link, aliased to avoid a name collision.
+import { Link } from "@/i18n/navigation";
+import ExternalLink from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { HeroAppMockup } from "./hero/HeroAppMockup";
@@ -30,6 +35,11 @@ const transitionVariants = {
 };
 
 export default function Hero() {
+  const t = useTranslations("home");
+  // "Open El Portal" already lives in `common.cta.button` (07-04) — reference
+  // it rather than duplicating the same words under a second `home` key.
+  const tCommon = useTranslations("common");
+
   return (
     <section className="relative overflow-hidden" style={{ background: "var(--color-ep-bg-base)" }}>
       {/* Atmospheric blue-tinted radials on the left (adapted from tailark) */}
@@ -86,9 +96,9 @@ export default function Hero() {
                   }}
                 >
                   <span className="text-sm" style={{ color: "var(--color-ep-fg)" }}>
-                    <span style={{ color: "var(--color-ep-accent-light)" }} className="font-medium">Early access</span>
+                    <span style={{ color: "var(--color-ep-accent-light)" }} className="font-medium">{t("hero.pill.badge")}</span>
                     <span style={{ color: "var(--color-ep-separator)" }}> · </span>
-                    Launching soon · First 30 signups get Pro for life
+                    {t("hero.pill.message")}
                   </span>
                   <span
                     className="block h-4 w-0.5"
@@ -116,7 +126,7 @@ export default function Hero() {
                     color: "var(--color-ep-fg-strong)",
                   }}
                 >
-                  The final operating system for high-performers.
+                  {t("hero.headline")}
                 </h1>
 
                 {/* Sub — narrative prose */}
@@ -124,7 +134,7 @@ export default function Hero() {
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg leading-[1.55]"
                   style={{ color: "var(--color-ep-fg)" }}
                 >
-                  Versions plan a 90-day identity. Cycles run a 15-day focus. Track habits, goals, biometrics... The system analyzes the trends the eye misses.
+                  {t("hero.subcopy")}
                 </p>
               </AnimatedGroup>
 
@@ -144,9 +154,9 @@ export default function Hero() {
                 className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
               >
                 <Button key={1} asChild variant="brand" size="lg" className="text-base">
-                  <Link href={APP_URL}>
-                    <span className="text-nowrap">Open El Portal</span>
-                  </Link>
+                  <ExternalLink href={APP_URL}>
+                    <span className="text-nowrap">{tCommon("cta.button")}</span>
+                  </ExternalLink>
                 </Button>
                 <Button
                   key={2}
@@ -156,7 +166,7 @@ export default function Hero() {
                   className="text-base"
                 >
                   <Link href="/features">
-                    <span className="text-nowrap">Read the methodology</span>
+                    <span className="text-nowrap">{t("hero.cta.secondary")}</span>
                   </Link>
                 </Button>
               </AnimatedGroup>

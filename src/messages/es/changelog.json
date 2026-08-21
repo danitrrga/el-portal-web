@@ -1,0 +1,844 @@
+{
+  "page": {
+    "heading": "Historial de cambios",
+    "subheading": "Cada cambio publicado en El Portal — qué hay de nuevo, qué se ha corregido, qué ahora va más rápido."
+  },
+  "noteLabel": "Nota",
+  "tags": {
+    "newFeature": "Novedad",
+    "improvement": "Mejora",
+    "optimization": "Optimización",
+    "fix": "Corrección",
+    "hotfix": "Parche urgente",
+    "release": "Lanzamiento"
+  },
+  "entries": [
+    {
+      "version": "2.0.28",
+      "date": "2026-05-20",
+      "tags": [
+        "fix"
+      ],
+      "title": "El inicio de sesión ahora aterriza donde debe",
+      "body": "El inicio de sesión con Google ahora pasa enteramente por la app — sin más redirecciones a una URL externa. Toda una clase de fallos silenciosos de autenticación ha desaparecido, y la pantalla de inicio de sesión gestiona bien los temas oscuros del navegador.",
+      "bullets": [
+        {
+          "lead": "Flujo OAuth limpio",
+          "body": "Al iniciar sesión con Google, llegas directamente a tu Dashboard — nunca a una URL externa sin más."
+        },
+        {
+          "lead": "Autocompletado pulido",
+          "body": "Los campos autocompletados por el navegador en la pantalla de inicio de sesión ahora encajan con el tema oscuro; se acabó el destello blanco cuando Chrome rellena tus credenciales."
+        },
+        {
+          "lead": "Enlaces de correo asegurados",
+          "body": "Los correos de enlace mágico se construyen ahora desde el propio dominio de la app, no desde la URL que el servidor viera al enviarlos."
+        }
+      ]
+    },
+    {
+      "version": "2.0.27",
+      "date": "2026-05-11",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Un tour guiado para tu primer día",
+      "body": "Los usuarios nuevos reciben ahora una guía paso a paso de El Portal — desde crear tu primera Versión hasta configurar tu primer Ciclo. Un foco marca exactamente dónde mirar; un conector te señala el control correcto. Al terminar, estás listo para el primer día.",
+      "bullets": [
+        {
+          "lead": "Foco paso a paso",
+          "body": "Cada paso del tour atenúa todo salvo lo único sobre lo que debes actuar, con una flecha clara que señala justo hacia ahí."
+        },
+        {
+          "lead": "Guía pestaña por pestaña",
+          "body": "El tour recorre la creación de la Versión y la configuración del Ciclo sección por sección, dentro de las propias ventanas modales."
+        },
+        {
+          "lead": "Inteligente para usuarios recurrentes",
+          "body": "Si ya tienes una Versión o un Ciclo, el tour se salta los pasos de creación y te muestra en su lugar lo que ya has construido."
+        },
+        {
+          "lead": "Repítelo cuando quieras",
+          "body": "Reinicia el tour desde Configuración siempre que quieras repasarlo."
+        }
+      ]
+    },
+    {
+      "version": "2.0.26",
+      "date": "2026-05-11",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Archivos es ahora una bóveda",
+      "body": "Archivos se ha reimaginado como un espacio más tranquilo e intencional. En vez de una superficie cargada de pestañas y secciones, llegas a un umbral — seis nombres grabados en piedra, espacio generoso, sin ruido visual. Cada uno abre su propia sala.",
+      "bullets": [
+        {
+          "lead": "Sala del Umbral",
+          "body": "Seis piedras centradas en la pantalla: Visión, Checklist de Vida, Rutinas, Notas Teóricas, Mantras y Habilidades y Rasgos. Haz clic en una para entrar."
+        },
+        {
+          "lead": "Cada piedra, su propia sala",
+          "body": "Cada sección vive ahora en su propia página. Rutinas y Notas Teóricas te dejan entrar en cada entrada individual desde su propia mini-sala."
+        },
+        {
+          "lead": "Galería de chips de Habilidades y Rasgos",
+          "body": "Explora tus habilidades y rasgos como chips. Añádelos en línea, haz doble clic para editar, sin necesidad de ventanas modales."
+        },
+        {
+          "lead": "Historial de Debrief eliminado",
+          "body": "Esa sección ha desaparecido. La bóveda está más tranquila sin ella."
+        }
+      ]
+    },
+    {
+      "version": "2.0.25",
+      "date": "2026-05-11",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Una nueva primera impresión",
+      "body": "En el momento justo después de verificar tu correo, El Portal ahora se presenta como es debido — una bienvenida animada superpuesta sobre el propio Dashboard, para que veas la interfaz real mientras te la muestran.",
+      "bullets": [
+        {
+          "lead": "Superposición, no un desvío",
+          "body": "La introducción ahora se muestra sobre el Dashboard en vez de llevarte a una página aparte. Llegas al lugar correcto desde el principio."
+        },
+        {
+          "lead": "Pantalla de bienvenida tras la verificación",
+          "body": "Justo después de confirmar tu correo, recibes una introducción clara y tranquila — qué es El Portal, a qué estás dando tu consentimiento y qué viene después."
+        },
+        {
+          "lead": "Introducción animada del sistema",
+          "body": "Versión, Ciclo y Día se presentan con una animación que refleja cómo funciona realmente el sistema."
+        }
+      ]
+    },
+    {
+      "version": "2.0.24",
+      "date": "2026-05-06",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Página de registros, reconstruida",
+      "body": "La página de registros de la base de datos se ha reconstruido con una interfaz más limpia y centrada. La cabecera pesada ha desaparecido, un indicador deslizante sigue tu pestaña activa, y los atajos de una sola tecla te permiten navegar sin levantar las manos del teclado.",
+      "bullets": [
+        {
+          "lead": "La barra de pestañas encabeza la página",
+          "body": "La cabecera con título ha desaparecido. Las pestañas de Versiones, Ciclos, Hábitos y Objetivos son lo primero que ves."
+        },
+        {
+          "lead": "Indicador deslizante",
+          "body": "Un resaltado suave sigue tu pestaña activa, igual que en la vista de Trends."
+        },
+        {
+          "lead": "Atajos de teclado",
+          "body": "Pulsa V, C, H o O para saltar directamente a cada pestaña."
+        },
+        {
+          "lead": "Insignias de estado más limpias",
+          "body": "Los estados activo y archivado ahora se muestran como píldoras discretas y consistentes."
+        }
+      ]
+    },
+    {
+      "version": "2.0.23",
+      "date": "2026-05-11",
+      "tags": [
+        "fix"
+      ],
+      "title": "Pulse Diario, ahora fiable",
+      "body": "Tus insights y notificaciones diarias fallaban en silencio la mayoría de los días. La infraestructura de programación se ha sustituido — tus datos de la mañana están ahí cuando los necesitas.",
+      "bullets": [
+        {
+          "lead": "Los Insights se ejecutan a tiempo",
+          "body": "Se abandonó un programador que perdía cerca del 80% de sus ejecuciones. Los informes diarios ahora se disparan de forma constante, todos los días."
+        },
+        {
+          "lead": "Las notificaciones llegan a tiempo",
+          "body": "La comprobación de notificaciones cada 15 minutos ahora corre con su propia programación, independiente del trabajo de informes diarios."
+        },
+        {
+          "lead": "Sin cortes silenciosos",
+          "body": "La generación de insights ahora puede completarse incluso en ventanas de procesamiento más largas."
+        }
+      ]
+    },
+    {
+      "version": "2.0.22",
+      "date": "2026-05-02",
+      "tags": [
+        "newFeature",
+        "improvement"
+      ],
+      "title": "Insights más inteligentes — patrones más profundos, tarjetas más limpias",
+      "body": "Insights ahora saca a la superficie patrones más profundos: cómo un hábito de hoy repercute en el mañana, qué sentimientos tienden a aparecer juntos y qué comportamientos mueven de verdad tu puntuación diaria. Las tarjetas se han rediseñado en torno a un único indicador de fuerza de la señal.",
+      "bullets": [
+        {
+          "lead": "Hábitos que repercuten hacia delante",
+          "body": "Insights ahora detecta cuándo un hábito de hoy predice cómo se verá un vital mañana o pasado mañana."
+        },
+        {
+          "lead": "Sentimientos como señales",
+          "body": "Descubre qué sentimientos suelen aparecer juntos, y qué hábitos hacen que un sentimiento sea más — o menos — probable."
+        },
+        {
+          "lead": "Hábitos frente a tu puntuación",
+          "body": "Comprueba exactamente qué hábitos están subiendo tu puntuación diaria y tu bienestar general, y cuáles no se están ganando su lugar."
+        },
+        {
+          "lead": "Un estado, tres niveles",
+          "body": "Cada tarjeta de insight usa ahora un único círculo: vacío para emergente, medio lleno para moderado, lleno para fuerte. Se acabaron las categorías multicolor."
+        },
+        {
+          "lead": "Explora informes anteriores",
+          "body": "Recorre tus últimos diez informes con un control flotante, y comprueba de un vistazo cuándo estará listo el siguiente."
+        }
+      ]
+    },
+    {
+      "version": "2.0.21",
+      "date": "2026-04-30",
+      "tags": [
+        "newFeature",
+        "improvement"
+      ],
+      "title": "Privacidad que controlas y un aspecto más sereno",
+      "body": "Ahora controlas exactamente qué datos compartes, y puedes recuperarlos todos en cualquier momento. El lenguaje visual se ha llevado hacia algo más sereno y seguro de sí mismo — el verde y el ámbar se retiran en favor de un único azul coherente.",
+      "bullets": [
+        {
+          "lead": "Tres interruptores de privacidad independientes",
+          "body": "Uno para tus datos personales, otro para las analíticas de uso anónimas, otro para la investigación opcional. Cada uno se activa desde Configuración, todos desactivados por defecto."
+        },
+        {
+          "lead": "Exporta todo, elimina todo",
+          "body": "Un clic descarga todos tus datos en un formato legible. Otro los borra de forma permanente. Ambos protegidos por un paso de confirmación."
+        },
+        {
+          "lead": "Una nueva página pública de Privacidad",
+          "body": "Una explicación en lenguaje llano de qué cubre cada interruptor, dónde viven tus datos y exactamente qué derechos tienes."
+        },
+        {
+          "lead": "Una paleta más coherente",
+          "body": "El verde ha desaparecido, el ámbar y el amarillo han salido de las analíticas, y el azul que se usa en todas partes viene ahora directamente del logo del portal."
+        },
+        {
+          "lead": "Sin cookies, punto",
+          "body": "Las analíticas anónimas ya no colocan ninguna cookie en tu dispositivo."
+        }
+      ],
+      "note": {
+        "icon": "lock",
+        "text": "Privacidad por defecto. Consentimiento granular. Exportación y borrado completos bajo petición."
+      }
+    },
+    {
+      "version": "2.0.20",
+      "date": "2026-04-25",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Cinema — cae dentro de la foto",
+      "body": "Abrir una diapositiva de Cinema ya no se limita a aparecer con un fundido — la propia foto se expande suavemente hasta ocupar toda la vista, y todo lo demás se organiza a su alrededor. Toca una diapositiva y caes dentro de ella.",
+      "bullets": [
+        {
+          "lead": "La foto manda",
+          "body": "Al abrir una diapositiva, la imagen que has tocado crece suavemente hasta llenar la vista completa. El texto y los controles aparecen después, así que la foto siempre se siente como la protagonista."
+        },
+        {
+          "lead": "Cierre ágil",
+          "body": "Pulsa ESC o la flecha de retroceso y la diapositiva se cierra limpiamente, sin rebote."
+        },
+        {
+          "lead": "Amigable con el teclado",
+          "body": "Flechas para navegar, ESC para cerrar, el scroll de la página se bloquea mientras estás inmerso."
+        },
+        {
+          "body": "Si tu sistema pide menos movimiento, la transformación se convierte en un simple fundido cruzado."
+        }
+      ]
+    },
+    {
+      "version": "2.0.19",
+      "date": "2026-04-22",
+      "tags": [
+        "newFeature",
+        "improvement"
+      ],
+      "title": "Pestaña de Insights y píldora de tiempo unificada",
+      "body": "La pestaña de Insights ya está activa, con correlaciones reales y una narrativa escrita en cada informe. La navegación por periodo y escala de tiempo en las analíticas se ha condensado en una única píldora flotante en la parte inferior de la pantalla.",
+      "bullets": [
+        {
+          "lead": "Pestaña de Insights",
+          "body": "Saca a la superficie patrones entre tus hábitos, sentimientos y vitales — redactados como una breve narrativa. Incluye una vista previa difuminada de cómo se verán tus insights en cuanto registres datos suficientes."
+        },
+        {
+          "lead": "Píldora de periodo flotante",
+          "body": "La escala y la navegación temporal son ahora un único control: toca para cambiar entre semana / mes / año, avanza o retrocede con las flechas. Se sitúa en la parte inferior en móvil y respeta el área segura."
+        },
+        {
+          "lead": "Pestaña de Notificaciones",
+          "body": "Las notificaciones y los ajustes de correo se han trasladado a su propia pestaña. Los cambios se guardan automáticamente — se acabó el botón Guardar. Elige con qué frecuencia quieres los informes: quincenal, mensual, cada ciclo o trimestral."
+        },
+        {
+          "lead": "Pulse siempre a un toque",
+          "body": "El acceso directo al check-in de Pulse ahora vive en la cabecera en móvil, así que está al alcance desde cualquier pantalla."
+        },
+        {
+          "body": "Mejor navegación por teclado y soporte de lector de pantalla en todas las pantallas de analíticas, además de un pulido de las traducciones."
+        }
+      ]
+    },
+    {
+      "version": "2.0.18",
+      "date": "2026-04-20",
+      "tags": [
+        "improvement",
+        "fix"
+      ],
+      "title": "Wordmark, nueva barra lateral y correcciones de inicio de sesión",
+      "body": "Un lockup de logo más refinado, una barra lateral que se ilumina alrededor de la página en la que estás, y el inicio de sesión con Google se ha reconstruido para que funcione de forma fiable — incluso después de cerrar sesión y volver a entrar.",
+      "bullets": [
+        {
+          "lead": "Wordmark refinado",
+          "body": "Un lockup de El Portal consistente aparece ahora en las pantallas de autenticación, la página de privacidad y los correos. El mismo wordmark en todas partes."
+        },
+        {
+          "lead": "Barra lateral volumétrica",
+          "body": "La página activa en la barra lateral brilla con una luz cónica suave y una capa sutil de grano de película. Discreto, pero inconfundible al recorrer la navegación con la vista."
+        },
+        {
+          "lead": "Carga más suave",
+          "body": "Los marcadores de carga planos se han sustituido por un brillo pulido que recorre cada página en cascada mientras se cargan los datos."
+        },
+        {
+          "lead": "Inicio de sesión con Google, corregido",
+          "body": "El botón ahora aparece de verdad en la página, el flujo de inicio de sesión funciona a la primera, y cerrar sesión y volver a entrar ya no rompe nada."
+        }
+      ]
+    },
+    {
+      "version": "2.0.17",
+      "date": "2026-04-18",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Trends — dashboard de analíticas por pestañas",
+      "body": "La página de Trends se ha reorganizado en cinco pestañas centradas y ahora es gratuita para todos. Cada pestaña aborda tus datos desde un ángulo distinto — bienestar, rendimiento, ciclos, insights e informes.",
+      "bullets": [
+        {
+          "lead": "Cinco pestañas",
+          "body": "Bienestar, Rendimiento, Ciclos, Insights e Informes. El dashboard ahora es gratuito; solo los informes generados por IA siguen siendo una función Pro."
+        },
+        {
+          "lead": "Pestaña de Rendimiento",
+          "body": "Media de puntuación diaria, tasa de días perfectos, mejor racha y una tabla de fiabilidad de hábitos que puedes ordenar. Un mapa de calor de un año muestra los días en los que sueles flaquear y los días en los que sueles acertar."
+        },
+        {
+          "lead": "Pestaña de Ciclos",
+          "body": "Gráfico de puntuación ciclo a ciclo con línea de tendencia, informes de ciclo desplazables, tarjetas de recorrido de objetivos, una línea temporal de evolución de identidad, y un escáner de recurrencias que señala fricciones que aparecen en varios ciclos."
+        },
+        {
+          "lead": "Pestaña de Informes",
+          "body": "Una tarjeta de informe pulida con narrativa, sparkline y destacados. Expórtala como PNG o PDF, o imprímela."
+        },
+        {
+          "lead": "Espejo móvil",
+          "body": "Cada pestaña tiene una versión móvil totalmente nativa con objetivos táctiles correctos y la píldora de periodo flotante."
+        },
+        {
+          "body": "La pestaña de Bienestar añade una puntuación de bienestar compuesta, un radar de Signos Vitales, un gráfico de cambio de ánimo y una tarjeta de consistencia de sueño. Disponible en los cinco idiomas."
+        }
+      ]
+    },
+    {
+      "version": "2.0.16",
+      "date": "2026-04-02",
+      "tags": [
+        "improvement",
+        "optimization"
+      ],
+      "title": "Trends — móvil, velocidad y pulido",
+      "body": "El dashboard de Trends funciona notablemente más rápido y se lee de maravilla en el móvil. Las secciones se cargan bajo demanda, los gráficos comparten una única paleta azul serena, y el estado vacío se ha rediseñado.",
+      "bullets": [
+        {
+          "lead": "Trends en móvil",
+          "body": "Diseño móvil completo con un navegador de tiempo flotante, gráficos a una sola columna y un calendario de ánimo solo semanal con objetivos táctiles más grandes."
+        },
+        {
+          "lead": "Scroll más rápido",
+          "body": "Los gráficos que quedan fuera de la vista inicial ahora solo se cargan al hacer scroll cerca de ellos. Se muestran marcadores de carga mientras llegan los datos."
+        },
+        {
+          "lead": "Paleta más serena",
+          "body": "Cada gráfico e indicador de ánimo comparte ahora un único degradado azul coherente, del azul marino profundo al cian brillante."
+        },
+        {
+          "body": "Estado vacío rediseñado con un degradado y una barra de progreso más suaves. Los puntos del calendario de ánimo escalan con la intensidad. Se respetan las preferencias de movimiento reducido."
+        }
+      ]
+    },
+    {
+      "version": "2.0.15",
+      "date": "2026-03-19",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Trends — tus datos de Pulse, visualizados",
+      "body": "Un dashboard de analíticas completo para tus datos de Pulse — trayectorias de ánimo, vitales, sueño, actividades, emociones, y los comportamientos estadísticamente ligados a tus mejores y peores días.",
+      "bullets": [
+        {
+          "lead": "Nueve secciones",
+          "body": "Tendencia de ánimo, seis Signos Vitales (sueño, energía, estrés, rendimiento, motivación, conexión), calendario de ánimo, duración del sueño, desglose de actividades y emociones, y rachas de consistencia."
+        },
+        {
+          "lead": "Cinco escalas de tiempo",
+          "body": "Semana, mes, año, ciclo, versión. Recorre cualquier periodo con anterior y siguiente."
+        },
+        {
+          "lead": "Lo que te sube, lo que te hunde",
+          "body": "Las tarjetas destacan las actividades más ligadas a tus días de mejor y peor ánimo."
+        },
+        {
+          "body": "Cada gráfico muestra cómo se compara el periodo actual con el anterior. Los datos de muestra aparecen difuminados hasta que has registrado suficientes check-ins. Disponible en los cinco idiomas."
+        }
+      ],
+      "note": {
+        "icon": "lock",
+        "text": "Trends es una función exclusiva de Pro disponible para los miembros de por vida."
+      }
+    },
+    {
+      "version": "2.0.14",
+      "date": "2026-03-19",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Página de Feedback y correos más ligeros",
+      "body": "Envía feedback directamente desde dentro de la app, y recibe correos de autenticación que se ven cuidados en cualquier bandeja de entrada — clara u oscura.",
+      "bullets": [
+        {
+          "lead": "Página de Feedback",
+          "body": "Comparte tus ideas sin salir de la app. Tu nombre, correo y plan se autocompletan, y una pequeña animación de confirmación se reproduce al enviar."
+        },
+        {
+          "lead": "Diseño de correo más ligero",
+          "body": "Los correos de verificación y contraseña usan ahora un diseño claro y limpio que se lee bien en cualquier bandeja de entrada, con un pie de página de marca que enlaza de vuelta a la app."
+        }
+      ]
+    },
+    {
+      "version": "2.0.13",
+      "date": "2026-03-18",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Pulse Diario — check-ins de mañana y noche",
+      "body": "Registra tu bienestar diario mediante check-ins estructurados de mañana y noche. Pulse Diario captura ánimo, vitales, emociones y actividades, construyendo con el tiempo una imagen rica de tu vida.",
+      "bullets": [
+        {
+          "lead": "Check-in matutino",
+          "body": "Cuatro pasos: ánimo, calidad del sueño, cómo te sientes (24 emociones entre las que elegir) y en qué quieres centrarte hoy."
+        },
+        {
+          "lead": "Check-in nocturno",
+          "body": "Ocho pasos que cubren ánimo, rendimiento, estrés, motivación, energía y conexión en una escala de 0 a 100, además de qué sentiste y qué hiciste."
+        },
+        {
+          "lead": "MoodOrb",
+          "body": "Una esfera luminosa que respira con tu ánimo: los colores fluyen, los ojos se abren, la sonrisa se curva hacia arriba. La esfera está ligada a la paleta del logo de El Portal."
+        },
+        {
+          "lead": "Tarjeta de Pulse en el Dashboard",
+          "body": "Tarjeta dividida en mañana y noche con animaciones de sol y luna, y insignias claras de lo que ya está hecho."
+        },
+        {
+          "body": "Indicadores discretos en el Dashboard, un acceso directo flotante en móvil cuando hay un check-in pendiente, y un horario de recordatorio personalizable en Configuración."
+        }
+      ],
+      "note": {
+        "icon": "lock",
+        "text": "Pulse Diario es una función exclusiva de Pro disponible para los miembros de por vida."
+      }
+    },
+    {
+      "version": "2.0.12",
+      "date": "2026-04-01",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Archivos — editor de texto enriquecido y checklists",
+      "body": "Archivos tiene ahora una experiencia de escritura real: un editor de texto enriquecido con una barra de herramientas flotante, y checklists interactivas que puedes marcar directamente dentro de tus notas.",
+      "bullets": [
+        {
+          "lead": "Edición de texto enriquecido",
+          "body": "Barra de herramientas flotante con negrita, cursiva, encabezados, citas, listas, enlaces y bloques de código. Con un estilo que combina con el look de cristal de El Portal."
+        },
+        {
+          "lead": "Checklists interactivas",
+          "body": "Escribe un marcador de casilla y se convierte en una casilla real que puedes activar. Funciona en el tema oscuro con estados de foco correctos."
+        },
+        {
+          "lead": "Página más rápida y tranquila",
+          "body": "Archivos se ha reorganizado para una carga más ágil y una lectura más fácil."
+        },
+        {
+          "body": "Tipografía pulida en los cinco idiomas — comillas tipográficas, rayas y puntos suspensivos correctos."
+        }
+      ]
+    },
+    {
+      "version": "2.0.11",
+      "date": "2026-03-29",
+      "tags": [
+        "newFeature",
+        "improvement"
+      ],
+      "title": "Inspector de Día y objetivos multi-ciclo",
+      "body": "La página independiente de Historial se ha integrado en el Dashboard como un Inspector de Día en línea. La página de Objetivos ahora te permite ver tus objetivos a través de varios ciclos.",
+      "bullets": [
+        {
+          "lead": "Inspector de Día",
+          "body": "Haz clic en cualquier punto de tu gráfico de rendimiento para inspeccionar y editar los hábitos de ese día sin salir de la página. La vista se guarda en la URL, así que puedes compartirla."
+        },
+        {
+          "lead": "Objetivos multi-ciclo",
+          "body": "Alterna entre ciclos para ver tus objetivos a lo largo del tiempo. Los objetivos de ciclos pasados quedan bloqueados, pero se pueden continuar en el ciclo actual."
+        },
+        {
+          "lead": "Gráfico más ágil",
+          "body": "El gráfico de progreso se actualiza al instante al marcar un hábito, sin retraso perceptible."
+        }
+      ]
+    },
+    {
+      "version": "2.0.10",
+      "date": "2026-03-28",
+      "tags": [
+        "improvement",
+        "fix"
+      ],
+      "title": "Más rápido, más limpio y más accesible",
+      "body": "Las páginas cargan más rápido, todas las pantallas ahora se pueden usar con teclado o lector de pantalla, y el Lab y Configuración se han reconstruido para mayor claridad.",
+      "bullets": [
+        {
+          "lead": "Lab reorganizado",
+          "body": "Secciones más claras para versiones, ciclos, objetivos y hábitos. Editar una versión ahora pasa por un asistente paso a paso centrado."
+        },
+        {
+          "lead": "Configuración más limpia",
+          "body": "Cinco pestañas: Cuenta, General, Apariencia, Pulse, Almacenamiento. Fácil encontrar lo que buscas."
+        },
+        {
+          "lead": "Accesibilidad",
+          "body": "Doce partes clave de la app ahora funcionan correctamente con lectores de pantalla y navegación solo con teclado. Cumple con WCAG AA."
+        },
+        {
+          "lead": "Carga más rápida",
+          "body": "Las páginas obtienen sus datos en paralelo y solo cargan las partes pesadas cuando realmente se necesitan. Toda la app se siente notablemente más ágil."
+        },
+        {
+          "lead": "Interruptor de Identidad",
+          "body": "Activa o desactiva el sistema de identidad desde Configuración, y la interfaz relacionada se oculta al instante en el Lab, el Dashboard, Archivos y el editor de ciclos."
+        },
+        {
+          "body": "La ventana modal de creación de versión se ha rediseñado con un asistente paso a paso, además de sutiles estados hover al estilo Raycast en la lista de hábitos."
+        }
+      ]
+    },
+    {
+      "version": "2.0.9",
+      "date": "2026-03-16",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Página de Database — más limpia y más rápida",
+      "body": "La página de Database se ha reconstruido pensando en la velocidad y la consistencia. Cada entidad se comporta ahora de la misma manera, y navegar entre pestañas se siente notablemente más rápido.",
+      "bullets": [
+        {
+          "lead": "Acciones unificadas",
+          "body": "Duplicar, editar y eliminar funcionan ahora de la misma manera en versiones, ciclos, hábitos y objetivos."
+        },
+        {
+          "lead": "Interacciones más ágiles",
+          "body": "Filtrar y cambiar de pestaña se siente instantáneo, incluso con bases de datos grandes."
+        },
+        {
+          "body": "Nuevo selector segmentado y pulido, con una sutil variante grafito."
+        }
+      ]
+    },
+    {
+      "version": "2.0.8",
+      "date": "2026-03-15",
+      "tags": [
+        "fix",
+        "optimization"
+      ],
+      "title": "Pasada de calidad — estabilidad y pulido",
+      "body": "Una pasada centrada en corregir errores sutiles, ajustar el manejo de datos y limpiar el peso muerto en todas las páginas.",
+      "bullets": [
+        {
+          "lead": "Corrección en el Dashboard",
+          "body": "Se resolvió un problema de orden poco frecuente que podía hacer que un gráfico se renderizara de forma incorrecta en condiciones concretas."
+        },
+        {
+          "lead": "Datos de objetivos más precisos",
+          "body": "Los objetivos llevan ahora metadatos más ricos, con un manejo más seguro cuando faltan campos."
+        },
+        {
+          "lead": "Más limpio por dentro",
+          "body": "Se eliminaron diagnósticos sobrantes y rutas de código sin usar."
+        },
+        {
+          "body": "Una cadena en inglés que se había colado en los idiomas no ingleses se ha corregido con la traducción correcta."
+        }
+      ]
+    },
+    {
+      "version": "2.0.4",
+      "date": "2026-03-12",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Experiencia mobile-first",
+      "body": "El Portal ya no es solo de escritorio. Se ha construido desde cero una experiencia móvil completa, con una navegación que se siente nativa.",
+      "bullets": [
+        {
+          "body": "Pantallas móviles dedicadas para hábitos, objetivos y analíticas — construidas para el tacto y las pantallas pequeñas."
+        },
+        {
+          "lead": "Barra de pestañas inferior",
+          "body": "para cambiar rápido entre las pantallas que más usas."
+        },
+        {
+          "body": "Hojas adaptadas al móvil sustituyen a las ventanas modales de escritorio donde importa."
+        },
+        {
+          "body": "Detección automática de móvil en la primera carga — abre la app en tu teléfono y llegas al lugar correcto."
+        }
+      ]
+    },
+    {
+      "version": "2.0.7",
+      "date": "2026-03-14",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Ahora en 5 idiomas",
+      "body": "El Portal ahora habla tu idioma. Todas las pantallas se han traducido por completo, y tu preferencia de idioma te sigue entre dispositivos.",
+      "bullets": [
+        {
+          "lead": "Cinco idiomas",
+          "body": "Inglés, español, chino (simplificado), portugués y francés."
+        },
+        {
+          "body": "Tu preferencia de idioma se sincroniza con tu cuenta, así que te sigue a cualquier dispositivo."
+        },
+        {
+          "body": "Cada pantalla, cada etiqueta, cada mensaje de error — traducidos por completo."
+        },
+        {
+          "body": "Renderizado correcto de caracteres chinos con una fuente dedicada."
+        }
+      ]
+    },
+    {
+      "version": "2.0.6",
+      "date": "2026-03-14",
+      "tags": [
+        "newFeature",
+        "fix"
+      ],
+      "title": "Restablecimiento de contraseña y refuerzo de seguridad",
+      "body": "Un flujo completo de contraseña olvidada, además de mejoras de seguridad importantes en la capa de autenticación.",
+      "bullets": [
+        {
+          "lead": "Restablece tu contraseña",
+          "body": "El enlace de contraseña olvidada en la pantalla de inicio de sesión envía un correo de marca con un enlace de restablecimiento válido durante una hora, y una página limpia gestiona la nueva contraseña y su confirmación."
+        },
+        {
+          "lead": "Seguridad reforzada",
+          "body": "Limpieza interna para eliminar credenciales de respaldo sin usar y ajustar cómo se sirven los recursos de los correos."
+        }
+      ],
+      "note": {
+        "icon": "lock",
+        "text": "Seguridad ante todo: ninguna credencial se expone jamás en el código del cliente."
+      }
+    },
+    {
+      "version": "2.0.5",
+      "date": "2026-03-14",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Rediseño de Tempo",
+      "body": "Una renovación visual de la pantalla de Tempo y un nuevo desplegable que por fin encaja en el tema oscuro.",
+      "bullets": [
+        {
+          "lead": "Rediseño de Tempo",
+          "body": "La duración del sprint ocupa ahora el centro, con indicadores codificados por color que muestran si tu versión se divide limpiamente en ciclos. Una línea temporal animada visualiza el desglose."
+        },
+        {
+          "lead": "Desplegables pulidos",
+          "body": "Los desplegables nativos se han sustituido por una versión con estilo propio que combina con el resto de la app y admite navegación por teclado."
+        }
+      ]
+    },
+    {
+      "version": "2.0.3",
+      "date": "2026-03-10",
+      "tags": [
+        "newFeature",
+        "improvement"
+      ],
+      "title": "Arrastrar y soltar, y configuración unificada",
+      "body": "Dos mejoras que quitan fricción real del uso diario: reordena hábitos y objetivos arrastrándolos, y encuentra todos los ajustes en un solo lugar.",
+      "bullets": [
+        {
+          "lead": "Reordenar arrastrando",
+          "body": "Reordena hábitos y objetivos con un arrastre suave. El nuevo orden se guarda al instante."
+        },
+        {
+          "lead": "Una única ventana de Configuración",
+          "body": "Cuenta, Tempo y las preferencias generales viven ahora en una única ventana con pestañas. Cambios de contraseña, subida de avatar y eliminación de cuenta, todo en un mismo lugar."
+        },
+        {
+          "lead": "Eliminación de cuenta",
+          "body": "Elimina tu cuenta directamente desde Configuración. Un paso de confirmación evita accidentes, y todo se elimina limpiamente."
+        }
+      ]
+    },
+    {
+      "version": "2.0.2",
+      "date": "2026-03-07",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Consistencia de diseño y pulido del Dashboard",
+      "body": "Una pasada de consistencia en toda la app — las mismas superficies, los mismos azules, los mismos estados hover en todas partes.",
+      "bullets": [
+        {
+          "lead": "Lenguaje visual unificado",
+          "body": "Cada color y superficie procede ahora de un único sistema compartido, así que la app se ve coherente de pantalla en pantalla."
+        },
+        {
+          "lead": "Se acabó el scroll forzado",
+          "body": "El Dashboard ahora encaja limpiamente en tu viewport."
+        },
+        {
+          "body": "Los gráficos y los números usan ahora la misma fuente que el resto de la app."
+        },
+        {
+          "body": "Los tooltips de los gráficos aparecen ahora encima del cursor en lugar de debajo, así que ya no provocan scroll de página al pasar el ratón."
+        }
+      ]
+    },
+    {
+      "version": "2.0.1",
+      "date": "2026-03-04",
+      "tags": [
+        "fix",
+        "improvement"
+      ],
+      "title": "Inicio de sesión y bases modernizados",
+      "body": "Trabajo a nivel de base que hace que El Portal sea más rápido, más seguro y más fácil de hacer crecer.",
+      "bullets": [
+        {
+          "lead": "Nueva canalización de inicio de sesión",
+          "body": "El inicio de sesión y la verificación corren ahora sobre nuestra propia infraestructura, con correos de verificación más rápidos y fiables."
+        },
+        {
+          "lead": "Base moderna",
+          "body": "El manejo de peticiones subyacente se ha actualizado a la última versión de nuestro stack, abriendo la puerta a páginas más rápidas y nuevas funciones."
+        },
+        {
+          "lead": "Modelo de datos más limpio",
+          "body": "Creencias y Mantras son ahora un único concepto unificado. La configuración se ha consolidado en un solo lugar, más fácil de gestionar."
+        },
+        {
+          "body": "Limpieza general — se eliminaron archivos sin usar y se mejoró la organización general del proyecto."
+        }
+      ]
+    },
+    {
+      "version": "2.0.0",
+      "date": "2026-03-14",
+      "tags": [
+        "release"
+      ],
+      "isRelease": true,
+      "title": "Versión 2.0 — Lanzamiento oficial",
+      "body": "El Portal V2 ya está aquí. Una reconstrucción desde cero que entrega una verdadera experiencia móvil, un lenguaje visual refinado y un modelo de interacción completamente renovado. Cada pantalla se ha repensado.",
+      "note": {
+        "icon": "rocket",
+        "text": "Todos los datos de usuario existentes se han migrado de forma transparente. No se requiere ninguna acción."
+      }
+    },
+    {
+      "version": "1.2.0",
+      "date": "2026-03-15",
+      "tags": [
+        "newFeature",
+        "optimization"
+      ],
+      "title": "Mapas de calor y progreso más inteligente",
+      "body": "Sincronización más rápida, gráficos con un aspecto más nítido, y soporte sin conexión para que tus registros diarios nunca se pierdan.",
+      "bullets": [
+        {
+          "body": "Una nueva curva de consistencia de hábitos que premia mantener una racha — la consistencia temprana importa ahora tanto como las rachas largas."
+        },
+        {
+          "body": "Gráficos de progreso semanal mejorados y un nuevo mapa de calor por día de la semana que muestra tus días más fuertes y más débiles."
+        },
+        {
+          "body": "Soporte sin conexión — tus registros del día se guardan localmente y se sincronizan cuando vuelves a tener conexión."
+        }
+      ]
+    },
+    {
+      "version": "1.1.5",
+      "date": "2026-03-02",
+      "tags": [
+        "improvement"
+      ],
+      "title": "Mejoras del Modo Cinema",
+      "body": "Visualizar tus objetivos es una mecánica central de El Portal. El Modo Cinema se ha mejorado para lograr más inmersión y concentración.",
+      "bullets": [
+        {
+          "body": "Ahora puedes editar el texto dinámico superpuesto en las 5 diapositivas de vida persistentes: Yo, Ella, Propósito, Social, Vida Material."
+        },
+        {
+          "body": "Transiciones más suaves entre diapositivas usando Framer Motion."
+        }
+      ],
+      "note": {
+        "icon": "info",
+        "text": "Las imágenes personalizadas existentes de Supabase Storage no se verán afectadas."
+      }
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-02-18",
+      "tags": [
+        "newFeature"
+      ],
+      "title": "Archivos — sintaxis de búsqueda avanzada",
+      "body": "Aprovecha la sintaxis avanzada de búsqueda al escribir en Mis Rutinas, el Archivo de Mantras y las Notas Teóricas.",
+      "note": {
+        "icon": "pen",
+        "text": "El valor de reflexionar sobre tu vida y tu crecimiento."
+      }
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-01-26",
+      "tags": [
+        "release"
+      ],
+      "isRelease": true,
+      "title": "Despliegue de la Versión 1",
+      "body": "El lanzamiento inicial de El Portal."
+    }
+  ]
+}

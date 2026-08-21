@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "landmarkLabel": "Principal",
+    "manifesto": "Manifiesto",
+    "changelog": "Cambios",
+    "features": "Funciones",
+    "pricing": "Precios",
+    "logIn": "Iniciar sesión",
+    "signUp": "Crear cuenta",
+    "toggleMenu": "Alternar menú"
+  },
+  "footer": {
+    "productHeading": "Producto",
+    "companyHeading": "Empresa",
+    "legalHeading": "Legal",
+    "features": "Funciones",
+    "changelog": "Changelog",
+    "mcpIntegration": "Integración MCP",
+    "manifesto": "Manifiesto",
+    "about": "Sobre nosotros",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "homeAriaLabel": "Inicio de El Portal",
+    "blurb": "Tu sistema operativo personal para vivir con intención y máximo rendimiento.",
+    "copyright": "© {year} El Portal. Todos los derechos reservados."
+  },
+  "cta": {
+    "heading": "Empieza tu primera Versión.",
+    "body": "Abre El Portal, traza tu primer arco y completa tu primer Ciclo. El sistema registra, analiza y muestra patrones — te concentras en el trabajo.",
+    "button": "Abrir El Portal",
+    "microcopy": "Configúralo en menos de 10 minutos"
+  },
+  "switcher": {
+    "label": "Idioma"
+  },
+  "localeHint": {
+    "message": "Esta página también está disponible en español.",
+    "action": "Ver en español",
+    "dismissLabel": "Cerrar",
+    "label": "Aviso de idioma"
+  }
+}

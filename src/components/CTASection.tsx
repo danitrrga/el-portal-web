@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 
 const SECTION_BG = "var(--color-ep-section-bg)";
@@ -8,7 +9,12 @@ const FG_MUTED = "var(--color-ep-fg-muted-2)";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://app.el-portal.app";
 
-export default function CTASection() {
+// Stays a Server Component (getTranslations from next-intl/server) — this is
+// a static marketing section with no interactivity, and adding a client
+// directive here would ship it into the client bundle for no gain.
+export default async function CTASection() {
+  const t = await getTranslations("common");
+
   return (
     <section
       className="relative overflow-hidden py-16 md:py-32"
@@ -40,29 +46,27 @@ export default function CTASection() {
             color: FG_STRONG,
           }}
         >
-          Start your first Version.
+          {t("cta.heading")}
         </h2>
 
         <p
           className="mt-6 text-[15px] md:text-lg leading-[1.6] text-balance mx-auto max-w-xl"
           style={{ color: FG }}
         >
-          Open El Portal, draft a 90-day arc, run your first Cycle. The
-          system tracks, analyzes, and surfaces patterns — you focus on
-          the work.
+          {t("cta.body")}
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 md:flex-row md:gap-6">
           <Button asChild variant="brand" size="lg" className="text-base">
             <Link href={APP_URL}>
-              <span className="text-nowrap">Open El Portal</span>
+              <span className="text-nowrap">{t("cta.button")}</span>
             </Link>
           </Button>
           <span
             className="text-[11px] font-medium uppercase tracking-[0.18em]"
             style={{ color: FG_MUTED }}
           >
-            Set up in under 10 minutes
+            {t("cta.microcopy")}
           </span>
         </div>
       </div>

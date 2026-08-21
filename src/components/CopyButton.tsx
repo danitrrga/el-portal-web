@@ -1,10 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check, Copy } from "lucide-react";
 
-export function CopyButton({ value, label = "Copy" }: { value: string; label?: string }) {
+/**
+ * `label` defaults to undefined, not a hardcoded English literal — a
+ * default parameter value cannot call a hook, so the catalogue fallback
+ * happens inside the component body via `useTranslations`. Callers may
+ * still pass `label` to override.
+ */
+export function CopyButton({ value, label }: { value: string; label?: string }) {
+  const t = useTranslations("mcp");
   const [copied, setCopied] = useState(false);
+  const resolvedLabel = label ?? t("copyButton.copy");
 
   async function handleCopy() {
     try {
@@ -20,7 +29,7 @@ export function CopyButton({ value, label = "Copy" }: { value: string; label?: s
     <button
       type="button"
       onClick={handleCopy}
-      aria-label={copied ? "Copied" : label}
+      aria-label={copied ? t("copyButton.copied") : resolvedLabel}
       data-copied={copied}
       className="group absolute top-2 right-2 inline-flex size-11 md:size-7 items-center justify-center rounded-md border border-zinc-800/60 bg-zinc-900/70 text-zinc-400 backdrop-blur transition-[color,background-color,border-color,transform] duration-200 ease-out hover:border-zinc-700 hover:bg-zinc-900 hover:text-zinc-100 active:scale-95 data-[copied=true]:border-emerald-500/30 data-[copied=true]:text-emerald-400"
     >

@@ -1,0 +1,79 @@
+{
+  "blueprintHeader": {
+    "badge": "BEHAVIORAL SYSTEM & PATTERN RECOGNITION",
+    "title": "Stop guessing. Start executing with deterministic precision."
+  },
+  "mockup": {
+    "lab": {
+      "cardTitle": "The Lab",
+      "cardDescription": "Where you design, execute, and iterate on your self-development system.",
+      "cycleName": "Cycle 6",
+      "activeLabel": "Active",
+      "dateRange": "16 May — 30 May",
+      "prioritiesLabel": "Priorities",
+      "priorities": [
+        "Compound block",
+        "Marketing site v2",
+        "Sub-22 5k attempt"
+      ],
+      "frictionLabel": "Friction",
+      "frictionItems": [
+        "Run volume bleeding into deep-work hours",
+        "Phone time spiking above 2h on rest days"
+      ],
+      "goalsLabel": "Goals",
+      "goals": [
+        "Sub-22 5k race in 30 days",
+        "Marketing site v2",
+        "Hit 100 paying customers",
+        "Read 12 books this version"
+      ]
+    },
+    "trends": {
+      "cardTitle": "Trends",
+      "cardDescription": "A correlation engine and AI model, evaluate your daily logs and biometric data to find patterns that were hidden.",
+      "weeklySummaryLabel": "Weekly Summary",
+      "summaryBody": "Two weeks of compounding habits. Meditation cuts evening stress by nearly a third, and sleep is feeding directly into mood.",
+      "summaryHighlight": "Tuesdays peak.",
+      "dataRevealsLabel": "What your data reveals",
+      "newBadge": "New",
+      "insights": [
+        {
+          "headline": "Meditate 10 min → 28% better mood",
+          "body": "Days you complete Meditate 10 min tend to have higher mood.",
+          "date": "Today"
+        },
+        {
+          "headline": "Deep work 90m → 16% higher wellbeing",
+          "body": "On days with Deep work block (90 min), your wellbeing tends to be higher.",
+          "date": "3d ago"
+        },
+        {
+          "headline": "Late screen time → 12% worse next-morning mood",
+          "body": "Phone use after 22:00 tends to depress next-day mood scores.",
+          "date": "5d ago"
+        }
+      ]
+    }
+  },
+  "methodology": {
+    "eyebrow": "Features",
+    "heading": "A method, not a vibe.",
+    "subheading": "El Portal isn't a template you fill in. Every mechanic answers to three principles that shape the rest of the system.",
+    "principles": [
+      {
+        "title": "Identity drives behavior.",
+        "body": "You decide who you want to become. Cycles align around that direction, focusing on the skills and habits your future identity requires. Days keep you consistent."
+      },
+      {
+        "title": "Data collection is essential",
+        "body": "You can't improve what you don't understand. Track the parts of your life that matter, and build a clearer picture of how you think, work, and live."
+      },
+      {
+        "title": "The system works for you.",
+        "body": "You do the work. The system analyzes patterns, weighs signals, and surfaces what matters most. A curated tool designed to support your growth, not demand your attention."
+      }
+    ],
+    "cta": "Read the full methodology"
+  }
+}

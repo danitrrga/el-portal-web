@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useId } from 'react';
 
 interface PortalIconProps {
     size?: number;
@@ -10,7 +12,17 @@ interface PortalIconProps {
  * masked to a clean circular shape. Used as the "O" in P[O]RTAL branding,
  * sidebar collapsed icon, and standalone mark.
  */
-export const PortalIcon: React.FC<PortalIconProps> = ({ size = 28, className = '' }) => (
+export const PortalIcon: React.FC<PortalIconProps> = ({ size = 28, className = '' }) => {
+    // The mask id MUST be unique per instance. It used to be the literal
+    // "portal-mask", and `url(#portal-mask)` resolves document-wide to the FIRST
+    // match — so with several marks on a page (navbar mobile + navbar desktop +
+    // footer) every SVG pointed at one mask. That is harmless while they all
+    // render, but the mobile mark is `display:none` above md, and a visible SVG
+    // masked by a hidden one loses its geometry: the artwork came out sliced off
+    // flat down its left edge instead of round.
+    const maskId = useId();
+
+    return (
     <svg
         width={size}
         height={size}
@@ -18,13 +30,14 @@ export const PortalIcon: React.FC<PortalIconProps> = ({ size = 28, className = '
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={className}
-        aria-label="Portal icon"
+        aria-hidden="true"
+        focusable="false"
     >
         <g transform="translate(397.5, 397.5) scale(1.13) translate(-397.5, -397.5)">
-            <mask id="portal-mask" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="123" y="123" width="549" height="549">
+            <mask id={maskId} style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="123" y="123" width="549" height="549">
                 <path d="M672 397.5C672 549.102 549.102 672 397.5 672C245.898 672 123 549.102 123 397.5C123 245.898 245.898 123 397.5 123C549.102 123 672 245.898 672 397.5Z" fill="#0D2F60" />
             </mask>
-            <g mask="url(#portal-mask)">
+            <g mask={`url(#${maskId})`}>
                 <path d="M672 397.5C672 549.102 549.102 672 397.5 672C245.898 672 123 549.102 123 397.5C123 245.898 245.898 123 397.5 123C549.102 123 672 245.898 672 397.5Z" fill="#0D2F60" />
                 <path d="M618 397.5C618 545.788 497.788 666 349.5 666C201.212 666 81 545.788 81 397.5C81 249.212 201.212 129 349.5 129C497.788 129 618 249.212 618 397.5Z" fill="#0B1A44" />
                 <path d="M561 397.5C561 544.132 442.132 663 295.5 663C148.868 663 30 544.132 30 397.5C30 250.868 148.868 132 295.5 132C442.132 132 561 250.868 561 397.5Z" fill="#083885" />
@@ -37,3 +50,4 @@ export const PortalIcon: React.FC<PortalIconProps> = ({ size = 28, className = '
 
     </svg>
 );
+};

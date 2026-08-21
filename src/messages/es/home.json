@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "pill": {
+      "badge": "Acceso anticipado",
+      "message": "Lanzamiento pronto"
+    },
+    "headline": "El sistema operativo definitivo para high performers.",
+    "subcopy": "Las Versiones fijan la identidad que construyes. Los Ciclos son los sprints dentro de ellas, dirigidos a las habilidades que exige. Registra hábitos, objetivos, biometría... El sistema analiza las tendencias que el ojo no capta.",
+    "cta": {
+      "secondary": "Leer la metodología"
+    },
+    "heroImage": {
+      "alt": "Panel de El Portal — vista de escritorio en primer plano, acabado mate con foco de luz"
+    }
+  },
+  "vcd": {
+    "heading": "Tres horizontes. Una jerarquía.",
+    "subheading": "Las Versiones planifican identidad. Los Ciclos concentran el enfoque. Los Días llevan la puntuación.",
+    "captions": [
+      {
+        "label": "Versión",
+        "body": "Arco de identidad. La fase a la que te comprometes."
+      },
+      {
+        "label": "Ciclo",
+        "body": "Sprint centrado en las habilidades que esa identidad exige. Varios caben dentro de una Versión."
+      },
+      {
+        "label": "Día",
+        "body": "Unidad atómica. Los hábitos ponderados se combinan en un número."
+      }
+    ]
+  },
+  "mcpIntro": {
+    "heading": "Tu agente lleva el registro.",
+    "body": "Conecta Claude, Cursor o cualquier agente compatible con MCP. Lee hábitos, ciclos y Trends. Escribe actualizaciones. La puntuación se mueve mientras haces el trabajo.",
+    "cta": "Ver el servidor MCP →"
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "hero": {
+    "heading": "How El Portal works.",
+    "body": "A method, not a vibe. Five mechanics, layered. The system reads, organizes, and surfaces signal, leaving you to stay focused on the work that earns it."
+  },
+  "scales": [
+    {
+      "name": "Version",
+      "duration": "An identity",
+      "isDefault": true,
+      "role": "The arc, representing who you're becoming.",
+      "bullets": [
+        "Sets the direction.",
+        "Contains its cycles.",
+        "Runs for as long as the identity takes."
+      ]
+    },
+    {
+      "name": "Cycle",
+      "duration": "A sprint",
+      "isDefault": true,
+      "role": "The sprint, defining what to work on now.",
+      "bullets": [
+        "Inside a Version.",
+        "Aimed at the problems and skills that identity demands.",
+        "Short enough to actually finish."
+      ]
+    },
+    {
+      "name": "Day",
+      "duration": "1 day",
+      "isDefault": false,
+      "role": "The reps, the only scale you actually live in.",
+      "bullets": [
+        "Inside a Cycle.",
+        "Atomic, with one set of habits and one score.",
+        "Where everything compounds from."
+      ]
+    }
+  ],
+  "temporalHierarchy": {
+    "eyebrow": "Temporal Hierarchy",
+    "heading": "Version, Cycle, Day.",
+    "defaultLabel": "default"
+  },
+  "dailyScore": {
+    "eyebrow": "The Daily Score",
+    "heading": "One number, honestly weighted.",
+    "body": "Every habit carries a weight. Your day rolls up into a single number, not a streak count or a vibe, representing the share of the weight you actually moved.",
+    "habitChips": [
+      { "name": "Stretch 5 min", "weightLabel": "LOW" },
+      { "name": "Deep work 90m", "weightLabel": "HIGH" },
+      { "name": "Read 20 pages", "weightLabel": "MED" }
+    ],
+    "scoreLabel": "Daily Score",
+    "scoreSubtext": "5 of 7 weight",
+    "weightTiers": [
+      {
+        "weightLabel": "LOW",
+        "example": "5-minute stretch · 1-glass of water",
+        "body": "Frictionless. Cheap to maintain, easy to lose."
+      },
+      {
+        "weightLabel": "MEDIUM",
+        "example": "20-minute read · 30-minute walk",
+        "body": "Repeatable. The middle of the habit stack."
+      },
+      {
+        "weightLabel": "HIGH",
+        "example": "90-minute deep work · long training session",
+        "body": "Costly. The work that actually moves the cycle."
+      }
+    ]
+  },
+  "pulseLoop": {
+    "eyebrow": "The Pulse Loop",
+    "heading": "Twice a day.",
+    "body": "Morning frames intent. Evening logs reality. The gap between the two is where the signal lives.",
+    "subBody": "Two short check-ins build the dataset the rest of the system reads from.",
+    "morning": {
+      "label": "Morning check-in",
+      "intro": "Four short steps. Each one calibrates the day before the day begins.",
+      "steps": [
+        { "label": "Mood", "body": "Where you are right now, on a calm scale." },
+        { "label": "Sleep", "body": "Quality of the night that just ended." },
+        {
+          "label": "Feelings",
+          "body": "What's actually present, selected from a bank of named emotions."
+        },
+        { "label": "Focus", "body": "The one thing you want today to be about." }
+      ]
+    },
+    "evening": {
+      "label": "Evening check-in",
+      "intro": "Eight short steps. The evening pass is denser because the evening has the data.",
+      "steps": [
+        { "label": "Mood", "body": "Where you landed after the day's work." },
+        { "label": "Productivity", "body": "How much of the day actually compounded." },
+        { "label": "Stress", "body": "Load you carried, not the load you planned." },
+        { "label": "Motivation", "body": "Pull toward the work, or against it." },
+        { "label": "Energy", "body": "Biological state at sundown." },
+        { "label": "Connectedness", "body": "Time spent in the people who matter." },
+        {
+          "label": "Feelings",
+          "body": "Named emotions from the same bank as morning."
+        },
+        {
+          "label": "Activities",
+          "body": "What you actually did — for the trend layer to read."
+        }
+      ]
+    }
+  },
+  "habitsAndGoals": {
+    "eyebrow": "Habits & Goals",
+    "heading": "Two primitives. Different time scales.",
+    "body": "Habits are the daily atoms. Goals are the cycle-scoped outcomes. Together they cover both ends of the practice.",
+    "habits": {
+      "heading": "Habits",
+      "scopeLabel": "Daily",
+      "body": "Weighted recurring actions. They feed the daily score and the consistency layer beneath it.",
+      "bullets": [
+        "Three weight tiers: LOW (1), MEDIUM (2), and HIGH (4).",
+        "Recurrence configured per habit, not assumed.",
+        "Don't auto-carry between cycles, remaining deliberate by design."
+      ]
+    },
+    "goals": {
+      "heading": "Goals",
+      "scopeLabel": "Cycle",
+      "body": "Outcomes you commit to inside a single Cycle. Two kinds, each with its own definition of done.",
+      "bullets": [
+        "task_project, with bounded scope, finished or not.",
+        "consistency_metric, representing a rate you hold across the cycle.",
+        "Carry across cycles via lineage, keeping the same goal across multiple cycles."
+      ]
+    },
+    "carryOver": {
+      "label": "Carry-over",
+      "body": "Goals can travel across cycles via a lineage link, keeping the same journey across multiple sprints. Habits start fresh each cycle, by choice."
+    }
+  },
+  "trendsInsights": {
+    "eyebrow": "Trends & Insights",
+    "heading": "The system reads the data you generate.",
+    "body": "A correlation engine and a set of pattern detectors look for repeating signals across your habits, vitals, and feelings, writing them up plainly.",
+    "insightCard": {
+      "title": "Sleep quality → next-day mood",
+      "delta": "↑ 24%",
+      "body": "Nights you sleep above your median predict a higher mood the morning after. Strong, repeated across the last two cycles.",
+      "tag": "Correlation",
+      "lag": "lag · 1 day"
+    },
+    "detectorsLabel": "Pattern detectors",
+    "detectorEyebrow": "Detector",
+    "detectors": [
+      {
+        "name": "Burnout",
+        "body": "Energy drops sharply over three days against a two-week baseline."
+      },
+      {
+        "name": "Regression",
+        "body": "A habit you held for a week or more has dropped to zero for three days running."
+      },
+      {
+        "name": "Weekday Blind Spot",
+        "body": "A habit you nail most days collapses on a single day of the week."
+      },
+      {
+        "name": "Sleep Lag",
+        "body": "A night of low sleep predicts a measurable drop in next-day performance."
+      }
+    ]
+  },
+  "closing": {
+    "body": "The method is the floor, and the convictions underneath it are what make it worth running.",
+    "cta": "Read the manifesto"
+  }
+}

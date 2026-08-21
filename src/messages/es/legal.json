@@ -1,0 +1,193 @@
+{
+  "authority": {
+    "notice": "Este documento está disponible en inglés y en español. En caso de discrepancia entre ambas versiones, prevalece la versión en inglés."
+  },
+  "privacy": {
+    "eyebrow": "Privacidad y datos",
+    "h1": "Tus datos, a la vista.",
+    "intro": "El Portal está alojado en la UE y se basa en tu consentimiento. Esta página enumera todo lo que almacenamos, todo lo que nunca tocamos y cómo recuperarlo todo.",
+    "storedLabel": "Qué almacenamos",
+    "neverStoredLabel": "Qué nunca tocamos",
+    "buckets": [
+      {
+        "tag": "Obligatorio",
+        "title": "Datos de ánimo, hábitos y ciclos",
+        "lede": "Las entradas que registras. Sin ellas, la app no puede funcionar para ti.",
+        "stored": [
+          "El ánimo y las sensaciones que registras en el check-in",
+          "Los hábitos que marcas como hechos o pendientes",
+          "Los ciclos de trabajo, objetivos y reflexiones que escribes",
+          "El correo y el nombre de usuario de tu cuenta"
+        ],
+        "neverStored": [
+          "Nada de fuera de la app",
+          "El historial de navegación o la actividad en otros sitios",
+          "La ubicación, los contactos o los sensores del dispositivo"
+        ],
+        "meta": "Solo se almacena tras tu consentimiento explícito al registrarte."
+      },
+      {
+        "tag": "Opcional — desactivado por defecto",
+        "title": "Estadísticas de uso anónimas",
+        "lede": "Registramos las pulsaciones en funciones, la navegación y los tiempos de carga para ver qué funciona y qué va lento. Sin contenido, sin cookies.",
+        "stored": [
+          "Qué pantallas se abrieron",
+          "Qué funciones se tocaron",
+          "Tiempos de carga de página y cambio de ruta",
+          "Códigos de error cuando algo falla"
+        ],
+        "neverStored": [
+          "El texto que escribes o los valores que registras",
+          "Ninguna dirección IP (se descarta antes de almacenarla)",
+          "Cookies de cualquier tipo"
+        ],
+        "meta": "Alojado en la UE, en Fráncfort. Tu interruptor lo controla todo."
+      },
+      {
+        "tag": "Opcional — desactivado por defecto",
+        "title": "Informes y tus reacciones",
+        "lede": "Cuando le pides a El Portal un informe con IA, guardamos el informe y cómo reaccionaste. Con el tiempo, esto nos ayuda a escribir informes que se parezcan más a ti.",
+        "stored": [
+          "El resumen de ánimo y hábitos en el que se basó el informe",
+          "El texto del informe que te escribimos",
+          "Tu reacción (lo dejaste abierto, lo descartaste, pediste que te lo repitiera, lo marcaste como útil)"
+        ],
+        "neverStored": [
+          "Tu nombre o el ID de tu cuenta (se sustituye por un hash aleatorio)",
+          "El texto de las diapositivas o cualquier cosa que escribas en una diapositiva",
+          "Las fotos que subes",
+          "Las reflexiones libres o las entradas de diario"
+        ],
+        "meta": "Cifrado en reposo. Nunca se vende, nunca se envía a redes publicitarias, nunca se comparte con proveedores de IA externos."
+      }
+    ],
+    "providersEyebrow": "Dónde viven tus datos",
+    "providersHeading": "Cuatro proveedores, todos en la UE.",
+    "providers": [
+      {
+        "name": "Supabase",
+        "region": "EU — Frankfurt",
+        "purpose": "Base de datos principal. Almacena tu cuenta, tus entradas y el registro de consentimiento."
+      },
+      {
+        "name": "PostHog Cloud",
+        "region": "EU — Frankfurt",
+        "purpose": "Estadísticas de uso anónimas. Solo activo si lo habilitas."
+      },
+      {
+        "name": "Vercel",
+        "region": "EU — edge",
+        "purpose": "Aloja la app y ejecuta las funciones de servidor."
+      },
+      {
+        "name": "Google Gemini",
+        "region": "EU",
+        "purpose": "Genera el texto de los informes con IA. Solo se activa cuando pides un informe."
+      }
+    ],
+    "rightsEyebrow": "Tus derechos",
+    "rightsHeading": "Recupéralo todo, cuando quieras.",
+    "rights": [
+      {
+        "title": "Exportarlo todo",
+        "description": "Descarga un único archivo con todo lo que tenemos sobre ti.",
+        "action": "Privacidad — Descargar"
+      },
+      {
+        "title": "Eliminarlo todo",
+        "description": "Elimina tu cuenta y todos tus datos de forma permanente. No se puede deshacer.",
+        "action": "Privacidad — Eliminar"
+      },
+      {
+        "title": "Cambiar de opinión cuando quieras",
+        "description": "Activa o desactiva cualquier interruptor en Configuración — Privacidad. Aplicamos el cambio al instante y guardamos un registro de cada elección.",
+        "action": "Privacidad"
+      },
+      {
+        "title": "Ponerte en contacto",
+        "description": "Si algo no te cuadra, escríbenos o contacta con tu autoridad de protección de datos.",
+        "action": "dtarraga.emp@gmail.com"
+      }
+    ],
+    "lastUpdated": "Última actualización: 2026-04-28",
+    "reachUs": "Escríbenos a"
+  },
+  "terms": {
+    "h1": "Términos de Servicio",
+    "lastUpdated": "Última actualización — 13 de abril de 2026",
+    "agreement": {
+      "heading": "Aceptación de los Términos",
+      "body": "Al acceder a El Portal o utilizarlo (“el Servicio”), aceptas quedar vinculado por estos Términos de Servicio. Si no estás de acuerdo, no uses el Servicio. Estos términos se aplican a todos los usuarios, tanto gratuitos como de pago."
+    },
+    "description": {
+      "heading": "Descripción del Servicio",
+      "body": "El Portal es un sistema operativo personal pensado ante todo para móvil, diseñado para vivir con intención y máximo rendimiento. Ofrece herramientas de seguimiento de hábitos, ciclos de trabajo profundo, gestión de tareas y analítica personal a través de un marco estructurado de Versión → Ciclo → Día."
+    },
+    "userAccounts": {
+      "heading": "Cuentas de Usuario",
+      "intro": "Para usar El Portal, debes crear una cuenta. Eres responsable de:",
+      "items": [
+        "Proporcionar información de registro exacta y completa",
+        "Mantener la seguridad de las credenciales de tu cuenta",
+        "Toda la actividad que se produzca en tu cuenta",
+        "Notificarnos de inmediato cualquier acceso no autorizado"
+      ]
+    },
+    "acceptableUse": {
+      "heading": "Uso Aceptable",
+      "intro": "Aceptas no:",
+      "items": [
+        "Usar el Servicio con fines ilícitos",
+        "Intentar aplicar ingeniería inversa, descompilar o desensamblar cualquier parte del Servicio",
+        "Extraer datos del Servicio mediante scraping, rastreo o herramientas automatizadas",
+        "Interferir con la infraestructura del Servicio o alterarla",
+        "Suplantar a otra persona o falsear tu afiliación",
+        "Subir código malicioso, virus o contenido dañino"
+      ]
+    },
+    "intellectualProperty": {
+      "heading": "Propiedad Intelectual",
+      "body1": "El Servicio, incluidos su diseño, código, identidad de marca y metodología, es propiedad de El Portal y está protegido por las leyes de propiedad intelectual. No puedes copiar, modificar ni distribuir ninguna parte del Servicio sin permiso explícito.",
+      "body2": "El nombre, el logotipo y la identidad visual de El Portal son marcas registradas. Nada en estos términos te otorga derechos para usarlos."
+    },
+    "userContent": {
+      "heading": "Contenido del Usuario",
+      "body1": "Conservas la propiedad total de todo el contenido que creas en El Portal — hábitos, tareas, notas, ciclos y datos de rendimiento. No reclamamos la propiedad de tu contenido.",
+      "body2": "Al usar el Servicio, nos concedes una licencia limitada para almacenar, procesar y mostrar tu contenido con el único fin de prestarte el Servicio."
+    },
+    "paymentTerms": {
+      "heading": "Condiciones de Pago",
+      "intro": "El Portal ofrece un nivel gratuito y un pago único de Lifetime. Al realizar un pago, reconoces que:",
+      "items": [
+        "La licencia de Lifetime es un pago único y sin renovaciones",
+        "Las solicitudes de reembolso se gestionan caso por caso dentro de los 14 días posteriores a la compra",
+        "El acceso a las funciones de pago se concede de inmediato tras la confirmación del pago"
+      ]
+    },
+    "disclaimers": {
+      "heading": "Exención de Responsabilidad",
+      "body": "El Portal se ofrece “tal cual” y “según disponibilidad”, sin garantías de ningún tipo, expresas o implícitas. No garantizamos que el Servicio esté siempre disponible sin interrupciones, libre de errores o sea seguro en todo momento. El uso que hagas del Servicio es responsabilidad exclusivamente tuya."
+    },
+    "limitationOfLiability": {
+      "heading": "Limitación de Responsabilidad",
+      "body": "En la medida máxima permitida por la ley, El Portal y sus operadores no serán responsables de daños indirectos, incidentales, especiales, derivados o punitivos, incluida la pérdida de datos, ingresos o beneficios, derivados del uso que hagas del Servicio. Nuestra responsabilidad total no superará el importe que hayas pagado por el Servicio en los doce meses anteriores a la reclamación."
+    },
+    "termination": {
+      "heading": "Terminación",
+      "body1": "Puedes eliminar tu cuenta en cualquier momento desde los ajustes de la app. Tras la eliminación, todos tus datos se eliminarán de forma permanente en un plazo de 30 días.",
+      "body2": "Nos reservamos el derecho de suspender o cancelar tu cuenta si incumples estos términos. Te avisaremos siempre que sea razonablemente posible."
+    },
+    "governingLaw": {
+      "heading": "Ley Aplicable",
+      "body": "Estos términos se rigen e interpretan de acuerdo con la ley aplicable, sin tener en cuenta principios de conflicto de leyes. Cualquier disputa se resolverá en los tribunales de la jurisdicción donde opera El Portal."
+    },
+    "changes": {
+      "heading": "Cambios en Estos Términos",
+      "body": "Podemos actualizar estos Términos de Servicio de vez en cuando. Los cambios entran en vigor en el momento en que se publican en esta página. Si sigues usando El Portal después de un cambio, se entiende que aceptas los términos revisados."
+    },
+    "contact": {
+      "heading": "Contacto",
+      "body": "Si tienes dudas sobre estos términos, escríbenos a"
+    }
+  }
+}

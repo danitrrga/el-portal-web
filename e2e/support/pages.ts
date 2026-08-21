@@ -1,7 +1,12 @@
 import type { Page } from "@playwright/test";
 
-/** Every prerendered route. Keep in sync with `src/app/`. */
-export const ROUTES = [
+/**
+ * Every prerendered English route. Keep in sync with `src/app/[locale]/`.
+ * Single source of truth for both locale trees — `ES_ROUTES` and `ROUTES`
+ * below are derived from this list, never hand-duplicated, so the two trees
+ * cannot drift apart.
+ */
+export const EN_ROUTES = [
   "/",
   "/features",
   "/manifesto",
@@ -11,6 +16,24 @@ export const ROUTES = [
   "/privacy",
   "/terms",
 ] as const;
+
+/**
+ * `localePrefix: "as-needed"` closes `/` to the literal `/es` (not `/es/`) —
+ * see `src/proxy.ts`'s own redirect assertion. Every other route gets a
+ * plain `/es` prefix.
+ */
+export const ES_ROUTES = EN_ROUTES.map((route) =>
+  route === "/" ? "/es" : `/es${route}`,
+);
+
+/**
+ * Doubles the layout-spec matrix this drives from 8 routes x 8 Playwright
+ * projects to 16 x 8 (`overflow`, `containment`, `a11y`, `touch-targets`).
+ * See `07-03-SUMMARY.md` for the measured wall-clock delta this produced —
+ * the CI job's 30-minute timeout was sized with this headroom in mind, but
+ * the number was recorded rather than assumed.
+ */
+export const ROUTES = [...EN_ROUTES, ...ES_ROUTES] as const;
 
 /**
  * `src/app/layout.tsx` puts `overflow-x-hidden` on <body>.

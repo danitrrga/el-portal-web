@@ -57,6 +57,30 @@ const PROJECTS: PlaywrightTestConfig["projects"] = [
       contextOptions: { reducedMotion: "reduce" as const },
     },
   },
+
+  // Permanent regression coverage (07-16) for the mobile-panel switcher's
+  // touch targets, the locale round-trip's NEXT_LOCALE cookie, and the
+  // cross-locale hint's no-cookie silence and Navbar-avoiding placement —
+  // behaviours the rest of the matrix only measures once. Deliberately its
+  // own project, not folded into LAYOUT_SPECS: these are behavioural
+  // (click-and-assert) checks, not per-viewport layout sweeps, so running
+  // them across all 8 layout projects would be 8x the cost for one
+  // viewport's worth of signal.
+  //
+  // `devices["Pixel 5"]`, NOT `devices["Desktop Chrome"]`: Desktop Chrome at
+  // a narrow width is a narrow MOUSE browser (`hasTouch: false`,
+  // `isMobile: false`) and exercises no touch behaviour. Pixel 5 is
+  // Chromium-based (launchable on this workstation, unlike the WebKit
+  // `touch-iphone` project) and carries `hasTouch: true` / `isMobile: true`
+  // — the genuine coarse-pointer signal this spec's whole purpose depends
+  // on. Viewport is overridden to VIEWPORTS["mobile-390"] so the width
+  // matches the rest of the harness exactly; `hasTouch`/`isMobile` are kept
+  // from the device descriptor.
+  {
+    name: "i18n-chrome",
+    testMatch: /i18n-chrome\.spec\.ts/,
+    use: { ...devices["Pixel 5"], viewport: VIEWPORTS["mobile-390"] },
+  },
 ];
 
 export default defineConfig({

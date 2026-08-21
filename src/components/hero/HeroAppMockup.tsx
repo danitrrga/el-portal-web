@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 /**
  * Hero screenshot — desktop closeup of the El Portal dashboard.
@@ -14,19 +15,24 @@ import Image from "next/image";
  *   - device-mockup-mobile-pulse-showoff-1.png
  *   - device-mockup-mobile-pulse-showoff-2.png
  *   - device-mockup-mobile-pulse-showoff-3.png
+ *
+ * `alt` is copy, not configuration — it resolves from `home.heroImage.alt` via
+ * `useTranslations` below. `src`/`width`/`height` stay here since they are
+ * identical in both locales.
  */
 const HERO_IMAGE = {
   src: "/assets/showcase/device-mockup-dashboard-desktop-closeup-dark-spottlight-matte.png",
   width: 1440,
   height: 1080,
-  alt: "El Portal dashboard — desktop closeup, spotlight matte",
 };
 
 export const HeroAppMockup: React.FC = () => {
+  const t = useTranslations("home");
+
   return (
     <Image
       src={HERO_IMAGE.src}
-      alt={HERO_IMAGE.alt}
+      alt={t("hero.heroImage.alt")}
       width={HERO_IMAGE.width}
       height={HERO_IMAGE.height}
       className="mx-auto block w-full h-auto rounded-xl"

@@ -6,6 +6,7 @@ import {
   LineChart,
   LucideIcon,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { ReactNode } from "react";
 
 /* ─── Monotone palette ─ white / grey / black only.
@@ -17,18 +18,24 @@ const FG_MUTED = "var(--color-ep-fg-muted)";
 const FG_SUBTLE = "var(--color-ep-fg-subtle)";
 const RULE = "var(--color-ep-rule)";
 
-export default function SystemBlueprintSection() {
+// Stays a Server Component (getTranslations from next-intl/server) — this is
+// a static marketing section with no interactivity, and adding a client
+// directive here would ship it into the client bundle for no gain.
+export default async function SystemBlueprintSection() {
+  const t = await getTranslations("blueprint");
+
   return (
     <section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-5xl">
         <div className="mx-auto grid gap-4 lg:grid-cols-2">
-          {/* THE LAB */}
+          {/* THE LAB — "The Lab" is a kept-English glossary term (nav.lab);
+              only the description translates. */}
           <FeatureCard>
             <CardHeader className="pb-3">
               <CardHeading
                 icon={FlaskConical}
-                title="The Lab"
-                description="Where you design, execute, and iterate on your self-development system."
+                title={t("mockup.lab.cardTitle")}
+                description={t("mockup.lab.cardDescription")}
               />
             </CardHeader>
 
@@ -42,13 +49,14 @@ export default function SystemBlueprintSection() {
             </div>
           </FeatureCard>
 
-          {/* TRENDS */}
+          {/* TRENDS — "Trends" is a kept-English glossary term (nav.trends,
+              D-01); only the description translates. */}
           <FeatureCard>
             <CardHeader className="pb-3">
               <CardHeading
                 icon={LineChart}
-                title="Trends"
-                description="A correlation engine and AI model, evaluate your daily logs and biometric data to find patterns that were hidden."
+                title={t("mockup.trends.cardTitle")}
+                description={t("mockup.trends.cardDescription")}
               />
             </CardHeader>
 
@@ -85,7 +93,17 @@ function MockupFrame({ children }: { children: ReactNode }) {
    all card chrome — just typographic hierarchy.
    Sections shown: Priorities · Friction · Goals (collapsed)
    ──────────────────────────────────────────────────────────────────── */
-function LabMockup() {
+// Progress percentages are illustrative UI data, not text — they cannot
+// legitimately differ between locales, so they stay in code, index-aligned
+// with the catalogue's `mockup.lab.goals` array (see 07-07-PLAN.md Task 1).
+const GOAL_PROGRESS = [13, 33, 0, 9];
+
+async function LabMockup() {
+  const t = await getTranslations("blueprint");
+  const priorities = t.raw("mockup.lab.priorities") as string[];
+  const frictionItems = t.raw("mockup.lab.frictionItems") as string[];
+  const goals = t.raw("mockup.lab.goals") as string[];
+
   return (
     <div className="absolute inset-0 overflow-hidden flex flex-col px-6 py-5">
       {/* Header */}
@@ -96,32 +114,28 @@ function LabMockup() {
             className="text-[15px] font-bold tracking-tight"
             style={{ color: FG_STRONG }}
           >
-            Cycle 6
+            {t("mockup.lab.cycleName")}
           </h2>
           <span
             className="text-[9px] font-bold uppercase tracking-[0.18em]"
             style={{ color: FG_MUTED }}
           >
-            Active
+            {t("mockup.lab.activeLabel")}
           </span>
         </div>
         <span
           className="text-[11px]"
           style={{ color: FG_SUBTLE }}
         >
-          16 May — 30 May
+          {t("mockup.lab.dateRange")}
         </span>
       </div>
 
       <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-4">
         {/* PRIORITIES */}
-        <SectionLabel>Priorities</SectionLabel>
+        <SectionLabel>{t("mockup.lab.prioritiesLabel")}</SectionLabel>
         <div className="space-y-1.5">
-          {[
-            "Compound block",
-            "Marketing site v2",
-            "Sub-22 5k attempt",
-          ].map((p, i) => (
+          {priorities.map((p, i) => (
             <div
               key={p}
               className="flex items-baseline gap-3"
@@ -146,12 +160,9 @@ function LabMockup() {
         <div className="h-px" style={{ background: RULE }} />
 
         {/* FRICTION */}
-        <SectionLabel>Friction</SectionLabel>
+        <SectionLabel>{t("mockup.lab.frictionLabel")}</SectionLabel>
         <ul className="space-y-1.5">
-          {[
-            "Run volume bleeding into deep-work hours",
-            "Phone time spiking above 2h on rest days",
-          ].map((f) => (
+          {frictionItems.map((f) => (
             <li
               key={f}
               className="flex items-start gap-2.5 text-[12px] leading-[1.4]"
@@ -170,32 +181,30 @@ function LabMockup() {
         <div className="h-px" style={{ background: RULE }} />
 
         {/* GOALS (collapsed) */}
-        <SectionLabel>Goals</SectionLabel>
+        <SectionLabel>{t("mockup.lab.goalsLabel")}</SectionLabel>
         <div className="space-y-1">
-          {[
-            { title: "Sub-22 5k race in 30 days", pct: 13 },
-            { title: "Marketing site v2", pct: 33 },
-            { title: "Hit 100 paying customers", pct: 0 },
-            { title: "Read 12 books this version", pct: 9 },
-          ].map((g) => (
-            <div
-              key={g.title}
-              className="flex items-baseline justify-between gap-3"
-            >
-              <span
-                className="text-[13px] font-medium truncate"
-                style={{ color: FG_STRONG }}
+          {goals.map((title, i) => {
+            const pct = GOAL_PROGRESS[i];
+            return (
+              <div
+                key={title}
+                className="flex items-baseline justify-between gap-3"
               >
-                {g.title}
-              </span>
-              <span
-                className="text-[12px] font-bold tabular-nums flex-shrink-0"
-                style={{ color: g.pct === 0 ? FG_SUBTLE : FG }}
-              >
-                {g.pct}%
-              </span>
-            </div>
-          ))}
+                <span
+                  className="text-[13px] font-medium truncate"
+                  style={{ color: FG_STRONG }}
+                >
+                  {title}
+                </span>
+                <span
+                  className="text-[12px] font-bold tabular-nums flex-shrink-0"
+                  style={{ color: pct === 0 ? FG_SUBTLE : FG }}
+                >
+                  {pct}%
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -208,64 +217,51 @@ function LabMockup() {
    InsightCardRow.tsx — weekly summary + correlation data points.
    No tag cards, no meter bars — just the correlations.
    ──────────────────────────────────────────────────────────────────── */
-function TrendsMockup() {
-  const insights: {
-    headline: string;
-    body: string;
-    lift: number;
-    polarity: "positive" | "negative";
-    strength: "strong" | "moderate" | "low";
-    isNew: boolean;
-    date: string;
-  }[] = [
-      {
-        headline: "Meditate 10 min → 28% better mood",
-        body: "Days you complete Meditate 10 min tend to have higher mood.",
-        lift: 28,
-        polarity: "positive",
-        strength: "strong",
-        isNew: true,
-        date: "Today",
-      },
-      {
-        headline: "Deep work 90m → 16% higher wellbeing",
-        body: "On days with Deep work block (90 min), your wellbeing tends to be higher.",
-        lift: 16,
-        polarity: "positive",
-        strength: "moderate",
-        isNew: true,
-        date: "3d ago",
-      },
-      {
-        headline: "Late screen time → 12% worse next-morning mood",
-        body: "Phone use after 22:00 tends to depress next-day mood scores.",
-        lift: 12,
-        polarity: "negative",
-        strength: "low",
-        isNew: false,
-        date: "5d ago",
-      },
-    ];
+// Correlation strength/polarity/lift are illustrative UI data driving icon
+// and color logic, not text — they cannot legitimately differ between
+// locales, so they stay in code, index-aligned with the catalogue's
+// `mockup.trends.insights` array (see 07-07-PLAN.md Task 1).
+const INSIGHT_META: {
+  lift: number;
+  polarity: "positive" | "negative";
+  strength: "strong" | "moderate" | "low";
+  isNew: boolean;
+}[] = [
+  { lift: 28, polarity: "positive", strength: "strong", isNew: true },
+  { lift: 16, polarity: "positive", strength: "moderate", isNew: true },
+  { lift: 12, polarity: "negative", strength: "low", isNew: false },
+];
+
+type TranslatedInsight = { headline: string; body: string; date: string };
+
+async function TrendsMockup() {
+  const t = await getTranslations("blueprint");
+  const insights = t.raw("mockup.trends.insights") as TranslatedInsight[];
 
   return (
     <div className="absolute inset-0 overflow-hidden flex flex-col px-6 py-5">
       <div className="flex-1 min-h-0 overflow-hidden flex flex-col gap-4">
         {/* WEEKLY SUMMARY */}
-        <SectionLabel>Weekly Summary</SectionLabel>
+        <SectionLabel>{t("mockup.trends.weeklySummaryLabel")}</SectionLabel>
         <p className="text-[12px] leading-[1.55]" style={{ color: FG }}>
-          Two weeks of compounding habits. Meditation cuts evening stress by
-          nearly a third, and sleep is feeding directly into mood.{" "}
-          <span style={{ color: FG_STRONG }}>Tuesdays peak.</span>
+          {t("mockup.trends.summaryBody")}{" "}
+          <span style={{ color: FG_STRONG }}>
+            {t("mockup.trends.summaryHighlight")}
+          </span>
         </p>
 
         {/* divider */}
         <div className="h-px" style={{ background: RULE }} />
 
         {/* WHAT YOUR DATA REVEALS — insight cards */}
-        <SectionLabel>What your data reveals</SectionLabel>
+        <SectionLabel>{t("mockup.trends.dataRevealsLabel")}</SectionLabel>
         <div className="space-y-2">
-          {insights.map((i) => (
-            <InsightRow key={i.headline} insight={i} />
+          {insights.map((insight, i) => (
+            <InsightRow
+              key={insight.headline}
+              insight={{ ...insight, ...INSIGHT_META[i] }}
+              newBadgeLabel={t("mockup.trends.newBadge")}
+            />
           ))}
         </div>
       </div>
@@ -276,6 +272,7 @@ function TrendsMockup() {
 /* ─── InsightRow — adapted from el-portal trends/InsightCardRow.tsx ─ */
 function InsightRow({
   insight,
+  newBadgeLabel,
 }: {
   insight: {
     headline: string;
@@ -286,6 +283,7 @@ function InsightRow({
     isNew: boolean;
     date: string;
   };
+  newBadgeLabel: string;
 }) {
   const arrow = insight.polarity === "positive" ? "↑" : "↓";
 
@@ -327,7 +325,7 @@ function InsightRow({
                 color: FG_STRONG,
               }}
             >
-              New
+              {newBadgeLabel}
             </span>
           )}
           <span

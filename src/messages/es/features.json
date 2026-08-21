@@ -1,0 +1,179 @@
+{
+  "hero": {
+    "heading": "Cómo funciona El Portal.",
+    "body": "Un método, no una moda. Cinco mecánicas, en capas. El sistema lee, organiza y muestra la señal, dejándote centrado en el trabajo que se la gana."
+  },
+  "scales": [
+    {
+      "name": "Versión",
+      "duration": "Una identidad",
+      "isDefault": true,
+      "role": "El arco, en quién te estás convirtiendo.",
+      "bullets": [
+        "Marca la dirección.",
+        "Contiene sus Ciclos.",
+        "Dura lo que tarde la identidad."
+      ]
+    },
+    {
+      "name": "Ciclo",
+      "duration": "Un sprint",
+      "isDefault": true,
+      "role": "El sprint, que define en qué trabajar ahora.",
+      "bullets": [
+        "Dentro de una Versión.",
+        "Dirigido a los problemas y las habilidades que esa identidad exige.",
+        "Lo bastante corto para terminarlo de verdad."
+      ]
+    },
+    {
+      "name": "Día",
+      "duration": "1 día",
+      "isDefault": false,
+      "role": "Las repeticiones, la única escala en la que vives de verdad.",
+      "bullets": [
+        "Dentro de un Ciclo.",
+        "Atómico, con un conjunto de hábitos y una puntuación.",
+        "Donde todo se acumula."
+      ]
+    }
+  ],
+  "temporalHierarchy": {
+    "eyebrow": "Jerarquía Temporal",
+    "heading": "Versión, Ciclo, Día.",
+    "defaultLabel": "por defecto"
+  },
+  "dailyScore": {
+    "eyebrow": "Puntuación Diaria",
+    "heading": "Un número, ponderado con honestidad.",
+    "body": "Cada hábito tiene un peso. Tu día se resume en un único número, no una racha ni una sensación, que representa la parte del peso que realmente moviste.",
+    "habitChips": [
+      { "name": "Estiramiento 5 min", "weightLabel": "BAJO" },
+      { "name": "Trabajo profundo 90m", "weightLabel": "ALTO" },
+      { "name": "Leer 20 páginas", "weightLabel": "MED" }
+    ],
+    "scoreLabel": "Puntuación Diaria",
+    "scoreSubtext": "5 de 7 de peso",
+    "weightTiers": [
+      {
+        "weightLabel": "BAJO",
+        "example": "Estiramiento de 5 minutos · 1 vaso de agua",
+        "body": "Sin fricción. Barato de mantener, fácil de perder."
+      },
+      {
+        "weightLabel": "MEDIO",
+        "example": "Lectura de 20 minutos · paseo de 30 minutos",
+        "body": "Repetible. El punto medio de la pila de hábitos."
+      },
+      {
+        "weightLabel": "ALTO",
+        "example": "Trabajo profundo de 90 minutos · sesión larga de entrenamiento",
+        "body": "Costoso. El trabajo que realmente mueve el Ciclo."
+      }
+    ]
+  },
+  "pulseLoop": {
+    "eyebrow": "Bucle de Pulse",
+    "heading": "Dos veces al día.",
+    "body": "La mañana fija la intención. La noche registra la realidad. La señal vive en el hueco entre ambas.",
+    "subBody": "Dos check-ins breves construyen los datos que el resto del sistema lee.",
+    "morning": {
+      "label": "Check-in matutino",
+      "intro": "Cuatro pasos breves. Cada uno calibra el día antes de que empiece.",
+      "steps": [
+        { "label": "Ánimo", "body": "Dónde estás ahora mismo, en una escala de calma." },
+        { "label": "Sueño", "body": "Calidad de la noche que acaba de terminar." },
+        {
+          "label": "Sentimientos",
+          "body": "Lo que sientes de verdad, elegido de un banco de emociones con nombre."
+        },
+        { "label": "Enfoque", "body": "Lo único en lo que quieres que gire hoy." }
+      ]
+    },
+    "evening": {
+      "label": "Check-in nocturno",
+      "intro": "Ocho pasos breves. La pasada de la noche es más densa porque la noche tiene los datos.",
+      "steps": [
+        { "label": "Ánimo", "body": "Dónde acabaste después del trabajo del día." },
+        { "label": "Rendimiento", "body": "Cuánto del día realmente se acumuló." },
+        { "label": "Estrés", "body": "La carga que llevaste, no la que planeaste." },
+        { "label": "Motivación", "body": "El tirón hacia el trabajo, o en contra de él." },
+        { "label": "Energía", "body": "Estado biológico al atardecer." },
+        { "label": "Conexión", "body": "Tiempo dedicado a las personas que importan." },
+        {
+          "label": "Sentimientos",
+          "body": "Emociones con nombre, del mismo banco que por la mañana."
+        },
+        {
+          "label": "Actividades",
+          "body": "Lo que hiciste de verdad, para que la capa de tendencias lo lea."
+        }
+      ]
+    }
+  },
+  "habitsAndGoals": {
+    "eyebrow": "Hábitos y Objetivos",
+    "heading": "Dos primitivas. Distintas escalas de tiempo.",
+    "body": "Los hábitos son los átomos diarios. Los objetivos son los resultados delimitados por el Ciclo. Juntos cubren los dos extremos de la práctica.",
+    "habits": {
+      "heading": "Hábitos",
+      "scopeLabel": "Diario",
+      "body": "Acciones recurrentes y ponderadas. Alimentan la puntuación diaria y la capa de consistencia que hay debajo.",
+      "bullets": [
+        "Tres niveles de peso: BAJO (1), MEDIO (2) y ALTO (4).",
+        "La recurrencia se configura por hábito, no se asume.",
+        "No se trasladan automáticamente entre Ciclos, deliberados por diseño."
+      ]
+    },
+    "goals": {
+      "heading": "Objetivos",
+      "scopeLabel": "Ciclo",
+      "body": "Resultados a los que te comprometes dentro de un único Ciclo. Dos tipos, cada uno con su propia definición de terminado.",
+      "bullets": [
+        "task_project, con alcance delimitado, terminado o no.",
+        "consistency_metric, que representa una tasa que mantienes durante el Ciclo.",
+        "Se trasladan entre Ciclos mediante un enlace de continuidad, manteniendo el mismo objetivo en varios Ciclos."
+      ]
+    },
+    "carryOver": {
+      "label": "Continuidad",
+      "body": "Los objetivos pueden viajar entre Ciclos mediante un enlace de continuidad, manteniendo el mismo recorrido durante varios sprints. Los hábitos empiezan de cero cada Ciclo, por decisión de diseño."
+    }
+  },
+  "trendsInsights": {
+    "eyebrow": "Trends e Insights",
+    "heading": "El sistema lee los datos que generas.",
+    "body": "Un motor de correlación y un conjunto de detectores de patrones buscan señales que se repiten en tus hábitos, tus signos vitales y tus sentimientos, y las explican con claridad.",
+    "insightCard": {
+      "title": "Calidad del sueño → ánimo del día siguiente",
+      "delta": "↑ 24%",
+      "body": "Las noches que duermes por encima de tu mediana predicen un ánimo más alto a la mañana siguiente. Fuerte, repetido en los últimos dos Ciclos.",
+      "tag": "Correlación",
+      "lag": "desfase · 1 día"
+    },
+    "detectorsLabel": "Detectores de patrones",
+    "detectorEyebrow": "Detector",
+    "detectors": [
+      {
+        "name": "Agotamiento",
+        "body": "La energía cae en picado durante tres días frente a una base de dos semanas."
+      },
+      {
+        "name": "Retroceso",
+        "body": "Un hábito que mantuviste durante una semana o más ha caído a cero durante tres días seguidos."
+      },
+      {
+        "name": "Punto Ciego Semanal",
+        "body": "Un hábito que cumples casi todos los días se hunde en un solo día de la semana."
+      },
+      {
+        "name": "Desfase del Sueño",
+        "body": "Una noche de poco sueño predice una caída medible en el rendimiento del día siguiente."
+      }
+    ]
+  },
+  "closing": {
+    "body": "El método es la base, y las convicciones que hay debajo son las que hacen que merezca la pena seguirlo.",
+    "cta": "Leer el manifiesto"
+  }
+}

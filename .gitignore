@@ -70,3 +70,7 @@ docs
 .superpowers
 .antigravitycli
 .claude/AGENT-SYSTEM.md
+
+# Local agent configuration — holds credentials, never commit
+.codex/
+AGENTS.md

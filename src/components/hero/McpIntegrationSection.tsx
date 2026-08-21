@@ -2,9 +2,12 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
+// Internal link only — locale-aware Link (see src/i18n/navigation.ts), never
+// next/link.
+import { Link } from "@/i18n/navigation";
 import React from "react";
 import { Bot, Cpu, Workflow, BrainCircuit, Cog, Terminal } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 // Official MCP brand mark (icon paths only, from modelcontextprotocol.io/logo/dark.svg)
 const McpLogo = (props: React.SVGProps<SVGSVGElement>) => (
@@ -24,6 +27,8 @@ const McpLogo = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function McpIntegrationSection() {
+  const t = useTranslations("home");
+
   return (
     <section>
       <div className="py-16 md:py-32">
@@ -87,14 +92,14 @@ export default function McpIntegrationSection() {
                 color: "var(--color-ep-fg-strong)",
               }}
             >
-              Your agent keeps the record.
+              {t("mcpIntro.heading")}
             </h2>
             <p className="text-muted-foreground text-[15px] md:text-base">
-              Connect Claude, Cursor, or any MCP-compatible agent. It reads habits, cycles, and trends. Writes back updates. The score moves while you do the work.
+              {t("mcpIntro.body")}
             </p>
 
             <Button variant="brand-link" size="sm" asChild>
-              <Link href="/mcp">View the MCP server →</Link>
+              <Link href="/mcp">{t("mcpIntro.cta")}</Link>
             </Button>
           </div>
         </div>

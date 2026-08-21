@@ -1,0 +1,34 @@
+{
+  "home": {
+    "title": "El Portal — El Sistema Operativo Personal",
+    "description": "El Portal es el sistema operativo personal para high performers. Registra hábitos, corre Ciclos y deja que el sistema muestre las tendencias que se te escapan."
+  },
+  "features": {
+    "title": "Cómo Funciona — El Portal",
+    "description": "Descubre cómo funciona El Portal: Versiones, Ciclos, Días, hábitos ponderados y check-ins diarios que alimentan los Trends e Insights que el sistema lee por ti."
+  },
+  "manifesto": {
+    "title": "El Manifiesto — El Portal",
+    "description": "Un método para llegar a ser quien eres. La identidad no se descubre: se elige, se diseña, se ensaya. Siete principios tras el sistema de El Portal."
+  },
+  "changelog": {
+    "title": "Historial de Cambios — El Portal",
+    "description": "Cada cambio publicado en El Portal: funciones nuevas, correcciones y mejoras de rendimiento, publicadas según se lanzan, sin lotes ni sorpresas."
+  },
+  "mcp": {
+    "title": "Servidor MCP — El Portal",
+    "description": "Conecta Claude, Cursor o cualquier agente compatible con MCP a El Portal. Lee el estado del Ciclo, registra hábitos y haz tus check-ins sin salir del agente."
+  },
+  "pricing": {
+    "title": "Precios — El Portal",
+    "description": "Empieza gratis con el sistema completo, o paga una vez por el acceso Lifetime con IA incluida. Sin suscripciones, sin niveles superiores, sin renovaciones."
+  },
+  "privacy": {
+    "title": "Política de Privacidad — El Portal",
+    "description": "Cómo El Portal gestiona tus datos y protege tu privacidad."
+  },
+  "terms": {
+    "title": "Términos de Servicio — El Portal",
+    "description": "Los términos que rigen tu uso de El Portal."
+  }
+}

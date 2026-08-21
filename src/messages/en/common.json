@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "landmarkLabel": "Primary",
+    "manifesto": "Manifesto",
+    "changelog": "Changelog",
+    "features": "Features",
+    "pricing": "Pricing",
+    "logIn": "Log in",
+    "signUp": "Sign Up",
+    "toggleMenu": "Toggle menu"
+  },
+  "footer": {
+    "productHeading": "Product",
+    "companyHeading": "Company",
+    "legalHeading": "Legal",
+    "features": "Features",
+    "changelog": "Changelog",
+    "mcpIntegration": "MCP Integration",
+    "manifesto": "Manifesto",
+    "about": "About",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "homeAriaLabel": "El Portal home",
+    "blurb": "Your personal operating system for intentional living and peak performance.",
+    "copyright": "© {year} El Portal. All rights reserved."
+  },
+  "cta": {
+    "heading": "Start your first Version.",
+    "body": "Open El Portal, draft your first arc, run your first Cycle. The system tracks, analyzes, and surfaces patterns — you focus on the work.",
+    "button": "Open El Portal",
+    "microcopy": "Set up in under 10 minutes"
+  },
+  "switcher": {
+    "label": "Language"
+  },
+  "localeHint": {
+    "message": "This page is also available in Spanish.",
+    "action": "View in Spanish",
+    "dismissLabel": "Close",
+    "label": "Language notice"
+  }
+}
