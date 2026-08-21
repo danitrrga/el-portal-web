@@ -91,7 +91,7 @@
       ]
     },
     "evening": {
-      "label": "Check-in vespertino",
+      "label": "Check-in nocturno",
       "intro": "Ocho pasos breves. La pasada de la noche es más densa porque la noche tiene los datos.",
       "steps": [
         { "label": "Ánimo", "body": "Dónde acabaste después del trabajo del día." },

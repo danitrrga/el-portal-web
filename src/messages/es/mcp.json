@@ -99,7 +99,7 @@
     },
     "write": {
       "portal_log_habits": "Registra hábitos como hechos o no hechos para cualquier fecha. Compatible con upsert. Lotes de hasta 30. Devuelve rachas actualizadas y la puntuación diaria.",
-      "portal_pulse": "Lee o escribe los check-ins de Pulse matutinos y vespertinos. Cubre ánimo, energía, sueño, estrés, rendimiento, sentimientos y reflexión.",
+      "portal_pulse": "Lee o escribe los check-ins de Pulse matutinos y nocturnos. Cubre ánimo, energía, sueño, estrés, rendimiento, sentimientos y reflexión.",
       "portal_create_cycle": "Crea un ciclo completo en una sola llamada: objetivos, hábitos, prioridades, mantras y objetivos trasladados de ciclos anteriores.",
       "portal_debrief_cycle": "Cierra un ciclo. El servidor calcula las estadísticas (puntuación media, mejores hábitos, tasa de finalización de objetivos). Aportas la reflexión.",
       "portal_create": "Crea nuevas entidades: versión, objetivo, hábito, archivo, mantra o elemento de identidad. Lotes de hasta 10.",
