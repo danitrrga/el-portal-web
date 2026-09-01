@@ -1,0 +1,31 @@
+# el-portal-hero design system
+
+> The component set and tokens for el-portal-hero. Every UI change imports from `@/components/ui`; nothing here is published to npm, so this file is the machine-readable index.
+
+Import: `import { Button } from "@/components/ui"` (or `@/components/ui/button` for one file).
+Tokens: `src/app/globals.css` - CSS custom properties. Use the token or a Tailwind utility bound to it; never a raw hex, rgb() or an arbitrary `[#...]` value.
+
+## Components
+
+- [accordion](src/components/ui/accordion.tsx): Accordion, AccordionContent, AccordionItem, AccordionTrigger
+- [animated-group](src/components/ui/animated-group.tsx): AnimatedGroup
+- [badge](src/components/ui/badge.tsx): Badge, badgeVariants
+- [button](src/components/ui/button.tsx): Button, buttonVariants
+- [card](src/components/ui/card.tsx): Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
+- [container-scroll-animation](src/components/ui/container-scroll-animation.tsx): Card, ContainerScroll, Header
+- [scroll-area](src/components/ui/scroll-area.tsx): ScrollArea, ScrollBar
+- [separator](src/components/ui/separator.tsx): Separator
+- [shiny-button](src/components/ui/shiny-button.tsx): ShinyButton
+
+## Vocabulary
+
+Names models reach for that this system does not have, and what it calls them instead
+(counts are how often the wrong name was invented across the benchmark's mined sample):
+
+- prop `as` -> use `asChild` (170 inventions)
+- prop `color` -> use `variant` (49 inventions)
+- prop `severity` -> use `variant` (9 inventions)
+
+## Notes
+
+- Generated from src/components/ui by forge/scripts/design/ds_readiness.py. Re-run it after adding a component.
